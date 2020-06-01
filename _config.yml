@@ -103,3 +103,8 @@ deploy:
   branch: master
 admin:
   deployCommand: ./hexo-deploy.bat
+
+
+search:
+  path: search.xml
+  field: all

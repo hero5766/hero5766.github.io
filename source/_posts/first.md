@@ -70,6 +70,13 @@ npm install --save hexo-renderer-jade hexo-generator-feed hexo-generator-sitemap
 npm install hexo-server --save
 # hexo部署插件
 npm install hexo-deployer-git --save
+# 搜索组件
+npm install --save hexo-generator-search
+# 卸载mathJax组件，安装KaTex
+npm un hexo-renderer-marked --save
+npm un hexo-renderer-kramed --save
+npm un hexo-math --save
+npm i @upupming/hexo-renderer-markdown-it-plus --save
 ```
 
 - 安装完后重新构建建立的hexo项目即可解决。
@@ -229,7 +236,7 @@ $ git checkout v1.7.0   # 选择版本
 
 ##### 主题推荐
 - hexo主题不少，看个人喜好，我总结了几个网上推荐并且比较多人用的主题。
-  1. [NexT](https://github.com/theme-next/hexo-theme-next)：极简风，功能集成多。缺点是太过简单界面不漂亮。[配置帮助文档](https://github.com/theme-next/hexo-theme-next/tree/master/docs/zh-CN)
+  - [NexT](https://github.com/theme-next/hexo-theme-next)：极简风，功能集成多。缺点是太过简单界面不漂亮。[配置帮助文档](https://github.com/theme-next/hexo-theme-next/tree/master/docs/zh-CN)
     - 设置CDN
     - 数学公式：MathJax、Katex
     - 评论：Disqus、DisqusJS、LiveRe、Gitalk、Valine (China)、Changyan (China)
@@ -239,7 +246,7 @@ $ git checkout v1.7.0   # 选择版本
     - 搜索工具：Algolia Search、Local Search、Swiftype
     - 聊天工具：Chatra、Tidio
     - 其他工具：PJAX、Fancybox、MediumZoom、Lazyload、Pangu Autospace、Quicklink、Motion、Progress bar、Backgroud JS
-  2. [Butterfly](https://github.com/jerryc127/hexo-theme-butterfly)[配置帮助文档]：基于Molunerfinn的hexo-theme-melody的基础上进行开发的。(https://docs.jerryc.me/#/zh-cn/)
+  - [Butterfly](https://github.com/jerryc127/hexo-theme-butterfly)[配置帮助文档]：基于Molunerfinn的hexo-theme-melody的基础上进行开发的。(https://docs.jerryc.me/#/zh-cn/)
     - 标签外挂（Tag Plugins）：Note (Bootstrap Callout)、Gallery相册图库、Gallery相册、mermaid
     - 评论：Disqus、Disqusjs、Laibili（来必力）、Gitalk、Valine、Utterances、Facebook Comments
     - 分享：AddThis、Sharejs、Addtoany
@@ -256,14 +263,14 @@ $ git checkout v1.7.0   # 选择版本
     - 豆瓣
     - Inject
     - CDN
-  3. [Fluid](https://github.com/fluid-dev/hexo-theme-fluid)：是基于 Hexo 的一款 Material Design 风格的主题，界面简洁，展示效果不错[配置帮助文档](https://hexo.fluid-dev.com/docs/)
+  -  [Fluid](https://github.com/fluid-dev/hexo-theme-fluid)：是基于 Hexo 的一款 Material Design 风格的主题，界面简洁，展示效果不错[配置帮助文档](https://hexo.fluid-dev.com/docs/)
     - 本地搜索
     - 在线聊天：daovoice
     - Tag 插件
     - LaTeX 数学公式
     - Mermaid 流程图
     - 音乐播放器
-  4. [Melody](https://github.com/Molunerfinn/hexo-theme-melody)：简洁大方，丰富的第三方支持。[配置帮助文档](https://molunerfinn.com/hexo-theme-melody-doc/)
+  - [Melody](https://github.com/Molunerfinn/hexo-theme-melody)：简洁大方，丰富的第三方支持。[配置帮助文档](https://molunerfinn.com/hexo-theme-melody-doc/)
     - 评论系统：Disqus、Laibili（来必力）、Gitment、Gitalk、Valine
     - 分享系统：AddThis、Sharejs
     - 搜索系统：Algolia、本地搜索
@@ -283,7 +290,7 @@ $ git checkout v1.7.0   # 选择版本
 - Melody支持平滑升级，由于`_config.yml`配置文件会根据用户更改，在`git pull`时会要求commit和merge。解决方法是将主题文件的`_config.yml`复制到hexo工作目录下的`source/_data/melody.yml`，没有`_data`就创建一个。之后用`git pull`就可以平滑升级了。
 
 ###### 创建分类页
-1. 分类页
+- 分类页
 `hexo new page categories`
 - 修改`source/categories/index.md`这个文件
 ```
@@ -294,7 +301,7 @@ type: "categories"
 ---
 ```
 
-2. 标签页
+- 标签页
 `hexo new page tags`
 - 修改`source/tages/index.md`这个文件
 
@@ -306,7 +313,7 @@ type: "tags"
 ---
 ```
 
-3. 相册页
+- 相册页
 `hexo new page gallery`
 - 修改`source/gallery/index.md`这个文件
 
@@ -340,7 +347,7 @@ type: "gallery"
 
 ![效果图](/images/pasted-7.png)
 
-4. 404页
+- 404页
 `hexo new page 404`
 - 修改`source/404/index.md`这个文件
 
@@ -356,29 +363,31 @@ permalink: /404
 ###### 配置文件
 - 更改主题文件夹下的配置文件`_config.yml`
 
-1. 语言
-- 默认语言是：`en`，支持列表：
+- 语言
+  - 默认语言是：`en`，支持列表：
+
 |语言|参数|
 |--|--|
 |英语|en|
 |简体中文|zh-Hans|
+
 ```
 language: en
 ```
 
-2. 代码高亮主题
-- Melody支持5种代码高亮主题：default、darker、pale night、light、ocean (从v1.5.5开始支持)
+- 代码高亮主题
+  - Melody支持5种代码高亮主题：default、darker、pale night、light、ocean (从v1.5.5开始支持)
 ```
 highlight_theme: default # default/darker/pale night/light
 ```
 
-3. 代码换行
-- 如果你不希望在代码块的区域里有横向滚动条的话，那么你可以考虑开启这个功能。
+- 代码换行
+  - 如果你不希望在代码块的区域里有横向滚动条的话，那么你可以考虑开启这个功能。
 ```
 code_word_wrap: true
 ```
 
-- 然后找到你站点的hexo配置文件_config.yml，将line_number改成false:
+  - 然后找到你站点的hexo配置文件_config.yml，将line_number改成false:
 ```
 highlight:
   enable: true
@@ -387,10 +396,10 @@ highlight:
   tab_replace:
 ```
 
-- 接着运行一下hexo clean后再运行hexo g生成新的文章。
+  - 接着运行一下hexo clean后再运行hexo g生成新的文章。
 
-4. 社交图标
-- 如果你只想使用`v4`的图标, 你只要访问[`font-awesome v4`](https://fontawesome.com/v4.7.0/)去找图标名，并且图标前缀通常就是 fa。举个例子, 配置 melody.yml：
+- 社交图标
+  - 如果你只想使用`v4`的图标, 你只要访问[`font-awesome v4`](https://fontawesome.com/v4.7.0/)去找图标名，并且图标前缀通常就是 fa。举个例子, 配置 melody.yml：
 ```
 social:
   github fa: https://github.com/Molunerfinn
@@ -399,8 +408,8 @@ social:
   ...
 ```
 
-5. 导航菜单
-- 在右上角的区域是导航菜单项。Hexo有默认的/和/archives的路径。配置melody.yml
+- 导航菜单
+  - 在右上角的区域是导航菜单项。Hexo有默认的/和/archives的路径。配置melody.yml
 ```
 menu:
   Home: /
@@ -409,7 +418,7 @@ menu:
   Categories: /categories
 ```
 
-- 你也可以修改菜单项名称，比如：
+  - 你也可以修改菜单项名称，比如：
 ```
 menu:
   Blog: /
@@ -418,20 +427,20 @@ menu:
   MyCategories: /categories
 ```
 
-6. 顶部图
-- 顶部图是theme-melody最神奇的配置项. 它拥有true、false或者具体图片url三种值。配置melody.yml：
+- 顶部图
+  - 顶部图是theme-melody最神奇的配置项. 它拥有true、false或者具体图片url三种值。配置melody.yml：
 ```
 top_img: true  // true/false/具体图片url
 ```
 
-7. 顶部图高度控制
-- 从 v1.7.0 版本开始，你可以通过设置 top_img_height 来控制顶部图的高度。默认值是 60，意味着顶部图会占据 60% 的页面高度。所以如果你喜欢，你可以设置成 100，这样你就能获得占据整个页面的顶部图了！配置 melody.yml：
+- 顶部图高度控制
+  - 从 v1.7.0 版本开始，你可以通过设置 top_img_height 来控制顶部图的高度。默认值是 60，意味着顶部图会占据 60% 的页面高度。所以如果你喜欢，你可以设置成 100，这样你就能获得占据整个页面的顶部图了！配置 melody.yml：
 ```
 top_img_height: 60
 ```
 
-8. 文章版权
-- 为你的博客文章展示文章版权和许可协议。配置melody.yml
+- 文章版权
+  - 为你的博客文章展示文章版权和许可协议。配置melody.yml
 ```
 post_copyright:
   enable: true
@@ -439,22 +448,22 @@ post_copyright:
   license_url: https://creativecommons.org/licenses/by-nc-sa/3.0/ # 协议说明地址
 ```
 
-9. 文章广告区
-- 在你的文章页面里加上广告！你可以放置一个你自己想展示的广告或者也可以是个音乐播放器等等。不过没研究出来怎么放音乐播放器。
+- 文章广告区
+  - 在你的文章页面里加上广告！你可以放置一个你自己想展示的广告或者也可以是个音乐播放器等等。不过没研究出来怎么放音乐播放器。
 ```
 adv:
   enable: true
   info: <a href="https://www.vultr.com/?ref=7231808"><img src="https://www.vultr.com/media/banner_1.png" width="728" height="90"></a>
 ```
 
-10. 头像
-- 最好是长宽相等的头像
+- 头像
+  - 最好是长宽相等的头像
 ```
 avatar: https://xxxx.jpg
 ```
 
-11. 友链
-- 你可以在侧边栏配置相应的友情链接。格式如下：
+- 友链
+  - 你可以在侧边栏配置相应的友情链接。格式如下：
 ```
 links_title: Links   # 配置友链的标题文字
 links:
@@ -465,15 +474,15 @@ links:
 
 ![友链效果图](/images/pasted-8.png)
 
-12. 目录
-- 你的文章能够拥有一个清晰的目录列表。目录位于侧边栏，并且会随着滚动条的滚动自动展开目录结构。
+- 目录
+  - 你的文章能够拥有一个清晰的目录列表。目录位于侧边栏，并且会随着滚动条的滚动自动展开目录结构。
 ```
 toc:
   enable: true # or false
   number: true # or false. 版本v1.5.6新增
 ```
 
-- 为特定的文章配置特定的目录章节数字，在你的文章md文件的头部，加入toc_number项，并配置true或者false即可。
+  - 为特定的文章配置特定的目录章节数字，在你的文章md文件的头部，加入toc_number项，并配置true或者false即可。
 ```
 title: Hi, theme-melody!
 tags:
@@ -484,19 +493,19 @@ date: 2017-09-07
 ---
 ```
 
-13. 页脚自定义文本 v1.5.5+
-- footer_custom_text是一个给你用来在页脚自定义文本的选项。通常你可以在这里写ICP备案号、码云声明文本等。支持HTML。
+- 页脚自定义文本 v1.5.5+
+  - footer_custom_text是一个给你用来在页脚自定义文本的选项。通常你可以在这里写ICP备案号、码云声明文本等。支持HTML。
 ```
 footer_custom_text: Hi, welcome to my <a href="https://molunerfinn.com">blog</a>!
 ```
 
-- 如果你配置成hitokoto，那么底部文字将会生成随机的谚语：
+  - 如果你配置成hitokoto，那么底部文字将会生成随机的谚语：
 ```
 footer_custom_text: hitokoto
 ```
 
-14. 特效
-- 点击效果
+- 特效
+  - 点击效果
 ```
 fireworks: true # 烟花
 
@@ -510,8 +519,8 @@ canvas_ribbon: # 彩带
 ```
 
 ###### 第三方支持
-1. 评论系统
-- Melody支持多种评论系统，我这里选择Valine
+- 评论系统
+  - Melody支持多种评论系统，我这里选择Valine
 ```
 valine:
   enable: false # if you want use valine,please set this value is ture
@@ -526,8 +535,8 @@ valine:
   guest_info: nick,mail,link #valine comment header in
 ```
 
-2. 搜索系统
-- 这里使用本地搜索，需要安装 hexo-generator-search. 根据它的文档去做相应配置。注意格式只支持 xml。
+- 搜索系统
+  - 这里使用本地搜索，需要安装`hexo-generator-search`. 根据它的文档去做相应配置。注意格式只支持 xml。
 ```
 local_search:
   enable: true # or false
@@ -536,15 +545,22 @@ local_search:
     hits_empty: "We didn't find any results for the search: ${query}" # if there are no result
 ```
 
-3. 分析统计
-- 这里使用百度分析，登录百度统计的官方网站，找到你百度统计的统计代码
+  - hexo项目的`_config.yml`配置
+```
+search:
+  path: search.xml
+  field: post
+```
+
+- 分析统计
+  - 这里使用百度分析，登录百度统计的官方网站，找到你百度统计的统计代码
 ```
 baidu_analytics: 你的代码
 ```
 
-4. 数学公式
-- 原先编写公式都是使用的MathJax，主题文档里推荐的KeTeX，比MathJax更轻量，加载页面更优越一下，这次就选KeTex。
-- 首先禁用MathJax（如果你配置过 MathJax 的话），然后修改你的melody.yml以便加载katex.min.css:
+- 数学公式
+  - 原先编写公式都是使用的MathJax，主题文档里推荐的KeTeX，比MathJax更轻量，加载页面更优越一下，这次就选KeTex。
+  - 首先禁用MathJax（如果你配置过 MathJax 的话），然后修改你的melody.yml以便加载katex.min.css:
 ```
 katex:
   enable: true
@@ -552,7 +568,7 @@ katex:
     css: https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css
 ```
 
-- 你不需要添加katex.min.js来渲染数学方程。相应的你需要卸载你之前的 hexo 的 markdown 渲染器以及hexo-math，然后安装新的hexo-renderer-markdown-it-plus:
+  - 你不需要添加katex.min.js来渲染数学方程。相应的你需要卸载你之前的 hexo 的 markdown 渲染器以及hexo-math，然后安装新的hexo-renderer-markdown-it-plus:
 ```
 # 替换 `hexo-renderer-kramed` 或者 `hexo-renderer-marked` 等hexo的markdown渲染器
 # 你可以在你的package.json里找到hexo的markdwon渲染器，并将其卸载
@@ -565,8 +581,8 @@ npm un hexo-math --save
 npm i @upupming/hexo-renderer-markdown-it-plus --save
 ```
 
-- 注意到 hexo-renderer-markdown-it-plus 已经无人持续维护, 所以我们使用 @upupming/hexo-renderer-markdown-it-plus。 这份 fork 的代码使用了 @neilsustc/markdown-it-katex 同时它也是 VSCode 的插件Markdown All in One所使用的, 所以我们可以获得最新的 KaTex 功能例如 \tag{}。
-- 你还可以通过 @neilsustc/markdown-it-katex 控制 KaTeX 的设置，所有可配置的选项参见：[katex官网](https://katex.org/docs/options.html)。 比如你想要禁用掉 KaTeX 在命令行上输出的冗长的警告信息，你可以在根目录的 _config.yml 中使用下面的配置将 strict 设置为 false:
+  - 注意到 hexo-renderer-markdown-it-plus 已经无人持续维护, 所以我们使用 @upupming/hexo-renderer-markdown-it-plus。 这份 fork 的代码使用了 @neilsustc/markdown-it-katex 同时它也是 VSCode 的插件Markdown All in One所使用的, 所以我们可以获得最新的 KaTex 功能例如 \tag{}。
+  - 你还可以通过 @neilsustc/markdown-it-katex 控制 KaTeX 的设置，所有可配置的选项参见：[katex官网](https://katex.org/docs/options.html)。 比如你想要禁用掉 KaTeX 在命令行上输出的冗长的警告信息，你可以在根目录的 _config.yml 中使用下面的配置将 strict 设置为 false:
 ```
 markdown_it_plus:
   plugins:
@@ -577,17 +593,17 @@ markdown_it_plus:
         strict: false
 ```
 
-- 当然，你还可以利用这个特性来定义一些自己常用的 macros。因为 KaTeX 更快更轻量，因此没有 MathJax 的功能多（比如右键菜单）。为那些使用 MathJax 的用户，我们也为 KaTeX 默认添加了 Copy As TeX Code 的功能。
+  - 当然，你还可以利用这个特性来定义一些自己常用的 macros。因为 KaTeX 更快更轻量，因此没有 MathJax 的功能多（比如右键菜单）。为那些使用 MathJax 的用户，我们也为 KaTeX 默认添加了 Copy As TeX Code 的功能。
 
-5. 字数统计 v1.3.0+
-- 打开 hexo 工作目录：`npm install hexo-wordcount --save` or `yarn add hexo-wordcount`，配置melody.yml:
+- 字数统计 v1.3.0+
+  - 打开 hexo 工作目录：`npm install hexo-wordcount --save` or `yarn add hexo-wordcount`，配置melody.yml:
 ```
 wordcount:
   enable: true
 ```
 
-6. 文章置顶 v1.6.0+
-- 打开 hexo 工作目录`npm uninstall hexo-generator-index --save`，然后`npm install hexo-generator-index-pin-top --save`。在文章的front-matter区域里添加top: True属性来把这篇文章置顶。
+- 文章置顶 v1.6.0+
+  - 打开 hexo 工作目录`npm uninstall hexo-generator-index --save`，然后`npm install hexo-generator-index-pin-top --save`。在文章的front-matter区域里添加top: True属性来把这篇文章置顶。
 
 #### 部署配置（deploy）
 |参数|	描述|
@@ -596,7 +612,7 @@ wordcount:
 |repo|	仓库路径|
 |branch|	分支名称|
 
-- deploy是网站的部署的，repo就是仓库(Repository)的简写。branch选择仓库的哪个分支。配置这两个值我们就可以将hexo和GitHub关联起来，也就是将hexo生成的文章部署到GitHub上，
+  - deploy是网站的部署的，repo就是仓库(Repository)的简写。branch选择仓库的哪个分支。配置这两个值我们就可以将hexo和GitHub关联起来，也就是将hexo生成的文章部署到GitHub上，
 ```
 deploy:
   type: git
@@ -839,9 +855,7 @@ sudo apt-get install npm
 sudo npm install hexo-cli -g
 ```
 
-  - 但是已经不需要初始化了，
-
-  - 直接在任意文件夹下，
+  - 但是已经不需要初始化了，直接在任意文件夹下，
 ```
 git clone git@………………
 ```

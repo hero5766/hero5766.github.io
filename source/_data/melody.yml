@@ -47,7 +47,7 @@ pwa:
 
 # Highlight theme
 # ---------------
-highlight_theme: default
+highlight_theme: ocean  # default、darker、pale night、light、ocean (从v1.5.5开始支持)
 
 code_word_wrap: true # or false
 
@@ -62,8 +62,8 @@ social:
 
 # Algolia search
 # ---------------
-#algolia_search:
-#  enable: false
+algolia_search:
+ enable: false
 #  hits:
 #    per_page: 10
 
@@ -79,9 +79,9 @@ local_search:
 # MathJax
 # Please see doc for more details: https://molunerfinn.com/hexo-theme-melody-doc/third-party-support.html#mathjax
 # ---------------
-#mathjax:
-#  enable: false
-#  cdn: https://cdn.jsdelivr.net/npm/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML
+mathjax:
+  enable: false
+  cdn: https://cdn.jsdelivr.net/npm/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML
 
 # KaTeX
 # Please see doc for more details: https://molunerfinn.com/hexo-theme-melody-doc/third-party-support.html#katex
@@ -149,7 +149,7 @@ post_meta:
 
 # Please see doc for more details: https://molunerfinn.com/hexo-theme-melody-doc/additional-package-support.html#word-counting
 wordcount:
-  enable: true
+  enable: false
 
 toc:
   enable: true
@@ -202,10 +202,10 @@ addThis:
 
 # Comments System
 # ---------------
-#disqus:
-#  enable: false
-#  #shortname:
-#  #count:
+disqus:
+  enable: false
+  #shortname:
+  #count:
 
 # laibili:
 # enable: false
@@ -243,7 +243,7 @@ valine:
 # ---------------
 since: 2020
 
-footer_custom_text: hitokoto # put custom text directly or put hitokoto to fetch random texts
+# footer_custom_text: hitokoto # put custom text directly or put hitokoto to fetch random texts
 
 ICP:
   enable: false
@@ -269,12 +269,12 @@ busuanzi:
 # canvas_ribbon
 # See: https://github.com/hustcc/ribbon.js
 ## 彩带
-canvas_ribbon: 
-  enable: true
-  size: 150
-  alpha: 0.6
-  zIndex: -1
-  click_to_change: false
+#canvas_ribbon: 
+#  enable: true
+#  size: 150
+#  alpha: 0.6
+#  zIndex: -1
+#  click_to_change: false
 
 # Sidebar Settings
 ## 友链
