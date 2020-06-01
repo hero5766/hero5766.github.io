@@ -225,7 +225,7 @@ $ git clone https://github.com/theme-next/hexo-theme-next themes/next
 
 ##### 主题推荐
 - hexo主题不少，看个人喜好，我总结了几个网上推荐并且比较多人用的主题。
-  1. [NexT](https://github.com/theme-next/hexo-theme-next)：极简风，功能集成多。缺点是太过简单界面不漂亮。[配置帮助文档](https://theme-next.js.org/)
+  1. [NexT](https://github.com/theme-next/hexo-theme-next)：极简风，功能集成多。缺点是太过简单界面不漂亮。[配置帮助文档](https://github.com/theme-next/hexo-theme-next/tree/master/docs/zh-CN)
     - 设置CDN
     - 数学公式：MathJax、Katex
     - 评论：Disqus、DisqusJS、LiveRe、Gitalk、Valine (China)、Changyan (China)
@@ -235,7 +235,7 @@ $ git clone https://github.com/theme-next/hexo-theme-next themes/next
     - 搜索工具：Algolia Search、Local Search、Swiftype
     - 聊天工具：Chatra、Tidio
     - 其他工具：PJAX、Fancybox、MediumZoom、Lazyload、Pangu Autospace、Quicklink、Motion、Progress bar、Backgroud JS
-  2. [Butterfly](https://github.com/jerryc127/hexo-theme-butterfly)[配置帮助文档]：基于Molunerfinn的hexo-theme-melody的基础上进行开发的。(https://docs.jerryc.me/)
+  2. [Butterfly](https://github.com/jerryc127/hexo-theme-butterfly)[配置帮助文档]：基于Molunerfinn的hexo-theme-melody的基础上进行开发的。(https://docs.jerryc.me/#/zh-cn/)
     - 标签外挂（Tag Plugins）：Note (Bootstrap Callout)、Gallery相册图库、Gallery相册、mermaid
     - 评论：Disqus、Disqusjs、Laibili（来必力）、Gitalk、Valine、Utterances、Facebook Comments
     - 分享：AddThis、Sharejs、Addtoany
@@ -252,14 +252,14 @@ $ git clone https://github.com/theme-next/hexo-theme-next themes/next
     - 豆瓣
     - Inject
     - CDN
-  3. [Fluid](https://github.com/fluid-dev/hexo-theme-fluid)：是基于 Hexo 的一款 Material Design 风格的主题，界面简洁，展示效果不错[配置帮助文档](https://hexo.fluid-dev.com/)
+  3. [Fluid](https://github.com/fluid-dev/hexo-theme-fluid)：是基于 Hexo 的一款 Material Design 风格的主题，界面简洁，展示效果不错[配置帮助文档](https://hexo.fluid-dev.com/docs/)
     - 本地搜索
     - 在线聊天：daovoice
     - Tag 插件
     - LaTeX 数学公式
     - Mermaid 流程图
     - 音乐播放器
-  4. [Melody](https://github.com/Molunerfinn/hexo-theme-melody)：简洁大方，丰富的第三方支持。[配置帮助文档](https://molunerfinn.com/)
+  4. [Melody](https://github.com/Molunerfinn/hexo-theme-melody)：简洁大方，丰富的第三方支持。[配置帮助文档](https://molunerfinn.com/hexo-theme-melody-doc/)
     - 评论系统：Disqus、Laibili（来必力）、Gitment、Gitalk、Valine
     - 分享系统：AddThis、Sharejs
     - 搜索系统：Algolia、本地搜索
@@ -268,8 +268,55 @@ $ git clone https://github.com/theme-next/hexo-theme-next themes/next
     - 数学公式：MathJax、KaTeX
     - 字数统计
     - 文章置顶 
+    - 相册
     - [添加音乐](https://liwenhau.github.io/2019/11/15/blogAddMusic/)
     - [视频播放](https://liwenhau.github.io/2020/02/27/video1/#星星还是那么亮（Cover-爱如潮水）)
+
+##### 主题配置
+- 我选择了Melody作为博客的主题，记录几个主要的配置。
+
+###### 平滑升级
+- Melody支持平滑升级，由于`_config.yml`配置文件会根据用户更改，在`git pull`时会要求commit和merge。解决方法是将主题文件的`_config.yml`复制到hexo工作目录下的`source/_data/melody.yml`，没有`_data`就创建一个。之后用`git pull`就可以平滑升级了。
+
+###### 创建分类页
+1. 分类页
+`hexo new page categories`
+- 修改`source/categories/index.md`这个文件
+```
+---
+title: 分类
+date: 2018-01-05 00:00:00
+type: "categories"
+---
+```
+
+2. 标签页
+`hexo new page tags`
+- 修改`source/tages/index.md`这个文件
+```
+---
+title: 标签
+date: 2018-01-05 00:00:00
+type: "tags"
+---
+```
+
+3. 相册页
+`hexo new page gallery`
+- 修改`source/gallery/index.md`这个文件
+```
+---
+title: Gallery
+date: 2018-01-05 00:00:00
+type: "gallery"
+---
+```
+
+- melody 提供了一个叫做gallery的标签
+
+
+
+
 
 #### 部署配置（deploy）
 |参数|	描述|
