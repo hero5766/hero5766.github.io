@@ -47,7 +47,7 @@ pwa:
 
 # Highlight theme
 # ---------------
-highlight_theme: ocean  # default、darker、pale night、light、ocean (从v1.5.5开始支持)
+highlight_theme: darker  # default、darker、pale night、light、ocean (从v1.5.5开始支持)
 
 code_word_wrap: true # or false
 
