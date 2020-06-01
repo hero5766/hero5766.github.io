@@ -235,7 +235,7 @@ $ git clone https://github.com/theme-next/hexo-theme-next themes/next
     - 搜索工具：Algolia Search、Local Search、Swiftype
     - 聊天工具：Chatra、Tidio
     - 其他工具：PJAX、Fancybox、MediumZoom、Lazyload、Pangu Autospace、Quicklink、Motion、Progress bar、Backgroud JS
-  2. [Butterfly](https://github.com/jerryc127/hexo-theme-butterfly)[配置帮助文档](https://docs.jerryc.me/)
+  2. [Butterfly](https://github.com/jerryc127/hexo-theme-butterfly)[配置帮助文档]：基于Molunerfinn的hexo-theme-melody的基础上进行开发的。(https://docs.jerryc.me/)
     - 标签外挂（Tag Plugins）：Note (Bootstrap Callout)、Gallery相册图库、Gallery相册、mermaid
     - 评论：Disqus、Disqusjs、Laibili（来必力）、Gitalk、Valine、Utterances、Facebook Comments
     - 分享：AddThis、Sharejs、Addtoany
@@ -252,14 +252,14 @@ $ git clone https://github.com/theme-next/hexo-theme-next themes/next
     - 豆瓣
     - Inject
     - CDN
-  3. [Fluid](https://github.com/fluid-dev/hexo-theme-fluid)[配置帮助文档](https://hexo.fluid-dev.com/)
+  3. [Fluid](https://github.com/fluid-dev/hexo-theme-fluid)：是基于 Hexo 的一款 Material Design 风格的主题，界面简洁，展示效果不错[配置帮助文档](https://hexo.fluid-dev.com/)
     - 本地搜索
     - 在线聊天：daovoice
     - Tag 插件
     - LaTeX 数学公式
     - Mermaid 流程图
     - 音乐播放器
-  4. [Melody](https://github.com/Molunerfinn/hexo-theme-melody)[配置帮助文档](https://molunerfinn.com/)
+  4. [Melody](https://github.com/Molunerfinn/hexo-theme-melody)：简洁大方，丰富的第三方支持。[配置帮助文档](https://molunerfinn.com/)
     - 评论系统：Disqus、Laibili（来必力）、Gitment、Gitalk、Valine
     - 分享系统：AddThis、Sharejs
     - 搜索系统：Algolia、本地搜索
