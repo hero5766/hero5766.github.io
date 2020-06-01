@@ -59,7 +59,7 @@ npm install
 npm ls --depth 0
 ```
 
-![upload successful](/images/pasted-0.png)
+![缺失包名的提示](/images/pasted-0.png)
 - 解决该问题，需要逐一安装缺失的包
 ```
 # 根据提示，注意安装缺失的依赖包
@@ -94,7 +94,7 @@ hexo server -d
   - 即可在localhost:4000/admin/中编辑博文了。
   - 然后，Deploy之前，还需要编辑配置文件_config.yml。(否则会出现Error: Config value "admin.deployCommand" not found或者Error: spawn hexo ENOENT之类的报错。)
     - Windows则在末尾加上
-![upload successful](/images/pasted-1.png)
+![_config.xml的配置](/images/pasted-1.png)
 - 然后在同级目录新建hexo-pubish.bat文件，文件内容如下：
 ```
 hexo g -d
@@ -119,7 +119,7 @@ admin:
 ```
 
   - 编辑完毕后，就可以点击Deploy，直接部署发布Github博客上。
-![upload successful](/images/pasted-2.png)
+![点击deploy部署](/images/pasted-2.png)
 - PS：关于Hexo Admin插入图片
   - Hexo Admin可以直接复制图片粘贴，然后自动下载到source/images目录并重命名。但在Windows中粘贴后会出现裂图。这时就需要手动把括号中的前后两个斜杠去掉，就能正常显示。
 - 密码保护
@@ -194,7 +194,8 @@ npm install
 |description|	网站描述|
 |author|	您的名字|
 |language|	网站使用的语言|
-|timezone|	网站时区。Hexo 默认使用您电脑的时区。时区列表。比如说：America/New_York, Japan, 和 UTC 。|  
+|timezone|	网站时区。Hexo 默认使用您电脑的时区。时区列表。比如说：America/New_York, Japan, 和 UTC 。|
+
 - 其中，description主要用于SEO，告诉搜索引擎一个关于您站点的简单描述，通常建议在其中包含您网站的关键词。author参数用于主题显示文章的作者。
 
 #### 网址配置
@@ -204,6 +205,7 @@ npm install
 |root|	网站根目录|
 |permalink|	文章的链接格式|
 |permalink_defaults|	永久链接中各部分的默认值|
+
 - 关于permalink链接的变量可以去[官网上查找](https://hexo.io/zh-cn/docs/permalinks)
 
 #### 主题配置（theme）
@@ -212,6 +214,7 @@ npm install
 |参数|	描述|
 |--|--|
 |theme|	landscape|
+
 - theme就是选择什么主题，也就是在`theme`这个文件夹下，在[hexo主题推荐官网](https://hexo.io/themes/)上有很多个主题，默认给你安装的是lanscape这个主题。其他的主题参数配置可以查询：[官网链接]((https://hexo.io/zh-cn/docs/themes.html))
 - 当你需要更换主题时，可以在官网上下载
 ```
@@ -274,6 +277,7 @@ $ git clone https://github.com/theme-next/hexo-theme-next themes/next
 |type|	git|
 |repo|	仓库路径|
 |branch|	分支名称|
+
 - deploy是网站的部署的，repo就是仓库(Repository)的简写。branch选择仓库的哪个分支。配置这两个值我们就可以将hexo和GitHub关联起来，也就是将hexo生成的文章部署到GitHub上，
 ```
 deploy:
@@ -312,6 +316,7 @@ date: 2013/7/13 20:46:25
 |post|	source/_posts|
 |page|	source|
 |draft|	source/_drafts|
+
 ##### post
 - layout布局默认是post类型，也就是使用代码`hexo new paper`创建的文章，会在source文件夹下的_post里面。
 - 而new这个命令其实是：
@@ -406,7 +411,7 @@ you need to install hexo-generator-json-content before using Insight Search
 6. 等等；
 ```
 
-![upload successful](/images/pasted-6.png)
+![展示结果](/images/pasted-6.png)
 
 ### 指令总结
 
@@ -440,7 +445,7 @@ markdown:
   - `hexo clean` && `hexo deploy -g` 查看效果
 
 
-## 3 git分支进行多终端工作
+## git分支进行多终端工作
 - 利用git的分支系统，可以解决多个终端同时进行文件工作的问题，这样每次打开不一样的电脑，只需要进行简单的配置和在github上把文件同步下来，就可以无缝操作了。
 
 ### 机制 
@@ -450,9 +455,9 @@ markdown:
 
 ### 上传分支
 - 首先，先在github上新建一个hexo分支，如图：
-![upload successful](/images/pasted-3.png)
+![github新建分支](/images/pasted-3.png)
 - 然后在这个仓库的settings中，选择默认分支为hexo分支（这样每次同步的时候就不用指定分支，比较方便）。
-![upload successful](/images/pasted-4.png)
+![设置默认分支为hexo](/images/pasted-4.png)
 - 然后在本地的任意目录下，打开git bash，
 ```
 git clone git@github.com:ZJUFangzh/ZJUFangzh.github.io.git
@@ -480,7 +485,7 @@ git push
 ```
 
 - 这样就上传完了，可以去你的github上看一看hexo分支有没有上传上去，其中node_modules、public、db.json已经被忽略掉了，没有关系，不需要上传的，因为在别的电脑上需要重新输入命令安装 。
-![upload successful](/images/pasted-5.png)
+![代码上传完成的目录](/images/pasted-5.png)
 - 这样就上传完了。
 
 ### 更换电脑操作
