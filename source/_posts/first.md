@@ -5,7 +5,8 @@ date: 2020-05-30 18:56:00
 ---
 # 使用hexo搭建博客
 
-- 之前的博客很多图挂掉了，想重新改改，但是恢复好像难度比较大。所以索性重新建了一个博客，顺便把创建博客的过程记录一下吧。
+- 之前的博客很多图都挂掉了，想重新改改，但是恢复好像难度比较大。所以索性重新建了一个博客，顺便把创建博客的过程记录一下吧。
+<!--more-->
 
 ## 1 准备工作
 ### 1.1 [github](https://github.com)操作
@@ -25,12 +26,12 @@ ssh-keygen -t rsa -C "youremail"
 sudo apt-get install nodejs
 sudo apt-get install npm
 ``` 
-安装完后，打开命令行
+- 安装完后，打开命令行
 ```
 node -v
 npm -v
 ```
-检查一下有没有安装成功。
+- 检查一下有没有安装成功。
 
 ### 1.3 安装git
   - windows：到git官网上下载,[Download git](https://gitforwindows.org/),下载后会有一个Git Bash的命令行工具，以后就用这个工具来使用git。
@@ -45,7 +46,7 @@ sudo apt-get install git
 npm install -g hexo-cli
 ```
 - 依旧用`hexo -v`查看一下版本。
-然后执行下面代码就可以搭建项目了
+- 然后执行下面代码就可以搭建项目了
 ```
 hexo init myblog
 cd myblog
@@ -60,9 +61,9 @@ npm ls --depth 0
 ```
 # 根据提示，注意安装缺失的依赖包
 npm install hexo-generator-archive --save
-# 必须安装的包
+# 更改主题后报错
 npm install --save hexo-renderer-jade hexo-generator-feed hexo-generator-sitemap hexo-browsersync hexo-generator-archive
-# 本地服务的插件，可以在本地暂时查看状态
+# 本地预览工具，使用`hexo server`或者`hexo s`即可预览项目
 npm install hexo-server --save
 # hexo部署插件
 npm install hexo-deployer-git --save
@@ -84,33 +85,60 @@ npm install --save hexo-admin
 ```
 hexo server -d
 ```
-- 即可在localhost:4000/admin/中编辑博文了。
-- 然后，Deploy之前，还需要编辑配置文件_config.yml。(否则会出现Error: Config value "admin.deployCommand" not found或者Error: spawn hexo ENOENT之类的报错。)
-  - Windows则在末尾加上
+  - 即可在localhost:4000/admin/中编辑博文了。
+  - 然后，Deploy之前，还需要编辑配置文件_config.yml。(否则会出现Error: Config value "admin.deployCommand" not found或者Error: spawn hexo ENOENT之类的报错。)
+    - Windows则在末尾加上
 ![upload successful](/images/pasted-1.png)
-然后在同级目录新建hexo-pubish.bat文件，文件内容如下：
+- 然后在同级目录新建hexo-pubish.bat文件，文件内容如下：
 ```
 hexo g -d
 ```
-  - linux
-  create deploy-script in project dir:
+    - linux  
+- create deploy-script in project dir:
 ```
 $ touch hexo-deploy.sh; chmod a+x hexo-deploy.sh
 ```
-with such 2 lines for example or any custom code:
+- with such 2 lines for example or any custom code:
 ```
 #!/usr/bin/env sh
 hexo deploy
 ```
-and edit _config.yml:
+- and edit _config.yml:
 ```
 admin:
   deployCommand: './hexo-deploy.sh'
 ```
-- 编辑完毕后，就可以点击Deploy，直接部署发布Github博客上。
+  - 编辑完毕后，就可以点击Deploy，直接部署发布Github博客上。
 ![upload successful](/images/pasted-2.png)
 - PS：关于Hexo Admin插入图片
   - Hexo Admin可以直接复制图片粘贴，然后自动下载到source/images目录并重命名。但在Windows中粘贴后会出现裂图。这时就需要手动把括号中的前后两个斜杠去掉，就能正常显示。
+- 密码保护
+  - 打开`setting`，点击`Setup authentification here`输入用户名，密码，密钥，下面会自动生成配置文件，复制加在hexo根目录下的`_config.yml`中：
+```
+admin:
+  username: myfavoritename
+  password_hash: be121740bf988b2225a313fa1f107ca1
+  secret: a secret something
+```
+  - 重启hexo，就可以看到登录页面了
+- 发布文章
+  - 进入后台之后点击Deploy，里面的Deploy按钮是用来执行发布脚本的，所以我们先在博客根目录下新建个目录admin_script，然后在目录中新建一个脚本hexo-g.sh，里面写下下面代码然后保存，
+```
+hexo g && hexo d
+```
+  - 然后给hexo-g.sh加入可执行权限
+```
+chmod +x hexo-d.sh
+```
+  - 然后在_config.yml中的admin下添加
+```
+admin:
+  username: myfavoritename
+  password_hash: be121740bf988b2225a313fa1f107ca1
+  secret: a secret something
+  deployCommand: ./admin_script/hexo-d.sh
+```
+  - 设置发布执行的脚本，点击Deploy就会执行这个命令并提交到GitHub上。
 
 ### 1.6 绑定域名
 - 如果有了域名，可以将域名和上一步建立的仓库进行绑定
@@ -169,15 +197,60 @@ npm install
 |参数|	描述|
 |--|--|
 |theme|	landscape|
-- theme就是选择什么主题，也就是在`theme`这个文件夹下，在[官网](https://hexo.io/themes/)上有很多个主题，默认给你安装的是lanscape这个主题。当你需要更换主题时，在官网上下载，把主题的文件`git clone`在`theme`文件夹下，再修改这个参数就可以了。更多的参数介绍：[官网链接]((https://hexo.io/zh-cn/docs/themes.html))
+- theme就是选择什么主题，也就是在`theme`这个文件夹下，在[hexo主题推荐官网](https://hexo.io/themes/)上有很多个主题，默认给你安装的是lanscape这个主题。其他的主题参数配置可以查询：[官网链接]((https://hexo.io/zh-cn/docs/themes.html))
+- 当你需要更换主题时，可以在官网上下载
+```
+$ git clone https://github.com/theme-next/hexo-theme-next themes/next
+```
 - 主题文件夹中的`_config.xml`是主题的相关配置，具体可以根据主题帮助文档更改就可以了。
 
-##### 2.2.3.2 主题推荐
+##### 2.2.3.3 主题推荐
 - hexo主题不少，看个人喜好，我总结了几个网上推荐并且比较多人用的主题。
-  1. dsafd
-  2. dsfj 
-    
-
+  1. [NexT](https://github.com/theme-next/hexo-theme-next)：极简风，功能集成多。缺点是太过简单界面不漂亮。[配置帮助文档](https://theme-next.js.org/)
+    - 设置CDN
+    - 数学公式：MathJax、Katex
+    - 评论：Disqus、DisqusJS、LiveRe、Gitalk、Valine (China)、Changyan (China)
+    - 分析：Google Analytics、Baidu Analytics (China)、Growingio Analytics、CNZZ Analytics (China)
+    - 统计：LeanCloud (China)、Firebase、Busuanzi Counting
+    - 发布工具：Widgetpack Rating、AddThis
+    - 搜索工具：Algolia Search、Local Search、Swiftype
+    - 聊天工具：Chatra、Tidio
+    - 其他工具：PJAX、Fancybox、MediumZoom、Lazyload、Pangu Autospace、Quicklink、Motion、Progress bar、Backgroud JS
+  2. [Butterfly](https://github.com/jerryc127/hexo-theme-butterfly)[配置帮助文档](https://docs.jerryc.me/)
+    - 标签外挂（Tag Plugins）：Note (Bootstrap Callout)、Gallery相册图库、Gallery相册、mermaid
+    - 评论：Disqus、Disqusjs、Laibili（来必力）、Gitalk、Valine、Utterances、Facebook Comments
+    - 分享：AddThis、Sharejs、Addtoany
+    - 搜索系统：Algolia、本地搜索
+    - 网站验证
+    - 分析统计：百度统计、谷歌分析、腾讯分析
+    - 广告：谷歌广告、手动广告配置
+    - 数学公式：MathJax、KaTeX
+    - 美化/特效：自定义主题色、网站背景、footer 背景、打字效果、静止彩带、动态彩带、canvas-nest、鼠标点击效果、页面美化、自定义字体、网站副标题、主页top_img显示大小、页面加载动画preloader
+    - PWA
+    - 字数统计
+    - 图片大图查看模式：fancybox、medium_zoom
+    - Snackbar 弹窗
+    - 豆瓣
+    - Inject
+    - CDN
+  3. [Fluid](https://github.com/fluid-dev/hexo-theme-fluid)[配置帮助文档](https://hexo.fluid-dev.com/)
+    - 本地搜索
+    - 在线聊天：daovoice
+    - Tag 插件
+    - LaTeX 数学公式
+    - Mermaid 流程图
+    - 音乐播放器
+  4. [Melody](https://github.com/Molunerfinn/hexo-theme-melody)[配置帮助文档](https://molunerfinn.com/)
+    - 评论系统：Disqus、Laibili（来必力）、Gitment、Gitalk、Valine
+    - 分享系统：AddThis、Sharejs
+    - 搜索系统：Algolia、本地搜索
+    - 分析统计：百度统计、谷歌分析、腾讯分析
+    - 广告：谷歌广告、访问日志(UV 和 PV)、busuanzi
+    - 数学公式：MathJax、KaTeX
+    - 字数统计
+    - 文章置顶 
+    - [添加音乐](https://liwenhau.github.io/2019/11/15/blogAddMusic/)
+    - [视频播放](https://liwenhau.github.io/2020/02/27/video1/#星星还是那么亮（Cover-爱如潮水）)
 
 #### 2.2.4 部署配置（deploy）
 |参数|	描述|
@@ -199,7 +272,7 @@ deploy:
 ```
 title: Hello World
 date: 2013/7/13 20:46:25
-- - -
+---
 ```
 - 以下是预先定义的参数，您可在模板中使用这些参数值并加以利用
 
@@ -226,7 +299,7 @@ date: 2013/7/13 20:46:25
 - layout布局默认是post类型，也就是使用代码`hexo new paper`创建的文章，会在source文件夹下的_post里面。
 - 而new这个命令其实是：
 ```
-hexo new [layout] <title>
+hexo new [layout] [title]
 ```
 - 只不过这个layout默认是post罢了。
 
@@ -293,6 +366,51 @@ you need to install hexo-generator-json-content before using Insight Search
 
 #### 2.2.10 评论系统(comment)
 - 这里的多数都是国外的，基本用不了。这个valine好像不错，还能统计文章阅读量，可以自己试一试，链接。
+
+#### 2.2.11 如何让博文列表不显示全部内容
+- 默认情况下，生成的博文目录会显示全部的文章内容，如何设置文章摘要的长度呢？答案是在合适的位置加上<!--more-->即可。  
+
+```
+使用github pages服务搭建博客的好处有：
+1. 全是静态文件，访问速度快；
+2. 免费方便，不用花一分钱就可以搭建一个自由的个人博客，不需要服务器不需要后台；
+3. 可以随意绑定自己的域名，不仔细看的话根本看不出来你的网站是基于github的；
+<!--more-->
+4. 数据绝对安全，基于github的版本管理，想恢复到哪个历史版本都行；
+5. 博客内容可以轻松打包、转移、发布到其它平台；
+6. 等等；
+```
+![upload successful](/images/pasted-6.png)
+
+### 2.3 指令总结
+
+|指令|简写|作用|
+|--|--|--|
+|init|i|初始化，创建一个hexo项目目录，不穿参数，则直接放在当前目录|
+|new|n|默认创建一个post文章|
+|sever|s|启动本地预览服务|
+|generate|g|根据md文件，生成html文件，放在public目录中。可以添加-w参数，实时更新，更加方便|
+|clean|c|清楚之前generate的文件|
+|deploy|d|部署到代码仓库|
+
+### 2.4 [表情配置](https://haojen.github.io/2016/09/03/Emoji-Demo/)
+- 使用方法:
+  - 比如你想发一个笑脸😄 直接输入笑脸对应的 emmoji 编码 :smile:就可以。[查看全部 emoji 表情编码](http://emoji.codes/)
+- 启用 emoji 的方法:
+  - 卸载默认的 markdown 引擎: 打开终端, 去往博客的根目录下执行 `npm un hexo-renderer-marked --save`
+  - 然后安装新的解析引擎: `npm i hexo-renderer-markdown-it --save` 和其 emoji 插件 : `npm install markdown-it-emoji --save`
+  - 配置_config.yml文件
+```
+markdown: 
+	plugins:   
+		- markdown-it-abbr   
+		- markdown-it-footnote   
+		- markdown-it-ins    
+		- markdown-it-sub    
+		- markdown-it-sup    
+		- markdown-it-emoji  //用emoji插件  
+```
+  - `hexo clean` && `hexo deploy -g` 查看效果
 
 
 ## 3 git分支进行多终端工作
@@ -363,24 +481,24 @@ sudo apt-get install npm
 ```
 sudo npm install hexo-cli -g
 ```
-    - 但是已经不需要初始化了，
+  - 但是已经不需要初始化了，
 
-    - 直接在任意文件夹下，
+  - 直接在任意文件夹下，
 ```
 git clone git@………………
 ```
-    - 然后进入克隆到的文件夹：
+  - 然后进入克隆到的文件夹：
 ```
 cd xxx.github.io
 npm install
 npm install hexo-deployer-git --save
 ```
-    - 生成，部署：
+  - 生成，部署：
 ```
 hexo g
 hexo d
 ```
-    - 然后就可以开始写你的新博客了
+  - 然后就可以开始写你的新博客了
 ```
 hexo new newpage
 ```
@@ -395,3 +513,15 @@ git push
 ```
 git pull
 ```
+
+## 4. 博客网站优化
+- 网站推广不是我的重点，之后的具体内容可以原文：[文章链接](https://blog.csdn.net/sinat_37781304/article/details/82729029)
+
+### 4.1 SEO
+- 百度SEO
+- 谷歌SEO
+
+### 4.2 网站统计
+- 百度统计
+- leanCloud文章阅读量统计
+- 不蒜子访问量人次统计
