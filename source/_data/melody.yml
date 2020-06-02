@@ -25,6 +25,7 @@ menu:
   Archives: /archives
   Tags: /tags
   Categories: /categories
+  Gallery: /gallery
   #XXX: /xxx
 
 # Favicon
@@ -140,7 +141,7 @@ avatar: http://img5.imgtn.bdimg.com/it/u=2825049556,3457318439&fm=26&gp=0.jpg
 
 # 顶部图
 top_img: false # false or url of img
-top_img_height: 60 # best range: 60 - 100
+# top_img_height: 60 # best range: 60 - 100
 
 post_meta:
   date_type: created # created or updated
@@ -228,7 +229,7 @@ disqus:
 
 # valine comment system. https://valine.js.org
 valine:
-  enable: false # if you want use valine,please set this value is true
+  enable: true # if you want use valine,please set this value is true
   appId: AdfkiqY89QUSUWbDY9xJuCh0-gzGzoHsz  # leancloud application app id
   appKey: 2cEvHcqEWsyoKwy4AUL3kPGh  # leancloud application app key
   notify: false # valine mail notify (true/false) https://github.com/xCss/Valine/wiki
@@ -243,7 +244,7 @@ valine:
 # ---------------
 since: 2020
 
-# footer_custom_text: hitokoto # put custom text directly or put hitokoto to fetch random texts
+footer_custom_text: hitokoto # put custom text directly or put hitokoto to fetch random texts
 
 ICP:
   enable: false
