@@ -1,6 +1,8 @@
 title: hexo搭建博客记录
-tags: []
-categories: []
+tags:
+  - skills
+categories:
+  - common
 date: 2020-05-30 18:56:00
 ---
 - 之前的博客很多图都挂掉了，想重新改改，但是恢复好像难度比较大。所以索性重新建了一个博客，顺便把创建博客的过程记录一下吧。
@@ -77,6 +79,8 @@ npm un hexo-renderer-marked --save
 npm un hexo-renderer-kramed --save
 npm un hexo-math --save
 npm i @upupming/hexo-renderer-markdown-it-plus --save
+# 音乐播放器
+npm install --save hexo-tag-aplayer
 ```
 
 - 安装完后重新构建建立的hexo项目即可解决。
@@ -107,19 +111,20 @@ hexo server -d
 hexo g -d
 ```
 
-    - linux  
-- create deploy-script in project dir:
+  - linux
+
+    - create deploy-script in project dir:
 ```
 $ touch hexo-deploy.sh; chmod a+x hexo-deploy.sh
 ```
 
-- with such 2 lines for example or any custom code:
+    - with such 2 lines for example or any custom code:
 ```
 #!/usr/bin/env sh
 hexo deploy
 ```
 
-- and edit _config.yml:
+    - and edit _config.yml:
 ```
 admin:
   deployCommand: './hexo-deploy.sh'
@@ -545,7 +550,7 @@ local_search:
     hits_empty: "We didn't find any results for the search: ${query}" # if there are no result
 ```
 
-  - hexo项目的`_config.yml`配置
+  - hexo项目的`_config.yml`配置：
 ```
 search:
   path: search.xml

@@ -108,3 +108,7 @@ admin:
 search:
   path: search.xml
   field: all
+
+# https://github.com/MoePlayer/hexo-tag-aplaye
+aplayer:
+  meting: true

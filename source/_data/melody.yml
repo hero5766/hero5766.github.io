@@ -15,17 +15,14 @@
 #   header_text_color: "#EEEEEE"
 #   footer_text_color: "#EEEEEE"
 
-# 语言
-language: zh-Hans
-
 # Main menu navigation
 # Header导航
 menu:
-  Home: /
-  Archives: /archives
-  Tags: /tags
-  Categories: /categories
-  Gallery: /gallery
+  主页: /
+  文章: /archives
+  标签: /tags
+  分类: /categories
+  相册: /gallery
   #XXX: /xxx
 
 # Favicon
