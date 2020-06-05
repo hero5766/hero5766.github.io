@@ -6,6 +6,8 @@ categories:
   - common
 date: 2020-06-04 22:34:00
 ---
+> markdown用法简介
+<!--more-->
 ## 标题
 
 - 标题间没有横岗
