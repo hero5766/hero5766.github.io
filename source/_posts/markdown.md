@@ -309,7 +309,7 @@ Note right of B: 我在右边
 B-->A: 很高兴认识你
 (```)
 ```
-![upload successful](/images/pasted-12.png)
+![时序图1](/images/pasted-12.png)
 
 |符号|	含义|
 |--|--|
@@ -332,6 +332,3 @@ B-->A: 很高兴认识你
     (```)
 ```
 ![时序图2](/images/pasted-11.png)
-
-
-
