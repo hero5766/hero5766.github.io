@@ -1,0 +1,356 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="markdown语法"><meta name="keywords" content="skills"><meta name="author" content="hero576"><meta name="copyright" content="hero576"><title>markdown语法 | void land space</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.7.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="dns-prefetch" href="https://hm.baidu.com"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?5ff8fca367285c16c6dd5c16ca2ccc1b";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();</script><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  }
+} </script><meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="void land space" type="application/atom+xml">
+</head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#标题"><span class="toc-number">1.</span> <span class="toc-text"> 标题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#字体"><span class="toc-number">2.</span> <span class="toc-text"> 字体</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#语义标记"><span class="toc-number">2.1.</span> <span class="toc-text"> 语义标记</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#语义标签"><span class="toc-number">2.2.</span> <span class="toc-text"> 语义标签</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#引用"><span class="toc-number">3.</span> <span class="toc-text"> 引用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分割线"><span class="toc-number">4.</span> <span class="toc-text"> 分割线</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#图片"><span class="toc-number">5.</span> <span class="toc-text"> 图片</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#超链接"><span class="toc-number">6.</span> <span class="toc-text"> 超链接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#视频插入"><span class="toc-number">7.</span> <span class="toc-text"> 视频插入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#列表"><span class="toc-number">8.</span> <span class="toc-text"> 列表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#无序列表"><span class="toc-number">8.1.</span> <span class="toc-text"> 无序列表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#有序列表"><span class="toc-number">8.2.</span> <span class="toc-text"> 有序列表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#列表嵌套"><span class="toc-number">8.3.</span> <span class="toc-text"> 列表嵌套</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#表格"><span class="toc-number">9.</span> <span class="toc-text"> 表格</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#普通表格"><span class="toc-number">9.1.</span> <span class="toc-text"> 普通表格</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#特殊表格"><span class="toc-number">9.2.</span> <span class="toc-text"> 特殊表格</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码"><span class="toc-number">10.</span> <span class="toc-text"> 代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#任务列表"><span class="toc-number">11.</span> <span class="toc-text"> 任务列表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#表情"><span class="toc-number">12.</span> <span class="toc-text"> 表情</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#样式"><span class="toc-number">13.</span> <span class="toc-text"> 样式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#更改字体-大小-颜色"><span class="toc-number">13.1.</span> <span class="toc-text"> 更改字体、大小、颜色</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#流程图"><span class="toc-number">14.</span> <span class="toc-text"> 流程图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#脚注"><span class="toc-number">15.</span> <span class="toc-text"> 脚注</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#锚点"><span class="toc-number">16.</span> <span class="toc-text"> 锚点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#定义型列表"><span class="toc-number">17.</span> <span class="toc-text"> 定义型列表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自动邮箱链接"><span class="toc-number">18.</span> <span class="toc-text"> 自动邮箱链接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#时序图"><span class="toc-number">19.</span> <span class="toc-text"> 时序图</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/images/haimianbaobao.jpg"></div><div class="author-info__name text-center">hero576</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">10</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">4</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">分类</span><span class="pull-right">4</span></a></div></div></div><div id="content-outer"><div class="plain" id="top-container"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">void land space</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">主页</a><a class="site-page" href="/archives">文章</a><a class="site-page" href="/tags">标签</a><a class="site-page" href="/categories">分类</a><a class="site-page" href="/gallery">相册</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> 搜索</span></a></span></div></div><div class="layout" id="content-inner"><article id="post"><div class="plain" id="post-title">markdown语法</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-06-04</time><span class="post-meta__separator">|</span><i class="fa fa-inbox" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/common/"> common</a></div><div class="article-container" id="post-content"><blockquote>
+<p>markdown用法简介</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="标题"><a class="markdownIt-Anchor" href="#标题"></a> 标题</h2>
+<ul>
+<li>标题间没有横岗</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 一级标题</span><br><span class="line">## 二级标题</span><br><span class="line">### 三级标题</span><br><span class="line">#### 四级标题</span><br><span class="line">##### 五级标题</span><br><span class="line">###### 六级标题</span><br></pre></td></tr></table></figure>
+<ul>
+<li>分级标题，= - 最少可以只写一个，兼容性一般</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">一级标题</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">二级标题</span><br><span class="line">---------------------</span><br></pre></td></tr></table></figure>
+<ul>
+<li>TOC：根据标题生成目录，兼容性一般</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[TOC]</span><br></pre></td></tr></table></figure>
+<h2 id="字体"><a class="markdownIt-Anchor" href="#字体"></a> 字体</h2>
+<h3 id="语义标记"><a class="markdownIt-Anchor" href="#语义标记"></a> 语义标记</h3>
+<table>
+<thead>
+<tr>
+<th>描述</th>
+<th>效果</th>
+<th>代码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>斜体</td>
+<td><em>斜体</em></td>
+<td><code>*斜体*</code></td>
+</tr>
+<tr>
+<td>斜体</td>
+<td><em>斜体</em></td>
+<td><code>_斜体_</code></td>
+</tr>
+<tr>
+<td>加粗</td>
+<td><strong>加粗</strong></td>
+<td><code>**加粗**</code></td>
+</tr>
+<tr>
+<td>加粗+斜体</td>
+<td><em><strong>加粗+斜体</strong></em></td>
+<td><code>***加粗+斜体***</code></td>
+</tr>
+<tr>
+<td>加粗+斜体</td>
+<td><strong><em>加粗+斜体</em></strong></td>
+<td><code>**_加粗+斜体_**</code></td>
+</tr>
+<tr>
+<td>删除线</td>
+<td><s>删除线</s></td>
+<td><code>~~删除线~~</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="语义标签"><a class="markdownIt-Anchor" href="#语义标签"></a> 语义标签</h3>
+<table>
+<thead>
+<tr>
+<th>描述</th>
+<th>效果</th>
+<th>代码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>斜体</td>
+<td><i>斜体</i></td>
+<td><code>&lt;i&gt;斜体&lt;/i&gt;</code></td>
+</tr>
+<tr>
+<td>加粗</td>
+<td><b>加粗</b></td>
+<td><code>&lt;b&gt;加粗&lt;/b&gt;</code></td>
+</tr>
+<tr>
+<td>强调</td>
+<td><em>强调</em></td>
+<td><code>&lt;em&gt;强调&lt;/em&gt;</code></td>
+</tr>
+<tr>
+<td>上标</td>
+<td>Z<sup>a</sup></td>
+<td><code>Z&lt;sup&gt;a&lt;/sup&gt;</code></td>
+</tr>
+<tr>
+<td>下标</td>
+<td>Z<sub>a</sub></td>
+<td><code>Z&lt;sub&gt;a&lt;/sub&gt;</code></td>
+</tr>
+<tr>
+<td>键盘文本</td>
+<td><kbd>Ctrl</kbd></td>
+<td><code>&lt;kbd&gt;Ctrl&lt;/kbd&gt;</code></td>
+</tr>
+<tr>
+<td>换行</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="引用"><a class="markdownIt-Anchor" href="#引用"></a> 引用</h2>
+<ul>
+<li>在引用的文字前加&gt;即可。引用也可以嵌套，如加两个&gt;&gt;三个&gt;&gt;&gt;n个…</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&gt;这是引用的内容</span><br><span class="line">&gt;也是引用的内容</span><br><span class="line">或者引用的内容</span><br><span class="line">&gt;&gt;这是引用的内容</span><br><span class="line">&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;这是引用的内容</span><br></pre></td></tr></table></figure>
+<h2 id="分割线"><a class="markdownIt-Anchor" href="#分割线"></a> 分割线</h2>
+<ul>
+<li>三个或者三个以上的 - 或者 * 都可以。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># ---</span><br><span class="line"># ----</span><br><span class="line"># ***</span><br><span class="line"># *****</span><br><span class="line"># 井号和空格是我防止格式变化的，实际中去掉就行</span><br></pre></td></tr></table></figure>
+<h2 id="图片"><a class="markdownIt-Anchor" href="#图片"></a> 图片</h2>
+<ul>
+<li>普通图片</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">![图片alt](图片地址 &#39;&#39;图片title&#39;&#39;)</span><br><span class="line"># 图片alt就是显示在图片下面的文字，相当于对图片内容的解释。</span><br><span class="line"># 图片title是图片的标题，当鼠标移到图片上时显示的内容。title可#加可不加</span><br></pre></td></tr></table></figure>
+<ul>
+<li>插入图片带有链接</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[[图片上传失败...(image-f83b77-1542510791300)]](http:&#x2F;&#x2F;www.baidu.com)&#123;:target&#x3D;&quot;_blank&quot;&#125;       &#x2F;&#x2F; 内链式</span><br><span class="line"></span><br><span class="line">[[图片上传失败...(image-4dc956-1542510791300)]][5]&#123;:target&#x3D;&quot;_blank&quot;&#125;                      &#x2F;&#x2F; 引用式</span><br><span class="line">[5]: http:&#x2F;&#x2F;www.baidu.com</span><br></pre></td></tr></table></figure>
+<h2 id="超链接"><a class="markdownIt-Anchor" href="#超链接"></a> 超链接</h2>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[超链接名](超链接地址 &quot;超链接title&quot;)</span><br><span class="line"># title可加可不加</span><br></pre></td></tr></table></figure>
+<h2 id="视频插入"><a class="markdownIt-Anchor" href="#视频插入"></a> 视频插入</h2>
+<ul>
+<li>Markdown 语法是不支持直接插入视频的</li>
+<li>普遍的做法是 插入HTML的 iframe 框架，通过网站自带的分享功能获取</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;iframe height&#x3D;498 width&#x3D;510 src&#x3D;&#39;http:&#x2F;&#x2F;player.youku.com&#x2F;embed&#x2F;XMjgzNzM0NTYxNg&#x3D;&#x3D;&#39; frameborder&#x3D;0 &#39;allowfullscreen&#39;&gt;&lt;&#x2F;iframe&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="/images/pasted-9.png" alt="iframe生成" /></p>
+<ul>
+<li>第二是伪造播放界面，实质是插入视频图片，然后通过点击跳转到相关页面</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[[图片上传失败...(image-49aefe-1542510791300)]](http:&#x2F;&#x2F;v.youku.com&#x2F;v_show&#x2F;id_XMjgzNzM0NTYxNg&#x3D;&#x3D;.html?spm&#x3D;a2htv.20009910.contentHolderUnit2.A&amp;from&#x3D;y1.3-tv-grid-1007-9910.86804.1-2#paction)&#123;:target&#x3D;&quot;_blank&quot;&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="列表"><a class="markdownIt-Anchor" href="#列表"></a> 列表</h2>
+<h3 id="无序列表"><a class="markdownIt-Anchor" href="#无序列表"></a> 无序列表</h3>
+<ul>
+<li>无序列表用 - + * 任何一种都可以</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">- 列表内容</span><br><span class="line">+ 列表内容</span><br><span class="line">* 列表内容</span><br><span class="line"># 注意：- + * 跟内容之间都要有一个空格</span><br></pre></td></tr></table></figure>
+<h3 id="有序列表"><a class="markdownIt-Anchor" href="#有序列表"></a> 有序列表</h3>
+<ul>
+<li>数字加点</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1. 列表内容</span><br><span class="line">2. 列表内容</span><br><span class="line">3. 列表内容</span><br><span class="line"># 注意：序号跟内容之间要有空格</span><br></pre></td></tr></table></figure>
+<h3 id="列表嵌套"><a class="markdownIt-Anchor" href="#列表嵌套"></a> 列表嵌套</h3>
+<ul>
+<li>上一级和下一级之间敲三个空格即可</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">- 1   </span><br><span class="line">  - 1.1</span><br></pre></td></tr></table></figure>
+<h2 id="表格"><a class="markdownIt-Anchor" href="#表格"></a> 表格</h2>
+<h3 id="普通表格"><a class="markdownIt-Anchor" href="#普通表格"></a> 普通表格</h3>
+<ul>
+<li><code>:</code> 代表对齐方式 , <code>:</code> 与 <code>|</code> 之间不要有空格，否则对齐会有些不兼容</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">表头|表头|表头</span><br><span class="line">---|:--:|---:</span><br><span class="line">内容|内容|内容</span><br><span class="line">内容|内容|内容</span><br><span class="line"># 第二行分割表头和内容。</span><br><span class="line"># - 有一个就行，为了对齐，多加了几个</span><br><span class="line"># 文字默认居左</span><br><span class="line"># -两边加：表示文字居中</span><br><span class="line"># -右边加：表示文字居右</span><br><span class="line"># 注：原生的语法两边都要用 | 包起来。此处省略</span><br><span class="line">a  | b | c  </span><br><span class="line">:-:|:- |-:</span><br><span class="line">    居中    |     左对齐      |   右对齐    </span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;|&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;|&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br></pre></td></tr></table></figure>
+<h3 id="特殊表格"><a class="markdownIt-Anchor" href="#特殊表格"></a> 特殊表格</h3>
+<ul>
+<li>一般对合并单元格，以及其他特殊格式表格，markdown 是无能为力的，不过可以在线生成HTML代码 <a href="http://www.tablesgenerator.com" target="_blank" rel="noopener">Tables Generator</a> (国外的站)，使用HTML标签。</li>
+</ul>
+<h2 id="代码"><a class="markdownIt-Anchor" href="#代码"></a> 代码</h2>
+<ul>
+<li>单行代码：代码之间分别用一个反引号包起来</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#96;代码内容&#96;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>代码块：代码之间分别用三个反引号包起来，且两边的反引号单独占一行</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">(&#96;&#96;&#96;)</span><br><span class="line">  代码...</span><br><span class="line">  代码...</span><br><span class="line">  代码...</span><br><span class="line">(&#96;&#96;&#96;)</span><br></pre></td></tr></table></figure>
+<h2 id="任务列表"><a class="markdownIt-Anchor" href="#任务列表"></a> 任务列表</h2>
+<ul>
+<li>兼容性一般 要隔开一行</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">这是文字……</span><br><span class="line"></span><br><span class="line">- [x] 选项一</span><br><span class="line">- [ ] 选项二  </span><br><span class="line">- [ ]  [选项3]</span><br></pre></td></tr></table></figure>
+<h2 id="表情"><a class="markdownIt-Anchor" href="#表情"></a> 表情</h2>
+<ul>
+<li><a href="https://www.webpagefx.com/tools/emoji-cheat-sheet/' target="_blank" rel="noopener"GitHub'">表情代码地址</a><br />
+<img src="/images/pasted-10.png" alt="表情" /></li>
+</ul>
+<h2 id="样式"><a class="markdownIt-Anchor" href="#样式"></a> 样式</h2>
+<ul>
+<li>支持内嵌CSS样式</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;p style&#x3D;&quot;color: #AD5D0F;font-size: 30px; font-family: &#39;宋体&#39;;&quot;&gt;内联样式&lt;&#x2F;p&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="更改字体-大小-颜色"><a class="markdownIt-Anchor" href="#更改字体-大小-颜色"></a> 更改字体、大小、颜色</h3>
+<p><font face="黑体">我是黑体字</font><br />
+<font face="微软雅黑">我是微软雅黑</font><br />
+<font face="STCAIYUN">我是华文彩云</font><br />
+<font color=red>我是红色</font><br />
+<font color=#008000>我是绿色</font><br />
+<font color=Blue>我是蓝色</font><br />
+<font size=5>我是尺寸</font><br />
+<font face="黑体" color=green size=5>我是黑体，绿色，尺寸为5</font></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;font face&#x3D;&quot;黑体&quot;&gt;我是黑体字&lt;&#x2F;font&gt;</span><br><span class="line">&lt;font face&#x3D;&quot;微软雅黑&quot;&gt;我是微软雅黑&lt;&#x2F;font&gt;</span><br><span class="line">&lt;font face&#x3D;&quot;STCAIYUN&quot;&gt;我是华文彩云&lt;&#x2F;font&gt;</span><br><span class="line">&lt;font color&#x3D;red&gt;我是红色&lt;&#x2F;font&gt;</span><br><span class="line">&lt;font color&#x3D;#008000&gt;我是绿色&lt;&#x2F;font&gt;</span><br><span class="line">&lt;font color&#x3D;Blue&gt;我是蓝色&lt;&#x2F;font&gt;</span><br><span class="line">&lt;font size&#x3D;5&gt;我是尺寸&lt;&#x2F;font&gt;</span><br><span class="line">&lt;font face&#x3D;&quot;黑体&quot; color&#x3D;green size&#x3D;5&gt;我是黑体，绿色，尺寸为5&lt;&#x2F;font&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="流程图"><a class="markdownIt-Anchor" href="#流程图"></a> 流程图</h2>
+<ul>
+<li>
+<p>流程图分为两个部分： <code>定义参数</code> 然后 <code>连接参数</code></p>
+<ul>
+<li>定义格式：<code>tag=&gt;type: content:&gt;url</code></li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>格式名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>tag</td>
+<td>标签 (可以自定义)</td>
+</tr>
+<tr>
+<td>=&gt;</td>
+<td>赋值</td>
+</tr>
+<tr>
+<td>type</td>
+<td>类型 (6种类型)：start启动;end结束;operation程序;subroutine子程序;condition条件;inputoutput输出</td>
+</tr>
+<tr>
+<td>content</td>
+<td>描述内容 (可以自定义)</td>
+</tr>
+<tr>
+<td>:&gt;url</td>
+<td>链接与跳转方式 兼容性很差</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">st&#x3D;&gt;start: 开始:&gt;http:&#x2F;&#x2F;www.baidu.com[blank]  &#x2F;&#x2F;示例</span><br><span class="line"># &#96;st&#x3D;&gt;start:&#96; 开始 的&#96;：&#96;后面保持空格</span><br></pre></td></tr></table></figure>
+<ul>
+<li>连接格式：<code>st-&gt;c1(yes,right)-&gt;c2(yes,right)-&gt;c3(yes,right)-&gt;io-&gt;e</code></li>
+<li>operation (程序); subroutine (子程序) ;condition (条件)，都可以在括号里加入连接方向。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>格式名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-&gt;</td>
+<td>连接</td>
+</tr>
+<tr>
+<td>condition</td>
+<td>条件</td>
+</tr>
+<tr>
+<td>(布尔值,方向)</td>
+<td>如果满足向右连接，4种方向：right ，left，up ，down 默认为：down</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">开始-&gt;判断条件1为no-&gt;判断条件2为no-&gt;判断条件3为no-&gt;输出-&gt;结束</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">(&#96;&#96;&#96;flow)</span><br><span class="line">st&#x3D;&gt;start: 开始</span><br><span class="line">op&#x3D;&gt;operation: My Operation</span><br><span class="line">cond&#x3D;&gt;condition: Yes or No?</span><br><span class="line">e&#x3D;&gt;end</span><br><span class="line">st-&gt;op-&gt;cond</span><br><span class="line">cond(yes)-&gt;e</span><br><span class="line">cond(no)-&gt;op</span><br><span class="line">(&#96;&#96;&#96;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">(&#96;&#96;&#96;flow  )                   &#x2F;&#x2F; 流程</span><br><span class="line">st&#x3D;&gt;start: 开始|past:&gt; http:&#x2F;&#x2F;www.baidu.com &#x2F;&#x2F; 开始</span><br><span class="line">e&#x3D;&gt;end: 结束              &#x2F;&#x2F; 结束</span><br><span class="line">c1&#x3D;&gt;condition: 条件1:&gt;http:&#x2F;&#x2F;www.baidu.com[_parent]   &#x2F;&#x2F; 判断条件</span><br><span class="line">c2&#x3D;&gt;condition: 条件2      &#x2F;&#x2F; 判断条件</span><br><span class="line">c3&#x3D;&gt;condition: 条件3      &#x2F;&#x2F; 判断条件</span><br><span class="line">io&#x3D;&gt;inputoutput: 输出     &#x2F;&#x2F; 输出</span><br><span class="line">&#x2F;&#x2F;----------------以上为定义参数-------------------------</span><br><span class="line">&#x2F;&#x2F;----------------以下为连接参数-------------------------</span><br><span class="line">&#x2F;&#x2F; 开始-&gt;判断条件1为no-&gt;判断条件2为no-&gt;判断条件3为no-&gt;输出-&gt;结束</span><br><span class="line">st-&gt;c1(yes,right)-&gt;c2(yes,right)-&gt;c3(yes,right)-&gt;io-&gt;e</span><br><span class="line">c1(no)-&gt;e                   &#x2F;&#x2F; 条件1不满足-&gt;结束</span><br><span class="line">c2(no)-&gt;e                   &#x2F;&#x2F; 条件2不满足-&gt;结束</span><br><span class="line">c3(no)-&gt;e                   &#x2F;&#x2F; 条件3不满足-&gt;结束</span><br><span class="line">(&#96;&#96;&#96;)</span><br></pre></td></tr></table></figure>
+<p><img src="/images/pasted-13.png" alt="流程图" /></p>
+<h2 id="脚注"><a class="markdownIt-Anchor" href="#脚注"></a> 脚注</h2>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Markdown[^1]</span><br><span class="line">[^1]: Markdown是一种纯文本标记语言        &#x2F;&#x2F; 在文章最后面显示脚注</span><br></pre></td></tr></table></figure>
+<h2 id="锚点"><a class="markdownIt-Anchor" href="#锚点"></a> 锚点</h2>
+<ul>
+<li>只有标题支持锚点， 跳转目录方括号后 保持空格</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[公式标题锚点](#1)</span><br><span class="line">### [需要跳转的目录] &#123;#1&#125;    &#x2F;&#x2F; 方括号后保持空格</span><br></pre></td></tr></table></figure>
+<h2 id="定义型列表"><a class="markdownIt-Anchor" href="#定义型列表"></a> 定义型列表</h2>
+<ul>
+<li>解释型定义</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Markdown </span><br><span class="line">:   轻量级文本标记语言，可以转换成html，pdf等格式  &#x2F;&#x2F;  开头一个&#96;:&#96; + &#96;Tab&#96; 或 四个空格</span><br><span class="line">代码块定义</span><br><span class="line">:   代码块定义……</span><br><span class="line">        var a &#x3D; 10;         &#x2F;&#x2F; 保持空一行与 递进缩进</span><br></pre></td></tr></table></figure>
+<h2 id="自动邮箱链接"><a class="markdownIt-Anchor" href="#自动邮箱链接"></a> 自动邮箱链接</h2>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;xxx@outlook.com&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="时序图"><a class="markdownIt-Anchor" href="#时序图"></a> 时序图</h2>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">(&#96;&#96;&#96;sequence)</span><br><span class="line">A-&gt;&gt;B: 你好</span><br><span class="line">Note left of A: 我在左边     &#x2F;&#x2F; 注释方向，只有左右，没有上下</span><br><span class="line">Note right of B: 我在右边</span><br><span class="line">B--&gt;A: 很高兴认识你</span><br><span class="line">(&#96;&#96;&#96;)</span><br></pre></td></tr></table></figure>
+<p><img src="/images/pasted-12.png" alt="时序图1" /></p>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-</td>
+<td>实线</td>
+</tr>
+<tr>
+<td>&gt;</td>
+<td>实心箭头</td>
+</tr>
+<tr>
+<td>–</td>
+<td>虚线</td>
+</tr>
+<tr>
+<td>&gt;&gt;</td>
+<td>空心箭头</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">(&#96;&#96;&#96;sequence)</span><br><span class="line">起床-&gt;吃饭: 稀饭油条</span><br><span class="line">吃饭-&gt;上班: 不要迟到了</span><br><span class="line">上班-&gt;午餐: 吃撑了</span><br><span class="line">上班-&gt;下班:</span><br><span class="line">Note right of 下班: 下班了</span><br><span class="line">下班-&gt;回家:</span><br><span class="line">Note right of 回家: 到家了</span><br><span class="line">回家--&gt;&gt;起床:</span><br><span class="line">Note left of 起床: 新的一天</span><br><span class="line">(&#96;&#96;&#96;)</span><br></pre></td></tr></table></figure>
+<p><img src="/images/pasted-11.png" alt="时序图2" /></p>
+</div></article><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/skills/">skills</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2020/06/04/katex/"><i class="fa fa-chevron-left">  </i><span>katex语法</span></a></div><div class="next-post pull-right"><a href="/2020/06/04/%E5%BE%AE%E7%A7%AF%E5%88%86/"><span>微积分</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="vcomment"></div><script src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = 'false' == 'true';
+var verify = 'false' == 'true';
+var record_ip = '' == 'true';
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  recordIP:record_ip,
+  appId:'AdfkiqY89QUSUWbDY9xJuCh0-gzGzoHsz',
+  appKey:'2cEvHcqEWsyoKwy4AUL3kPGh',
+  placeholder:'劈个叉吧',
+  avatar:'mm',
+  guest_info:guest_info,
+  pageSize:'100',
+  lang: 'zh-cn'
+})</script></div></div><footer><div class="layout" id="footer"><div class="copyright">&copy;2020 By hero576</div><div class="framework-info"><span>驱动 - </span><a href="http://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody" target="_blank" rel="noopener"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.7.0"></script><script src="/js/fancybox.js?version=1.7.0"></script><script src="/js/sidebar.js?version=1.7.0"></script><script src="/js/copy.js?version=1.7.0"></script><script src="/js/fireworks.js?version=1.7.0"></script><script src="/js/transition.js?version=1.7.0"></script><script src="/js/scroll.js?version=1.7.0"></script><script src="/js/head.js?version=1.7.0"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css"><script src="/js/katex.js"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a href="https://github.com/wzpan/hexo-generator-search" target="_blank" rel="noopener" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>

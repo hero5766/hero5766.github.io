@@ -1,0 +1,166 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="go包管理工具——gomod"><meta name="keywords" content="package"><meta name="author" content="hero576"><meta name="copyright" content="hero576"><title>go包管理工具——gomod | void land space</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.7.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="dns-prefetch" href="https://hm.baidu.com"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?5ff8fca367285c16c6dd5c16ca2ccc1b";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();</script><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  }
+} </script><meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="void land space" type="application/atom+xml">
+</head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#介绍"><span class="toc-number">1.</span> <span class="toc-text"> 介绍</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用"><span class="toc-number">2.</span> <span class="toc-text"> 使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#初始化"><span class="toc-number">2.1.</span> <span class="toc-text"> 初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装依赖"><span class="toc-number">2.2.</span> <span class="toc-text"> 安装依赖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#升级依赖"><span class="toc-number">2.3.</span> <span class="toc-text"> 升级依赖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#移除依赖"><span class="toc-number">2.4.</span> <span class="toc-text"> 移除依赖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看依赖包"><span class="toc-number">2.5.</span> <span class="toc-text"> 查看依赖包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#模块配置文本格式化"><span class="toc-number">2.6.</span> <span class="toc-text"> 模块配置文本格式化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#发布版本"><span class="toc-number">2.7.</span> <span class="toc-text"> 发布版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从老项目迁移"><span class="toc-number">2.8.</span> <span class="toc-text"> 从老项目迁移</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用-vendor-目录"><span class="toc-number">2.9.</span> <span class="toc-text"> 使用 vendor 目录</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#阅读更多"><span class="toc-number">3.</span> <span class="toc-text"> 阅读更多</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/images/haimianbaobao.jpg"></div><div class="author-info__name text-center">hero576</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">10</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">4</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">分类</span><span class="pull-right">4</span></a></div></div></div><div id="content-outer"><div class="plain" id="top-container"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">void land space</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">主页</a><a class="site-page" href="/archives">文章</a><a class="site-page" href="/tags">标签</a><a class="site-page" href="/categories">分类</a><a class="site-page" href="/gallery">相册</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> 搜索</span></a></span></div></div><div class="layout" id="content-inner"><article id="post"><div class="plain" id="post-title">go包管理工具——gomod</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-06-06</time><span class="post-meta__separator">|</span><i class="fa fa-inbox" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/golang/"> golang</a></div><div class="article-container" id="post-content"><blockquote>
+<p>gomod在Go v1.12功能基本稳定，到下一个版本 v1.13将默认开启，是时候开始在项目中使用gomod了。</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="介绍"><a class="markdownIt-Anchor" href="#介绍"></a> 介绍</h1>
+<ul>
+<li>Go 的包管理方式是逐渐演进的， 最初是 monorepo 模式，所有的包都放在 GOPATH 里面，使用类似命名空间的包路径区分包，不过这种包管理显然是有问题，由于包依赖可能会引入破坏性更新，生产环境和测试环境会出现运行不一致的问题。</li>
+<li>从 v1.5 开始开始引入 vendor 包模式，如果项目目录下有 vendor 目录，那么 go 工具链会优先使用 vendor 内的包进行编译、测试等，这之后第三方的包管理思路都是通过这种方式来实现，比如说由社区维护准官方包管理工具 dep。</li>
+<li>不过官方并不认同这种方式，在 v1.11 中加入了 Go Module 作为官方包管理形式，就这样 dep 无奈的结束了使命。最初的 Go Module 提案的名称叫做 vgo，下面为了介绍简称为 gomod。不过在 v1.11 和 v1.12 的 Go 版本中 gomod 是不能直接使用的。可以通过 go env 命令返回值的 GOMOD 字段是否为空来判断是否已经开启了 gomod，如果没有开启，可以通过设置环境变量 export GO111MODULE=on 开启。</li>
+</ul>
+<h1 id="使用"><a class="markdownIt-Anchor" href="#使用"></a> 使用</h1>
+<h2 id="初始化"><a class="markdownIt-Anchor" href="#初始化"></a> 初始化</h2>
+<ul>
+<li>在项目目录直接使用<code>go mod init</code></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go mod init</span><br></pre></td></tr></table></figure>
+<ul>
+<li>这时可看到目录内多了 go.mod 文件，内容很简单只有两行：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">module github.com&#x2F;islishude&#x2F;gomodtest</span><br><span class="line">go 1.12</span><br></pre></td></tr></table></figure>
+<ul>
+<li>首行为当前的模块名称，接下来是 go 的使用版本。这两行和 npm package.json 的 name 和 engine 字段的功能很类似。</li>
+<li>其中项目引用了没有下载的包<code>import &quot;rsc.io/quote&quot;</code>，如果是默认情况下，使用 go run main.go 肯定会提示找不到这个包的错误，但是当前 gomod 模式，如果没有此依赖回先下载这个依赖。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ go run main.go</span><br><span class="line">go: finding rsc.io&#x2F;quote v1.5.2</span><br><span class="line">go: finding rsc.io&#x2F;sampler v1.3.0</span><br><span class="line">go: finding golang.org&#x2F;x&#x2F;text v0.0.0-20170915032832-14c0d48ead0c</span><br><span class="line">go: downloading rsc.io&#x2F;quote v1.5.2</span><br><span class="line">go: extracting rsc.io&#x2F;quote v1.5.2</span><br><span class="line">go: downloading rsc.io&#x2F;sampler v1.3.0</span><br><span class="line">go: extracting rsc.io&#x2F;sampler v1.3.0</span><br><span class="line">go: downloading golang.org&#x2F;x&#x2F;text v0.0.0-20170915032832-14c0d48ead0c</span><br><span class="line">go: extracting golang.org&#x2F;x&#x2F;text v0.0.0-20170915032832-14c0d48ead0c</span><br><span class="line">Hello, world.</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>因为包含<code>http://golang.org</code>下的包，记得设置代理。这个时候当前包目录除了 <code>go.mod</code> 还有一个 go.sum 的文件，这个类似 npm package-lock.json</p>
+</li>
+<li>
+<p>gomod 不会在 $GOPATH/src 目录下保存 <a href="http://rsc.io" target="_blank" rel="noopener">rsc.io</a> 包的源码，而是包源码和链接库保存在 $GOPATH/pkg/mod 目录下。</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ ls $GOPATH&#x2F;pkg&#x2F;mod</span><br><span class="line">cache      golang.org rsc.io</span><br></pre></td></tr></table></figure>
+<ul>
+<li>除了 go run 命令以外，go build、go test 等命令也能自动下载相关依赖包。</li>
+</ul>
+<h2 id="安装依赖"><a class="markdownIt-Anchor" href="#安装依赖"></a> 安装依赖</h2>
+<ul>
+<li>如果要想先下载依赖，那么可以直接像以前那样 go get 即可，不过 gomod 下可以跟语义化版本号，比如 go get foo@v1.2.3，也可以跟 git 的分支或 tag，比如go get foo@master，当然也可以跟 git 提交哈希，比如 go get foo@e3702bed2。需要特别注意的是，gomod 除了遵循语义化版本原则外，还遵循最小版本选择原则，也就是说如果当前版本是 v1.1.0，只会下载不超过这个最大版本号。如果使用 go get foo@master，下次在下载只会和第一次的一样，无论 master 分支是否更新了代码，如下所示，使用包含当前最新提交哈希的虚拟版本号替代直接的 master 版本号。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ go get golang.org&#x2F;x&#x2F;crypto&#x2F;sha3@master</span><br><span class="line">go: finding golang.org&#x2F;x&#x2F;crypto&#x2F;sha3 latest</span><br><span class="line">go: finding golang.org&#x2F;x&#x2F;crypto latest</span><br><span class="line">$ cat go.mod</span><br><span class="line">module github.com&#x2F;adesight&#x2F;test</span><br><span class="line">go 1.12</span><br><span class="line">require (</span><br><span class="line">	golang.org&#x2F;x&#x2F;crypto v0.0.0-20190313024323-a1f597ede03a &#x2F;&#x2F; indirect</span><br><span class="line">	rsc.io&#x2F;quote v1.5.2</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果下载所有依赖可以使用 go mod download 命令。</li>
+</ul>
+<h2 id="升级依赖"><a class="markdownIt-Anchor" href="#升级依赖"></a> 升级依赖</h2>
+<ul>
+<li>查看所有以升级依赖版本：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ go list -u -m all</span><br><span class="line">go: finding golang.org&#x2F;x&#x2F;sys latest</span><br><span class="line">go: finding golang.org&#x2F;x&#x2F;crypto latest</span><br><span class="line">github.com&#x2F;adesight&#x2F;test</span><br><span class="line">golang.org&#x2F;x&#x2F;crypto v0.0.0-20190313024323-a1f597ede03a</span><br><span class="line">golang.org&#x2F;x&#x2F;sys v0.0.0-20190215142949-d0b11bdaac8a [v0.0.0-20190316082340-a2f829d7f35f]</span><br><span class="line">golang.org&#x2F;x&#x2F;text v0.3.0</span><br><span class="line">rsc.io&#x2F;quote v1.5.2</span><br><span class="line">rsc.io&#x2F;sampler v1.99.99</span><br></pre></td></tr></table></figure>
+<ul>
+<li>升级次级或补丁版本号：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go get -u rsc.io&#x2F;quote</span><br></pre></td></tr></table></figure>
+<ul>
+<li>仅升级补丁版本号：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go get -u&#x3D;patch rscio&#x2F;quote</span><br></pre></td></tr></table></figure>
+<ul>
+<li>升降级版本号，可以使用比较运算符控制：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go get foo@&#39;&lt;v1.6.2&#39;</span><br></pre></td></tr></table></figure>
+<h2 id="移除依赖"><a class="markdownIt-Anchor" href="#移除依赖"></a> 移除依赖</h2>
+<ul>
+<li>当前代码中不需要了某些包，删除相关代码片段后并没有在 go.mod 文件中自动移出。</li>
+<li>运行下面命令可以移出所有代码中不需要的包：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go mod tidy</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果仅仅修改 go.mod 配置文件的内容，那么可以运行 go mod edit --droprequire=path，比如要移出 <a href="http://golang.org/x/crypto" target="_blank" rel="noopener">golang.org/x/crypto</a> 包</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go mod edit --droprequire&#x3D;golang.org&#x2F;x&#x2F;crypto</span><br></pre></td></tr></table></figure>
+<h2 id="查看依赖包"><a class="markdownIt-Anchor" href="#查看依赖包"></a> 查看依赖包</h2>
+<ul>
+<li>可以直接查看 go.mod 文件，或者使用命令行：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ go list -m all</span><br><span class="line">github.com&#x2F;adesight&#x2F;test</span><br><span class="line">golang.org&#x2F;x&#x2F;crypto v0.0.0-20190313024323-a1f597ede03a</span><br><span class="line">golang.org&#x2F;x&#x2F;sys v0.0.0-20190215142949-d0b11bdaac8a</span><br><span class="line">golang.org&#x2F;x&#x2F;text v0.3.0</span><br><span class="line">rsc.io&#x2F;quote v1.5.2</span><br><span class="line">rsc.io&#x2F;sampler v1.99.99</span><br><span class="line">$ go list -m -json all # json 格式输出</span><br><span class="line">&#123;</span><br><span class="line">        &quot;Path&quot;: &quot;golang.org&#x2F;x&#x2F;text&quot;,</span><br><span class="line">        &quot;Version&quot;: &quot;v0.3.0&quot;,</span><br><span class="line">        &quot;Time&quot;: &quot;2017-12-14T13:08:43Z&quot;,</span><br><span class="line">        &quot;Indirect&quot;: true,</span><br><span class="line">        &quot;Dir&quot;: &quot;&#x2F;Users&#x2F;lishude&#x2F;go&#x2F;pkg&#x2F;mod&#x2F;golang.org&#x2F;x&#x2F;text@v0.3.0&quot;,</span><br><span class="line">        &quot;GoMod&quot;: &quot;&#x2F;Users&#x2F;lishude&#x2F;go&#x2F;pkg&#x2F;mod&#x2F;cache&#x2F;download&#x2F;golang.org&#x2F;x&#x2F;text&#x2F;@v&#x2F;v0.3.0.mod&quot;</span><br><span class="line">&#125;</span><br><span class="line">&#123;</span><br><span class="line">        &quot;Path&quot;: &quot;rsc.io&#x2F;quote&quot;,</span><br><span class="line">        &quot;Version&quot;: &quot;v1.5.2&quot;,</span><br><span class="line">        &quot;Time&quot;: &quot;2018-02-14T15:44:20Z&quot;,</span><br><span class="line">        &quot;Dir&quot;: &quot;&#x2F;Users&#x2F;lishude&#x2F;go&#x2F;pkg&#x2F;mod&#x2F;rsc.io&#x2F;quote@v1.5.2&quot;,</span><br><span class="line">        &quot;GoMod&quot;: &quot;&#x2F;Users&#x2F;lishude&#x2F;go&#x2F;pkg&#x2F;mod&#x2F;cache&#x2F;download&#x2F;rsc.io&#x2F;quote&#x2F;@v&#x2F;v1.5.2.mod&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="模块配置文本格式化"><a class="markdownIt-Anchor" href="#模块配置文本格式化"></a> 模块配置文本格式化</h2>
+<ul>
+<li>由于可手动修改 go.mod 文件，所以可能此文件并没有被格式化，使用下面命令进行文本格式化。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go mod edit -fmt</span><br></pre></td></tr></table></figure>
+<h2 id="发布版本"><a class="markdownIt-Anchor" href="#发布版本"></a> 发布版本</h2>
+<ul>
+<li>发布包新版本和其它包管理工具基本一致，可以直接打标签，不过打标签之前需要在 go.mod 中写入相应的版本号：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ go mod edit --module&#x3D;github.com&#x2F;islishude&#x2F;gomodtest&#x2F;v2</span><br><span class="line">$ cat go.mod</span><br><span class="line">module github.com&#x2F;islishude&#x2F;gomodtest&#x2F;v2</span><br><span class="line">go 1.12</span><br><span class="line">require (</span><br><span class="line">	golang.org&#x2F;x&#x2F;crypto v0.0.0-20190313024323-a1f597ede03a &#x2F;&#x2F; indirect</span><br><span class="line">	rsc.io&#x2F;quote v1.5.2</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>官方推荐将上述过程在一个新分支来避免混淆，那么类如上述例子可以创建一个 v2 分支，但这个不是强制要求的。</li>
+<li>还有一种方式发布新版本，那就是在主线版本种加入 v2 文件夹，相应的也需要内置 go.mod 这个文件。</li>
+<li>比如上述我们引入的 <a href="http://rsc.io/quote" target="_blank" rel="noopener">http://rsc.io/quote</a> 包，其中 v3 版本是用内置文件夹，而 v2 使用的是 tag。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ tree .</span><br><span class="line">.</span><br><span class="line">├── LICENSE</span><br><span class="line">├── README.md</span><br><span class="line">├── buggy</span><br><span class="line">│   └── buggy_test.go</span><br><span class="line">├── go.mod</span><br><span class="line">├── go.sum</span><br><span class="line">├── quote.go</span><br><span class="line">├── quote_test.go</span><br><span class="line">└── v3</span><br><span class="line">    ├── go.mod</span><br><span class="line">    ├── go.sum</span><br><span class="line">    └── quote.go</span><br><span class="line">$ git tag -a</span><br><span class="line">bad</span><br><span class="line">v1.0.0</span><br><span class="line">v1.1.0</span><br><span class="line">v1.2.0</span><br><span class="line">v1.2.1</span><br><span class="line">v1.3.0</span><br><span class="line">v1.4.0</span><br><span class="line">v1.5.0</span><br><span class="line">v1.5.1</span><br><span class="line">v1.5.2</span><br><span class="line">v1.5.3-pre1</span><br><span class="line">v2.0.0</span><br><span class="line">v2.0.1</span><br><span class="line">v3.0.0</span><br><span class="line">v3.1.0</span><br><span class="line">(END)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>根据上面的说明，想必你会看到一个问题，当我们升级主版本号的时候，要更改 module 名称，也就是上面所说的加上版本号，这就存在一个问题，如果我们要更新到主版本号的依赖就没有这么简单了，因为升级的依赖包路径都需要修改，这个在其它语言包管理以及 Go 第三方包管理工具都不存在的一点。</li>
+<li>如下所示，升级 <a href="http://rsc.io/quote" target="_blank" rel="noopener">rsc.io/quote</a> 到 v3 版本。注意一点，作为例子这里包作者对函数也加上了版本，其实大部分人是不会加的。这个模式叫做 semantic import versioning，也是备受争议，大多数人认为这个没有特别大的作用，而维护者则认为这是为了 Go 下一个十年的必要条件。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package main</span><br><span class="line">import (</span><br><span class="line">	&quot;fmt&quot;</span><br><span class="line"></span><br><span class="line">	&quot;rsc.io&#x2F;quote&#x2F;v3&quot;</span><br><span class="line">)</span><br><span class="line">func main() &#123;</span><br><span class="line">	fmt.Println(quote.HelloV3())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>对于内部开发我觉得还挺好，让大家都了解，不要随意加入破坏性更新。</li>
+<li>不过由于这个不讨喜功能，不同版本可以存在同一个包了。补充一句，对于 v0 和 v1 版本并不需要加入到 import path 内。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package main</span><br><span class="line">import (</span><br><span class="line">	&quot;fmt&quot;</span><br><span class="line"></span><br><span class="line">	q1 &quot;rsc.io&#x2F;quote&quot;</span><br><span class="line">	&quot;rsc.io&#x2F;quote&#x2F;v3&quot;</span><br><span class="line">)</span><br><span class="line">func main() &#123;</span><br><span class="line">	fmt.Println(quote.HelloV3())</span><br><span class="line">	fmt.Println(q1.Hello())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="从老项目迁移"><a class="markdownIt-Anchor" href="#从老项目迁移"></a> 从老项目迁移</h2>
+<ul>
+<li>从很多第三方的包管理工具迁移到 gomod 特别简单，直接运行 go mod init 即可。</li>
+<li>如果没有使用任何第三方包管理工具，除了运行 go mod init 初始化以外，还要使用 go get ./… 下载安装所有依赖包，并更新 go.mod 和 go.sum 文件。</li>
+<li>默认情况下，go get 命令使用 @latest 版本控制符对所有依赖进行下载，如果想要更改某一个包的版本，可以使用 go mod edit --require 命令，比如要更新 <a href="http://rsc.io/quote" target="_blank" rel="noopener">rsc.io/quote</a> 到 v3.1.0 版本。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go mod edit --require&#x3D;rsc.io&#x2F;quote@v3.1.0</span><br></pre></td></tr></table></figure>
+<h2 id="使用-vendor-目录"><a class="markdownIt-Anchor" href="#使用-vendor-目录"></a> 使用 vendor 目录</h2>
+<ul>
+<li>如果你不喜欢 go mod 的缓存方式，你可以使用 go mod vendor 回到 godep 或 govendor 使用的 vendor 目录进行包管理的方式。</li>
+<li>当然这个命令并不能让你从godep之类的工具迁移到 go modules，它只是单纯地把 go.sum 中的所有依赖下载到 vendor 目录里，如果你用它迁移 godep 你会发现 vendor 目录里的包会和 godep 指定的产生相当大的差异，所以请务必不要这样做。</li>
+<li>使用 go build -mod=vendor 来构建项目，因为在 go modules 模式下 go build 是屏蔽 vendor 机制的，所以需要特定参数重新开启 vendor 机制:</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go build -mod&#x3D;vendor</span><br><span class="line">.&#x2F;hello</span><br><span class="line">hello world!</span><br></pre></td></tr></table></figure>
+<ul>
+<li>构建成功。当发布时也只需要和使用 godep 一样将 vendor 目录带上即可。</li>
+</ul>
+<h1 id="阅读更多"><a class="markdownIt-Anchor" href="#阅读更多"></a> 阅读更多</h1>
+<p>上面说到 dep 这个社区维护的准官方管理工具无奈结束使命被 gomod 替代，关于这段故事，你可以阅读这篇文章：<a href="https://zhuanlan.zhihu.com/p/41627929" target="_blank" rel="noopener">《关于 Go Module 的争吵》</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/59687626" target="_blank" rel="noopener">原文链接</a><br />
+<a href="https://juejin.im/post/5c7fc2b1f265da2dac4575fc" target="_blank" rel="noopener">原文链接2</a></p>
+</div></article><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/package/">package</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2020/06/21/%E6%8D%AE%E7%B1%BB%E5%9E%8B/"><i class="fa fa-chevron-left">  </i><span>数据类型</span></a></div><div class="next-post pull-right"><a href="/2020/06/06/govender/"><span>go使用vendor管理目录</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="vcomment"></div><script src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = 'false' == 'true';
+var verify = 'false' == 'true';
+var record_ip = '' == 'true';
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  recordIP:record_ip,
+  appId:'AdfkiqY89QUSUWbDY9xJuCh0-gzGzoHsz',
+  appKey:'2cEvHcqEWsyoKwy4AUL3kPGh',
+  placeholder:'劈个叉吧',
+  avatar:'mm',
+  guest_info:guest_info,
+  pageSize:'100',
+  lang: 'zh-cn'
+})</script></div></div><footer><div class="layout" id="footer"><div class="copyright">&copy;2020 By hero576</div><div class="framework-info"><span>驱动 - </span><a href="http://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody" target="_blank" rel="noopener"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.7.0"></script><script src="/js/fancybox.js?version=1.7.0"></script><script src="/js/sidebar.js?version=1.7.0"></script><script src="/js/copy.js?version=1.7.0"></script><script src="/js/fireworks.js?version=1.7.0"></script><script src="/js/transition.js?version=1.7.0"></script><script src="/js/scroll.js?version=1.7.0"></script><script src="/js/head.js?version=1.7.0"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css"><script src="/js/katex.js"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a href="https://github.com/wzpan/hexo-generator-search" target="_blank" rel="noopener" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>
