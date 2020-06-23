@@ -24,7 +24,6 @@ See demo:
 - [Elody's Blog](https://elody-07.github.io)
 - [zouyaoji's Blog](https://zouyaoji.top/)
 - [flytreeleft's Blog](https://flytreeleft.org/)
-- [Crystalwindz's Blog](https://crystalwindz.com/)
 - [霪霖笙箫的博客](https://fridolph.github.io/)
 - [upupming 的博客](https://upupming.site/)
 - [HibisciDai's blog](https://hibiscidai.com/)

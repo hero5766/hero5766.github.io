@@ -1,4 +1,4 @@
-title: gomod
+title: go包管理工具——gomod
 tags:
   - package
 categories:

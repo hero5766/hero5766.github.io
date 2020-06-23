@@ -134,7 +134,7 @@ cdn:
 
 # Post info settings
 # ---------------
-avatar: http://img5.imgtn.bdimg.com/it/u=2825049556,3457318439&fm=26&gp=0.jpg
+avatar: /images/haimianbaobao.jpg
 
 # 顶部图
 top_img: false # false or url of img
