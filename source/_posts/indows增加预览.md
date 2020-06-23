@@ -1,7 +1,10 @@
 title: windows增加预览
 author: hero576
-date: 2020-06-22 22:21:59
 tags:
+  - windows
+categories:
+  - common
+date: 2020-06-22 22:21:00
 ---
 > 给windows增加预览功能
 <!--more-->
@@ -36,7 +39,6 @@ tags:
 |Microsoft Visio previewer|{21E17C2F-AD3A-4b89-841F-09CFE02D16B7}|预览visio文件|
 |Microsoft PowerPoint previewer|{65235197-874B-4A07-BDC5-E65EA825B718}|预览ppt|
 |Microsoft Word previewer|{84F66100-FF7C-4fb4-B0C0-02CD7FB668FE}|预览word|
-
 
 - 这些都是`Windows 10`自带的预览器。除此之外，这里也会列出很多第三方程序提供的预览器。像PDF文档的预览器，在安装`Adobe`时，程序会自动注册预览器，将`pdf`文件与之关联。
 - `.opml`文件我们选择`Windows TXT Previewer`作为默认预览器，将`{1531d583-8375-4d3f-b5fb-d23bbd169f22}`数值名称复制到剪贴板备用。
