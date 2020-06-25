@@ -1,9 +1,9 @@
 title: go使用vendor管理目录
 author: hero576
 tags:
-  - package
-categories:
   - golang
+categories:
+  - programme
 date: 2020-06-06 12:48:00
 ---
 > golang的依赖包默认是从`GOROOT`和`GOPATH`去找，vendor可以在项目众建立`vendor`目录，方便不同机器直接使用所依赖的包。

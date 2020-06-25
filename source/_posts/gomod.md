@@ -1,8 +1,8 @@
 title: go包管理工具——gomod
 tags:
-  - package
-categories:
   - golang
+categories:
+  - programme
 date: 2020-06-06 13:43:00
 ---
 > gomod在Go v1.12功能基本稳定，到下一个版本 v1.13将默认开启，是时候开始在项目中使用gomod了。
