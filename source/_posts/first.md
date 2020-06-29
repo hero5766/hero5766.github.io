@@ -11,8 +11,8 @@ date: 2020-05-30 18:56:00
 ## 准备工作
 ### [github](https://github.com)操作
 - 创建仓库  
-  在github新建一个以你的用户名命名的仓库：`用户名.github.io`，这样将来访问地址就是：`http://用户名.githu.io`了。所以，每个github账户只能创建一个可以直接使用域名访问的仓库。
-- 生成ssh添加到githubƒ
+  在`github`新建一个以你的用户名命名的仓库：`用户名.github.io`，这样将来访问地址就是：`http://用户名.githu.io`了。所以，每个github账户只能创建一个可以直接使用域名访问的仓库。
+- 生成`ssh`添加到`github`
 ```
 git config --global user.name "yourname"
 git config --global user.email "youremail"
@@ -20,7 +20,7 @@ ssh-keygen -t rsa -C "youremail"
 ```
 
 ### 安装node.js和npm
-  - windows：nodejs选择LTS版本就行了。
+  - windows：`nodejs`选择`LTS`版本就行了。
   - linux：
 ```
 sudo apt-get install nodejs
@@ -36,14 +36,14 @@ npm -v
 - 检查一下有没有安装成功。
 
 ### 安装git
-  - windows：到git官网上下载,[Download git](https://gitforwindows.org/),下载后会有一个Git Bash的命令行工具，以后就用这个工具来使用git。
-  - linux：对linux来说实在是太简单了，因为最早的git就是在linux上编写的，只需要一行代码
+  - windows：到`git`官网上下载,[Download git](https://gitforwindows.org/),下载后会有一个`Git Bash`的命令行工具，以后就用这个工具来使用git。
+  - linux：对`linux`来说实在是太简单了，因为最早的`git`就是在`linux`上编写的，只需要一行代码
 ```
 sudo apt-get install git
 ```
 
 ### 安装hexo  
-- 前面git和nodejs安装好后，就可以安装hexo了，你可以先创建一个文件夹blog，然后cd到这个文件夹下（或者在这个文件夹下直接右键git bash打开）
+- 前面`git`和`nodejs`安装好后，就可以安装`hexo`了，你可以先创建一个文件夹`blog`，然后cd到这个文件夹下（或者在这个文件夹下直接右键`git bash`打开）
 ```
 npm install -g hexo-cli
 ```
@@ -56,7 +56,7 @@ cd myblog
 npm install
 ```
 
-- 搭建完成之后，查看npm 安装各 hexo 插件的情况
+- 搭建完成之后，查看`npm` 安装各 `hexo` 插件的情况
 ```
 npm ls --depth 0
 ```
@@ -83,7 +83,7 @@ npm i @upupming/hexo-renderer-markdown-it-plus --save
 npm install --save hexo-tag-aplayer
 ```
 
-- 安装完后重新构建建立的hexo项目即可解决。
+- 安装完后重新构建建立的`hexo`项目即可解决。
 ```
 # 清除缓存
 hexo clean
@@ -102,17 +102,16 @@ npm install --save hexo-admin
 hexo server -d
 ```
 
-  - 即可在localhost:4000/admin/中编辑博文了。
-  - 然后，Deploy之前，还需要编辑配置文件_config.yml。(否则会出现Error: Config value "admin.deployCommand" not found或者Error: spawn hexo ENOENT之类的报错。)
+  - 即可在`localhost:4000/admin/`中编辑博文了。
+  - 然后，`Deploy`之前，还需要编辑配置文件`_config.yml`。(否则会出现`Error: Config value "admin.deployCommand" not found`或者`Error: spawn hexo ENOENT`之类的报错。)
     - Windows则在末尾加上
 ![_config.xml的配置](/images/pasted-1.png)
-- 然后在同级目录新建hexo-pubish.bat文件，文件内容如下：
+- 然后在同级目录新建`hexo-pubish.bat`文件，文件内容如下：
 ```
 hexo g -d
 ```
 
   - linux
-
     - create deploy-script in project dir:
 ```
 $ touch hexo-deploy.sh; chmod a+x hexo-deploy.sh
@@ -130,12 +129,12 @@ admin:
   deployCommand: './hexo-deploy.sh'
 ```
 
-  - 编辑完毕后，就可以点击Deploy，直接部署发布Github博客上。
+  - 编辑完毕后，就可以点击`Deploy`，直接部署发布`Github`博客上。
 ![点击deploy部署](/images/pasted-2.png)
-- PS：关于Hexo Admin插入图片
-  - Hexo Admin可以直接复制图片粘贴，然后自动下载到source/images目录并重命名。但在Windows中粘贴后会出现裂图。这时就需要手动把括号中的前后两个斜杠去掉，就能正常显示。
+- PS：关于`Hexo Admin`插入图片
+  - `Hexo Admin`可以直接复制图片粘贴，然后自动下载到`source/images`目录并重命名。但在`Windows`中粘贴后会出现裂图。这时就需要手动把括号中的前后两个斜杠去掉，就能正常显示。
 - 密码保护
-  - 打开`setting`，点击`Setup authentification here`输入用户名，密码，密钥，下面会自动生成配置文件，复制加在hexo根目录下的`_config.yml`中：
+  - 打开`setting`，点击`Setup authentification here`输入用户名，密码，密钥，下面会自动生成配置文件，复制加在`hexo`根目录下的`_config.yml`中：
 ```
 admin:
   username: myfavoritename
@@ -143,19 +142,19 @@ admin:
   secret: a secret something
 ```
 
-  - 重启hexo，就可以看到登录页面了
+  - 重启`hexo`，就可以看到登录页面了
 - 发布文章
-  - 进入后台之后点击Deploy，里面的Deploy按钮是用来执行发布脚本的，所以我们先在博客根目录下新建个目录admin_script，然后在目录中新建一个脚本hexo-g.sh，里面写下下面代码然后保存，
+  - 进入后台之后点击`Deploy`，里面的`Deploy`按钮是用来执行发布脚本的，所以我们先在博客根目录下新建个目录`admin_script`，然后在目录中新建一个脚本`hexo-g.sh`，里面写下下面代码然后保存，
 ```
 hexo g && hexo d
 ```
 
-  - 然后给hexo-g.sh加入可执行权限
+  - 然后给`hexo-g.sh`加入可执行权限
 ```
 chmod +x hexo-d.sh
 ```
 
-  - 然后在_config.yml中的admin下添加
+  - 然后在`_config.yml`中的`admin`下添加
 ```
 admin:
   username: myfavoritename
@@ -164,20 +163,20 @@ admin:
   deployCommand: ./admin_script/hexo-d.sh
 ```
 
-  - 设置发布执行的脚本，点击Deploy就会执行这个命令并提交到GitHub上。
+  - 设置发布执行的脚本，点击`Deploy`就会执行这个命令并提交到`GitHub`上。
 
 ### 绑定域名
 - 如果有了域名，可以将域名和上一步建立的仓库进行绑定
-  - 首先在终端中ping一下仓库网址，获取IP，`ping 用户名.github.com`
-  - 配置域名的CNAME的指向获取的IP
-  - 登录GitHub，进入之前创建的仓库，点击settings，设置Custom domain，输入你的域名fangzh.top
-  - 然后在你的博客文件source中创建一个名为CNAME文件，不要后缀。写上你的域名。  
+  - 首先在终端中`ping`一下仓库网址，获取`IP`，`ping 用户名.github.com`
+  - 配置域名的`CNAME`的指向获取的`IP`
+  - 登录`GitHub`，进入之前创建的仓库，点击`settings`，设置`Custom domain`，输入你的域名`fangzh.top`
+  - 然后在你的博客文件`source`中创建一个名为`CNAME`文件，不要后缀。写上你的域名。  
 - 过不了多久，再打开你的浏览器，输入你自己的域名，就可以看到搭建的网站啦！
 
 ## hexo的使用
 
 ### 创建项目
-- hexo安装完成后，接下来初始化一下hexo
+- `hexo`安装完成后，接下来初始化一下`hexo`
 ```
 hexo init [项目名称]
 cd [项目名称]
@@ -196,7 +195,7 @@ npm install
 |_config.yml|博客的配置文件|
 
 ### 项目配值
-- 在文件根目录下的_config.yml，就是整个hexo框架的配置文件了。可以在里面修改大部分的配置。详细可参考[官方的配置](https://hexo.io/zh-cn/docs/configuration)描述。
+- 在文件根目录下的`_config.yml`，就是整个`hexo`框架的配置文件了。可以在里面修改大部分的配置。详细可参考[官方的配置](https://hexo.io/zh-cn/docs/configuration)描述。
 
 #### 网站配置
 |参数|	描述|
@@ -208,7 +207,7 @@ npm install
 |language|	网站使用的语言|
 |timezone|	网站时区。Hexo 默认使用您电脑的时区。时区列表。比如说：America/New_York, Japan, 和 UTC 。|
 
-- 其中，description主要用于SEO，告诉搜索引擎一个关于您站点的简单描述，通常建议在其中包含您网站的关键词。author参数用于主题显示文章的作者。
+- 其中，`description`主要用于`SEO`，告诉搜索引擎一个关于您站点的简单描述，通常建议在其中包含您网站的关键词。`author`参数用于主题显示文章的作者。
 
 #### 网址配置
 |参数|	描述|
@@ -330,7 +329,7 @@ type: "gallery"
 ---
 ```
 
-- melody 提供了一个叫做gallery的标签，让你能够在markdown文件里生成gallery-item。修改你刚刚创建的source/gallery/index.md，并加上gallery 标签。
+- melody 提供了一个叫做`gallery`的标签，让你能够在`markdown`文件里生成`gallery-item`。修改你刚刚创建的`source/gallery/index.md`，并加上`gallery` 标签。
 
 ```
 {% gallery img-url [title] %}
@@ -433,19 +432,19 @@ menu:
 ```
 
 - 顶部图
-  - 顶部图是theme-melody最神奇的配置项. 它拥有true、false或者具体图片url三种值。配置melody.yml：
+  - 顶部图是theme-melody最神奇的配置项. 它拥有`true`、`false`或者具体图片`url`三种值。配置`melody.yml`：
 ```
 top_img: true  // true/false/具体图片url
 ```
 
 - 顶部图高度控制
-  - 从 v1.7.0 版本开始，你可以通过设置 top_img_height 来控制顶部图的高度。默认值是 60，意味着顶部图会占据 60% 的页面高度。所以如果你喜欢，你可以设置成 100，这样你就能获得占据整个页面的顶部图了！配置 melody.yml：
+  - 从 `v1.7.0` 版本开始，你可以通过设置 `top_img_height` 来控制顶部图的高度。默认值是 60，意味着顶部图会占据 60% 的页面高度。所以如果你喜欢，你可以设置成 100，这样你就能获得占据整个页面的顶部图了！配置 `melody.yml`：
 ```
 top_img_height: 60
 ```
 
 - 文章版权
-  - 为你的博客文章展示文章版权和许可协议。配置melody.yml
+  - 为你的博客文章展示文章版权和许可协议。配置`melody.yml`
 ```
 post_copyright:
   enable: true
@@ -487,7 +486,7 @@ toc:
   number: true # or false. 版本v1.5.6新增
 ```
 
-  - 为特定的文章配置特定的目录章节数字，在你的文章md文件的头部，加入toc_number项，并配置true或者false即可。
+  - 为特定的文章配置特定的目录章节数字，在你的文章md文件的头部，加入toc_number项，并配置`true`或者`false`即可。
 ```
 title: Hi, theme-melody!
 tags:
@@ -498,13 +497,13 @@ date: 2017-09-07
 ---
 ```
 
-- 页脚自定义文本 v1.5.5+
-  - footer_custom_text是一个给你用来在页脚自定义文本的选项。通常你可以在这里写ICP备案号、码云声明文本等。支持HTML。
+- 页脚自定义文本 `v1.5.5+`
+  - `footer_custom_text`是一个给你用来在页脚自定义文本的选项。通常你可以在这里写ICP备案号、码云声明文本等。支持HTML。
 ```
 footer_custom_text: Hi, welcome to my <a href="https://molunerfinn.com">blog</a>!
 ```
 
-  - 如果你配置成hitokoto，那么底部文字将会生成随机的谚语：
+  - 如果你配置成`hitokoto`，那么底部文字将会生成随机的谚语：
 ```
 footer_custom_text: hitokoto
 ```
@@ -513,7 +512,6 @@ footer_custom_text: hitokoto
   - 点击效果
 ```
 fireworks: true # 烟花
-
 canvas_ribbon: # 彩带
   enable: true
   size: 150
@@ -698,31 +696,31 @@ hexo publish draft newpage
 hexo new page about
 ```
 
-- 它就会在根目录下source文件夹中新建了一个about文件夹，以及index.md，在index.md中写上你想要写的东西，就可以在网站上展示出来了。
+- 它就会在根目录下source文件夹中新建了一个`about`文件夹，以及`index.md`，在`index.md`中写上你想要写的东西，就可以在网站上展示出来了。
 - 如果你想要自己再自定义一个菜单栏的选项，那么就
 ```
 hexo new page yourdiy
 ```
 
-- 然后在主题配置文件的menu菜单栏添加一个 Yourdiy : /yourdiy，注意冒号后面要有空格，以及前面的空格要和menu中默认的保持整齐。然后在languages文件夹中，找到zh-CN.yml，在index中添加yourdiy: '中文意思'就可以显示中文了。
+- 然后在主题配置文件的menu菜单栏添加一个 `Yourdiy : /yourdiy`，注意冒号后面要有空格，以及前面的空格要和`menu`中默认的保持整齐。然后在`languages`文件夹中，找到`zh-CN.yml`，在`index`中添加`yourdiy: '中文意思'`就可以显示中文了。
 
 #### 定制（customize）
-- 在这里可以修改你的个人logo，在`source/css/images`文件夹中放入自己要的logo，再改一下`url`的链接名字就可以了。
-- `favicon`是网站中出现的那个小图标的icon，找一张你喜欢的logo，然后转换成ico格式，放在`images`文件夹下，配置一下路径就行。
-- `social_links` 可以显示你的社交链接，而且是有logo的。
+- 在这里可以修改你的个人`logo`，在`source/css/images`文件夹中放入自己要的`logo`，再改一下`url`的链接名字就可以了。
+- `favicon`是网站中出现的那个小图标的`icon`，找一张你喜欢的`logo`，然后转换成`ico`格式，放在`images`文件夹下，配置一下路径就行。
+- `social_links` 可以显示你的社交链接，而且是有`logo`的。
 
 #### 侧边栏(widgets)
-- 侧边栏的小标签，如果你想自己增加一个，比如我增加了一个联系方式，那么我把communication写在上面，在zh-CN.yml中的sidebar，添加communication: '中文'。
-- 然后在hueman/layout/widget中添加一个communicaiton.ejs，填入模板：
-```
-<% if (site.posts.length) { %>
-    <div class="widget-wrap widget-list">
-        <h3 class="widget-title"><%= __('sidebar.communiation') %></h3>
-        <div class="widget">
-            <!--这里添加你要写的内容-->
-        </div>
-    </div>
-<% } %>
+- 侧边栏的小标签，如果你想自己增加一个，比如我增加了一个联系方式，那么我把`communication`写在上面，在`zh-CN.yml`中的`sidebar`，添加`communication: '中文'`。
+- 然后在`hueman/layout/widget`中添加一个`communicaiton.ejs`，填入模板：
+```html
+<- % if (site.posts.length) { % >
+    <-div class="widget-wrap widget-list">
+        <-h3 class="widget-title"><-%= __('sidebar.communiation') %-><-/h3>
+        <-div class="widget">
+            <-!--这里添加你要写的内容--->
+        <-/div>
+    <-/div>
+<- % } % >
 ```
 
 #### 搜索框(search)
@@ -734,17 +732,17 @@ you need to install hexo-generator-json-content before using Insight Search
 - 它已经告诉你了，如果想要使用，就安装这个插件。
 
 #### 评论系统(comment)
-- 这里的多数都是国外的，基本用不了。这个valine好像不错，还能统计文章阅读量，可以自己试一试，链接。
+- 这里的多数都是国外的，基本用不了。这个`valine`好像不错，还能统计文章阅读量，可以自己试一试，链接。
 
 #### 如何让博文列表不显示全部内容
-- 默认情况下，生成的博文目录会显示全部的文章内容，如何设置文章摘要的长度呢？答案是在合适的位置加上<!--more-->即可。  
+- 默认情况下，生成的博文目录会显示全部的文章内容，如何设置文章摘要的长度呢？答案是在合适的位置加上`<!--more-->`即可。  
 
 ```
 使用github pages服务搭建博客的好处有：
 1. 全是静态文件，访问速度快；
 2. 免费方便，不用花一分钱就可以搭建一个自由的个人博客，不需要服务器不需要后台；
 3. 可以随意绑定自己的域名，不仔细看的话根本看不出来你的网站是基于github的；
-<!--more-->
+< !--more-- >
 4. 数据绝对安全，基于github的版本管理，想恢复到哪个历史版本都行；
 5. 博客内容可以轻松打包、转移、发布到其它平台；
 6. 等等；
@@ -767,9 +765,9 @@ you need to install hexo-generator-json-content before using Insight Search
 - 使用方法:
   - 比如你想发一个笑脸😄 直接输入笑脸对应的 emmoji 编码 :smile:就可以。[查看全部 emoji 表情编码](http://emoji.codes/)
 - 启用 emoji 的方法:
-  - 卸载默认的 markdown 引擎: 打开终端, 去往博客的根目录下执行 `npm un hexo-renderer-marked --save`
-  - 然后安装新的解析引擎: `npm i hexo-renderer-markdown-it --save` 和其 emoji 插件 : `npm install markdown-it-emoji --save`
-  - 配置_config.yml文件
+  - 卸载默认的`markdown`引擎: 打开终端, 去往博客的根目录下执行 `npm un hexo-renderer-marked --save`
+  - 然后安装新的解析引擎: `npm i hexo-renderer-markdown-it --save` 和其`emoji`插件 : `npm install markdown-it-emoji --save`
+  - 配置`_config.yml`文件
 ```
 markdown: 
 	plugins:   
