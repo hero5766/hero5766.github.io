@@ -178,13 +178,42 @@
 <ul>
 <li>申请和初始化的最小单位是字节(char类型：00-FF)</li>
 </ul>
-<p>|函数|所在文件|说明|<br />
-|–<br />
-|<code>void * malloc(size_t _Size);</code> |stdlib.h |申请堆内存空间并返回,所申请的空间并未初始化。常见的初始化方法是<code>memset</code>字节初始化。失败返回空指针NULL。|<br />
-|<code>void memset()</code>|stdlib.h|字节单位初始化|<br />
-|<code>void *calloc(size_t nmemb, size_t size);</code>|stdlib.h|申请堆内存空间并返回，所申请的空间，自动清零。|<br />
-|<code>void *realloc(void *ptr, size_t size);</code>|stdlib.h|扩容(缩小)原有内存的大小。通常用于扩容，缩小会会导致内存缩去的部分数据丢失。|<br />
-|<code>void free(void *p);</code>|stdlib.h|释放申请的堆内存|</p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>所在文件</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>void * malloc(size_t _Size);</code></td>
+<td>stdlib.h</td>
+<td>申请堆内存空间并返回,所申请的空间并未初始化。常见的初始化方法是<code>memset</code>字节初始化。失败返回空指针NULL。</td>
+</tr>
+<tr>
+<td><code>void memset()</code></td>
+<td>stdlib.h</td>
+<td>字节单位初始化</td>
+</tr>
+<tr>
+<td><code>void *calloc(size_t nmemb, size_t size);</code></td>
+<td>stdlib.h</td>
+<td>申请堆内存空间并返回，所申请的空间，自动清零。</td>
+</tr>
+<tr>
+<td><code>void *realloc(void *ptr, size_t size);</code></td>
+<td>stdlib.h</td>
+<td>扩容(缩小)原有内存的大小。通常用于扩容，缩小会会导致内存缩去的部分数据丢失。</td>
+</tr>
+<tr>
+<td><code>void free(void *p);</code></td>
+<td>stdlib.h</td>
+<td>释放申请的堆内存</td>
+</tr>
+</tbody>
+</table>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">int * p &#x3D; (int*)malloc(1024*1024*1024); &#x2F;&#x2F;申请堆空间。1G完全无压力</span><br><span class="line">if(p&#x3D;&#x3D;NULL)</span><br><span class="line">  printf(&quot;malloc error\n&quot;);&#x2F;&#x2F;申请堆内存错误</span><br><span class="line">memset(p,0,1024*1024*1024*sizeof(int));&#x2F;&#x2F;初始化0</span><br><span class="line">memset(p,1,1024*1024*1024*sizeof(int));&#x2F;&#x2F;初始化为：0101 0101</span><br><span class="line">free(p); &#x2F;&#x2F;手动释放</span><br><span class="line">p &#x3D; NULL; &#x2F;&#x2F;置空</span><br></pre></td></tr></table></figure>
 <h5 id="堆与栈空间的返回"><a class="markdownIt-Anchor" href="#堆与栈空间的返回"></a> 堆与栈空间的返回</h5>
 <ul>
@@ -556,7 +585,7 @@
 <li>长度：</li>
 </ul>
 <p>|length| d i| u o x X| f F e E g G a |c| s| p|<br />
-|–||||||<br />
+|–|--|–|--|–|--|<br />
 |(none) |int| unsigned int |float/double |int |char* |void*|<br />
 |hh |signed char |unsigned char|||||<br />
 |h| short int unsigned short int|<br />
@@ -668,11 +697,32 @@
 <li>struct 是构造新类型的关键字 ，有了它，就可以构造任意的构造类型了。</li>
 </ul>
 <h5 id="结构体定义"><a class="markdownIt-Anchor" href="#结构体定义"></a> 结构体定义</h5>
-<p>|结构体|定义|声明|<br />
-|–<br />
-|无名构造类型|<code>struct{char name[30];}stu,stu2,stu3;</code>||<br />
-|有名构造类型|<code>struct student{char name[30];}stu;</code>|<code>struct student s1</code>|<br />
-|别名构造体类型|<code>typedef struct student{char name[30];}STUDENT;</code>|<code>STUDENT stu</code>|</p>
+<table>
+<thead>
+<tr>
+<th>结构体</th>
+<th>定义</th>
+<th>声明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>无名构造类型</td>
+<td><code>struct{char name[30];}stu,stu2,stu3;</code></td>
+<td></td>
+</tr>
+<tr>
+<td>有名构造类型</td>
+<td><code>struct student{char name[30];}stu;</code></td>
+<td><code>struct student s1</code></td>
+</tr>
+<tr>
+<td>别名构造体类型</td>
+<td><code>typedef struct student{char name[30];}STUDENT;</code></td>
+<td><code>STUDENT stu</code></td>
+</tr>
+</tbody>
+</table>
 <h5 id="typedef"><a class="markdownIt-Anchor" href="#typedef"></a> typedef</h5>
 <ul>
 <li><code>typedef</code>对现有类型取别名，不能创造新的类型
@@ -878,14 +928,47 @@
 <li>void 即无类型，可以赋给任意类型的指针，本质即代表内存的最小单位，在 32位机上地位等同于 char。</li>
 </ul>
 <h5 id="零所代表的意义"><a class="markdownIt-Anchor" href="#零所代表的意义"></a> 零所代表的意义</h5>
-<p>|零值| 意义| 备注|<br />
-|–<br />
-|0| 整型数据的 0||<br />
-|0.0| 实型数据的 0||<br />
-|NULL| 指针型数据的 0 |内存的 0 地址，用于初始化暂不用指针。或是标识己经被释放堆内存的指针。|<br />
-|’\0’| 转义字符型(ASCII 值为 0) |非可打印字符，用于标识字符串结束标记。|<br />
-|‘0’| 字符型(ASCII 值为 48) |可打印字符，用于打印字符 0|<br />
-|“0”| 字符串型 |包含两个 ASCII 值 48 和 0|</p>
+<table>
+<thead>
+<tr>
+<th>零值</th>
+<th>意义</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>整型数据的 0</td>
+<td></td>
+</tr>
+<tr>
+<td>0.0</td>
+<td>实型数据的 0</td>
+<td></td>
+</tr>
+<tr>
+<td>NULL</td>
+<td>指针型数据的 0</td>
+<td>内存的 0 地址，用于初始化暂不用指针。或是标识己经被释放堆内存的指针。</td>
+</tr>
+<tr>
+<td>‘\0’</td>
+<td>转义字符型(ASCII 值为 0)</td>
+<td>非可打印字符，用于标识字符串结束标记。</td>
+</tr>
+<tr>
+<td>‘0’</td>
+<td>字符型(ASCII 值为 48)</td>
+<td>可打印字符，用于打印字符 0</td>
+</tr>
+<tr>
+<td>“0”</td>
+<td>字符串型</td>
+<td>包含两个 ASCII 值 48 和 0</td>
+</tr>
+</tbody>
+</table>
 <h4 id="指针运算"><a class="markdownIt-Anchor" href="#指针运算"></a> 指针运算</h4>
 <h5 id="赋值运算"><a class="markdownIt-Anchor" href="#赋值运算"></a> 赋值运算</h5>
 <ul>
@@ -1023,12 +1106,37 @@
 </li>
 </ul>
 <h4 id="字符串操作函数"><a class="markdownIt-Anchor" href="#字符串操作函数"></a> 字符串操作函数</h4>
-<p>|函数|所在文件|说明|<br />
-|-<br />
-|<code>size_t strlen ( const char * str );</code> |string.h|获取长度|<br />
-|<code>char * strcat ( char * dest, const char * src );</code>|string.h|追加 src 串到 dest 的末尾，dest 的末尾的’\0’字符，会被 src 的第一个字符所覆盖，追加完成后的新串会被在其末尾自动追加’\0’。|<br />
-|<code>char * strcpy ( char * dest, const char * src );</code>|string.h|拷贝 src 所指向的字符串，到 dest 所指向空间中去，拷贝到 dest的内容包含 src 中的结束符’\0’。|<br />
-|<code>int strcmp ( const char * str1, const char * str2 );</code>|string.h|比较字符串 str1 和字符串 str2 的大小。该函数从两字符串的第一个字符开始，如果相等，依次往下比较，直到遇到不相同的字符或其中一个遇到’\0’s。比较的依据，是两字符对应的 ASCII 值的大小。|</p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>所在文件</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>size_t strlen ( const char * str );</code></td>
+<td>string.h</td>
+<td>获取长度</td>
+</tr>
+<tr>
+<td><code>char * strcat ( char * dest, const char * src );</code></td>
+<td>string.h</td>
+<td>追加 src 串到 dest 的末尾，dest 的末尾的’\0’字符，会被 src 的第一个字符所覆盖，追加完成后的新串会被在其末尾自动追加’\0’。</td>
+</tr>
+<tr>
+<td><code>char * strcpy ( char * dest, const char * src );</code></td>
+<td>string.h</td>
+<td>拷贝 src 所指向的字符串，到 dest 所指向空间中去，拷贝到 dest的内容包含 src 中的结束符’\0’。</td>
+</tr>
+<tr>
+<td><code>int strcmp ( const char * str1, const char * str2 );</code></td>
+<td>string.h</td>
+<td>比较字符串 str1 和字符串 str2 的大小。该函数从两字符串的第一个字符开始，如果相等，依次往下比较，直到遇到不相同的字符或其中一个遇到’\0’s。比较的依据，是两字符对应的 ASCII 值的大小。</td>
+</tr>
+</tbody>
+</table>
 <h3 id="常量"><a class="markdownIt-Anchor" href="#常量"></a> 常量</h3>
 <ul>
 <li>常量(Constant)量是程序中不可改变的量，常以字面量(Literal)，或者宏(Macro)的方式出现。 主要用于赋值或是参与计算,并且常量也是用类型的。</li>
@@ -1156,38 +1264,198 @@
 </ul>
 <h3 id="运符符"><a class="markdownIt-Anchor" href="#运符符"></a> 运符符</h3>
 <h4 id="cc语全部运算符"><a class="markdownIt-Anchor" href="#cc语全部运算符"></a> c/c++语全部运算符</h4>
-<p>|Precedence| Operator| Description| Associativity|<br />
-|–|--|–|<br />
-|1| ++ --| Suffix/postfix increment and decrement|Left-to-right|<br />
-||()| Function call and subexpression||<br />
-||<code>[]</code>|Array subscripting||<br />
-||<code>.</code> |Structure and union member access||<br />
-||<code>-&gt;</code>| Structure and union member access through pointer||<br />
-|2|<code>++ --</code>| Prefix increment and decrement|Right-to-left|<br />
-||<code>+ -</code>| Unary plus and minus||<br />
-||<code>! ~</code>| Logical NOT and bitwise NOT||<br />
-||<code>(type)</code> |Type cast||<br />
-||<code>*</code> | Indirection (dereference)||<br />
-||<code>&amp;</code>| Address-of||<br />
-||<code>sizeof</code>| Size-of||<br />
-|3| <code>* / %</code> |Multiplication, division, and remainder|Left-to-right|<br />
-|4 |<code>+ -</code>| Addition and subtraction||<br />
-|5| <code>&lt;&lt; &gt;&gt;</code> |Bitwise left shift and right shift||<br />
-|6| <code>&lt; &lt;=</code>| For relational operators &lt; and ≤ respectively||<br />
-||<code>&gt; &gt;=</code>| For relational operators &gt; and ≥ respectively||<br />
-|7| <code>== !=</code>| For relational = and ≠ respectively||<br />
-|8| <code>&amp;</code> |Bitwise AND||<br />
-|9| <code>^|</code>| Bitwise XOR (exclusive or)||<br />
-|10 |<code>|</code>| Bitwise OR (inclusive or)||<br />
-|11| <code>&amp;&amp;</code> |Logical AND||<br />
-|12| <code>||</code>| Logical OR||<br />
-|13|<code>?:</code> |Ternary conditional|Right-to-Left|<br />
-|14|<code>=</code>| Simple assignment||<br />
-||<code>+= -=</code>|Assignment by sum and difference<br />
-||<code>*= /= %=</code> |Assignment by product, quotient, and remainder||<br />
-||<code>&lt;&lt;= &gt;&gt;=</code>|Assignment by bitwise left shift and right  shift||<br />
-||<code>&amp;= ^= |=</code>|Assignment by bitwise AND, XOR, and OR||<br />
-|15| <code>,</code>| Comma| Left-to-right|</p>
+<table>
+<thead>
+<tr>
+<th>Precedence</th>
+<th>Operator</th>
+<th>Description</th>
+<th>Associativity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>++ –</td>
+<td>Suffix/postfix increment and decrement</td>
+<td>Left-to-right</td>
+</tr>
+<tr>
+<td></td>
+<td>()</td>
+<td>Function call and subexpression</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td><code>[]</code></td>
+<td>Array subscripting</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td><code>.</code></td>
+<td>Structure and union member access</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td><code>-&gt;</code></td>
+<td>Structure and union member access through pointer</td>
+<td></td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>++ --</code></td>
+<td>Prefix increment and decrement</td>
+<td>Right-to-left</td>
+</tr>
+<tr>
+<td></td>
+<td><code>+ -</code></td>
+<td>Unary plus and minus</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td><code>! ~</code></td>
+<td>Logical NOT and bitwise NOT</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td><code>(type)</code></td>
+<td>Type cast</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td><code>*</code></td>
+<td>Indirection (dereference)</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td><code>&amp;</code></td>
+<td>Address-of</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td><code>sizeof</code></td>
+<td>Size-of</td>
+<td></td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>* / %</code></td>
+<td>Multiplication, division, and remainder</td>
+<td>Left-to-right</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>+ -</code></td>
+<td>Addition and subtraction</td>
+<td></td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>&lt;&lt; &gt;&gt;</code></td>
+<td>Bitwise left shift and right shift</td>
+<td></td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>&lt; &lt;=</code></td>
+<td>For relational operators &lt; and ≤ respectively</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td><code>&gt; &gt;=</code></td>
+<td>For relational operators &gt; and ≥ respectively</td>
+<td></td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>== !=</code></td>
+<td>For relational = and ≠ respectively</td>
+<td></td>
+</tr>
+<tr>
+<td>8</td>
+<td><code>&amp;</code></td>
+<td>Bitwise AND</td>
+<td></td>
+</tr>
+<tr>
+<td>9</td>
+<td><code>^|</code></td>
+<td>Bitwise XOR (exclusive or)</td>
+<td></td>
+</tr>
+<tr>
+<td>10</td>
+<td><code>|</code></td>
+<td>Bitwise OR (inclusive or)</td>
+<td></td>
+</tr>
+<tr>
+<td>11</td>
+<td><code>&amp;&amp;</code></td>
+<td>Logical AND</td>
+<td></td>
+</tr>
+<tr>
+<td>12</td>
+<td><code>||</code></td>
+<td>Logical OR</td>
+<td></td>
+</tr>
+<tr>
+<td>13</td>
+<td><code>?:</code></td>
+<td>Ternary conditional</td>
+<td>Right-to-Left</td>
+</tr>
+<tr>
+<td>14</td>
+<td><code>=</code></td>
+<td>Simple assignment</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td><code>+= -=</code></td>
+<td>Assignment by sum and difference</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td><code>*= /= %=</code></td>
+<td>Assignment by product, quotient, and remainder</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td><code>&lt;&lt;= &gt;&gt;=</code></td>
+<td>Assignment by bitwise left shift and right  shift</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td><code>&amp;= ^= |=</code></td>
+<td>Assignment by bitwise AND, XOR, and OR</td>
+<td></td>
+</tr>
+<tr>
+<td>15</td>
+<td><code>,</code></td>
+<td>Comma</td>
+<td>Left-to-right</td>
+</tr>
+</tbody>
+</table>
 <h4 id="运符符分类"><a class="markdownIt-Anchor" href="#运符符分类"></a> 运符符分类</h4>
 <ul>
 <li>计算机中还按操作的数的个数将其分为 3 类，单目运算符，双目运算符和三目运算符。</li>
@@ -1202,14 +1470,47 @@
 <ul>
 <li>位操作不同于逻辑操作，逻辑操作是一种整体的操作，而位操作是针对内部数据位补码的操作。逻辑操作的世界里，只有真与假（零和非零），而位操作的世界里按位论真假（1 和 0）。运算符也不同，如下。</li>
 </ul>
-<p>|位运算符| 逻辑运算符|说明|<br />
-|–<br />
-|&amp;| &amp;&amp;||<br />
-| <code>|</code> | <code>||</code> ||<br />
-|<code>~</code>|<code>！</code>||<br />
-|<code>^|</code>|||<br />
-|<code>&lt;&lt; &gt;&gt;</code>||位数为非负整数，且默认对 32 求余<br>对无符号数和有符号中的正数补 0；有符号数中的负数，取决于所使用的系统：补0的称为“逻辑右移”，补1的称为“算术右移”。|<br />
-|<code>&amp;= |= ^= &gt;&gt;= &lt;&lt;=</code>|||</p>
+<table>
+<thead>
+<tr>
+<th>位运算符</th>
+<th>逻辑运算符</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&amp;</td>
+<td>&amp;&amp;</td>
+<td></td>
+</tr>
+<tr>
+<td><code>|</code></td>
+<td><code>||</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>~</code></td>
+<td><code>！</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>^|</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>&lt;&lt; &gt;&gt;</code></td>
+<td></td>
+<td>位数为非负整数，且默认对 32 求余<br>对无符号数和有符号中的正数补 0；有符号数中的负数，取决于所使用的系统：补0的称为“逻辑右移”，补1的称为“算术右移”。</td>
+</tr>
+<tr>
+<td><code>&amp;= |= ^= &gt;&gt;= &lt;&lt;=</code></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
 <h2 id="语法-2"><a class="markdownIt-Anchor" href="#语法-2"></a> 语法</h2>
 <h3 id="程序流程"><a class="markdownIt-Anchor" href="#程序流程"></a> 程序流程</h3>
 <h4 id="选择"><a class="markdownIt-Anchor" href="#选择"></a> 选择</h4>
@@ -1281,17 +1582,47 @@
 <ul>
 <li>使用随机函数产生，某一范围内了随机数。比如生成[1,100]以内的随机数。srand和 rand()配合使用产生伪随机数序列。rand 函数在产生随机数前，需要系统提供的生成伪随机数序列的种子，rand 根据这个种子的值产生一系列随机数。如果系统提供的种子没有变化，每次调用 rand 函数生成的伪随机数序列都是一样的。</li>
 </ul>
-<p>|函数|所在文件|说明|<br />
-|-<br />
-|<code>int rand (void);</code>|<code>stdlib.h</code>|产生一组<code>[0,RAND_MAX]</code>伪随机数|<br />
-|<code>void srand (unsigned int seed);</code>|<code>stdlib.h</code>|设置随机种子seed|</p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>所在文件</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>int rand (void);</code></td>
+<td><code>stdlib.h</code></td>
+<td>产生一组<code>[0,RAND_MAX]</code>伪随机数</td>
+</tr>
+<tr>
+<td><code>void srand (unsigned int seed);</code></td>
+<td><code>stdlib.h</code></td>
+<td>设置随机种子seed</td>
+</tr>
+</tbody>
+</table>
 <ul>
 <li>随机种子一般设置<code>srand(time(NULL));</code>，但是在同一秒得出的随机数可能仍然是相同的。</li>
 </ul>
 <h5 id="时间函数"><a class="markdownIt-Anchor" href="#时间函数"></a> 时间函数</h5>
-<p>|函数|所在文件|说明|<br />
-|-<br />
-|<code>struct tm * localtime (const time_t * timer);</code>|<code>stdlib.h</code>|获取时间函数，转换时间戳为time结构体|</p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>所在文件</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>struct tm * localtime (const time_t * timer);</code></td>
+<td><code>stdlib.h</code></td>
+<td>获取时间函数，转换时间戳为time结构体</td>
+</tr>
+</tbody>
+</table>
 <ul>
 <li>返回值详细解析：</li>
 </ul>
@@ -1307,18 +1638,64 @@
 |int tm_yday| days since January 1 |0-365|<br />
 |int tm_isdst| Daylight Saving Time flag||</p>
 <h5 id="数学函数"><a class="markdownIt-Anchor" href="#数学函数"></a> 数学函数</h5>
-<p>|函数|所在文件|说明|<br />
-|-<br />
-|<code>double sqrt(double x)</code> |math.h|计算 x 的平方根（squareroot）|<br />
-|<code>double pow(double x, double y)</code> |math.h|计算 x 的 y 次幂(power)|<br />
-|<code>double ceil(double x)</code>  |math.h|求不小于 x 的最小整数，并以 double 形式显示 |<br />
-|<code>double floor(double x)</code>  |math.h|求不大于 x 的最大整数，并以 double 形式显示|<br />
-|<code>double sin(double x)</code>|math.h|正弦曲线|</p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>所在文件</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>double sqrt(double x)</code></td>
+<td>math.h</td>
+<td>计算 x 的平方根（squareroot）</td>
+</tr>
+<tr>
+<td><code>double pow(double x, double y)</code></td>
+<td>math.h</td>
+<td>计算 x 的 y 次幂(power)</td>
+</tr>
+<tr>
+<td><code>double ceil(double x)</code></td>
+<td>math.h</td>
+<td>求不小于 x 的最小整数，并以 double 形式显示</td>
+</tr>
+<tr>
+<td><code>double floor(double x)</code></td>
+<td>math.h</td>
+<td>求不大于 x 的最大整数，并以 double 形式显示</td>
+</tr>
+<tr>
+<td><code>double sin(double x)</code></td>
+<td>math.h</td>
+<td>正弦曲线</td>
+</tr>
+</tbody>
+</table>
 <h5 id="工具函数"><a class="markdownIt-Anchor" href="#工具函数"></a> 工具函数</h5>
-<p>|函数|所在文件|说明|<br />
-|-<br />
-|int toupper(int x)|ctype.h |如果 x 为小写字母，则返回对应的大写字母 |<br />
-|int tolower(int x)|ctype.h| 如果 x 为大写字母，则返回对应的小写字母|</p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>所在文件</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>int toupper(int x)</td>
+<td>ctype.h</td>
+<td>如果 x 为小写字母，则返回对应的大写字母</td>
+</tr>
+<tr>
+<td>int tolower(int x)</td>
+<td>ctype.h</td>
+<td>如果 x 为大写字母，则返回对应的小写字母</td>
+</tr>
+</tbody>
+</table>
 <h4 id="自定义函数"><a class="markdownIt-Anchor" href="#自定义函数"></a> 自定义函数</h4>
 <h5 id="函数定义"><a class="markdownIt-Anchor" href="#函数定义"></a> 函数定义</h5>
 <ul>
@@ -1415,13 +1792,36 @@
 </ul>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//#define sum(a,b) (aa+bb)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> sum(a,b) (a##a+b##b)</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"%d\n"</span>,sum(<span class="number">2</span>,<span class="number">3</span>));</span><br></pre></td></tr></table></figure>
 <h5 id="预定义宏"><a class="markdownIt-Anchor" href="#预定义宏"></a> 预定义宏</h5>
-<p>|宏名|说明|<br />
-|–<br />
-|<strong>DATE</strong>| 进行预处理的日期（“MMmm dd yyyy”形式的字符串文字）|<br />
-|<strong>FILE</strong>| 代表当前源代码文件名的字符串文字|<br />
-|<strong>LINE</strong>| 代表当前源代码中的行号的整数常量|<br />
-|<strong>TIME</strong>| 源文件编译时间，格式“hh：mm：ss”|<br />
-|<strong>func</strong>| 当前所在函数名|</p>
+<table>
+<thead>
+<tr>
+<th>宏名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>DATE</strong></td>
+<td>进行预处理的日期（“MMmm dd yyyy”形式的字符串文字）</td>
+</tr>
+<tr>
+<td><strong>FILE</strong></td>
+<td>代表当前源代码文件名的字符串文字</td>
+</tr>
+<tr>
+<td><strong>LINE</strong></td>
+<td>代表当前源代码中的行号的整数常量</td>
+</tr>
+<tr>
+<td><strong>TIME</strong></td>
+<td>源文件编译时间，格式“hh：mm：ss”</td>
+</tr>
+<tr>
+<td><strong>func</strong></td>
+<td>当前所在函数名</td>
+</tr>
+</tbody>
+</table>
 <ul>
 <li>在打印调试信息时打印这两个宏<code>__FILE__</code>, <code>__LINE__</code>可以给开发者非常有用的提示。</li>
 </ul>
@@ -1479,9 +1879,20 @@
 <p>二进制与文本转化查看工具</p>
 </li>
 </ul>
-<p>|windows| linux|<br />
-|–<br />
-|UltraEdit| hexdump -c -C -x -o|</p>
+<table>
+<thead>
+<tr>
+<th>windows</th>
+<th>linux</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>UltraEdit</td>
+<td>hexdump -c -C -x -o</td>
+</tr>
+</tbody>
+</table>
 <h5 id="文件缓冲"><a class="markdownIt-Anchor" href="#文件缓冲"></a> 文件缓冲</h5>
 <ul>
 <li>有缓冲区（buffer）的原因：
@@ -1500,29 +1911,149 @@
 <ul>
 <li>在开始执行程序的时候，将自动打开 3 个文件和相关的流：标准输入流(stdin)、标准输出流(stdout)和标准错误(stderr)，它们都是<code>FIEL*</code>型的指针。流提供了文件和程序的通信通道。</li>
 </ul>
-<p>|函数|所在文件|功能|<br />
-|–<br />
-|<code>FILE * fopen ( const char * filename, const char * mode );</code>|stdio.h|以 mode 的方式，打开一个 filename 命名的文件，返回一个指向该文件缓冲的 FILE 结构体指针。|<br />
-|<code>int fclose ( FILE * stream );</code>|stdio.h|fclose()用来关闭先前 fopen()打开的文件. 此动作会让缓冲区内的数据写入文件中, 并释放系统所提供的文件资源。主动刷缓存，防止意外退出，系统未正确退出来不及刷新。|<br />
-|<code>int fputc (int ch, FILE * stream );</code>|stdio.h|将 ch 字符，写入文件。写入失败返回EOF|<br />
-|<code>int fgetc ( FILE * stream );</code>|stdio.h| 从文件流中读取一个字符并返回。|<br />
-|<code>int feof( FILE * stream );</code>|stdio.h|判断文件是否读到文件结尾|<br />
-|<code>int fputs(char *str,FILE *fp)</code>|stdio.h|把 str 指向的字符串写入 fp 指向的文件中。|<br />
-|<code>char *fgets(char *str,int length,FILE *fp)</code>|stdio.h|从 fp 所指向的文件中，至多读 length-1 个字符，送入字符数组 str中， 如果在读入 length-1 个字符结束前遇\n 或 EOF，读入即结束，字符串读入后在最后加一个‘\0’字符。<br>fgets 函数返回有三个条件：<br>1-读 n-1 个字符前遇到\n，读取结束(\n 被读取) + \0。 <br>2-读 n-1 个字符前遇到 EOF，读取结束 +\0。 <br>3-读到 n-1 个符+\0。|<br />
-|<code>int fwrite(void *buffer, int num_bytes, int count, FILE *fp)</code>|stdio.h|把 buffer 指向的数据写入fp 指向的文件中|<br />
-|<code>int fread(void *buffer, int num_bytes, int count, FILE *fp)</code>|stdio.h|把 fp 指向的文件中的数据读到 buffer 中。|<br />
-|<code>rewind()</code>|stdio.h|文件指针回退文件开头|<br />
-|<code>long ftell ( FILE * stream );</code>|stdio.h|得到流式文件的当前读写位置,其返回值是当前读写位置偏离文件头部的字节数.|<br />
-|<code>int fseek ( FILE * stream, long offset, int where);</code>|stdio.h|偏移文件指针。<br>常见的起始位置有宏定义：<br>#define SEEK_CUR 1 当前位置<br>#define SEEK_END 2 文件结尾<br>#define SEEK_SET 0 文件开头|<br />
-|<code>|stdio.h|| |</code>|stdio.h||</p>
-<p>|mode值|处理方式|文件不存在时|文件存在时|向文件输入|向文件输出|<br />
-|–<br />
-|r |读 取|出错|打开文件  | 不能|可以|<br />
-|w |写 入|新建|覆盖源文件 | 可以|不能|<br />
-|a |追 加|新建|源文件新加 | 可以|不能|<br />
-|r+|读/写|出错|打开文件  | 可以|可以|<br />
-|w+|写/读|新建|覆盖源文件 | 可以|可以|<br />
-|a+|读/追|新建|源文件新加 | 可以|可以|</p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>所在文件</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>FILE * fopen ( const char * filename, const char * mode );</code></td>
+<td>stdio.h</td>
+<td>以 mode 的方式，打开一个 filename 命名的文件，返回一个指向该文件缓冲的 FILE 结构体指针。</td>
+</tr>
+<tr>
+<td><code>int fclose ( FILE * stream );</code></td>
+<td>stdio.h</td>
+<td>fclose()用来关闭先前 fopen()打开的文件. 此动作会让缓冲区内的数据写入文件中, 并释放系统所提供的文件资源。主动刷缓存，防止意外退出，系统未正确退出来不及刷新。</td>
+</tr>
+<tr>
+<td><code>int fputc (int ch, FILE * stream );</code></td>
+<td>stdio.h</td>
+<td>将 ch 字符，写入文件。写入失败返回EOF</td>
+</tr>
+<tr>
+<td><code>int fgetc ( FILE * stream );</code></td>
+<td>stdio.h</td>
+<td>从文件流中读取一个字符并返回。</td>
+</tr>
+<tr>
+<td><code>int feof( FILE * stream );</code></td>
+<td>stdio.h</td>
+<td>判断文件是否读到文件结尾</td>
+</tr>
+<tr>
+<td><code>int fputs(char *str,FILE *fp)</code></td>
+<td>stdio.h</td>
+<td>把 str 指向的字符串写入 fp 指向的文件中。</td>
+</tr>
+<tr>
+<td><code>char *fgets(char *str,int length,FILE *fp)</code></td>
+<td>stdio.h</td>
+<td>从 fp 所指向的文件中，至多读 length-1 个字符，送入字符数组 str中， 如果在读入 length-1 个字符结束前遇\n 或 EOF，读入即结束，字符串读入后在最后加一个‘\0’字符。<br>fgets 函数返回有三个条件：<br>1-读 n-1 个字符前遇到\n，读取结束(\n 被读取) + \0。 <br>2-读 n-1 个字符前遇到 EOF，读取结束 +\0。 <br>3-读到 n-1 个符+\0。</td>
+</tr>
+<tr>
+<td><code>int fwrite(void *buffer, int num_bytes, int count, FILE *fp)</code></td>
+<td>stdio.h</td>
+<td>把 buffer 指向的数据写入fp 指向的文件中</td>
+</tr>
+<tr>
+<td><code>int fread(void *buffer, int num_bytes, int count, FILE *fp)</code></td>
+<td>stdio.h</td>
+<td>把 fp 指向的文件中的数据读到 buffer 中。</td>
+</tr>
+<tr>
+<td><code>rewind()</code></td>
+<td>stdio.h</td>
+<td>文件指针回退文件开头</td>
+</tr>
+<tr>
+<td><code>long ftell ( FILE * stream );</code></td>
+<td>stdio.h</td>
+<td>得到流式文件的当前读写位置,其返回值是当前读写位置偏离文件头部的字节数.</td>
+</tr>
+<tr>
+<td><code>int fseek ( FILE * stream, long offset, int where);</code></td>
+<td>stdio.h</td>
+<td>偏移文件指针。<br>常见的起始位置有宏定义：<br>#define SEEK_CUR 1 当前位置<br>#define SEEK_END 2 文件结尾<br>#define SEEK_SET 0 文件开头</td>
+</tr>
+<tr>
+<td>``</td>
+<td>stdio.h</td>
+<td></td>
+</tr>
+<tr>
+<td>``</td>
+<td>stdio.h</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>mode值</th>
+<th>处理方式</th>
+<th>文件不存在时</th>
+<th>文件存在时</th>
+<th>向文件输入</th>
+<th>向文件输出</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>r</td>
+<td>读 取</td>
+<td>出错</td>
+<td>打开文件</td>
+<td>不能</td>
+<td>可以</td>
+</tr>
+<tr>
+<td>w</td>
+<td>写 入</td>
+<td>新建</td>
+<td>覆盖源文件</td>
+<td>可以</td>
+<td>不能</td>
+</tr>
+<tr>
+<td>a</td>
+<td>追 加</td>
+<td>新建</td>
+<td>源文件新加</td>
+<td>可以</td>
+<td>不能</td>
+</tr>
+<tr>
+<td>r+</td>
+<td>读/写</td>
+<td>出错</td>
+<td>打开文件</td>
+<td>可以</td>
+<td>可以</td>
+</tr>
+<tr>
+<td>w+</td>
+<td>写/读</td>
+<td>新建</td>
+<td>覆盖源文件</td>
+<td>可以</td>
+<td>可以</td>
+</tr>
+<tr>
+<td>a+</td>
+<td>读/追</td>
+<td>新建</td>
+<td>源文件新加</td>
+<td>可以</td>
+<td>可以</td>
+</tr>
+</tbody>
+</table>
 <ul>
 <li>如果读写的是二进制文件，则还要加b,比如rb, r+b等。unix/linux不区分文本和二进制文件。</li>
 </ul>
