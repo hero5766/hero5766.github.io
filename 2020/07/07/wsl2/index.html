@@ -19,7 +19,19 @@
 </blockquote>
 <a id="more"></a>
 <ul>
-<li><a href="https://docs.microsoft.com/zh-cn/windows/wsl/install-win10" target="_blank" rel="noopener">教程链接</a></li>
+<li>
+<p><a href="https://docs.microsoft.com/zh-cn/windows/wsl/install-win10" target="_blank" rel="noopener">教程链接</a></p>
+</li>
+<li>
+<p>如果电脑上删除了windows应用商店，可以用如下方法重新安装：</p>
+<ul>
+<li>Windows+x选A，以管理员身份运行WindowsPowerShell</li>
+<li>输入命令<code>Get-AppxPackage -allusers | Select Name, PackageFullName</code>，获取当前系统安装的所有应用。</li>
+<li>在列表中找到名称为“Microsoft.WindowsStore”(即应用商店)的应用，然后复制右侧对应的包名称。<code>Microsoft.WindowsStore_11801.1001.6.0_x64__8wekyb3d8bbwe</code></li>
+<li>输入下列命令进行应用商店的重装（版本不同包名称也不同，下列命令看着替换一下自己的包名称就好了。）：<code>Add-appxpackage -register &quot;C:\Program Files\WindowsApps\Microsoft.WindowsStore_11801.1001.6.0_x64__8wekyb3d8bbwe\appxmanifest.xml&quot; -disabledevelopmentmode</code></li>
+<li>打开开始菜单，应用商店已装回。</li>
+</ul>
+</li>
 </ul>
 <h2 id="安装docker"><a class="markdownIt-Anchor" href="#安装docker"></a> 安装docker</h2>
 <ul>
