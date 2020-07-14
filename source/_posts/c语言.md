@@ -192,6 +192,28 @@ char short int long float double if else return do while for switch case break c
 - 函数
   - 函数本身就是全局可调用的，在编译时，只需要声明，即可完成编译，在链接的时候才去链接实现体。
   - static 修饰函数的意义，就在于将全局函数变成了，本文件内的全局函数。
+  
+##### volatile
+- volatile设计用来修饰被不同线程访问和修改的变量；volatile的作用是作为指令关键字，确保本条指令不会因编译器的优化而省略，且要求每次直接读值。
+- volatile的变量是说这变量可能会被意想不到地改变，这样，编译器就不会去假设这个变量的值了。优化器在用到这个变量时必须每次都小心地重新读取这个变量的值，而不是使用保存在寄存器里的备份
+```c
+int square(volatile int *ptr){ 
+  return ((*ptr) * (*ptr));
+}
+```
+
+- 使用volatile变量的例子
+  - 并行设备的硬件寄存器（如：状态寄存器）
+  - 一个中断服务子程序中会访问到的非自动变量（Non-automatic variables)
+  - 多线程应用中被几个任务共享的变量
+
+- 这是区分C程序员和嵌入式系统程序员的最基本的问题：嵌入式系统程序员经常同硬件、中断、RTOS等等打交道，所有这些都要求使用volatile变量。不懂得volatile内容将会带来灾难。
+
+- 注意点：
+  - **一个参数既可以是const还可以是volatile**：一个例子是只读的状态寄存器。它是volatile因为它可能被意想不到地改变。它是const因为程序不应该试图去修改它。
+  - **一个指针可以是volatile**：一个例子是当一个中断服务子程序修改一个指向一个buffer的指针时。
+   
+
 
 # 数据类型
 ## 类型总览
@@ -321,7 +343,7 @@ char short int long float double if else return do while for switch case break c
 ### 数组
 - 数组，在内存中是一段连续的存储区域 。
 
-##### 一维数组
+#### 一维数组
 - 逻辑与声明：`int [10] array; => int array[10];`
 - 初始化共分五种情况：
   1. 不初始化 => 成员初始值未知
@@ -385,7 +407,7 @@ int array2[][3] = {1,2,3,4,5}
 ### 结构体
 - struct 是构造新类型的关键字 ，有了它，就可以构造任意的构造类型了。
 
-##### 结构体定义
+#### 结构体定义
 |结构体|定义|声明|
 |--|--|--|
 |无名构造类型|`struct{char name[30];}stu,stu2,stu3;`||
@@ -505,7 +527,6 @@ strcpy(ps->name,"Jimy");  //直接赋值，会引发崩溃
 free(ps->name);
 free(ps);   // 一定要先释放ps.name，在释放ps
 ```
-
 
 - **未释放结构体内指针所指向的空间**：从内向外依次释放空间。
 ```c

@@ -4,7 +4,7 @@ tags:
   - C/C++
 categories:
   - programme
-date: 2020-06-30 19:20:00
+date: 2020-07-13 19:20:00
 ---
 > `c++`记录
 <!--more-->
@@ -412,13 +412,316 @@ cout<<p1->data<<xx.data<<endl;
 ## 命名空间(namespace scope)
 - 命名空间为了大型项目开发，而引入的一种避免命名冲突的一种机制。比如说，在一个大型项目中，要用到多家软件开发商提供的类库。在事先没有约定的情况下，两套类库可能在存在同名的函数或是全局变量而产生冲突。项目越大，用到的类库越多，开发人员越多，这种冲突就会越明显。
 
+### 默认NameSpace
+- 全局`Global scope`是一个程序中最大的 scope。也是引起命名冲突的根源。C 语言没有从语言层面提供这种机制来解决。也算是 C 语言的硬伤了。`Global scope`是无名的命名空间，命名空间为空。`c++`的作用域运算符：`::`。所以全局的命名空间直接用`::`即可表示。
+- 局部`Function scope`就是函数作用域，就没有命名空间的概念了。直接使用函数内声明的变量即可。
+
+```c
+int a = 10;
+int main(){
+	::a = 20;
+}
+```
+
+### 语法
+- NameSpace 是对全局(Global scope)区域的再次划分
+
+#### 声明
+```c
+namespace NAMESPACE空间名称
+{
+ 全局变量 int a;
+ 数据类型 struct Stu{};
+ 函数 void func();
+ 其它命名空间 namespace
+}
+```
+
+#### 使用
+1. 直接指定 命名空间：`Space::a = 5;`，直接调用
+2. 使用 using+命名空间+空间元素：`using Space::a; a = 2000;`，取出其中一个
+3. 使用 using +namespace+命名空间： `using namespace Space;`，都取出来
+
+> 全取出来虽然方便，但是可能会与局部的同名变量发生冲突。
+
+#### 支持嵌套
+```c
+namespace MySpace
+{
+ int x = 1;
+ int y = 2;
+ namespace Other {
+  int m = 3;
+  int n = 4;
+ } 
+}
+using namespace MySpace::Other;
+cout<<m<<n<<endl;
+```
+
+#### 协作开发
+- 同名命名空间自动合并，对于一个命名空间中的类，要包含声明和实现。
 
 ## 系统 string 类
+- 除了使用字符数组来处理字符串以外，c++引入了字符串类型。可以定义字符串变量。
+- 在`<iostream>`std命名空间中
+
+### 定义及初始化
+```c
+string str;
+str = "china";  //初始化方式1
+string str2 = " is great ";//初始化方式2
+string str3(str2);//初始化方式3
+cout<<str<<str2<<endl<<str3<<endl;
+```
+
+### 类型大小
+```c
+string str;
+cout<<"sizeof(string) = "<<sizeof(string)<<endl; //4
+cout<<"sizeof(str) = "<<sizeof(str)<<endl;     //4
+```
+
+### 常用运算
+
+|操作|示例|
+|--|--|
+|赋值|`string str3 = str2;`|
+|加法|`string combine = str + str2;`|
+|大小|`str3.size()`|
+|关系|`string s1 = "abcdeg";string s2 = "12345";`<br>`if(s1>s2)`<br>`cout<<"s1>s2"<<endl;`|
+|减法没有重载|`string s3 = s1-s2; // error`|
+
+### 常见的成员函数
+
+|操作|示例|说明|
+|--|--|--|
+|下标操作|`char & operator[](int n) ;`||
+|求串大小|`int size();`||
+|返回 c 串|`char *c_str();`|与字符数组之间操作，需要返回c串|
+|查找|`int find(char c, int pos = 0);`<br>`int find(char * s, int pos = 0);`|返回下标值，没有找到返回-1，默认从 0 下标开找|
+|删除|`string &erase(int idx=0，int n = npos);`|作用是删除从 idx 开始，往后数 n 位的字符串。|
+|交换 swap|`void swap(stirng &s2);`||
+
+### string 类型数组
+- string 数组是高效的，如果用二维数组来存入字符串数组的话，则容易浪费空间，此时列数是由最长的字符串决定。如果用二级指针申请堆空间，依据大小申请相应的空间，虽然解决了内存浪费的问题，但是操作麻烦。用 string 数组存储，字符串数组的话，效率即高又灵活。
+```c
+string sArray[10] = {
+"0",
+"1",
+"22",
+"333",
+};
+for(int i=0; i<10; i++){
+  cout<<sArray[i]<<endl;
+}
+```
+
+## vector类
+- 使用`char**`、`string`、vector三种方式，打印文件中的内容
+```c
+File *fp = fopen("a.txt","r+");
+if (fp==NULL)return -1;
+int lineCount=0;char buf[1024];
+while(fgets(buf,1024,fp)!=NULL)lineCount++;
+rewind(fp);
+//----------------char**-------------------
+char**p=(char**)malloc((lineCount+1)*sizeof(char*));
+char **pt = p;
+while(fgets(buf,1024,fp)!=NULL){
+  int len=strlen(buf);
+  *pt = (char*)malloc(len+1);
+  strcpy(*pt,buf);pt++;
+}
+*pt=NULL;
+while(*p)printf("%s",*p++);
+//----------------string-------------------
+//string str[lineCount];  不推荐使用可变数组
+string * str = new string[lineCount+1];
+string * pstr = str;
+while(fgets(buf,1024,fp)!=NULL){
+  * pstr++ = buf;
+}
+for(int i=0;i<lineCount;i++)count<<str[i];
+//----------------vector-------------------
+vector<string> vs;
+while(fgets(buf,1024,fp)!=NULL){
+  vs.push_back(buf);
+}
+for(int i=0;i<vs.size();i++)count<<vs[i];
+fclose(fp);
+```
 
 # `C++`面向对象
 ## 封装(Encapsulation)
+- 概念：当单一变量无法完成描述需求的时候，结构体类型解决了这一问题。可以将多个类型打 包成一体，形成新的类型。但是，新类型并不包含，对数据类的操作。所的有操作都是通过函数的方式，去其进行封装。
+
+### 定义封装
+- 封装，可以达到，对外提供接口，屏蔽数据，对内开放数据。
+- struct 中所有行为和属性都是 public 的(默认)。C++中的 class 可以指定行为和属性的访问方式，默认为 pirvate。
+
+|访问属性| 属性| 对象内部| 对象外部|
+|--|--|--|--|
+|public| 公有| 可访问| 可访问|
+|protected| 保护| 可访问| 不可访问|
+|private| 私有| 可访问| 不可访问|
+
+### 用class去封装带行为的类
+- class 封装的本质，在于将数据和行为，绑定在一起然后通过对象来完成操作。
+
 
 ## 类与对象(Class &&object)
+### 构造器（Constructor）
+- 构造器名与类名相同。
+- 在类对象创建时，自动调用，完成类对象的初始化。尤其是动态堆内存的申请。
+- 规则:
+  1. 在对象创建时自动调用,完成初始化相关工作。
+  2. 无返回值，与类名同，
+  3. 可以重载，可默认参数。
+  4. 默认无参空体，一经实现，默认不复存在。
+
+#### 定义
+```c
+class 类名
+{
+类名(形式参数)
+构造体
+}
+```
+
+#### 参数初始化表
+```c
+class A {
+  public:
+    A(char * ps)
+      :name(ps),len(strlen(name.c_str())){}
+    void dis(){}
+  private:
+    int len;
+    string name;
+};
+```
+- 注意点
+  1. 此格式只能用于类的构造函数。
+  2. 初始化列表中的初始化顺序，与声明顺序有关，与前后赋值顺序无关。
+  3. 必须用此格式来初始化非静态 const 数据成员(c++98)。 
+  4. 必须用此格式来实始化引用数据。
+
+### 析造器(Destructor)
+- 析构函数的作用，并不是删除对象，而在对象销毁前完成的一些清理工作。
+  1. 栈对象离开其作用域。
+  2. 堆对象被手动 delete.
+  
+#### 析构器的定义及意义
+```C
+class 类名{ 
+~类名()
+析造体
+}
+```
+
+- 在类对像销毁时，自动调用，完成对象的销毁。尤其是类中己申请的堆内存的释放. 
+- 规则: 
+  1. 对象销毁时，自动调用。完成销毁的善后工作。
+  2. 无返值，与类名同，无参。不可以重载与默认参数。 
+  3. 系统提供默认空析构器，一经实现，不复存在。
+
+### 拷贝构造(Copy contructor)
+- 由己存在的对象，创建新对象。也就是说新对象，不由构造器来构造，而是由拷贝构造器来完成。拷贝构造器的格式是固定的。
+
+#### 定义
+```c
+class 类名
+{
+类名(const 类名 & another)
+拷贝构造体
+}
+class A {
+A(const A & another)
+{}
+}
+```
+
+- 规则：
+  1. 系统提供默认的拷贝构造器。一经实现，不复存在。
+  2. 系统提供的时等位拷贝，也就是所谓的浅浅的拷贝。
+  3. 要实现深拷贝，必须要自定义。
+
+
+#### 拷贝构造发生的时机
+1. 制作对象的副本。
+2. 以对象作为参数和返回值。
+
+#### 深拷贝与浅拷贝
+- 系统提供默认的拷贝构造器，一经定义不再提供。但系统提供的默认拷贝构造器是等位拷贝，也就是通常意义上的浅拷贝。如果类中包含的数据元素全部在栈上，浅拷贝也可以满足需求的。但如果堆上的数据，则会发生多次析构行为。
+
+![深拷贝与浅拷贝](/images/pasted-49.png)
+
+
+### this 指针
+- 系统在创建对象时，默认生成的指向当前对象的指针。这样作的目的，就是为了带来方便。
+
+#### 作用
+  1. 避免构造器的入参与成员名相同。
+  2. 基于 this 指针的自身引用还被广泛地应用于那些支持多重串联调用的函数中。比如连续赋值。
+
+### 赋值运算符重载(Operator=)
+- 用一个己有对象，给另外一个己有对象赋值。两个对象均己创建结束后，发生的赋值行为。
+  1. 系统提供默认的赋值运算符重载，一经实现，不复存在。
+  2. 系统提供的也是等位拷贝，也就浅拷贝，会造成内存泄漏，重析构。
+  3. 要实现深深的赋值，必须自定义。
+  4. 自定义面临的问题有三个：1、自赋值；2；内存泄漏、3，重析构
+  5. 返回引用，且不能用 const 修饰。`a = b = c => (a+b) = c`
+
+#### 定义
+```c
+类名
+{
+类名& operator=(const 类名& 源对象)
+拷贝体
+}
+class A {
+  A& operator=(const A& another){
+    //函数体
+    return *this;
+  }
+};
+```
+
+### 返回栈上引用与对象
+#### c语言返回栈变量
+- 返回的过程产生了”中间变量”作为纽带。
+- 不管是返回指针还是返回值，return 将 return 之后的值存到 eax 寄存器中，回到父函数再将返回的值赋给变量。
+```c
+int func(){
+int a = 4;
+return a;
+}
+int main(void){
+int i = 3;
+i = func();
+return 0;
+}
+```
+
+#### c++返回栈对象
+```c
+class A {
+public:
+A(){cout<<this<<" constructor"<<endl;}
+A(const A &other){cout<<this<<" cp contructor from "<<&other<<endl;}
+A & operator=(const A &other){cout<<this<<" operator = "<<&other<<endl;}
+~A(){cout<<this<<" destructor"<<endl;}
+};
+```
+
+- 在main的栈上事先开辟了一个临时空间，把这个空间的地址隐式的转到foo函数栈上。然后，把 a 内的东西，拷贝到临时空间中。 所以发生一次构造，一次拷贝，两次析构。
+
+#### c++返回栈对象引用
+- 返回栈对象的引用，多用于产生串联应用。比如连等式。 栈对象是不可以返回引用的。除非，函数的调用者返回自身对象。
+```c
+
+```
 
 ## 友元(Friend)
 
