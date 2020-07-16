@@ -688,10 +688,11 @@ class A {
 };
 ```
 
-### 返回栈上引用与对象
-#### c语言返回栈变量
-- 返回的过程产生了”中间变量”作为纽带。
-- 不管是返回指针还是返回值，return 将 return 之后的值存到 eax 寄存器中，回到父函数再将返回的值赋给变量。
+### 类和对象
+#### 返回栈上引用与对象
+##### c语言返回栈变量
+- 为了解决函数调用完就释放空间的问题，在函数返回的过程产生了”中间变量”作为纽带。
+- 不管是返回指针还是返回值，return将return之后的值存到`eax寄存器`中，回到父函数再将返回的值赋给变量。
 ```c
 int func(){
 int a = 4;
@@ -704,32 +705,985 @@ return 0;
 }
 ```
 
-#### c++返回栈对象
+##### `c++`返回栈对象
 ```c
 class A {
-public:
-A(){cout<<this<<" constructor"<<endl;}
-A(const A &other){cout<<this<<" cp contructor from "<<&other<<endl;}
-A & operator=(const A &other){cout<<this<<" operator = "<<&other<<endl;}
-~A(){cout<<this<<" destructor"<<endl;}
+  public:
+    A(){cout<<this<<" constructor"<<endl;}
+    A(const A &other){cout<<this<<" cp contructor from "<<&other<<endl;}
+    A & operator=(const A &other){cout<<this<<" operator = "<<&other<<endl;}
+    ~A(){cout<<this<<" destructor"<<endl;}
 };
 ```
 
-- 在main的栈上事先开辟了一个临时空间，把这个空间的地址隐式的转到foo函数栈上。然后，把 a 内的东西，拷贝到临时空间中。 所以发生一次构造，一次拷贝，两次析构。
+- `C++`的操作方式时，函数有返回值时，在main函数开辟一个临时空间，并将临时空间的地址隐式传递到调用的函数，再把函数内的变量拷贝到指定地址。
 
-#### c++返回栈对象引用
-- 返回栈对象的引用，多用于产生串联应用。比如连等式。 栈对象是不可以返回引用的。除非，函数的调用者返回自身对象。
+##### c++返回栈对象引用
+- 返回栈对象的引用，多用于产生串联应用。比如连等式。
+- 栈对象是不可以返回引用的。除非，函数的调用者返回自身对象。
+- 这是由于返回后自身对象并未析构，但是如果是函数内创建的对象，在返回给主函数引用地址前，对象已经析构，可能会造成不可预知的错误。
 ```c
-
+MyString & MyString::operator=(const MyString & another){
+  return *this;
+} 
 ```
 
+#### 栈和堆上的对象及对象数组
+- 注意无参构造器的建立，因为如果生成对象数组，没有初始化则必调用无参构造器，或者手动调用带参构造器。
+```c
+class Stu{
+public:
+  Stu(string n):_name(n){}
+private:
+  string _name;
+}
+//-----------------------------
+Stu s; //error 没有无参构造器
+Stu s[5]= {Stu("zhangsan"),Stu("lisi")}; //error 不能指定个数，或部分初始化，则会报错。
+Stu s[]= {Stu("zhangsan"),Stu("lisi")};
+Stu * ps = new Stu[4]{Stu("zhangsan")}; //C11中支持此种初始化方法，但必须对指定的类个数初始化,否则会报错。
+Stu * ps = new Stu[1]{Stu("zhangsan")};
+```
+
+#### 成员函数的存储方式
+- 用类去定义对象时，系统会为每一个对象分配存储空间。如果一个类包括了数据和函数，要分别为数据分配存储空间，而函数则会创建公用的函数代码。这样做会大大节约存储空间。
+
+![类成员组成](/images/pasted-50.png)
+
+- 调用的原理：调用函数时，会通过this指针，找到对应对象的空间，操作不同的变量。
+
+### 修饰符
+#### const修饰符
+##### const常量类的成员
+- const 修饰类的成员变量，表示成员常量，不能被修改，同时它只能在初始化参数列表中赋值(c11 中支持类中初始化)。
+- 可被 const 和非 const 成员函数调用，而不可以修改。
+```c
+class A {
+public:
+A():a(199){}  // 初始化参数列表赋值const变量a
+private:
+const int a;  // c11支持在类中初始化
+};
+```
+
+##### const常量类的成员函数
+- 承诺在本函数内部不会修改类内的数据成员，不会调用其它非 const 成员函数。
+- const 修饰函数放在，声明之后，实现体之前，大概也没有别的地方可以放了。
+```c
+void dis() const{}
+```
+
+- const 构成函数重载 
+  1. 如果 const 构成函数重载，const 对象只能调用 const 函数，非 const 对象优先调用非 const 函数，若无则调用const成员函数。
+  2. const 函数只能调用 const 函数。非 const 函数可以调用 const 函数。
+  3. 类体外定义的 const 成员函数，在定义和声明处都需要 const 修饰符
+
+##### const常量类对象
+1. const 对象，只能调用 const 成员函数。
+2. 可访问 const 或非 const 数据成员，不能修改。
+
+
+#### static修饰符
+- 在 C++中，静态成员是属于整个类的而不是某个对象，静态成员变量只存储一份供所有对象共用。所以在所有对象中都可以共享它。
+- 使用静态成员变量实现多个对象之间的数据共享不会破坏隐藏(相比全局变量的优点)的原则，保证了安全性还可以节省内存。
+- 类的静态成员，属于类，也属于对象，但终归属于类。
+
+##### static的类成员
+- 使用静态类成员
+  1. static 成员变量实现了同簇类对象间信息共享。
+  2. static 成员类外存储，求类大小，并不包含在内。
+  3. static 成员是命名空间属于类的全局变量，存储在 data 区 rw 段。
+  4. static 成员使用时必须实始化，且只能类外初始化。
+  5. 可以通过类名访问（无对象生成时亦可），也可以通过对象访问。
+  6. static 成员在类声明的时候就开辟空间并初始化了，而普通类成员在类构造时才开辟空间并初始化；
+- 声明：`static 数据类型 成员变量; //在类的内部`
+- 初始化：必须在类的外部`数据类型 类名::静态数据成员 = 初值; //没有static修饰`
+- 调用：`类名::静态数据成员`; `类对象.静态数据成员`
+
+##### static的类成员函数
+- 使用静态类成员函数
+  1. 静态成员函数的意义，不在于信息共享，数据沟通，而在于管理静态数据成员，完成对静态数据成员的封装。
+  2. 静态成员函数只能访问静态数据成员。原因：非静态成员函数，在调用时 this指针时被当作参数传进。而静态成员函数属于类，而不属于对象，没有 this 指针。
+- 声明：`static 函数声明`
+- 调用：`类名::函数调用`；`类对象.函数调用`
+
+#### static const 类成员
+- 如果一个类的成员，既要实现共享，又要实现不可改变，那就用 static const 修饰。修饰成员函数，格式并无二异，修饰数据成员。
+- 必须要类内部实始化。
+
+#### 指向类成员的指针
+- 在 C++语言中，可以定义一个指针，使其指向类成员或成员函数，然后通过指针来访问类的成员。这包括指向属性成员的指针和指向成员函数的指针。
+
+##### 指向类数据成员的指针
+- 定义：`<成员数据类型><类名>::*<指针名>`
+- 赋值&初始化：`<成员数据类型><类名>::*<指针名>[=&<类名>::<非静态数据成员>]`
+  - 指向非静态数据成员的指针在定义时必须和类相关联，在使用时必须和具体的对象关联。实际保存的是某个对象成员相对于这个类生成对象其实地址的偏移量，所以可以适用任意对象。
+- 解用引：由于类不是运行时 存在的对象。因此，在使用这类指针时，需要首先指定类的一个对象，然后，通过对象来引用指针所指向的成员。 
+`<类对象名>.*<指向非静态数据成员的指针>`
+`<类对象指针>->*<指向非静态数据成员的指针>`
+
+##### 指向类成员函数的指针
+- 一个指向非静态成员函数的指针必须在三个方面与其指向的成员函数保持一致：参数列表要相同、返回类型要相同、所属的类型要相同
+- 定义：`<数据类型>(<类名>::*<指针名>)(<参数列表>)`
+- 赋值&初始化：`<数据类型>(<类名>::*<指针名>)(<参数列表>)[=&<类名>::<非静态成员函数>]`
+- 解用引由于类不是运行时存在的对象。因此，在使用这类指针时，需要首先指定类的一个对象，然后，通过对象来引用指针所指向的成员。`(<类对象名>.*<指向非静态成员函数的指针>)(<参数列表>)`；`(<类对象指针>->*<指向非静态成员函数的指针>)(<参数列表>)`
+
+##### 指向类静态成员的指针
+- **类静态数据成员的指针**：指向静态数据成员的指针的定义和使用与普通指针相同，在定义时无须和类相关联，在使用时也无须和具体的对象相关联。
+- **指向类静态成员函数的指针**：向静态成员函数的指针和普通指针相同，在定义时无须和类相关联，在使用时也无须和具体的对象相关联。
+```c
+int *p = & A::data;cout<<*p<<endl;
+void (*pfunc)() = &A::dis;pfunc();
+```
+
+##### 小结
+- 与普通意义上的指针不一样。存放的是偏移量。指向非静态成员函数时，必须用类名作限定符，使用时则必须用类的实例作限定符。指向静态成员函数时，则不需要使用类名作限定符。
+
+```c
+//适用类成员函数指针实现内部函数选择调用
+class Widget{
+public:
+  Widget(){fptr[0] = &f;fptr[1] = &g;fptr[2] = &h;fptr[3] = &i;}
+  void select(int idx, int val){
+    if(idx<0 || idx>cnt) return;
+    (this->*fptr[idx])(val);  //fptr只是存了偏移量，所以必须与this一起
+  }
+  int count(){return cnt;}
+private:
+  void f(int val){cout<<"void f() "<<val<<endl;}
+  void g(int val){cout<<"void g() "<<val<<endl;}
+  void h(int val){cout<<"void h() "<<val<<endl;}
+  void i(int val){cout<<"void i() "<<val<<endl;}
+  enum{ cnt = 4};   //建议使用匿名enum作为常量
+  void (Widget::*fptr[cnt])(int);
+};
+Widget w;
+for(int i=0; i<w.count(); i++){
+w.select(i,1);
+}
+```
+
+
 ## 友元(Friend)
+- 采用类的机制后实现了数据的隐藏与封装，类的数据成员一般定义为私有成员，成员函数一般定义为公有的，依此提供类与外界间的通信接口。但是，有时需要定义一些函数，这些函数不是类的一部分，但又需要频繁地访问类的数据成员，这时可以将这些函数定义为该类的友元函数。除了友元函数外，还有友元类，两者统称为友元。友元的作用是提高了程序的运行效率（即减少了类型和安全性检查及调用的时间开销），但它破坏了类的封装性和隐藏性，使得非成员函数可以访问类的私有成员。
+- 可以是一个函数，该函数被称为友元函数；友元也可以是一个类，该类被称为友元类。
+
+- 友元目的本质，是让其它不属于本类的成员(全局函数，其它类的成员函数)，成为类的成员而具备了本类成员的属性。
+
+### 友元使用
+#### 声明位置
+- 友元声明以关键字friend开始，它只能出现在类定义中。因为友元不是授权类的成员，所以它不受其所在类的声明区域 public private 和 protected 的影响。通常我们选择把所有友元声明组织在一起并放在类头之后.
+
+#### 友元的利弊
+- 友元不是类成员，但是它可以访问类中的私有成员。友元的作用在于提高程序的运行效率，但是，它破坏了类的封装性和隐藏性，使得非成员函数可以访问类的私有成员。不过，类的访问权限确实在某些应用场合显得有些呆板，从而容忍了友元这一特别语法现象。
+
+#### 注意事项
+1. 友元关系不能被继承。
+2. 友元关系是单向的，不具有交换性。若类B是类A的友元，类A不一定是类B的友元，要看在类中是否有相应的声明。
+3. 友元关系不具有传递性。若类B是类A的友元，类C是B的友元，类C不一定是类A的友元，同样要看类中是否有相应的申明
+
+### 友元函数
+- 友元函数是可以直接访问类的私有成员的非成员函数。它是定义在类外的普通函数，它不属于任何类，但需要在类的定义中加以声明，声明时只需在友元的名称前加上关键字friend：`friend 类型 函数名(形式参数);`,一个函数可以是多个类的友元函数，只需要在各个类中分别声明。
+
+- 全局函数作友元函数
+```c
+class Point{
+public:
+  Point(double xx, double yy){ x = xx;y = yy;}
+  friend double Distance(Point &a, Point &b);  //友元声明在public、private没有区别
+private:
+  double x, y;
+};
+double Distance(Point &a, Point &b){
+  double dx = a.x - b.x;double dy = a.y - b.y;return sqrt(dx*dx + dy*dy);
+}
+//------------------------
+Point p1(3.0, 4.0), p2(6.0, 8.0);
+double d = Distance(p1, p2);
+```
+
+- 类成员函数作友元函数
+```c
+class Point;    // 前向声明类Point，否则ManagerPoint声明时无法编译通过
+class ManagerPoint
+{
+public:
+  double Distance(Point &a, Point &b);   // 能有实现体，否则编译时无法获取Point的结构，造成编译失败不
+};
+class Point
+{
+public:
+Point(double xx, double yy){ x = xx;y = yy;}
+friend double ManagerPoint::Distance(Point &a, Point &b);
+private:
+  double x, y;
+};
+double ManagerPoint::Distance(Point &a, Point &b){ // 实现体在Point实现之后
+double dx = a.x - b.x;double dy = a.y - b.y;return sqrt(dx*dx + dy*dy);
+}
+//------------------------------
+Point p1(3.0, 4.0), p2(6.0, 8.0);
+ManagerPoint mp;
+float d = mp.Distance(p1,p2);
+```
+
+- 前向声明，是一种不完全型（forward declaration）声明，即只需提供类名(无需提供类实现)即可。正因为是（incomplete type）功能也很有限:
+  1. 不能定义类的对象。
+  2. 可以用于定义指向这个类型的指针或引用。
+  3. 用于声明(不是定义)，使用该类型作为形参类型或者函数的返回值类型。
+
+
+### 友元类
+- 友元类的所有成员函数都是另一个类的友元函数，都可以访问另一个类中的隐藏信息（包括私有成员和保护成员）。
+- 当希望一个类可以存取另一个类的私有成员时，可以将该类声明为另一类的友元类。
+```c
+class A {
+public:
+  inline void Test(){}
+private:
+  int x ,y;
+  friend Class B;
+}
+class B {
+public:
+   inline void Test(){ A a;printf("x=%d,y=%d".a.x,a.y);} 
+}
+```
 
 ## 运算符重载(Operator OverLoad)
+- 运算符重载的本质是函数重载。
+
+### 语法格式
+```c
+返值类型 operator 运算符名称(形参表列) {
+重载实体; }
+```
+- operator 运算符名称 在一起构成了新的函数名。
+- 比如`const Complex operator+(const Complex &c1,const Complex &c2);`我们会说，operator+ 重载了重载了运算符+。
+
+### 友元重载和成员重载
+```c
+class Complex{
+  friend const Complex operator+(const Complex &c1,const Complex &c2);
+  const Complex operator+(const Complex &another);
+private:
+  float _x;float _y;
+};
+const Complex operator+(const Complex &c1,const Complex &c2){
+  cout<<"友元函数重载"<<endl;return Complex(c1._x + c2._x,c1._y + c2._y);
+}
+const Complex Complex::operator+(const Complex & another){
+  cout<<"成员函数重载"<<endl;return Complex(this->_x + another._x,this->_y + another._y);
+}
+```
+
+- 重载运算符不能破坏语意。
+- 关于返回值
+```c
+int a = 3;int b = 4;
+(a+b) = 100; 这种语法是错的，所以重载函数+的返回值加const来修饰，防止匿名的返回值被赋值。
+string a = “china”,b = “ is china”, c;
+(c = a) = b; 此时的语法，是重载= 返回值不需加 const 。
+```
+
+### 重载规则
+- 1、C++不允许用户自己定义新的运算符，只能对已有的 C++运算符进行重载。
+  - 例如，有人觉得 BASIC 中用`**`作为幂运算符很方便，也想在 C++中将`**`定义为幂运算符，用`3**5`表示3^5，这是不行的
+- 2、C++中绝大部分运算符都是可以被重载的
+![可以被重载的运算符](/images/pasted-51.png)
+  
+  - 不能重载的运算符只有 4 个,前两个运算符不能重载是为了保证访问成员的功能不能被改变，域运算符合sizeof运算符的运算对象是类型而不是变量或一般表达式，不具备重载的特征。
+
+|不可重载|运算符|
+|--|--|
+|`.`| 成员运算符|
+|`.*`| 成员对象选择符|
+|`::`| 域解析运算符|
+|`?:`| 条件运算符，三目运算符|
+|`sizeof`| 类型大小运算符|
+
+  - 只能重载为成员函数的运算符
+
+|不可重载|运算符|
+|--|--|
+|`=` |赋值运算符|
+|`[]` |下标运算符|
+|`()` |函数运算符|
+|`->` |间接成员访问|
+|`->*` |间接取值访问|
+
+- 3、重载不能改变运算符运算对象（即操作数）的个数。
+  - 如关系运算符“>”和“<”等是双目运算符，重载后仍为双目运算符，需要两个参数。运算符`+`，`-`，`*`，`&`等既可以作为单目运算符，也可以作为双目运算符，可以分别将它们重载为单目运算符或双目运算符。
+- 4、重载不能改变运算符的优先级别。
+  - 例如`*`和`/`优先级高于`+`和`-`，不论怎样进行重载，各运算符之间的优先级不会改变。有时在程序中希望改变某运算符的优先级，也只能使用加括号的方法强制改变重载运算符的运算顺序。
+- 5、重载不能改变运算符的结合性。
+  - 如复制运算符”=“是右结合性（自右至左），重载后仍为右结合性。
+- 6、重载运算符的函数不能有默认的参数
+  - 否则就改变了运算符参数的个数，与前面第3点矛盾。
+- 7、重载运算符的运算中至少有一个操作数是自定义类。
+  - 重载的运算符必须和用户定义的自定义类型的对象一起使用，其参数至少应有一个是类对象（或类对象的引用）。也就是说，参数不能全部是 C++的标准类型，以防止用户修改用于标准类型数据成员的运算符的性质，如下面这样是不对的：
+  ```c
+  int operator + (int a,int b){return(a-b);}
+  ```
+  - 原来运算符+的作用是对两个数相加，现在企图通过重载使它的作用改为两个数相减。如果允许这样重载的话，如果有表达式 4+3，它的结果是 7 还是 1 呢？显然，这是绝对要禁止的。
+- 8、不必重载的运算符（= &）
+  - 用于类对象的运算符一般必须重载，但有两个例外，运算符”=“和运算符”&“不必用户重载。
+  - 复制运算符”=“可以用于每一个类对象，可以用它在同类对象之间相互赋值。因为系统已为每一个新声明的类重载了一个赋值运算符，它的作用是逐个复制类中的数据成员
+  - 地址运算符&也不必重载，它能返回类对象在内存中的起始地址。
+- 9、对运算符的重载，不应该失去其原有的意义
+  - 应当使重载运算符的功能类似于该运算符作用于标准类型数据时候时所实现的功能。
+  - 例如，我们会去重载”+“以实现对象的相加，而不会去重载”+“以实现对象相减的功能，因为这样不符合我们对”+“原来的认知。
+
+### 双目运算符重载
+- 形式：`L#R`
+- 全局函数：`operator#(L,R);`
+- 成员函数：`L.operator#(R)`
+- 实现重载+=
+```c
+class Complex{
+public:
+  Complex& operator+=(const Complex &c){
+    this->_x += c._x;this->_y += c._y;return * this;
+  }
+private:
+  float _x;
+  float _y;
+};
+```
+
+### 单目运算符重载
+- 形式：`#M 或 M#`
+- 全局函数：`operator#(M)`
+- 成员函数：`M.operator#()`
+- 重载-运算符
+```c
+class Complex{
+public:
+  const Complex operator-(void) const{
+    return Complex(-_x,-_y);
+  }
+private:
+  float _x;
+  float _y;
+};
+```
+
+### 重载格式
+
+![重载与函数调用的关系](/images/pasted-52.png)
+
+- 建议
+|运算符 |建议使用|
+|--|--|
+|所有的一元运算符 |成员|
+|`+=` `-=` `/=` `*=` `^=` `&=` `!=` `%=` `>>=` `<<=` |成员|
+|其它二员运算符 |非成员|
+
+- 友元还是成员
+  1. 一个操作符的左右操作数不一定是相同类型的对象，这就涉及到将该操作符函数定义为谁的友元，谁的成员问题。
+  2. 一个操作符函数，被声明为哪个类的成员，取决于该函数的调用对象(通常是左操作数)。
+
+### 使用重载完成类型转换
+#### 标准类型间转换
+- 隐式类型转换：`5/8 5.0/8`
+- 显式类型转换：`static_cast<float>(5)/8`或者`(float)5/8`
+
+#### 用类型转换构造函数进行类型转换
+- 实现其它类型到本类类型的转化。可用于构造和传参（也是构造，赋值）。
+```c
+class 目标类{
+目标类(const 源类 & 源类对象引用) {
+  根据需求完成从源类型到目标类型的转换
+  }
+}
+```
+
+- 转换构造函数，本质是一个构造函数。是只有一个参数的构造函数。如有多个参数，只能称为构造函数，而不是转换函数。
+```c
+class Point3D{
+public:
+  Point3D(int x,int y,int z):_x(x),_y(y),_z(z){}
+  Point3D(Point2D &p){
+    this->_x = p._x;this->_y = p._y;this->_z = 0;
+  }
+private:
+  int _x;int _y;int _z;
+};
+```
+
+- explicit 关键字：以显式的方式完成转化 static_cast<目标类> (源类对象)，否则会报错。
+- implicit 关键字：以隐式的方式完成转化
+```c
+explicit Point3D(Point2D &p) //注:explicit 是个仅用于声明的关键字{
+this->_x = p._x;this->_y = p._y;this->_z = 0;
+}
+Point2D p2(1,2);
+Point3D p3a = static_cast<Point3D> (p2); //(Point3D)p2;
+```
+
+#### 用类型转换操作符函数进行转换
+- 类型转化函数：转换函数必须是类方法，转换函数无参数，无返回。
+```c
+class 源类{
+operator 转化目标类(void)
+{
+根据需求完成从源类型到目标类型的转换
+} }
+```
+
+- 举例
+```c
+class Point2D
+{
+public:
+  operator Point3D();  //无参数，无返回
+private:int _x;int _y;
+};
+Point2D::operator Point3D(){
+  return Point3D(_x,_y,0);  //无参数，无返回，但需要return目标类
+}
+//-------------------------
+Point3D p3a = p2;
+p3a.dis();
+```
+
+### 重载的高级用法
+#### 函数操作符`()`---仿函数
+- 把类对象像函数名一样使用。仿函数(functor)，就是使一个类的使用看上去象一个函数。其实现就是类中实现一个operator()，这个类就有了类似函数的行为，就是一个仿函数类了。
+```
+class 类名{
+返值类型 operator()(参数类型)
+函数体
+}
+```
+
+- 举例
+```c
+class Pow
+{
+public:
+int operator()(int i){return i*i;}
+double operator ()(double d){return d*d;}
+};
+//--------------
+Pow pow;
+int i = pow(4); //pow.opreator()(4);
+double d = pow(5.5);
+```
+
+#### 堆内存操作符 （new delete）
+- 适用于极个别情况需要定制的时候才用的到。注: operator new 中 size_t 参数是编译器自动计算传递的。
+```c
+void *operator new(size_t)
+void operator delete(void *)
+void *operator new[](size_t)
+void operator delete[](void *)
+```
+
+- 全局重载
+```c
+void * operator new (size_t size){return malloc(size);}
+void operator delete(void *p){free(p);}
+void * operator new[] (size_t size){return malloc(size);}
+void operator delete[](void *p){free(p);}
+```
+
+- 类中重载
+```c
+class A {
+public:
+  void * operator new (size_t size){void *p = malloc(size); // ((A*)p)->a = 100;return p;}
+  void operator delete(void *p){free(p);}
+  void * operator new[] (size_t size){return malloc(size);}
+  void operator delete[](void *p){free(p);}
+private:int a;
+};
+```
+
+#### 解引用与智能指针（`->` /`*`）
+- 常规意义上讲，new 或是 malloc 出来的堆上的空间，都需要手动 delete 和 free 的。但在其它高级语言中，只需申请无需释放的功能是存在的。
+- 智能指针，被auto_ptr托管以后，不需要关心delete问题，他会在ptr离开其栈空间的时候发生。
+```c
+#include <memory>
+class A {
+public:
+  A(){cout<<"A()"<<endl;}
+  ~A(){cout<<"~A()"<<endl;}
+  void func(){cout<<"hahaha"<<endl;}
+};
+void foo(){
+auto_ptr<A> p (new A);
+p->func(); //两种访问方式
+(*p).func();
+}
+```
+
+- 使用重载实现
+```c
+class PMA
+{
+public:
+  PMA(A *p):_p(p){}
+  ~PMA(){delete _p;}
+  A& operator*(){return *_p;}
+  A* operator->(){return _p;}
+private:
+  A * _p;
+};
+```
+
 
 ## 继承与派生(Inherit&&Derive)
+- 继承和派生实际描述的是一件事，只不过被描述对象不同，父类派生出子类，子类继承于父类。基类派生出派生类，派生类继承于基类。
+
+### 语法
+- 一个派生类可以同时有多个基类，这种情况称为多重继承，派生类只有一个基类，称为单继承。
+- 默认继承方式是private
+```c
+class 派生类名：[继承方式] 基类名{
+  派生类成员声明；
+};
+```
+
+### 派生类的组成
+- 派生类中的成员，包含两大部分，一类是从基类继承过来的，一类是自己增加的成员。从基类继承过过来的表现其共性，而新增的成员体现了其个性。
+  1. 全盘接收，除了构造器与析构器。基类有可能会造成派生类的成员冗余，所以说基类是需设计的。
+  2. 派生类有了自己的个性，使派生类有了意义。
+
+### 派生类的构造
+- 派生类中由基类继承而来的成员的初始化工作还是由基类的构造函数完成，然后派生类中新增的成员在派生类的构造函数中初始化
+
+#### 语法
+- 构造函数的初始化顺序是根据声明的顺序初始化。
+- 如果基类中没有默认构造函数(无参)，那么在派生类的构造函数中必须显示调用基类构造函数，以初始化基类成员。
+```c
+派生类名::派生类名（参数总表）：基类名（参数表）,内嵌子对象（参数表）{
+  派生类新增成员的初始化语句; //也可出现地参数列表中
+}
+```
+
+- 如果父类没有空参构造函数或者默认值构造函数，那么子类必须要使用参数列表的方式，显是的调用父类的构造器，否则无法完成父类的初始化。
+```c
+//-----------父类-------------
+class Student{
+public:
+  Student(string sn,int n,char s):name(sn),num(n),sex(s){};
+  ~Student();
+  void dis();
+private:
+  string name;int num;char sex;
+};
+//-----------子类-------------
+class Graduate:public Student
+public:
+  Graduate(string sn,int in,char cs,float fs):Student(sn,in,cs),salary(fs){};  //调用构造器
+  ~Graduate();
+void dump(){dis();cout<<salary<<endl;}
+private:
+  float salary;
+};
+class Doctor:public Graduate  //孙子类构造时，只需完成其父类即可，不用完成爷类构造
+public:
+  Doctor(string sn,int in,char cs,float fs,string st):Graduate(sn,in,cs,fs),title(st){};  
+  ~Doctor();
+void print(){dump();cout<<title<<endl;}
+private:
+  string title;
+};
+//-----------父类2-------------
+class Father{
+public:
+  Father(){cout<<"father"<<endl;}  //无参构造 可以实现子类自动的调用
+  //Father(int i=0){cout<<"father"<<endl;}  // 默认值构造器
+}
+//-----------子类2-------------
+class Son{
+public:
+  Son(){cout<<"son"<<endl;}  //首先会隐式的调用父类无参构造，再调用子类构造
+  //Son():father(){cout<<"son"<<endl;}  //显示调用父类器构造
+  //Son():father(11){cout<<"son"<<endl;}  //显示调用父类器有参构造
+}
+```
+
+- 派生类构造函数执行的次序：**基类-->成员中的类对象-->子类-->孙类**
+  1. 调用基类构造函数，调用顺序按照它们被继承时声明的顺序（从左到右）；
+  2. 调用内嵌成员对象的构造函数，调用顺序按照它们在类中声明的顺序；
+  3. 派生类的构造函数体中的内容
+
+- 子类构造器中，要么显示的调用父类的构造器(传参)，要么隐式的调用。
+- 发生隐式调用时，父类要有无参构造器或是可以包含无参构造器的默认参数函数。子类对象亦然。
+
+
+#### 派生类的拷贝构造
+- 派生类中的默认拷贝构造器会调用父类中默认或自实现拷贝构造器，若子类中自实现拷贝构造器，则必须显示的调用父类的拷贝构造器。
+- 格式
+```
+派生类::派生类(const 派生类& another)
+:基类(another),派生类新成员(another.新成员) {}
+```
+
+```c
+//----------父类----------------
+class Student{
+public:
+Student(string sn,int n,char s):name(sn),num(n),sex(s){};
+Student(const Student & another){name = another.name;num = another.num;sex = another.sex;};  //父类拷贝构造器
+~Student();
+void dis();
+private:string name;int num;char sex;
+};
+//----------父类----------------
+class Graduate:public Student{
+public:
+Graduate(string sn,int in,char cs,float fs):Student(sn,in,cs),salary(fs){};
+~Graduate(){};
+Graduate(const Graduate & another):Student(another),salary(another.salary){};  //子类自实现拷贝构造，必须显式调用父类的构造
+void dump(){dis();cout<<salary<<endl;}
+private:float salary;
+};
+```
+
+#### 派生类的赋值运算符重载
+- 赋值运算符函数不是构造器，所以可以继承，语法上就没有构造器的严格一些。
+- 派生类的默认赋值运算符重载函数，会调用父类的默认或自实现函数。派生类若自实现，则不会发生调用行为，也不报错(区别拷贝)，赋值错误，若要正确，需要显式的调用父类的构造器
+- 格式
+```c
+子类& 子类::operator=(const 子类& another){
+if(this == &another)
+  return *this; //防止自赋值
+父类::operator =(another); // 调用父类的赋值运算符重载
+this->salary = another.salary;//子类成员初始化
+return * this;
+}
+```
+
+```c
+Graduate & Graduate::operator=(const Graduate & another){
+if(this == &another)
+  return *this;
+Student::operator =(another);   // 显式的调用父类的赋值运算符函数
+this->salary = another.salary;
+return * this;
+}
+```
+
+- 对于父类和子类的成员重名的方法(即使返回值和参数不同，只要函数名相同)，类似上面的父类的赋值运算函数，则需要使用`::`到父类的命名空间就可以了。
+
+#### 派生类友元函数
+- 由于友元函数并非类成员，因引不能被继承，在某种需求下，可能希望派生类的友元函数能够使用基类中的友元函数。为此可以通过强制类型转换，将派生类的指针或是引用强转为其类的引用或是指针，然后使用转换后的引用或是指针来调用基类中的友元函数。
+```c
+class Student{
+friend ostream &operator<<(ostream & out, Student & stu){out<<stu.a<<"--"<<stu.b<<endl;}; 
+private:int a;int b;
+};
+class Graduate:public Student{
+friend ostream &operator<<(ostream & out, Graduate & gra){
+  out<<(Student&)gra<<endl;  //强转为student，在使用student的<<操作符
+  out<<gra.c<<"**"<<gra.d<<endl; //调用自身的变量
+};  // 声明友元
+private:int c;int d;
+};
+//-------------------------------
+// Student a;
+// cout<<a<<endl;
+Graduate g;
+cout<<g<<endl;
+return 0;
+```
+
+
+#### 派生类析构函数的语法
+- 派生类的析构函数的功能是在该对象消亡之前进行一些必要的清理工作，析构函数没有类型，也没有参数。析构函数的执行顺序与构造函数相反。 
+- 析构顺序：**子类->成员->基类**
+- 无需指明析构关系。why? 析构函数只有一种，无重载，无默参。
+
+#### 派生类成员的标识和访问
+##### 作用域分辨符
+- 格式：`基类名::成员名；基类名::成员名（参数表）；`
+- 如果某派生类的多个基类拥有同名的成员，同时，派生类又新增这样的同名成员，在这种情况下，派生类成员将`shadow(隐藏)`所有基类的同名成员。这就需要这样的调用方式才能调用基类的同名成员。
+
+|重载和隐藏的区别||
+|--|--|
+|重载overload|同一作用域 ，函数同名不同参(个数，类型，顺序)|
+|隐藏shadow|父子类中，标识符(函数，变量)相同，无关乎返值和参数(函数)，或声明类 型(变量)|
+
+##### 继承方式
+- 派生类成员属性划分为四种：
+  1. 公有成员
+  2. 保护成员
+  3. 私有成员
+  4. 不可见的成员
+
+- 继承方式规定了如何访问基类继承的成员。继承方式有 public, private, protected。继承方式不影响派生类的访问权限，影响了从基类继承来的成员的访问权限，包括派生类内的访问权限和派生类对象。
+- pretected 对于外界访问属性来说，等同于私有，但可以派生类中可见。
+
+|继承方式|基类成员方式|派生类内部访问|派生类对象访问|
+|--|--|--|
+|公有继承|public<br>protected<br>private|public<br>protected<br>inaccess|public<br>inaccess<br>inaccess|
+|保护继承|public<br>protected<br>private|protected<br>protected<br>inaccess|inaccess<br>inaccess<br>inaccess|
+|私有继承|public<br>protected<br>private|private<br>private<br>inaccess|inaccess<br>inaccess<br>inaccess|
+
+- public 公有继承
+  - 当类的继承方式为公有继承时，基类的公有和保护成员的访问属性在派生类中不变，而基类的私有成员不可访问。即基类的公有成员和保护成员被继承到派生类中仍作为派生类的公有成员和保护成员。派生类的其他成员可以直接访问它们。无论派生类的成员还是派生类的对象都无法访问基类的私有成员。
+- private 私有继承
+  - 当类的继承方式为私有继承时，基类中的公有成员和保护成员都以私有成员身份出现在派生类中，而基类的私有成员在派生类中不可访问。基类的公有成员和保护成员被继承后作为派生类的私有成员，派生类的其他成员可以直接访问它们，但是在类外部通过派生类的对象无法访问。无论是派生类的成员还是通过派生类的对象，都无法访问从基类继承的私有成员。通过多次私有继承后，对于基类的成员都会成为不可访问。因此私有继承比较少用。
+- protected 保护继承
+  - 保护继承中，基类的公有成员和私有成员都以保护成员的身份出现在派生类中，而基类的私有成员不可访问。派生类的其他成员可以直接访问从基类继承来的公有和保护成员，但是类外部通过派生类的对象无法访问它们，无论派生类的成员还是派生类的对象，都无法访问基类的私有成员。
+  
+- public作用：传承接口 间接的传承了数据(protected)
+- protected作用：传承数据，间接封杀了对外接口
+- private统杀了数据和接口
+  1. 只要是私有成员到派生类中,均不可访问. 正是体现的数据隐蔽性.其私有成员仅可被本类的成员函数访问
+  2. 如果多级派生当中，均采用 public,直到最后一级，派生类中均可访问基类的public,protected 成员. 兼顾了数据的隐蔽性和接口传承和数据传递
+  3. 如果多级派生当中，均采用 private,直到最后一级,派生类中基类的所有成员均变为不可见. 只兼顾了数据的隐蔽性
+  4. 如果多级派生当中,均采用 protected,直到最后一级，派生类的基类的所有成员即使可见,也均不可被类外调用只兼顾了数据的隐蔽性和数据传递
+
+### 多继承
+- 从继承类别上分，继承可分为单继承和多继承，前面讲的都是单继承。
+
+#### 继承语法
+```c
+派生类名::派生类名（参数总表）：基类名 1（参数表 1），基类名（参数名 2）....基类名 n（参数名 n），内嵌子对象 1（参数表 1），内嵌子对象 2（参数表 2）....内嵌子对象 n（参数表 n） {
+  派生类新增成员的初始化语句；
+}
+```
+
+#### 三角问题(二义性问题)
+- 多个父类中重名的成员，继承到子类中后，为了避免冲突，携带了各父类的作用域信息, 子类中要访问继承下来的重名成员，则会产生二义性，为了避免冲突，访问时需要还有父类的作用域信息。
+
+#### 虚继承
+- 在多继承中，保存共同基类的多份同名成员，虽然有时是必要的，可以在不同的数据成员中分别存放不同的数据，但在大多数情况下，是我们不希望出现的。因为保留多份数据成员的拷贝，不仅占有较多的存储空间，还增加了访问的困难。
+- 为此，c++提供了，虚基类和虚继承机制，实现了在多继承中只保留一份共同成员。 虚基类，需要设计和抽象，虚继承，是一种继承的扩展。
+  1. M 类称为虚基类(virtual base class )，是抽象和设计的结果。
+  2. 虚继承语法：`class 派生类名:virtual 继承方式 基类`
+  3. 虚基类及间接类的实始化
+```c
+class A{A(int i){}};
+class B:virtual public A {B(int n):A(n){}};
+class C:virtual public A {C(int n):A(n){}};
+class D:public B,public C {D(int n):A(n),B(n),C(n){}};  // 这里ABC都要初始化
+```
 
 ## 多态（PolyMorphism）
+- C++中所谓的多态(polymorphism)是指，由继承而产生的相关的不同的类，其对象对同一消息会作出不同的响应。
+- 多态性是面向对象程序设计的一个重要特征，能增加程序的灵活性。可以减轻系统升级,维 护,调试的工作量和复杂度
+
+### 赋值兼容(多态实现的前提)
+- 赋值兼容规则是指在需要基类对象的任何地方都可以使用公有派生类的对象来替代。赋值兼容是一种默认行为，不需要任何的显示的转化步骤。
+- 赋值兼容规则中所指的替代包括以下的情况：
+  - 派生类的对象可以赋值给基类对象。
+  - 派生类的对象可以初始化基类的引用。
+  - 派生类对象的地址可以赋给指向基类的指针。
+- 在替代之后，派生类对象就可以作为基类的对象使用，但只能使用从基类继承的成员。
+- 父类也可以通过强转的方式转化为子类。 父类对象强转为子类对象后，访问从父类继承下来的部分是可以的，但访问子类的部分，则会发生越界的风险，越界的结果是未知的。
+
+```c
+class Shape{
+public:
+  Shape(int x,int y):_x(x),_y(y){}
+  void draw(){cout<<"draw Shap ";cout<<"start ("<<_x<<","<<_y<<") "<<endl;}
+//private:
+protected:int _x;int _y;
+};
+class Circle:public Shape{
+public:
+  Circle(int x, int y,int r):Shape(x,y),_r(r){}
+  void draw(){cout<<"draw Circle ";cout<<"start ("<<_x<<","<<_y<<") ";cout<<"radio r = "<<_r<<endl;}
+private:int _r;
+};
+//------------------------------
+Shape s(3,5);
+s.draw();
+Circle c(1,2,4);
+c.draw();
+s = c;
+s.draw();
+Shape &rs = c;
+rs.draw();
+Shape *ps = &c;
+ps->draw();
+//c = static_cast<Circle>(s); //缺少转化函数
+//c.draw();
+Circle * pc = static_cast<Circle*>(&s); //父类通过强转的方式转化为子类
+pc->draw();
+```
+
+### 多态形成的条件
+#### 多态
+##### 静多态
+- 前面学习的函数重载，也是一种多态现象，通过命名倾轧在编译阶段决定，故称为静多态。
+
+##### 动多态
+- 动多态，不是在编译器阶段决定，而是在运行阶段决定，故称为动多态。动多态行成的
+- 条件如下: 
+  1. 父类中有虚函数。
+  2. 子类 override(覆写)父类中的虚函数。
+  3. 通过己被子类对象赋值的父类指针或引用，调用共用接口。
+  
+#### 虚函数
+- 虚函数要点
+  1. 在基类中用 virual 声明成员函数为虚函数。类外实现虚函数时，不必再加 virtual.
+  2. 在派生类中重新定义此函数称为覆写，要求函数名，返值类型，函数参数个数及类型全部匹配。并根据派生类的需要重新定义函数体。
+  3. 当一个成员函数被声明为虚函数后，其派生类中完全相同的函数（显示的写出）也为虚函数。 可以在其前加 virtual 以示清晰。
+  4. 定义一个指基类对象的指针，并使其指向其子类的对象，通过该指针调用虚函数，此时调用的就是指针变量指向对象的同名函数。
+  5. 子类中的覆写的函数，可以为任意访问类型，依子类需求决定。
+
+- 格式：`class 类名{virtual 函数声明; }`
+- 例举
+```c
+//--------------Shape 类中----------
+virtual void draw(){cout<<"draw Shap ";cout<<"start ("<<_x<<","<<_y<<") "<<endl;}
+//--------------Circle 类中----------
+void draw(){cout<<"draw Circle ";cout<<"start ("<<_x<<","<<_y<<") ";cout<<"radio r = "<<_r<<endl;}
+//--------------Rect 类中----------
+void draw(){cout<<"draw Rect";cout<<"start ("<<_x<<","<<_y<<") ";cout<<"len = "<<_len<<" wid = "<<_wid<<endl;} 
+//--------------main----------
+Circle c(1,2,4);
+c.draw();
+Rect r(2,3,4,5);
+r.draw();
+Shape *ps;
+int choice;
+while(1) //真正的实现了动多态，在运行阶段决定。
+{
+scanf("%d",&choice);
+switch(choice)
+{
+case 1:
+ps = &c;
+ps->draw();
+break;
+case 2:
+ps = &r;
+ps->draw();
+break;
+} }
+```
+
+#### 纯虚函数
+- 要点
+  1. 含有纯虚函数的类，称为抽象基类，不可实列化。即不能创建对象，存在的意义就是被继承，提供族类的公共接口，java 中称为 interface。
+  2. 纯虚函数只有声明，没有实现，被“初始化”为 0。
+  3. 如果一个类中声明了纯虚函数，而在派生类中没有对该函数定义，则该虚函数在派生类中仍然为纯虚函数，派生类仍然为纯虚基类。
+- 格式：`class 类名{virtual 函数声明 = 0;}`
+- 例举
+```c
+//------------Shape 类中
+virtual void draw() = 0;
+//------------Circle 类中
+void draw(){cout<<"draw Circle ";cout<<"start ("<<_x<<","<<_y<<") ";cout<<"radio r = "<<_r<<endl;} 
+//------------main()
+// Shape s(1,2); //函数纯虚函数的类称为抽象基类
+Circle c(1,2,3);
+Rect r(1,2,3,5);
+Shape *pc = &c;
+pc->draw();
+pc = &r;
+pc->draw();
+```
+
+8.3.6.含有虚函数的析构
+含有虚函数的类，析构函数也应该声明为虚函数。在 delete 父类指针的时候，会调用子
+类的析构函数，实现完整析构。
+8.3.7.若干限制
+1)只有类的成员函数才能声明为虚函数
+虚函数仅适用于有继承关系的类对象，所以普通函数不能声明为虚函数。
+2)静态成员函数不能是虚函数
+静态成员函数不受对象的捆绑，只有类的信息。
+3)内联函数不能是虚函数
+4)构造函数不能是虚函数
+构造时，对象的创建尚未完成。构造完成后，才能算一个名符其实的对象。
+5)析构函数可以是虚函数且通常声明为虚函数。
+
+
+### 运行时类型信息(RTTI)
+- typeid、dynamic_cast是C++运行时类型信息RTTI(run time type identificaiton重要组成部分。运行时信息，来自于多态，所以只用于基于多态的继承体系中。
+
+#### typeid
+- 运算符 typeid 返回包含操作数数据类型信息的 type_info 对象的一个引用，信息中包括数据类型的名称，要使用 typeid,程序中需要包含头文件`<typeinfo>`。
+- 其中 type_info 重载了操作符==, !=,分别用来比较是否相等、不等，函数 name()返回类型名称。type_info 的拷贝和赋值均是私有的，故不可拷贝和赋值。
+- 常用于返回检查,调试之用。
+```c
+typedef void (*Func)();
+class Base{public:virtual ~Base(){}};
+class Derive:public Base{};
+//------------------------
+cout<<typeid(int).name()<<endl;
+cout<<typeid(double).name()<<endl;
+cout<<typeid(char *).name()<<endl;
+cout<<typeid(char **).name()<<endl;
+cout<<typeid(const char *).name()<<endl;
+cout<<typeid(const char * const ).name()<<endl;
+cout<<typeid(Func).name()<<endl;
+cout<<typeid(Base).name()<<endl;
+cout<<typeid(Derive).name()<<endl;
+Derive d;
+Base &b = d; //Base 中没有虚函数时，有时？
+cout<<typeid(b).name()<<endl;
+cout<<typeid(d).name()<<endl;
+Base *p = &d;
+cout<<typeid(p).name()<<endl; //判断指针是，其实是看不出其类型信息的
+cout<<typeid(*p).name()<<endl;
+cout<<typeid(d).name()<<endl;
+cout<<boolalpha<<(typeid(*p)== typeid(d))<<endl;
+```
+
+- 多态下使用 typeid 时要注意的问题:
+  1. 确保基类定义了至少一个虚函数(虚析构也算)。
+  2. 不要将 typeid 作用于指针，应该作用于引用，或解引用的指针。
+  3. typeid 是一个运算符，而不是函数。
+  4. typeid 运算符返回的 type_info 类型，其拷贝构造函数和赋值运算函数都声明为private 了，这意味着其不能用于 stl 容器，所以我们一般不能不直接保存 type_info 信息，而保存 type_info 的 name 信息
+
+#### typecast
+##### static_cast
+- 在一个方向上可以作隐式转换的，在另外一个方向上可以作静态转换。发生在编译阶段，不保证后序使用的正确性。
+
+##### reinterpreter_cast
+- 既不在编译器期也不在运行期进行检查，安全性完全由程序员决定。
+
+##### dynamic_cast
+- dynamic_cast 一种运行时的类型转化方式,所以要在运行时作转换判断。检查指针所指类型，然后判断这一类型是否与正在转换成的类型有一种 “is a”的关系，如果是，dynamic_cast 返回对象地址。如果不是，dynamic_cast 返回 NULL。
+- dynamic_cast 常用多态继承中，判断父类指针的真实指向。
+```c
+class A {public:virtual ~A(){}};
+class B:public A {};
+class C:public A {};
+class D {};
+//-----------------------
+B b;
+A *pa = &b;
+B *pb = dynamic_cast<B*>(pa); //成功
+cout<<pb<<endl;
+C *pc = dynamic_cast<C*>(pa); //成功 安全
+cout<<pc<<endl;
+D *pd = dynamic_cast<D*>(pa); //成功 安全
+cout<<pd<<endl;
+pb = static_cast<B*>(pa); //成功
+cout<<pb<<endl;
+pc = static_cast<C*>(pa); //成功 不安全
+cout<<pc<<endl;
+// pd = static_cast<D*>(pa); //编译 不成功
+// cout<<pd<<endl;
+pb = reinterpret_cast<B*>(pa); //成功 不安全
+cout<<pb<<endl;
+pc = reinterpret_cast<C*>(pa); //成功 不安全
+cout<<pc<<endl;
+pd = reinterpret_cast<D*>(pa); //成功 不安全
+cout<<pd<<endl;
+```
+
+### 多态实现
+
+#### 虚函数表
+- C++的多态是通过一张虚函数表（Virtual Table）来实现的，简称为 V-Table。在这个表中，主是要一个类的虚函数的地址表，这张表解决了继承、覆写的问题，保证其真实反应实际的函数。这样，在有虚函数的类的实例中这个表被分配在了这个实例的内存中，所以，当我们用父类的指针来操作一个子类的时候，这张虚函数表就显得由为重要了，它就像一个地图一样，指明了实际所应该调用的函数。
+- 这里我们着重看一下这张虚函数表。C++的编译器应该是保证虚函数表的指针存在于对象实例中最前面的位置（这是为了保证取到虚函数表的有最高的性能——如果有多层继承或是多重继承的情况下）。 这意味着我们通过对象实例的地址得到这张虚函数表，然后就可以遍历其中函数指针，并调用相应的函数。
+
+
+
+
+
+
+
 
 # `C++`高级
 ## 模板(Templates)

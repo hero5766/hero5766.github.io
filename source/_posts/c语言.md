@@ -1002,7 +1002,7 @@ for( 表达式 1 ; 表达式 2 ; 表达式 3 )
 - 返回值详细解析：
 
 |variable| Meaning| Range|
-|--
+|--|--|--|
 |int tm_sec| seconds after the minute |0-61*|
 |int tm_min| minutes after the hour |0-59|
 |int tm_hour| hours since midnight |0-23|
