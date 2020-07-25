@@ -1,0 +1,1780 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="Qt5"><meta name="keywords" content=""><meta name="author" content="hero576"><meta name="copyright" content="hero576"><title>Qt5 | void land space</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.7.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="dns-prefetch" href="https://hm.baidu.com"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?5ff8fca367285c16c6dd5c16ca2ccc1b";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();</script><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  }
+} </script><meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="void land space" type="application/atom+xml">
+</head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#简介"><span class="toc-number">1.</span> <span class="toc-text"> 简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-number">1.1.</span> <span class="toc-text"> 安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#调式"><span class="toc-number">1.2.</span> <span class="toc-text"> 调式</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#qt项目介绍"><span class="toc-number">2.</span> <span class="toc-text"> Qt项目介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#创建项目"><span class="toc-number">2.1.</span> <span class="toc-text"> 创建项目</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#application模板"><span class="toc-number">2.1.1.</span> <span class="toc-text"> Application模板</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#library模板"><span class="toc-number">2.1.2.</span> <span class="toc-text"> Library模板</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#生成文件"><span class="toc-number">2.2.</span> <span class="toc-text"> 生成文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#项目配置"><span class="toc-number">2.3.</span> <span class="toc-text"> 项目配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#qt配置库和头文件"><span class="toc-number">2.3.1.</span> <span class="toc-text"> Qt配置库和头文件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#库文件准备"><span class="toc-number">2.3.1.1.</span> <span class="toc-text"> 库文件准备</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#引用库的配置"><span class="toc-number">2.3.1.2.</span> <span class="toc-text"> 引用库的配置</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#新增ui和qrc"><span class="toc-number">2.3.2.</span> <span class="toc-text"> 新增ui和qrc</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#vsqt配置项目"><span class="toc-number">2.3.3.</span> <span class="toc-text"> VS+Qt配置项目</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#输出-调试-库-头文件设置"><span class="toc-number">2.3.3.1.</span> <span class="toc-text"> 输出、调试、库、头文件设置</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#qmake"><span class="toc-number">2.4.</span> <span class="toc-text"> QMake</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#qt编译经历的步骤"><span class="toc-number">2.4.1.</span> <span class="toc-text"> QT编译经历的步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#手动创建pro"><span class="toc-number">2.4.2.</span> <span class="toc-text"> 手动创建pro</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#创建pro"><span class="toc-number">2.4.2.1.</span> <span class="toc-text"> 创建pro</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#配置qmake和jom执行路径"><span class="toc-number">2.4.2.2.</span> <span class="toc-text"> 配置qmake和jom执行路径</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#导入vs开发环境"><span class="toc-number">2.4.2.3.</span> <span class="toc-text"> 导入vs开发环境</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建动态库和静态库"><span class="toc-number">2.5.</span> <span class="toc-text"> 创建动态库和静态库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#qtcreator创建"><span class="toc-number">2.5.1.</span> <span class="toc-text"> qtcreator创建</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#pro手动创建"><span class="toc-number">2.5.1.1.</span> <span class="toc-text"> pro手动创建</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#调用动态库"><span class="toc-number">2.5.2.</span> <span class="toc-text"> 调用动态库</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#debug和release编译设置"><span class="toc-number">2.6.</span> <span class="toc-text"> debug和release编译设置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#跨平台编译"><span class="toc-number">2.7.</span> <span class="toc-text"> 跨平台编译</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#qt信号槽"><span class="toc-number">3.</span> <span class="toc-text"> Qt信号槽</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#信号槽的原理"><span class="toc-number">3.1.</span> <span class="toc-text"> 信号槽的原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#组成"><span class="toc-number">3.1.1.</span> <span class="toc-text"> 组成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#过程"><span class="toc-number">3.1.2.</span> <span class="toc-text"> 过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码实现"><span class="toc-number">3.1.3.</span> <span class="toc-text"> 代码实现</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#qthread"><span class="toc-number">4.</span> <span class="toc-text"> QThread</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#利用信号执行槽函数"><span class="toc-number">4.1.</span> <span class="toc-text"> 利用信号执行槽函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#在qthread中添加信号绑定到qwidget"><span class="toc-number">4.2.</span> <span class="toc-text"> 在QThread中添加信号，绑定到QWidget</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#qt核心窗口类qwidget"><span class="toc-number">5.</span> <span class="toc-text"> Qt核心窗口类QWidget</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#手动创建qwidget对象"><span class="toc-number">5.1.</span> <span class="toc-text"> 手动创建QWidget对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#窗口的属性"><span class="toc-number">5.2.</span> <span class="toc-text"> 窗口的属性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#设置窗口坐标和大小"><span class="toc-number">5.2.1.</span> <span class="toc-text"> 设置窗口坐标和大小</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设置窗口最大化-最小化-全屏-正常"><span class="toc-number">5.2.2.</span> <span class="toc-text"> 设置窗口最大化、最小化、全屏、正常</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#定制窗口类型"><span class="toc-number">5.2.3.</span> <span class="toc-text"> 定制窗口类型</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#qt文本处理"><span class="toc-number">6.</span> <span class="toc-text"> Qt文本处理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#字符集"><span class="toc-number">6.1.</span> <span class="toc-text"> 字符集</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#编码"><span class="toc-number">6.1.1.</span> <span class="toc-text"> 编码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字节序bom"><span class="toc-number">6.1.2.</span> <span class="toc-text"> 字节序BOM</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#qstring"><span class="toc-number">6.2.</span> <span class="toc-text"> QString</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#常用功能"><span class="toc-number">6.2.1.</span> <span class="toc-text"> 常用功能</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#qt中文乱码问题"><span class="toc-number">6.3.</span> <span class="toc-text"> QT中文乱码问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#字符集设置"><span class="toc-number">6.3.1.</span> <span class="toc-text"> 字符集设置</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#qt控件"><span class="toc-number">7.</span> <span class="toc-text"> Qt控件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#qlabel"><span class="toc-number">7.1.</span> <span class="toc-text"> QLabel</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#显示文字"><span class="toc-number">7.1.1.</span> <span class="toc-text"> 显示文字</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#样式设置"><span class="toc-number">7.1.2.</span> <span class="toc-text"> 样式设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#显示图片"><span class="toc-number">7.1.3.</span> <span class="toc-text"> 显示图片</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#播放gif动画"><span class="toc-number">7.1.4.</span> <span class="toc-text"> 播放gif动画</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建qlabel"><span class="toc-number">7.1.5.</span> <span class="toc-text"> 创建QLabel</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#qlabel的富文本模式"><span class="toc-number">7.1.6.</span> <span class="toc-text"> QLabel的富文本模式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#链接事件"><span class="toc-number">7.1.6.1.</span> <span class="toc-text"> 链接事件</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#qlabel选择和编辑"><span class="toc-number">7.1.7.</span> <span class="toc-text"> QLabel选择和编辑</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#qpushbutton"><span class="toc-number">7.2.</span> <span class="toc-text"> QPushButton</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#事件设置"><span class="toc-number">7.2.1.</span> <span class="toc-text"> 事件设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#快捷键设置"><span class="toc-number">7.2.2.</span> <span class="toc-text"> 快捷键设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#样式设置-2"><span class="toc-number">7.2.3.</span> <span class="toc-text"> 样式设置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#qlineedit"><span class="toc-number">7.3.</span> <span class="toc-text"> QLineEdit</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#属性方法槽"><span class="toc-number">7.3.1.</span> <span class="toc-text"> 属性方法槽</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#信号事件"><span class="toc-number">7.3.2.</span> <span class="toc-text"> 信号事件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#输入验证正则"><span class="toc-number">7.3.3.</span> <span class="toc-text"> 输入验证（正则）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#复杂验证qvalidator-qregexpvalidator"><span class="toc-number">7.3.4.</span> <span class="toc-text"> 复杂验证QValidator、QRegExpValidator</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#显示样式"><span class="toc-number">7.3.5.</span> <span class="toc-text"> 显示样式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#qobject"><span class="toc-number">7.4.</span> <span class="toc-text"> QObject</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#遍历所有qobject子节点"><span class="toc-number">7.4.1.</span> <span class="toc-text"> 遍历所有QObject子节点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#qlayout"><span class="toc-number">7.5.</span> <span class="toc-text"> QLayout</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#手动添加qlayout"><span class="toc-number">7.5.1.</span> <span class="toc-text"> 手动添加QLayout</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#qradiobutton"><span class="toc-number">7.5.2.</span> <span class="toc-text"> QRadioButton</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#qcombobox"><span class="toc-number">7.6.</span> <span class="toc-text"> QComboBox</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#qslider"><span class="toc-number">7.7.</span> <span class="toc-text"> QSlider</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#qslider重载鼠标事件"><span class="toc-number">7.7.1.</span> <span class="toc-text"> QSlider重载鼠标事件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#qlistwidget"><span class="toc-number">7.8.</span> <span class="toc-text"> QListWidget</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#qtablewidget"><span class="toc-number">7.9.</span> <span class="toc-text"> QTableWidget</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#qtreewidget"><span class="toc-number">7.10.</span> <span class="toc-text"> QTreeWidget</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#qdialog"><span class="toc-number">7.11.</span> <span class="toc-text"> QDIalog</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#qprogressbar"><span class="toc-number">7.12.</span> <span class="toc-text"> QProgressbar</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#qmainwindow"><span class="toc-number">8.</span> <span class="toc-text"> QMainWindow</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#菜单"><span class="toc-number">8.1.</span> <span class="toc-text"> 菜单</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#工具栏"><span class="toc-number">8.2.</span> <span class="toc-text"> 工具栏</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#状态栏"><span class="toc-number">8.3.</span> <span class="toc-text"> 状态栏</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#qt事件"><span class="toc-number">9.</span> <span class="toc-text"> Qt事件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#qevent事件重载"><span class="toc-number">9.1.</span> <span class="toc-text"> QEvent事件重载</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#qt图像绘制"><span class="toc-number">10.</span> <span class="toc-text"> Qt图像绘制</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#qpainter"><span class="toc-number">10.1.</span> <span class="toc-text"> QPainter</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#qimage"><span class="toc-number">10.2.</span> <span class="toc-text"> QImage</span></a></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/images/haimianbaobao.jpg"></div><div class="author-info__name text-center">hero576</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">23</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">10</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">分类</span><span class="pull-right">5</span></a></div></div></div><div id="content-outer"><div class="plain" id="top-container"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">void land space</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">主页</a><a class="site-page" href="/archives">文章</a><a class="site-page" href="/tags">标签</a><a class="site-page" href="/categories">分类</a><a class="site-page" href="/gallery">相册</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> 搜索</span></a></span></div></div><div class="layout" id="content-inner"><article id="post"><div class="plain" id="post-title">Qt5</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-07-17</time></div><div class="article-container" id="post-content"><blockquote>
+<p>qt界面开发</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="简介"><a class="markdownIt-Anchor" href="#简介"></a> 简介</h1>
+<ul>
+<li><a href="https://www.qt.io" target="_blank" rel="noopener">官方网址</a></li>
+<li>5.9是qt长期维护的版本</li>
+</ul>
+<h2 id="安装"><a class="markdownIt-Anchor" href="#安装"></a> 安装</h2>
+<ul>
+<li>
+<p>安装qt程序会自动安装qt creater，插件根据使用情况选择，下载qt vs addin，方便qt在vs的开发。</p>
+</li>
+<li>
+<p>linux环境配置</p>
+<ul>
+<li>sudo apt-get install -y g++ make</li>
+<li>sudo apt-get install -y libgl1-mesa-dev</li>
+<li>下载qt-source-linux-x64.run，并执行安装</li>
+</ul>
+</li>
+</ul>
+<h2 id="调式"><a class="markdownIt-Anchor" href="#调式"></a> 调式</h2>
+<ul>
+<li>windows需要下载并安装调式工具：windows10sdk，选择Debugging Tools for Windows</li>
+</ul>
+<p><img src="/images/pasted-58.png" alt="安装windows调式工具" /></p>
+<ul>
+<li>
+<p>安装完成后，在<code>c:\Program Files(x86)\Windows Kits\10\Debuggers\x86</code>文件夹下，有一个<code>cdb.exe</code>的调式工具</p>
+</li>
+<li>
+<p>配置Qt调式文件路径，如果调式工具是后安装的，这个需要手动配置。</p>
+</li>
+</ul>
+<p><img src="/images/pasted-59.png" alt="配置Qt调式" /></p>
+<ul>
+<li>调试快捷键</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>按键</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>F9</td>
+<td>设置断点</td>
+</tr>
+<tr>
+<td>F5</td>
+<td>执行程序，知道运行到下一个断点</td>
+</tr>
+<tr>
+<td>F10</td>
+<td>单步执行，不进入函数</td>
+</tr>
+<tr>
+<td>F11</td>
+<td>单步执行，遇到函数则进入</td>
+</tr>
+</tbody>
+</table>
+<h1 id="qt项目介绍"><a class="markdownIt-Anchor" href="#qt项目介绍"></a> Qt项目介绍</h1>
+<h2 id="创建项目"><a class="markdownIt-Anchor" href="#创建项目"></a> 创建项目</h2>
+<ul>
+<li>创建项目时有如下模板：Application、Library、其他项目、Non Qt project、Import Project</li>
+</ul>
+<h3 id="application模板"><a class="markdownIt-Anchor" href="#application模板"></a> Application模板</h3>
+<ul>
+<li>用于创建窗体应用</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>项目类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Qt Widgets Application</td>
+<td>带有窗体的qt项目</td>
+</tr>
+<tr>
+<td>Qt Console Application</td>
+<td></td>
+</tr>
+<tr>
+<td>Qt Quick Application</td>
+<td></td>
+</tr>
+<tr>
+<td>Qt Quick Controls 2 Application</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>窗体程序都继承与基类widgets，还有其派生类，对应不同窗体程序。<br />
+|widgets基类及其派生|说明|<br />
+|-|-|<br />
+|QMainWindow|主窗口，带菜单栏|<br />
+|QWidget|简单窗体|<br />
+|QDialog|对话框|</li>
+</ul>
+<h3 id="library模板"><a class="markdownIt-Anchor" href="#library模板"></a> Library模板</h3>
+<ul>
+<li>用于链接库程序</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>项目类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C++库</td>
+<td>分为了共享库(win:dll文件，linux:so文件)和静态库</td>
+</tr>
+<tr>
+<td>Qt Quick Extension Plugin</td>
+<td></td>
+</tr>
+<tr>
+<td>Qt creator插件</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="生成文件"><a class="markdownIt-Anchor" href="#生成文件"></a> 生成文件</h2>
+<ul>
+<li>源码文件<br />
+<img src="/images/pasted-57.png" alt="生成的源码文件目录" /></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>文件名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pro文件</td>
+<td>用户项目配置，生成项目，编译文件</td>
+</tr>
+<tr>
+<td>headers</td>
+<td>存放头文件</td>
+</tr>
+<tr>
+<td>sources</td>
+<td>存放main.cpp和其他函数实现文件</td>
+</tr>
+<tr>
+<td>forms</td>
+<td>存放界面文件，可以用qt界面编辑器打开编辑，里面存的是xml</td>
+</tr>
+<tr>
+<td>pro.user文件</td>
+<td>存放用户的qt配置信息，配置的编译环境等信息，当更换其他电脑时，这个文件需要删除，在新的环境下重新生成</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>编译文件
+<ul>
+<li>makefile文件：qt会自动生成makefile文件，指定了项目配置</li>
+<li>ui_widget：将源码xml文件转成cpp文件</li>
+<li>debug/release：qt编译连接后生成的obj、EXE、lib、cpp等文件</li>
+</ul>
+</li>
+</ul>
+<h2 id="项目配置"><a class="markdownIt-Anchor" href="#项目配置"></a> 项目配置</h2>
+<h3 id="qt配置库和头文件"><a class="markdownIt-Anchor" href="#qt配置库和头文件"></a> Qt配置库和头文件</h3>
+<h4 id="库文件准备"><a class="markdownIt-Anchor" href="#库文件准备"></a> 库文件准备</h4>
+<ul>
+<li>qt引用其他的库文件的配置，比如opencv。</li>
+<li>头文件：<code>include</code>一般放在与项目同级别文件夹或者项目目录的src下；</li>
+<li>库文件：<code>*.lib</code>文件放在项目路径的lib文件夹下；</li>
+<li>动态链接库：<code>*.dll</code>文件放在项目路径的bin文件夹下；</li>
+</ul>
+<h4 id="引用库的配置"><a class="markdownIt-Anchor" href="#引用库的配置"></a> 引用库的配置</h4>
+<ul>
+<li>在qt项目右键，选择添加库，引用外部库，设置库文件路径；</li>
+</ul>
+<p><img src="/images/pasted-60.png" alt="添加库" /></p>
+<ul>
+<li>添加完成后，执行qmake，生成对应的makefile</li>
+</ul>
+<p><img src="/images/pasted-61.png" alt="执行qmake" /></p>
+<ul>
+<li>指定构建目录</li>
+</ul>
+<p><img src="/images/pasted-63.png" alt="配置build配置" /></p>
+<ul>
+<li>配置运行配置，路径(working directory)，让可执行文件找到对应的dll文件</li>
+</ul>
+<p><img src="/images/pasted-62.png" alt="配置run配置" /></p>
+<h3 id="新增ui和qrc"><a class="markdownIt-Anchor" href="#新增ui和qrc"></a> 新增ui和qrc</h3>
+<ul>
+<li>项目右键新建，可以选择以下ui类型</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>ui文件</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Qt Item Model</td>
+<td></td>
+</tr>
+<tr>
+<td>Qt 设计师界面类</td>
+<td>自动生成绑定好.h和.cpp的ui文件</td>
+</tr>
+<tr>
+<td>Qt Designer From</td>
+<td>仅生成ui文件，需要自己手动绑定</td>
+</tr>
+<tr>
+<td>Qt Resource File</td>
+<td></td>
+</tr>
+<tr>
+<td>QML File</td>
+<td></td>
+</tr>
+<tr>
+<td>QtQuick UI File</td>
+<td></td>
+</tr>
+<tr>
+<td>JS File</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="vsqt配置项目"><a class="markdownIt-Anchor" href="#vsqt配置项目"></a> VS+Qt配置项目</h3>
+<h4 id="输出-调试-库-头文件设置"><a class="markdownIt-Anchor" href="#输出-调试-库-头文件设置"></a> 输出、调试、库、头文件设置</h4>
+<ul>
+<li>右键项目，点击属性</li>
+</ul>
+<p><img src="/images/pasted-64.png" alt="项目属性配置" /></p>
+<ul>
+<li>常规：输出路径、平台命令集、</li>
+<li>调试：工作目录、环境</li>
+<li>C/C++：常规–&gt;附加包含目录</li>
+<li>连接器：常规–&gt;输出文件、附加库目录、输入–&gt;附加依赖项、系统–&gt;子系统（子系统中：控制台表示从main为入口，显示黑窗口；窗口表示从winmain为入口，没有）</li>
+</ul>
+<h2 id="qmake"><a class="markdownIt-Anchor" href="#qmake"></a> QMake</h2>
+<h3 id="qt编译经历的步骤"><a class="markdownIt-Anchor" href="#qt编译经历的步骤"></a> QT编译经历的步骤</h3>
+<ul>
+<li>编译pro生成makefile</li>
+<li>jom或者make编译makefile
+<ul>
+<li>生成界面源码：<code>uic.exe widgget.ui -o ui_widget.h</code></li>
+<li>生成信号槽代码：<code>moc.exe widget.h moc_widget.cpp</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="手动创建pro"><a class="markdownIt-Anchor" href="#手动创建pro"></a> 手动创建pro</h3>
+<h4 id="创建pro"><a class="markdownIt-Anchor" href="#创建pro"></a> 创建pro</h4>
+<ul>
+<li>在空的项目文件目录中创建pro文件，写入下面的配置</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//添加QT的库</span></span><br><span class="line">QT += widgets core opencv ...</span><br><span class="line">QT -= <span class="built_in">console</span></span><br><span class="line"><span class="comment">//头文件的引用，默认是相对于输出路径，$$PWD代表pro所在文件路径</span></span><br><span class="line">INCLUDEPATH += ../../include</span><br><span class="line">INCLUDEPATH += $$PWD../../include</span><br><span class="line"><span class="comment">//库文件的引用</span></span><br><span class="line">LIBS += -L<span class="string">"../../lib"</span> -lopencv_world320</span><br><span class="line"><span class="comment">//指定生成目录</span></span><br><span class="line">DESTDIR += ../../bin</span><br><span class="line"><span class="comment">//指定生成可执行程序的名字</span></span><br><span class="line">TARGET = testq</span><br><span class="line"><span class="comment">//指定用到的源码，根据需求添加文件名即可</span></span><br><span class="line">SOURCES += main.cpp \</span><br><span class="line">        preson.h \</span><br><span class="line">        person.cpp</span><br><span class="line"><span class="comment">//添加控制台</span></span><br><span class="line">CONFIG += <span class="built_in">console</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>使用cmd，执行<code>qmake -o makefile testqmake.pro</code>，生成makefile</p>
+<ul>
+<li>如果提示缺少环境变量，可以在<code>c:\Program File(x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat</code>中找到环境变量的配置。</li>
+</ul>
+</li>
+<li>
+<p>编译makefile：<code>jom /f makefile.Debug</code>，在debug文件夹中就有编译文件了。</p>
+</li>
+<li>
+<p>上述语句可以写进批处理文件中</p>
+</li>
+</ul>
+<figure class="highlight bat"><table><tr><td class="code"><pre><span class="line"><span class="keyword">call</span> "c:\Program File(x86)\Microsoft Visual Studio <span class="number">14</span>.<span class="number">0</span>\VC\vcvarsall.bat"</span><br><span class="line">qmake -o makefile testqmake.pro</span><br><span class="line">jom /f makefile.Debug</span><br><span class="line"><span class="built_in">pause</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>在linux中，批处理文件添加执行权限：<code>chmod +x make.sh</code></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> PATH=/opt/Qt5.9.0/5.9/gcc_64/bin:<span class="variable">$PATH</span></span><br><span class="line">qmake -o makefile testqmake.pro</span><br><span class="line">make</span><br></pre></td></tr></table></figure>
+<h4 id="配置qmake和jom执行路径"><a class="markdownIt-Anchor" href="#配置qmake和jom执行路径"></a> 配置qmake和jom执行路径</h4>
+<ul>
+<li>添加环境变量<code>c:\qt\qt5.9.0\5.9\msvc2015\bin</code>和<code>c:\qt\qt5.9.0\Tools\QtCreator\bin</code></li>
+</ul>
+<h4 id="导入vs开发环境"><a class="markdownIt-Anchor" href="#导入vs开发环境"></a> 导入vs开发环境</h4>
+<ul>
+<li>方法一：<code>qmake -tp vc testqmake.pro</code></li>
+<li>方法二：使用vs插件导入</li>
+</ul>
+<h2 id="创建动态库和静态库"><a class="markdownIt-Anchor" href="#创建动态库和静态库"></a> 创建动态库和静态库</h2>
+<ul>
+<li>qt创建库的配置是<code>TEMPLATE=lib</code>，如果是静态库，还要加上配置<code>CONFIG += staticlib</code></li>
+</ul>
+<h3 id="qtcreator创建"><a class="markdownIt-Anchor" href="#qtcreator创建"></a> qtcreator创建</h3>
+<ul>
+<li>新建项目，选择Library–&gt;c++库–&gt;共享库，并设置类名：<code>testlib</code></li>
+<li>pro文件会自动生成</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//定义宏，用以区分是库函数调用，还是执行调用</span></span><br><span class="line">DEFINES += TESTLIB_LIBRARY</span><br></pre></td></tr></table></figure>
+<h4 id="pro手动创建"><a class="markdownIt-Anchor" href="#pro手动创建"></a> pro手动创建</h4>
+<ul>
+<li>手动创建pro文件，testlib.h、testlib.cpp文件</li>
+<li>pro文件配置</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">SOURCES += testlib.cpp</span><br><span class="line">HEADERS += testlib.h</span><br><span class="line"><span class="comment">//生成文件名称</span></span><br><span class="line">TARGET=libdll</span><br><span class="line"><span class="comment">//动态库，如果是静态库，还需CONFIG += staticlib</span></span><br><span class="line">TEMPLATE=lib</span><br><span class="line">CONFIG += staticlib</span><br><span class="line"><span class="comment">//打开控制台，用以输出cout</span></span><br><span class="line">CONFIG += <span class="built_in">console</span></span><br><span class="line"><span class="comment">//定义宏，表示项目是库项目</span></span><br><span class="line">DEFINES += TESTLIB_LIBRARY</span><br><span class="line"><span class="comment">//输出路径</span></span><br><span class="line">DESTDIR = ../../lib</span><br><span class="line">DLLDESTDIR = ../../bin</span><br></pre></td></tr></table></figure>
+<h3 id="调用动态库"><a class="markdownIt-Anchor" href="#调用动态库"></a> 调用动态库</h3>
+<ul>
+<li>引用头文件：<code>#include &lt;testlib.h&gt;</code></li>
+<li>配置库路径：有两种方法，一个是在项目右键中选择添加库的方式配置，再一种是配置pro文件</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//配置库头文件路径</span></span><br><span class="line">INCLUDEPATH += ../../include</span><br><span class="line"><span class="comment">//配置库路径</span></span><br><span class="line">LIBS += -L../../lib -llibdll</span><br></pre></td></tr></table></figure>
+<h2 id="debug和release编译设置"><a class="markdownIt-Anchor" href="#debug和release编译设置"></a> debug和release编译设置</h2>
+<ul>
+<li>pro配置：<code>CONFIG += debug_and_release</code>，这个是默认设置，即生成debug也生成release。</li>
+<li>另一种配置写法</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">CONFIG(debug,debug|release)&#123;</span><br><span class="line"><span class="comment">//生成文件名称</span></span><br><span class="line">  TARGET = testdll_d <span class="comment">// debug_binary</span></span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line"><span class="comment">//生成文件名称</span></span><br><span class="line">  TARGET = testdll   <span class="comment">// release_binary</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="跨平台编译"><a class="markdownIt-Anchor" href="#跨平台编译"></a> 跨平台编译</h2>
+<ul>
+<li>Qt支持多种平台的开发，包括：win32、linux、mac、unix</li>
+<li>测试是什么环境，可以在pro文件添加语句：<code>message($$QMAKESPEC)</code>，执行QMake，就可以显示了</li>
+<li>查看支持的环境配置列表：<code>$QTPATH/Qt5.9.0/5.9/clang_64/mkspecs</code></li>
+<li>pro配置：</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//方法一：</span></span><br><span class="line">win32:INCLUDEPATH += C:<span class="regexp">/mylibs/</span>headers</span><br><span class="line"><span class="comment">//方法二：</span></span><br><span class="line">win32&#123;</span><br><span class="line">  INCLUDEPATH += C:<span class="regexp">/mylibs/</span>headers</span><br><span class="line">&#125;</span><br><span class="line">!linux&#123;</span><br><span class="line">  message(<span class="string">"not linux"</span>)</span><br><span class="line">&#125;</span><br><span class="line">win32|linux&#123;</span><br><span class="line">  message(<span class="string">"win or linux"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="qt信号槽"><a class="markdownIt-Anchor" href="#qt信号槽"></a> Qt信号槽</h1>
+<ul>
+<li>信号槽是Qt中最关键的技术，作为<code>c++</code>程序，最关注的就是性能，对于信号槽的理解，对提升性能有很大的帮助。</li>
+<li>槽是一个线程，排队执行信号，如果遇到时间复杂度高的任务，应该使用多线程处理。</li>
+</ul>
+<h2 id="信号槽的原理"><a class="markdownIt-Anchor" href="#信号槽的原理"></a> 信号槽的原理</h2>
+<ul>
+<li>类似windows的消息机制：在系统注册回调函数，指定类型消息调用，由主循环一直调用。</li>
+<li>信号槽的区别是，不关心消息的类型，以及由谁接收。信号可以发送给不同的接收者。</li>
+</ul>
+<h3 id="组成"><a class="markdownIt-Anchor" href="#组成"></a> 组成</h3>
+<ul>
+<li>主要包含：信号函数（只发送，不需要知道接收者），槽函数（普通函数，只接收不管通信），QObject将两者绑定。</li>
+</ul>
+<h3 id="过程"><a class="markdownIt-Anchor" href="#过程"></a> 过程</h3>
+<ul>
+<li>绑定信号函数和槽函数</li>
+<li>调用信号函数（将信号写入队列）</li>
+<li>主线程从队列中获取信号</li>
+</ul>
+<p><img src="/images/pasted-65.png" alt="信号槽关系图" /></p>
+<h3 id="代码实现"><a class="markdownIt-Anchor" href="#代码实现"></a> 代码实现</h3>
+<ul>
+<li>主循环的建立</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 入口程序建立主循环对象</span></span><br><span class="line"><span class="function">QApplication <span class="title">a</span><span class="params">(arg,argv)</span></span>;</span><br><span class="line"><span class="comment">// 在exec中，执行循环并处理相关调用，直至获取退出的操作</span></span><br><span class="line"><span class="keyword">return</span> a.exec();</span><br></pre></td></tr></table></figure>
+<ul>
+<li>信号槽的绑定
+<ul>
+<li>设计器添加信号槽：拖动、添加，这里添加的是内部的信号槽函数，生成在ui的xml中</li>
+<li>自定义实现的槽函数：当我们对界面改变时，而不想占用主线程的线程，防止一些异常的发生，就需要自己定义。在其他线程绑定槽函数手动添加信号槽。
+<ul>
+<li>Q_OBJECT：在类中包含Q_OBJECT的宏，就会生成对应的moc代码</li>
+<li>手动创建信号 signals</li>
+<li>手动创建槽 public slots</li>
+<li>两者绑定：
+<ul>
+<li>方式一：设计器将槽函数绑定，在ui自动生成的cpp中加入自己定义的函数<code>QObject::connect(pushBtn,SIGNAL(clicked()),testsignalClass,SLOT(ViewSlot))</code></li>
+<li>方式二：手动绑定。在类的构造器中添加：<code>connect(ui.testBtn,SIGNAL(clicked()),this,SLOT(TestSlot()))</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">testsignal</span> :</span><span class="keyword">public</span> QWidget&#123;</span><br><span class="line">  Q_OBJECT</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  testsignal(QWidget *p = Q_NULLPTR);</span><br><span class="line">signals:</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">ViewSig</span><span class="params">()</span></span>;  <span class="comment">//只需声明，信号函数会自动做定义</span></span><br><span class="line"><span class="keyword">public</span> slots:</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">ViewSlot</span><span class="params">()</span></span>; <span class="comment">// 槽函数需要自己手动完成定义</span></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">TestSlot</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="qthread"><a class="markdownIt-Anchor" href="#qthread"></a> QThread</h1>
+<ul>
+<li>Qt实现了线程类，使用方法相对简单，只需要继承<code>QThread</code>类，重写<code>void run(){}</code>方法，处理线程功能即可。调用启动方法<code>void start(){}</code>。终止<code>void stop(){}</code>，不建议使用，线程手动退出可能会造成不可预知的错误，尽量使空间正常释放。一般是在run中的循环一次结束时判断是否需要退出，防止数据泄露。</li>
+</ul>
+<h2 id="利用信号执行槽函数"><a class="markdownIt-Anchor" href="#利用信号执行槽函数"></a> 利用信号执行槽函数</h2>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QtWidgets/QApplication&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QWidget&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QThread&gt;</span></span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">XThread</span>:</span><span class="keyword">public</span> QThread&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  XThread();~XThread();</span><br><span class="line">  testQWidget* w = <span class="literal">NULL</span>;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">    w-&gt;Hide(); <span class="comment">// 执行信号</span></span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">testQWidget</span>&#123;</span></span><br><span class="line">  Q_OBJECT</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  testQWidget()&#123;<span class="built_in">connect</span>(<span class="keyword">this</span>,SIGNAL(Hide),<span class="keyword">this</span>,SLOT(hide()));&#125;;<span class="keyword">virtual</span> ~testQWidget()&#123;&#125;;</span><br><span class="line">signals:</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">Hide</span><span class="params">()</span></span>&#123;&#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span>&#123;</span><br><span class="line">  <span class="function">QApplication <span class="title">a</span><span class="params">(argc,argv)</span></span>;</span><br><span class="line">  testQWidget w;</span><br><span class="line">  w.show();</span><br><span class="line">  XThread xt;</span><br><span class="line">  xt.w = &amp;w;</span><br><span class="line">  xt.start();</span><br><span class="line">  <span class="keyword">return</span> a.exec();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="在qthread中添加信号绑定到qwidget"><a class="markdownIt-Anchor" href="#在qthread中添加信号绑定到qwidget"></a> 在QThread中添加信号，绑定到QWidget</h2>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QtWidgets/QApplication&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QWidget&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QThread&gt;</span></span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">XThread</span>:</span><span class="keyword">public</span> QThread&#123;</span><br><span class="line">  Q_OBJECT</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  XThread()&#123;&#125;;</span><br><span class="line">  ~XThread()&#123;<span class="built_in">terminate</span>();&#125;; <span class="comment">//在项目退出时，保证线程退出，这个是不安全的方法</span></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">    msleep(<span class="number">1000</span>);</span><br><span class="line">    Move(<span class="number">0</span>,<span class="number">0</span>);</span><br><span class="line">  &#125;;</span><br><span class="line">signals:</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">Move</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>;  <span class="comment">//只需声明，无需实现</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">testQWidget</span>&#123;</span></span><br><span class="line">  Q_OBJECT</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  testQWidget()&#123;&#125;;<span class="keyword">virtual</span> ~testQWidget()&#123;&#125;;</span><br><span class="line"><span class="keyword">public</span> slots:</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">move</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>&#123;QWidget::<span class="built_in">move</span>(x,y);&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span>&#123;</span><br><span class="line">  <span class="function">QApplication <span class="title">a</span><span class="params">(argc,argv)</span></span>;</span><br><span class="line">  w.show();</span><br><span class="line">  XThread xt;</span><br><span class="line">  QObject::<span class="built_in">connect</span>(&amp;xt,SIGNAL(Move(<span class="keyword">int</span>,<span class="keyword">int</span>)),&amp;w,SLOT(<span class="built_in">move</span>(<span class="keyword">int</span>,<span class="keyword">int</span>)))</span><br><span class="line">  xt.w = &amp;w;</span><br><span class="line">  xt.start();</span><br><span class="line">  <span class="keyword">return</span> a.exec();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="qt核心窗口类qwidget"><a class="markdownIt-Anchor" href="#qt核心窗口类qwidget"></a> Qt核心窗口类QWidget</h1>
+<ul>
+<li>QWidget是所有用户界面对象的基类</li>
+<li>窗口部件接收鼠标、键盘等事件</li>
+<li>屏幕上绘制自己</li>
+<li>父子关系有相对坐标</li>
+</ul>
+<h2 id="手动创建qwidget对象"><a class="markdownIt-Anchor" href="#手动创建qwidget对象"></a> 手动创建QWidget对象</h2>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">QWidget w;</span><br><span class="line">w.show();<span class="comment">//显示包含子窗口，是一个槽函数</span></span><br><span class="line">w.setWindowTitle(<span class="string">"my widget"</span>);  <span class="comment">//设置title</span></span><br><span class="line">w.hide();<span class="comment">//隐藏包含子窗口，槽函数，资源并未释放</span></span><br></pre></td></tr></table></figure>
+<h2 id="窗口的属性"><a class="markdownIt-Anchor" href="#窗口的属性"></a> 窗口的属性</h2>
+<h3 id="设置窗口坐标和大小"><a class="markdownIt-Anchor" href="#设置窗口坐标和大小"></a> 设置窗口坐标和大小</h3>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>QRect geometry()</code></td>
+<td>获取坐标和宽高</td>
+</tr>
+<tr>
+<td><code>setGeometry(x,y,width,height)</code></td>
+<td>设置坐标和宽高</td>
+</tr>
+<tr>
+<td><code>x();y();width();height()</code></td>
+<td>获取坐标和宽高</td>
+</tr>
+<tr>
+<td><code>move(x,y);resize(width,height)</code></td>
+<td>设置坐标和宽高</td>
+</tr>
+</tbody>
+</table>
+<h3 id="设置窗口最大化-最小化-全屏-正常"><a class="markdownIt-Anchor" href="#设置窗口最大化-最小化-全屏-正常"></a> 设置窗口最大化、最小化、全屏、正常</h3>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>setWindowState(Qt::WindowMaximized)</code></td>
+<td>设置窗口状态</td>
+</tr>
+<tr>
+<td><code>showMinimized()</code></td>
+<td>设置</td>
+</tr>
+<tr>
+<td><code>showMaximized()</code></td>
+<td>设置</td>
+</tr>
+<tr>
+<td><code>showNormal()</code></td>
+<td>设置</td>
+</tr>
+<tr>
+<td><code>showFullScreen()</code></td>
+<td>设置</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Qt::WindowMaximized</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>WindowMinimized</code></td>
+<td>窗口最小化</td>
+</tr>
+<tr>
+<td><code>WindowMaximized</code></td>
+<td>窗口最大化</td>
+</tr>
+<tr>
+<td><code>WindowNoState</code></td>
+<td>窗口无状态</td>
+</tr>
+<tr>
+<td><code>WindowFullScreen</code></td>
+<td>窗口全屏</td>
+</tr>
+<tr>
+<td><code>WindowActive</code></td>
+<td>活动状态</td>
+</tr>
+</tbody>
+</table>
+<h3 id="定制窗口类型"><a class="markdownIt-Anchor" href="#定制窗口类型"></a> 定制窗口类型</h3>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CustomizeWindowHint</code></td>
+<td>自定义</td>
+</tr>
+<tr>
+<td><code>setWindowFlags</code></td>
+<td>设置类型，指定多个值</td>
+</tr>
+<tr>
+<td><code>setWindowFlag(Qt::WindowCloseButtonHint,flase)</code></td>
+<td>设置类型</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>窗口按钮</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Qt::WindowCloseButtonHint</code></td>
+<td>关闭按钮</td>
+</tr>
+<tr>
+<td><code>Qt::WindowWindowMinimizeHint</code></td>
+<td>最小化按钮</td>
+</tr>
+<tr>
+<td><code>Qt::WindowWindowMaximizeHint</code></td>
+<td>最大化按钮</td>
+</tr>
+<tr>
+<td><code>Qt::FramelessWindowHint</code></td>
+<td>无边框的窗体</td>
+</tr>
+<tr>
+<td><code>Qt::WindowTitleHint|Qt::CustomWindowHint</code></td>
+<td>标题栏保留，取出所有按钮</td>
+</tr>
+<tr>
+<td><code>Qt::CustomWindowHint</code></td>
+<td>全部自定义</td>
+</tr>
+</tbody>
+</table>
+<h1 id="qt文本处理"><a class="markdownIt-Anchor" href="#qt文本处理"></a> Qt文本处理</h1>
+<h2 id="字符集"><a class="markdownIt-Anchor" href="#字符集"></a> 字符集</h2>
+<h3 id="编码"><a class="markdownIt-Anchor" href="#编码"></a> 编码</h3>
+<ul>
+<li>ASCii：7位字符集，128个字符，最高位作为奇偶校验，在转码传输时会被丢弃。</li>
+<li>ISO-8859-1扩展ASCii：128-255拉丁</li>
+<li>ANSI标准：没够国家标准学会，多字节字符集（MBCS），0-127依旧是1个字节代表1个字符，2个字节来表示1个字符</li>
+<li>GB2312编码：ANSI 6763常用汉字，两个大于127的字符表示一个汉字</li>
+<li>GBK编码：在GB2312的基础上扩展汉字21003个</li>
+<li>UTF-8编码：变长的编码方式，单字节与ASCii相同，对于n个字节，首字节前n位为1，n+1为0，后面字节前两位都为10。</li>
+</ul>
+<p><img src="/images/pasted-66.png" alt="UTF-8编码" /></p>
+<ul>
+<li>UTF-16编码：两个字节或四个字节</li>
+<li>UTF-32编码：四个字节</li>
+</ul>
+<h3 id="字节序bom"><a class="markdownIt-Anchor" href="#字节序bom"></a> 字节序BOM</h3>
+<ul>
+<li>LE(littleEndian)：小字节字节序，地位在前：<code>0x001A23</code>–<code>23 1A 00</code></li>
+<li>BE(bigEndian)：大字节字节序，地位在前：<code>0x001A23</code>–<code>00 1A 23</code></li>
+<li>BOM字节序标志头：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>字节序标志头</th>
+<th>字节序</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>FE FF</code></td>
+<td>BE</td>
+</tr>
+<tr>
+<td><code>FF FE</code></td>
+<td>LE</td>
+</tr>
+</tbody>
+</table>
+<h2 id="qstring"><a class="markdownIt-Anchor" href="#qstring"></a> QString</h2>
+<ul>
+<li>16-bit Qchar ushort Unicode 4.0</li>
+</ul>
+<h3 id="常用功能"><a class="markdownIt-Anchor" href="#常用功能"></a> 常用功能</h3>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>==</code></td>
+<td>相等判断</td>
+</tr>
+<tr>
+<td><code>isNull()</code></td>
+<td>是否null</td>
+</tr>
+<tr>
+<td><code>isEmpty()</code></td>
+<td>是否为空</td>
+</tr>
+<tr>
+<td><code>+=</code></td>
+<td>字符拼接</td>
+</tr>
+<tr>
+<td><code>append(char*)</code></td>
+<td>添加字符串</td>
+</tr>
+<tr>
+<td><code>%1 %2 arg()</code></td>
+<td>格式化字符串，arg(int,最小宽度,进制数)</td>
+</tr>
+<tr>
+<td><code>QString::number(int)</code></td>
+<td>数字转字符串</td>
+</tr>
+<tr>
+<td><code>QString.toInt()</code></td>
+<td>字符串转数字，注意不要转换浮点型，返回为0</td>
+</tr>
+<tr>
+<td><code>QString.toDouble()</code></td>
+<td>字符串转数字</td>
+</tr>
+<tr>
+<td><code>QChar.toLatin1()</code></td>
+<td>字符串转数字</td>
+</tr>
+<tr>
+<td>`for(QString::iterator itr=itstr.begin();itr!=itstr.end();itr++)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>&lt;br&gt;</code>for(int i=0;i&lt;itstr.size();i++)`</td>
+<td>字符串遍历，返回QChar类型</td>
+</tr>
+<tr>
+<td><code>itstr.indexOf(string,[startIndex])</code></td>
+<td>字符串查找，找不到返回-1</td>
+</tr>
+<tr>
+<td><code>itstr.lastIndexOf(string)</code></td>
+<td>字符串查找</td>
+</tr>
+<tr>
+<td><code>itstr.indexOf(QRegExp())</code></td>
+<td>字符串正则表达式查找</td>
+</tr>
+<tr>
+<td><code>itstr.chop(int)</code></td>
+<td>字符串结去除尾部n个字符，直接改变原对象</td>
+</tr>
+<tr>
+<td><code>itstr.left(int)</code></td>
+<td>返回从字符串左边开始的n个字符</td>
+</tr>
+<tr>
+<td><code>itstr.right(int)</code></td>
+<td>返回从字符串右边开始的n个字符，从最右边开始</td>
+</tr>
+<tr>
+<td><code>itstr.replace(string,string)</code></td>
+<td>字符串替换，直接改变原对象</td>
+</tr>
+<tr>
+<td><code>itstr.replace(QRegExp(),string)</code></td>
+<td>字符串正则替换</td>
+</tr>
+<tr>
+<td><code>QStringList itstr.split(sep)</code></td>
+<td>字符串切割，也支持正则表达式</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;QDebug&gt;</span></span></span><br><span class="line">QString str;</span><br><span class="line"><span class="keyword">if</span> (str.isNull())&#123;qDebug()&lt;&lt;<span class="string">"str is null"</span>&lt;&lt;<span class="built_in">endl</span>;&#125;;</span><br><span class="line"><span class="keyword">if</span> (str.isEmpty())&#123;qDebug()&lt;&lt;<span class="string">"str is empty"</span>&lt;&lt;<span class="built_in">endl</span>;&#125;;</span><br><span class="line">str = QString(<span class="string">"name=%1 age=%2"</span>).arg(<span class="string">"xxx"</span>).arg(<span class="number">12</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="qt中文乱码问题"><a class="markdownIt-Anchor" href="#qt中文乱码问题"></a> QT中文乱码问题</h2>
+<ul>
+<li>默认字符集设置</li>
+<li>文件字符集格式vs qtcreator设置</li>
+<li>字符集转换QStringLiteral</li>
+<li>通过预编译宏，设置原文件是gbk的编码转utf8：<code>#pragma execution_character_set(&quot;UTF-8&quot;)</code></li>
+</ul>
+<h3 id="字符集设置"><a class="markdownIt-Anchor" href="#字符集设置"></a> 字符集设置</h3>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>codec = QTextCodec::codecForName(&quot;UTF-8&quot;);</code></td>
+<td>设置本地编码格式</td>
+</tr>
+<tr>
+<td><code>QTextCodec::setCodecForLocale(codec);</code></td>
+<td>本地处理的字符集</td>
+</tr>
+<tr>
+<td><code>QTextCodec::availableCodecs();</code></td>
+<td>查询支持哪些格式字符集</td>
+</tr>
+<tr>
+<td><code>QString::fromLocal9Bit(string);</code></td>
+<td>根据本地编码方式存入QString，默认是GBK</td>
+</tr>
+<tr>
+<td><code>QString::toStdString();</code></td>
+<td>把QString转为char* 或者string</td>
+</tr>
+<tr>
+<td><code>QString::toStdWString();</code></td>
+<td>把QString转为宽字符集，以支持win64，例如：L&quot;1234&quot;</td>
+</tr>
+<tr>
+<td><code>QString::toLocal9Bit();</code></td>
+<td>把QString转为本地编码格式</td>
+</tr>
+<tr>
+<td><code>QStringLiteral(&quot;中文&quot;)</code></td>
+<td>将多字节编码转为UTF-8</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QDebug&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QMessageBox&gt;</span></span></span><br><span class="line">QString str = <span class="string">"中文"</span>;</span><br><span class="line">qDebug&lt;&lt;str; <span class="comment">//此时打印为乱码</span></span><br><span class="line">str = QStringLiteral(<span class="string">"中文"</span>); <span class="comment">//将多字节编码转为UTF-8</span></span><br><span class="line">qDebug&lt;&lt;str; <span class="comment">//此时正常输出中文</span></span><br><span class="line">QMessageBox::information(<span class="number">0</span>,<span class="string">"title"</span>,str);</span><br></pre></td></tr></table></figure>
+<h1 id="qt控件"><a class="markdownIt-Anchor" href="#qt控件"></a> Qt控件</h1>
+<h2 id="qlabel"><a class="markdownIt-Anchor" href="#qlabel"></a> QLabel</h2>
+<ul>
+<li>继承于QWidget</li>
+</ul>
+<h3 id="显示文字"><a class="markdownIt-Anchor" href="#显示文字"></a> 显示文字</h3>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">ui.label-&gt;setText(QString(<span class="string">"String"</span>))</span><br></pre></td></tr></table></figure>
+<h3 id="样式设置"><a class="markdownIt-Anchor" href="#样式设置"></a> 样式设置</h3>
+<ul>
+<li>
+<p>设计器设置：右击label空间，选择“改变样式表”，选择添加颜色等操作。在属性编辑器中选择对齐方式。</p>
+</li>
+<li>
+<p>代码设置：</p>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">label.setStyleSheet(QString::fromUtf8(<span class="string">"color:rgb(255,0,0);"</span>));</span><br></pre></td></tr></table></figure>
+<h3 id="显示图片"><a class="markdownIt-Anchor" href="#显示图片"></a> 显示图片</h3>
+<ul>
+<li>在属性编辑器中，选择pixmap，选择图片进行显示</li>
+<li>代码设置</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">label.setPixmap(QPixmap(QString::fromUtf8(<span class="string">":/项目名/Resources/test.jpg"</span>)));</span><br></pre></td></tr></table></figure>
+<ul>
+<li>通过样式设置</li>
+</ul>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">backgroud-images:url(:/项目名/Resources/test.jpg);</span><br><span class="line">border-images:url(:/项目名/Resources/test.jpg);</span><br><span class="line">images:url(:/项目名/Resources/test.jpg);</span><br></pre></td></tr></table></figure>
+<h3 id="播放gif动画"><a class="markdownIt-Anchor" href="#播放gif动画"></a> 播放gif动画</h3>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">QMovie *mov = <span class="keyword">new</span> QMovie(<span class="string">"test.gif"</span>);</span><br><span class="line">lab.setMovie(mov)</span><br><span class="line">mov-&gt;start();</span><br></pre></td></tr></table></figure>
+<h3 id="创建qlabel"><a class="markdownIt-Anchor" href="#创建qlabel"></a> 创建QLabel</h3>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">QLabel *lab = <span class="keyword">new</span> QLabel(<span class="keyword">this</span>); <span class="comment">//this表示属于哪个窗体的，如果为null则单独显示一个label</span></span><br><span class="line">lab-&gt;setGeometry(<span class="number">0</span>,<span class="number">0</span>,<span class="number">200</span>,<span class="number">200</span>);</span><br><span class="line">lab-&gt;setStyleSheet(<span class="string">"background-color:rgb(255,0,0)"</span>);</span><br><span class="line">lab.show();</span><br></pre></td></tr></table></figure>
+<h3 id="qlabel的富文本模式"><a class="markdownIt-Anchor" href="#qlabel的富文本模式"></a> QLabel的富文本模式</h3>
+<ul>
+<li>前面QLabel都是PlainText模式，支持\n换行，QLabel也支持富文本RichText模式，支持html。</li>
+<li>在属性编辑器中，点击textFormat选择RichText，双击即可用html编辑</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">lab-&gt;setTextFormat(Qt::RichText);</span><br></pre></td></tr></table></figure>
+<h4 id="链接事件"><a class="markdownIt-Anchor" href="#链接事件"></a> 链接事件</h4>
+<ul>
+<li>QLabel链接事件绑定了两个槽函数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>void linkActivated(const QString &amp;link)</td>
+<td>点击事件</td>
+</tr>
+<tr>
+<td>void linkHovered(const QString &amp;link)</td>
+<td>悬停事件</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//---------类中定义槽-------------</span></span><br><span class="line"><span class="keyword">public</span> slots:</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">Act</span><span class="params">(QString url)</span></span>;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">Hov</span><span class="params">(QString url)</span></span>;</span><br><span class="line"><span class="comment">//---------ui中绑定-------------</span></span><br><span class="line"><span class="built_in">connect</span>(ui.label,SIGNAL(linkActivated()),<span class="keyword">this</span>,SLOT(Act()));</span><br><span class="line"><span class="built_in">connect</span>(ui.label,SIGNAL(linkHovered()),<span class="keyword">this</span>,SLOT(Hov()));</span><br></pre></td></tr></table></figure>
+<h3 id="qlabel选择和编辑"><a class="markdownIt-Anchor" href="#qlabel选择和编辑"></a> QLabel选择和编辑</h3>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>setTextInteractionFlags</td>
+<td>设置是否可以选择、编辑</td>
+</tr>
+<tr>
+<td>selectedText</td>
+<td>获取选择的文本</td>
+</tr>
+<tr>
+<td>setSelection(startIndex,length)</td>
+<td>设置选了什么文本</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Flags</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NoTextInteraction</td>
+<td></td>
+</tr>
+<tr>
+<td>TextSelectableByMouse</td>
+<td></td>
+</tr>
+<tr>
+<td>TextSelectableByKeyboard</td>
+<td></td>
+</tr>
+<tr>
+<td>LinksAccessibleByMouse</td>
+<td></td>
+</tr>
+<tr>
+<td>LinksAccessibleByKeyboard</td>
+<td></td>
+</tr>
+<tr>
+<td>TextEditable</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="qpushbutton"><a class="markdownIt-Anchor" href="#qpushbutton"></a> QPushButton</h2>
+<h3 id="事件设置"><a class="markdownIt-Anchor" href="#事件设置"></a> 事件设置</h3>
+<table>
+<thead>
+<tr>
+<th>事件信号</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>click()</td>
+<td></td>
+</tr>
+<tr>
+<td>click(bool)</td>
+<td>是否选中</td>
+</tr>
+<tr>
+<td>pressed()</td>
+<td></td>
+</tr>
+<tr>
+<td>released()</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="快捷键设置"><a class="markdownIt-Anchor" href="#快捷键设置"></a> 快捷键设置</h3>
+<ul>
+<li>在按钮添加快捷键，有两种方法，在按钮名前加<code>&amp;</code>符号，那么按钮名的首字母+<code>Alt</code>就是快捷键了。第二种方法就是代码设置</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>事件信号</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>setShortcut</td>
+<td></td>
+</tr>
+<tr>
+<td>setShortcut(tr(“Alt+F7”))</td>
+<td><code>ui-&gt;shortcut-&gt;setShortcut(tr(&quot;X&quot;));</code></td>
+</tr>
+<tr>
+<td>setShortcut(tr(“Ctrl+x,Ctrl+c”))</td>
+<td>组合按键</td>
+</tr>
+</tbody>
+</table>
+<h3 id="样式设置-2"><a class="markdownIt-Anchor" href="#样式设置-2"></a> 样式设置</h3>
+<ul>
+<li>样式设置和label设置差不多，背景图片设置中有flat设置，可以取消按钮的凹凸效果，样式可以自己更改。</li>
+<li>圆角边框，渐变援交光泽按钮</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">QPushButton::!hover&#123;</span><br><span class="line">  <span class="built_in">background</span>-color:qradialgradient(spread:reflact......)</span><br><span class="line">&#125;</span><br><span class="line">QPushButton::hover&#123;</span><br><span class="line">  border-radius:<span class="number">10</span>px;</span><br><span class="line">  <span class="built_in">background</span>-color:qradialgradient(spread:reflact......)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="qlineedit"><a class="markdownIt-Anchor" href="#qlineedit"></a> QLineEdit</h2>
+<h3 id="属性方法槽"><a class="markdownIt-Anchor" href="#属性方法槽"></a> 属性方法槽</h3>
+<table>
+<thead>
+<tr>
+<th>事件信号</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>setText()</td>
+<td>设置文本，不发信号</td>
+</tr>
+<tr>
+<td>text()</td>
+<td>获取文本</td>
+</tr>
+<tr>
+<td>setPlaceholderText()</td>
+<td>设置提示文字</td>
+</tr>
+<tr>
+<td>setClearButtonEnabled</td>
+<td>默认关闭清空内容</td>
+</tr>
+<tr>
+<td>setReadOnly</td>
+<td>设置是否只读</td>
+</tr>
+<tr>
+<td>setMaxLength</td>
+<td>默认长度3万多</td>
+</tr>
+<tr>
+<td>undo()</td>
+<td>撤销</td>
+</tr>
+<tr>
+<td>redo()</td>
+<td>恢复</td>
+</tr>
+</tbody>
+</table>
+<h3 id="信号事件"><a class="markdownIt-Anchor" href="#信号事件"></a> 信号事件</h3>
+<table>
+<thead>
+<tr>
+<th>事件信号</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>editingFinished</td>
+<td>按下回车或者焦点移开，触发事件</td>
+</tr>
+<tr>
+<td>returnPressed</td>
+<td>按下回车</td>
+</tr>
+<tr>
+<td>textChanged</td>
+<td>用户输入或者setText()调用，激发事件</td>
+</tr>
+<tr>
+<td>textEdited</td>
+<td>只有用户手动修改激发事件</td>
+</tr>
+</tbody>
+</table>
+<h3 id="输入验证正则"><a class="markdownIt-Anchor" href="#输入验证正则"></a> 输入验证（正则）</h3>
+<ul>
+<li>格式掩码</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>掩码</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>setInputMask(&quot;000.000.000.000;_&quot;)</code></td>
+<td>格式化字符串，后面的<code>;_</code>代表不填写时默认显示<code>_</code></td>
+</tr>
+</tbody>
+</table>
+<p><img src="/images/pasted-67.png" alt="掩码格式" /></p>
+<h3 id="复杂验证qvalidator-qregexpvalidator"><a class="markdownIt-Anchor" href="#复杂验证qvalidator-qregexpvalidator"></a> 复杂验证QValidator、QRegExpValidator</h3>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//整型</span></span><br><span class="line">QIntValidator *ival = <span class="keyword">new</span> QIntValidator();</span><br><span class="line">ival-&gt;setRange(<span class="number">10</span>,<span class="number">1000</span>);</span><br><span class="line">ui.iedit-&gt;setValidator(ival);</span><br><span class="line"><span class="comment">//浮点型</span></span><br><span class="line"><span class="comment">//默认科学计数法，会在输入完校验</span></span><br><span class="line">QDoubleValidator *dval = <span class="keyword">new</span> QDoubleValidator();</span><br><span class="line">dval-&gt;setRange(<span class="number">1</span>,<span class="number">199</span>); <span class="comment">//结合写法：dval-&gt;setRange(1,199,3); </span></span><br><span class="line">dval-&gt;setDecimal(<span class="number">3</span>);</span><br><span class="line"><span class="comment">//更改为普通计数法</span></span><br><span class="line">dval-&gt;setNotation(QDoubleValidator::StandardNotation);</span><br><span class="line">ui.dedit-&gt;setValidator(ival);</span><br><span class="line"><span class="comment">//正则</span></span><br><span class="line"><span class="function">QRegExpValidator *pReg <span class="keyword">new</span> <span class="title">QRegExpValidator</span><span class="params">(QRegExp(<span class="string">"\d+"</span>),<span class="keyword">this</span>)</span></span>;</span><br><span class="line">ui.email-&gt;setVlidator(pReg);</span><br><span class="line"><span class="comment">//-------在信号函数校验--------</span></span><br><span class="line"><span class="keyword">const</span> QValidator *v = ui.email-&gt;validator();</span><br><span class="line"><span class="keyword">int</span> pos = <span class="number">0</span>;</span><br><span class="line"><span class="comment">//返回：Invalid 0；Intermediate 1；Acceptable 2</span></span><br><span class="line"><span class="keyword">if</span> v-&gt;validate(ui.email-&gt;<span class="built_in">text</span>(),pos)!=QValidator::Acceptable&#123;</span><br><span class="line">  ui.label-&gt;setText(QString::fromLocal8bit(<span class="string">"格式不正确"</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="显示样式"><a class="markdownIt-Anchor" href="#显示样式"></a> 显示样式</h3>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>setEchoMode(QLineEdid::Normal)</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Flags</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Normal</td>
+<td></td>
+</tr>
+<tr>
+<td>NoEcho</td>
+<td></td>
+</tr>
+<tr>
+<td>Password</td>
+<td></td>
+</tr>
+<tr>
+<td>PasswordEchoOnEdit</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="qobject"><a class="markdownIt-Anchor" href="#qobject"></a> QObject</h2>
+<h3 id="遍历所有qobject子节点"><a class="markdownIt-Anchor" href="#遍历所有qobject子节点"></a> 遍历所有QObject子节点</h3>
+<ul>
+<li>遍历子节点，获取节点对象名称<code>QObjectList children()</code>、<code>objectName</code>，</li>
+<li>转换子节点-获取节点对象类型</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>QObjectList cs = this-&gt;children()</code></td>
+<td>遍历子节点</td>
+</tr>
+<tr>
+<td><code>cs[1]-&gt;objectName</code></td>
+<td>获取节点对象名称</td>
+</tr>
+<tr>
+<td><code>QMetaObject *mobj = QObject-&gt;metaObject()</code></td>
+<td>获取节点对象类型的元数据</td>
+</tr>
+<tr>
+<td><code>metaObject()-&gt;className</code></td>
+<td>获取类的名称</td>
+</tr>
+<tr>
+<td><code>qobject_cast&lt;QCheckBox*&gt;(cb)</code></td>
+<td>转换子节点，转换失败返回NULL</td>
+</tr>
+</tbody>
+</table>
+<h2 id="qlayout"><a class="markdownIt-Anchor" href="#qlayout"></a> QLayout</h2>
+<ul>
+<li>布局器依赖于QWidget</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>布局</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Vertical Layout</td>
+<td>垂直布局</td>
+</tr>
+<tr>
+<td>Horizontal Layout</td>
+<td>水平布局</td>
+</tr>
+<tr>
+<td>Grid Layout</td>
+<td>网格布局</td>
+</tr>
+<tr>
+<td>From Layout</td>
+<td>表单布局</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>QSize sizeHint()</code></td>
+<td>推荐尺寸只能重载修改</td>
+</tr>
+<tr>
+<td><code>QSizePolicy::PolicyFlag</code></td>
+<td>尺寸策略</td>
+</tr>
+<tr>
+<td><code>setContentsMargins</code></td>
+<td>设置边距</td>
+</tr>
+<tr>
+<td><code>setMinimumSize(width,height)</code></td>
+<td>设置最小尺寸</td>
+</tr>
+<tr>
+<td><code>setMaximumSize(width,height)</code></td>
+<td>设置最大尺寸</td>
+</tr>
+<tr>
+<td><code>setSpacing(width)</code></td>
+<td>设置间距</td>
+</tr>
+<tr>
+<td><code>QGridLayout::setVerticalSpacing(width)</code></td>
+<td>设置水平间距</td>
+</tr>
+<tr>
+<td><code>QGridLayout::setHorizontalSpacing(width)</code></td>
+<td>设置垂直间距</td>
+</tr>
+<tr>
+<td><code>QFormLayout::addRow(tr(&quot;&amp;name&quot;),nameLineEdit)</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>QFormLayout::insertRow(row,tr(&quot;&amp;name&quot;),nameLineEdit)</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>QLayoutItem *itemAt(row,ItemRole)</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>QLayoutItem::widget()</code></td>
+<td>转为widget，否则返回null</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>PolicyFlag</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GrowFlag</td>
+<td>必要时超过推荐</td>
+</tr>
+<tr>
+<td>ExpandFlag</td>
+<td>尽可能扩展</td>
+</tr>
+<tr>
+<td>ShrinkFlag</td>
+<td>必要时小于推荐</td>
+</tr>
+<tr>
+<td>IgnoreFlag</td>
+<td>缺省大小忽略</td>
+</tr>
+</tbody>
+</table>
+<h3 id="手动添加qlayout"><a class="markdownIt-Anchor" href="#手动添加qlayout"></a> 手动添加QLayout</h3>
+<ul>
+<li>添加QVBoxLayout/QHBoxLayout</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">QWidget *w = <span class="keyword">new</span> QWidget;</span><br><span class="line">QVBoxLayout *lay = <span class="keyword">new</span> QVBoxLayout(w); <span class="comment">//绑定方式一</span></span><br><span class="line"><span class="comment">//w-&gt;setLayout(lay)绑定方式二</span></span><br><span class="line">QPushButton *btn = <span class="keyword">new</span> QPushButton(<span class="string">"button"</span>);</span><br><span class="line">lay-&gt;addWidget(btn1);</span><br><span class="line">w.show()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>添加QGridLayout</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">lay-&gt;addWidget(btn,<span class="keyword">int</span> row,<span class="keyword">int</span> column,Qt::Alignment);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>添加QFromLayout：插入项目addRow和insertRow、遍历项目、表单验证</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">```</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## QCheckBox</span><br><span class="line">- 选择项，继承于QAbstractButton，支持快捷键</span><br><span class="line"></span><br><span class="line">|函数|说明|</span><br><span class="line">|-|-|</span><br><span class="line">|<span class="built_in">text</span>()|获取文本信息|</span><br><span class="line">|setText()|设置文本信息|</span><br><span class="line">|bool isChecked() const|状态|</span><br><span class="line">|void setChecked(bool)|设置状态|</span><br><span class="line">|void toggled()|设置状态|</span><br><span class="line">|setAutoExclusive()|设置排他，同一级别的，可以放在不同的widget中，相互不影响|</span><br><span class="line"></span><br><span class="line">|事件|说明|</span><br><span class="line">|-|-|</span><br><span class="line">|clicked(<span class="keyword">bool</span>)|点击事件|</span><br><span class="line">|toggled(<span class="keyword">bool</span>)|变化触发|</span><br><span class="line"></span><br><span class="line">### QButtonGroup</span><br><span class="line">- QCheckBox可以放入组中管理，加入组中默认设为单选，可以设置是否排他</span><br><span class="line"></span><br><span class="line">|函数|说明|</span><br><span class="line">|-|-|</span><br><span class="line">|setEclusive(<span class="keyword">bool</span>)|设置是否单选|</span><br><span class="line"></span><br><span class="line">|事件|说明|</span><br><span class="line">|-|-|</span><br><span class="line">|`void buttonClicked(QAbstractButton *button)`||</span><br><span class="line">|`void buttonClicked(int id)`||</span><br><span class="line">|`void buttonPressed(QAbstractButton *button)`||</span><br><span class="line">|`void buttonPressed(int id)`||</span><br><span class="line">|`void buttonReleased(QAbstractButton *button)`||</span><br><span class="line">|`void buttonReleased(int id)`||</span><br><span class="line">|`void buttonToggled(QAbstractButton *button, bool checked)`||</span><br><span class="line">|`void buttonToggled(int id,bool checked)`||</span><br><span class="line"></span><br><span class="line">```c</span><br><span class="line">QButtonGroup *group = <span class="keyword">new</span> QButtonGroup(<span class="keyword">this</span>);</span><br><span class="line">group-&gt;addButton(ui.checkBox1);</span><br><span class="line">group-&gt;addButton(ui.checkBox2);</span><br><span class="line">group-&gt;setEclusive(<span class="literal">false</span>);</span><br><span class="line"><span class="comment">//绑定手动点击事件</span></span><br><span class="line">QObject::<span class="built_in">connect</span>(group,SIGNAL(buttonClicked(QAbstractButton*)),<span class="keyword">this</span>,SLOT(Test(QAbstractButton *)));</span><br></pre></td></tr></table></figure>
+<h3 id="qradiobutton"><a class="markdownIt-Anchor" href="#qradiobutton"></a> QRadioButton</h3>
+<ul>
+<li>类似于QCheckBox，相关属性、函数基本相同</li>
+<li>默认是单选的</li>
+</ul>
+<h2 id="qcombobox"><a class="markdownIt-Anchor" href="#qcombobox"></a> QComboBox</h2>
+<ul>
+<li>下拉列表，还可以设置选项的图标</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>void addItem(const QString &amp;text,const QVariant &amp;userData = QVariant())</code></td>
+<td>新增数据，默认在结尾插入</td>
+</tr>
+<tr>
+<td><code>void addItem(const QIcon &amp;icon,const QString &amp;text,const QVariant &amp;userData=QVariant())</code></td>
+<td>新增数据以及图标</td>
+</tr>
+<tr>
+<td><code>void addItems(const QStringList &amp;texts)</code></td>
+<td>新增一组数据</td>
+</tr>
+<tr>
+<td><code>void insertItems(int index,const QStringList &amp;list)</code></td>
+<td>根据索引插入</td>
+</tr>
+<tr>
+<td><code>void insertItem(int index,const QString &amp;text,const QVariant &amp;userData=QVariant())</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>void insertItem(int index,const QIcon &amp;icon,const QString &amp;text,const QVariant &amp;userData=QVariant())</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>void removeItem(int index)</code></td>
+<td>删除</td>
+</tr>
+<tr>
+<td><code>[slot]void QComboBox::clearEditText()</code></td>
+<td>清空</td>
+</tr>
+<tr>
+<td><code>[slot]void QComboBox::clear()</code></td>
+<td>清空</td>
+</tr>
+<tr>
+<td><code>QVariant itemText(int index)</code></td>
+<td>获取文字</td>
+</tr>
+<tr>
+<td><code>QVariant itemData(int index)</code></td>
+<td>获取传入的userData</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>事件</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>void activated(int index)(const QString &amp;text)</code></td>
+<td>用户选中时触发，支持两种输入</td>
+</tr>
+<tr>
+<td><code>void currentIndex(int index)(const QString &amp;text)</code></td>
+<td>代码和用户选中都会触发</td>
+</tr>
+<tr>
+<td><code>void currentTextChanged(const QString &amp;text)</code></td>
+<td>文字变化触发，前提是可编辑模式</td>
+</tr>
+<tr>
+<td><code>void editTextChanged(const QString &amp;text)</code></td>
+<td>只有可编辑时编辑触发</td>
+</tr>
+<tr>
+<td><code>void highlighted(int index)(const QString &amp;text)</code></td>
+<td>未选中，鼠标移动到选项高亮时触发</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>QVariant用户自定义类型</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>void setValue(const T &amp;value)</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>Q_DECLARE_METATYPE(Test)</code></td>
+<td>注册类型</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">STU</span>&#123;</span></span><br><span class="line">  <span class="keyword">int</span> a;</span><br><span class="line">  <span class="keyword">int</span> b;</span><br><span class="line">&#125;</span><br><span class="line">Q_DECLARE_METATYPE(STU);</span><br><span class="line">QVariant var:</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">STU</span> <span class="title">my</span>;</span></span><br><span class="line">var.setValue(my);</span><br><span class="line">ui.comboBox-&gt;addItem(<span class="string">"Item001"</span>,var);</span><br><span class="line">QVariant var2 = ui.comboBox-&gt;itemData(<span class="number">0</span>);</span><br><span class="line">a = var2.value&lt;STU&gt;().a</span><br></pre></td></tr></table></figure>
+<h2 id="qslider"><a class="markdownIt-Anchor" href="#qslider"></a> QSlider</h2>
+<ul>
+<li>滑动条</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>setRange(int min,int max)</code></td>
+<td>设定范围，建议设置跟像素匹配</td>
+</tr>
+<tr>
+<td><code>setSingleStep(键盘操作)</code></td>
+<td>设置单步长度</td>
+</tr>
+<tr>
+<td><code>setPageStep(鼠标操作)</code></td>
+<td>设置单步长度</td>
+</tr>
+<tr>
+<td><code>setOrientation Horizontal Vertical</code></td>
+<td>设置方向</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>事件</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>void setValue(int value)</code></td>
+<td>鼠标拖动时触发</td>
+</tr>
+<tr>
+<td><code>void sliderMoved(int value)</code></td>
+<td>鼠标拖动时触发</td>
+</tr>
+<tr>
+<td><code>void sliderPressed()</code></td>
+<td>点击滑块</td>
+</tr>
+<tr>
+<td><code>void sliderReleased()</code></td>
+<td>松开滑块</td>
+</tr>
+<tr>
+<td><code>void valueChanged(int value)</code></td>
+<td>点击和设置值都会触发</td>
+</tr>
+</tbody>
+</table>
+<h3 id="qslider重载鼠标事件"><a class="markdownIt-Anchor" href="#qslider重载鼠标事件"></a> QSlider重载鼠标事件</h3>
+<ul>
+<li><code>void mousePressEvent(QMouseEvent e)</code></li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;QSlide&gt;</span></span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">XSlide</span>:</span><span class="keyword">public</span> QSlider&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">XSlide(QWidget *p=Null):QSlider(p)&#123;&#125;;~XSlide();</span><br><span class="line"><span class="function"><span class="keyword">virtual</span> <span class="title">MousePressEvent</span><span class="params">(QMouse Event *e)</span></span>&#123;</span><br><span class="line">  QSlider::mousePressEvent(e);</span><br><span class="line">  <span class="keyword">double</span> p = (<span class="keyword">double</span>)e-&gt;pos().x()/(<span class="keyword">double</span>)<span class="built_in">width</span>();</span><br><span class="line">  <span class="keyword">int</span> val = p*(maximum()-minium())+minimum();</span><br><span class="line">  setValue(val);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="qlistwidget"><a class="markdownIt-Anchor" href="#qlistwidget"></a> QListWidget</h2>
+<ul>
+<li>列表</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>selectionMode</code></td>
+<td>单选多选模式</td>
+</tr>
+<tr>
+<td><code>flow</code></td>
+<td>从上到下还是从左到右</td>
+</tr>
+<tr>
+<td><code>gridSize</code></td>
+<td>每一行的宽高</td>
+</tr>
+<tr>
+<td><code>iconSize</code></td>
+<td>图标宽高</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line"><span class="comment">//插入数据3种方法</span></span><br><span class="line">QListWidgetItem *item = <span class="keyword">new</span> QListWidgetItem;</span><br><span class="line">item.setText(itemText);</span><br><span class="line">listWidget-&gt;insertItem(row,newItem);</span><br><span class="line"><span class="keyword">new</span> QListWidgetItem(<span class="string">"xxx"</span>.<span class="string">"listWidget"</span>);</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">addItem</span><span class="params">(<span class="keyword">const</span> QString &amp;label)</span></span></span><br><span class="line">[slot]void QListWidget::clear();</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>事件</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>listWidget-&gt;setEditTriggers(QAbstractItemView::AllEditTriggers)</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>item-&gt;setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled|Qt::ItemIsEditable)</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>No EditTriggers 0 No Editing possible</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>Currentchanged 1 Editing start whenever current item changes</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>for(int i=0;i&lt;ui.listWidget-&gt;count();i++){ui.listWidget-&gt;item(i)-&gt;text();}</code></td>
+<td>遍历</td>
+</tr>
+<tr>
+<td><code>listWidget-&gt;sortItems(Qt::DescendingOrder|AscendingOrder)</code></td>
+<td>排序</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>QListWidget还可以使用<code>setItemWidget</code>添加更多的控件。</li>
+</ul>
+<h2 id="qtablewidget"><a class="markdownIt-Anchor" href="#qtablewidget"></a> QTableWidget</h2>
+<ul>
+<li>表格控件</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>horizontalHeader() verticalHeader</code></td>
+<td>标题显示</td>
+</tr>
+<tr>
+<td><code>setVerticalScrollBarPolicy</code></td>
+<td>滚动条显示</td>
+</tr>
+<tr>
+<td><code>selectionMode</code></td>
+<td>选择模式</td>
+</tr>
+<tr>
+<td><code>setSelectionBehavior</code></td>
+<td>选择行、列、一项</td>
+</tr>
+<tr>
+<td><code>setCornerButtonEnable</code></td>
+<td>右上角全选按钮</td>
+</tr>
+<tr>
+<td><code>setShowGrid setGridStyle</code></td>
+<td>网格显示</td>
+</tr>
+<tr>
+<td><code>setSortingEnable</code></td>
+<td>排序按钮</td>
+</tr>
+<tr>
+<td><code>setColumnCount(5);setRowCount(5);</code><br><code>setHorizontalHeaderItem(int column,QTableWidgetItem *itme);</code><br><code>setHorizontalHeaderLabels(const QStringList &amp;labels);</code><br><code>setVertivalHeaderItem(int column,QTableWidgetItem *itme);</code><br><code>setVertivalHeaderLabels(const QStringList &amp;labels);</code><br><code>QTableWidgetItem *hotzontalHeaderItem(int column) const</code></td>
+<td>插入标题</td>
+</tr>
+<tr>
+<td><code>setRowCount(5)</code><br><code>[slot]void insertColumn(int column);[slot]void insertRow(int row)</code><br><code>setCellWidget(row,column,new QLineEdit);void setItem(row,column,QTableWidgetItem *item)</code></td>
+<td>插入数据</td>
+</tr>
+<tr>
+<td><code>QList&lt;QTableWidgetItem*&gt;selectedItems()//空行无法选择</code><br><code>std::set&lt;int&gt;vecItemIndex;QItemSelectionModel *sel = TAB-&gt;selectionModel();QModelIndexLIst list = sele-&gt;selectedIndexes();</code></td>
+<td>选择数据</td>
+</tr>
+<tr>
+<td><code>setRowCount(int);[slot]void removeColumn(int column);[slot]void removeRow(int);QmodelIndex currentIndex();</code></td>
+<td>删除数据</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>事件</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cellEntered(int,int);setMouseTracking</code></td>
+<td>要先设置鼠标追踪，才能获取鼠标悬停事件，即使没有内容的表格也触发，空行有效</td>
+</tr>
+<tr>
+<td><code>itemEntered(QTableWidgetItem *item);</code></td>
+<td>只有有元素的表格触发，空行无效</td>
+</tr>
+<tr>
+<td><code>cellChanged(int,int)</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>cellClicked(int,int)</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>cellDoubleClicked(int,int)</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>itemChanged(QTableWidgetItem*item)</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="qtreewidget"><a class="markdownIt-Anchor" href="#qtreewidget"></a> QTreeWidget</h2>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>header()-&gt;setVisible(true)</code></td>
+<td>是否显示标题</td>
+</tr>
+<tr>
+<td><code>setSortingEnabled</code></td>
+<td>点击标题排序</td>
+</tr>
+<tr>
+<td><code>setAnimated</code></td>
+<td>动画展开</td>
+</tr>
+<tr>
+<td><code>setVerticalScrollBarPolicy setHorizontalScrollBarPolicy</code></td>
+<td>滚动条显示</td>
+</tr>
+<tr>
+<td><code>selectionMode</code></td>
+<td>选择模式</td>
+</tr>
+<tr>
+<td><code>setSelectionBehavior</code></td>
+<td>选择行、列、项</td>
+</tr>
+<tr>
+<td><code>QTreeWidgetItem *h=NULL;tree-&gt;setHeaderItem(new QTreeWidgetItem())//清理原来的标题，不清理数据；ui.treeWidget-&gt;clear();h=tree-&gt;headerItem();h-&gt;setText(0,QStringLiteral(&quot;text&quot;));</code></td>
+<td>设置标题</td>
+</tr>
+<tr>
+<td><code>inserTopLevelItem(int,QTreeWidgetItem*);</code><br><code>addTopLevelItem(QTreeWidgetItem*)</code><br><code>new QTreeWidgetItem(treeWidget)</code><br><code>int topLevelItemCount()const</code><br><code>void setItemWidget(QTreeWidgetItem *,int,QWidget*)</code><br><code>QList&lt;QTreeWidgetItem*&gt;selectedItems()const</code><br><code>void setColumnCount(int columns)</code><br><code>void addChild(QTreeWidgetItem*)</code><br><code>void addChildren(const QList&lt;QTreeWidgetItem*&gt;</code><br><code>void setText(int col,const QString &amp;text)</code><br><code>QTreeWidgetItem *parent()const</code><br><code>QTreeWidget * treeWidget()const</code></td>
+<td>插入读取</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>事件</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>void collapseItem(const QTreeWidgetItem*)</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>void expandItem(const QTreeWidgetItem*)</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>currentItemChanged</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>itemActivated</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>itemClicked</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>itemCollapsed</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>itemDoubleClicked</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>itemEntered</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>itemExpanded</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>itmePressed</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="qdialog"><a class="markdownIt-Anchor" href="#qdialog"></a> QDIalog</h2>
+<ul>
+<li>继承于QWidget</li>
+<li>派生类：</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">QColorDialog、QFileDialog、QFontDialog、QInputDialog、QProgressDialog</span><br><span class="line">QErrorMessage、QMessageBox</span><br></pre></td></tr></table></figure>
+<ul>
+<li>常用方法</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>show</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>exec</code></td>
+<td>阻塞有返回值 show</td>
+</tr>
+<tr>
+<td><code>[slot]accept()</code></td>
+<td>确认，返回值QDialog::Accepted</td>
+</tr>
+<tr>
+<td><code>[slot]reject()</code></td>
+<td>拒绝，返回值QDialog::Rejected</td>
+</tr>
+<tr>
+<td><code>done(int);</code></td>
+<td>更多返回值</td>
+</tr>
+<tr>
+<td><code>result()</code></td>
+<td>获取返回值</td>
+</tr>
+</tbody>
+</table>
+<h2 id="qprogressbar"><a class="markdownIt-Anchor" href="#qprogressbar"></a> QProgressbar</h2>
+<ul>
+<li>进度条，一般是展示进度。要新开线程进行处理，防止主窗口堵塞。</li>
+</ul>
+<h1 id="qmainwindow"><a class="markdownIt-Anchor" href="#qmainwindow"></a> QMainWindow</h1>
+<h2 id="菜单"><a class="markdownIt-Anchor" href="#菜单"></a> 菜单</h2>
+<ul>
+<li>QMenuBar、QMenu、QAction</li>
+</ul>
+<h2 id="工具栏"><a class="markdownIt-Anchor" href="#工具栏"></a> 工具栏</h2>
+<ul>
+<li>QToolBar</li>
+</ul>
+<h2 id="状态栏"><a class="markdownIt-Anchor" href="#状态栏"></a> 状态栏</h2>
+<ul>
+<li>QStatusBar</li>
+</ul>
+<h1 id="qt事件"><a class="markdownIt-Anchor" href="#qt事件"></a> Qt事件</h1>
+<h2 id="qevent事件重载"><a class="markdownIt-Anchor" href="#qevent事件重载"></a> QEvent事件重载</h2>
+<ul>
+<li><code>bool event(QEvent*)</code>返回true，则不继续向父级事件传递，直接结束。所有事件在这个函数中获取到。</li>
+<li>派生类</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">QKeyEvent、QMouseEvent、QTouchEvent、QWheelEvent</span><br></pre></td></tr></table></figure>
+<ul>
+<li>QWidget重载事件函数，这样防止重载event事件时，发生的强转。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">keyPressEvent</span><span class="params">(QKeyEvent* e)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">keyReleaseEvent</span><span class="params">(QKeyEvent* e)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">leaveEvent</span><span class="params">(QEvent* e)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">enterEvent</span><span class="params">(QEvent* e)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">mouseDoubleEvent</span><span class="params">(QMouseEvent* e)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">mouseMoveEvent</span><span class="params">(QMouseEvent* e)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">mousePressEvent</span><span class="params">(QMouseEvent* e)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">mouseReleaseEvent</span><span class="params">(QMouseEvent* e)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">moveEvent</span><span class="params">(QMouseEvent* e)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">resizeEvent</span><span class="params">(QResizeEvent* e)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">showEvent</span><span class="params">(QShowEvent* e)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">wheelEvent</span><span class="params">(QWheelEvent* e)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">paintEvent</span><span class="params">(QPaintEvent* e)</span></span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>QMouseEvent坐标</p>
+<ul>
+<li>相对(本地)坐标：x(),y()</li>
+<li>窗口坐标：QPoint windowPos()</li>
+<li>屏幕坐标：screenPos()、QCursor::pos()</li>
+<li>相对坐标转换为屏幕坐标：QWidget::mapToGlobal(ev-&gt;pos());</li>
+</ul>
+</li>
+<li>
+<p>按键状态</p>
+<ul>
+<li>button &amp; Qt::LeftButton|Qt::RightButton|Qt::MidButton</li>
+</ul>
+</li>
+</ul>
+<h1 id="qt图像绘制"><a class="markdownIt-Anchor" href="#qt图像绘制"></a> Qt图像绘制</h1>
+<h2 id="qpainter"><a class="markdownIt-Anchor" href="#qpainter"></a> QPainter</h2>
+<h2 id="qimage"><a class="markdownIt-Anchor" href="#qimage"></a> QImage</h2>
+</div></article><div class="post-meta__tag-list"></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2020/07/21/goproxy/"><i class="fa fa-chevron-left">  </i><span>goproxy</span></a></div><div class="next-post pull-right"><a href="/2020/07/15/python%E5%BA%93%E6%95%B4%E7%90%86/"><span>python库整理</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="vcomment"></div><script src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = 'false' == 'true';
+var verify = 'false' == 'true';
+var record_ip = '' == 'true';
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  recordIP:record_ip,
+  appId:'AdfkiqY89QUSUWbDY9xJuCh0-gzGzoHsz',
+  appKey:'2cEvHcqEWsyoKwy4AUL3kPGh',
+  placeholder:'劈个叉吧',
+  avatar:'mm',
+  guest_info:guest_info,
+  pageSize:'100',
+  lang: 'zh-cn'
+})</script></div></div><footer><div class="layout" id="footer"><div class="copyright">&copy;2020 By hero576</div><div class="framework-info"><span>驱动 - </span><a href="http://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody" target="_blank" rel="noopener"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.7.0"></script><script src="/js/fancybox.js?version=1.7.0"></script><script src="/js/sidebar.js?version=1.7.0"></script><script src="/js/copy.js?version=1.7.0"></script><script src="/js/fireworks.js?version=1.7.0"></script><script src="/js/transition.js?version=1.7.0"></script><script src="/js/scroll.js?version=1.7.0"></script><script src="/js/head.js?version=1.7.0"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css"><script src="/js/katex.js"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a href="https://github.com/wzpan/hexo-generator-search" target="_blank" rel="noopener" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>
