@@ -668,8 +668,7 @@ QPushButton::hover{
 ```
 
 ## QLineEdit
-### 属性方法槽 信号事件
-
+### 属性方法槽 
 
 |事件信号|说明|
 |-|-|
@@ -682,52 +681,428 @@ QPushButton::hover{
 |undo()|撤销|
 |redo()|恢复|
 
-### 输入验证（正则）
-- 格式掩码
+### 信号事件
 
 |事件信号|说明|
 |-|-|
-|`setInputMask("000.000.000.000;_")`|格式化字符串|
+|editingFinished |按下回车或者焦点移开，触发事件|
+|returnPressed |按下回车|
+|textChanged|用户输入或者setText()调用，激发事件|
+|textEdited|只有用户手动修改激发事件|
+
+### 输入验证（正则）
+- 格式掩码
+
+|掩码|说明|
+|-|-|
+|`setInputMask("000.000.000.000;_")`|格式化字符串，后面的`;_`代表不填写时默认显示`_`|
 
 ![掩码格式](/images/pasted-67.png)
 
-- 格式校验
+### 复杂验证QValidator、QRegExpValidator
+```c
+//整型
+QIntValidator *ival = new QIntValidator();
+ival->setRange(10,1000);
+ui.iedit->setValidator(ival);
+//浮点型
+//默认科学计数法，会在输入完校验
+QDoubleValidator *dval = new QDoubleValidator();
+dval->setRange(1,199); //结合写法：dval->setRange(1,199,3); 
+dval->setDecimal(3);
+//更改为普通计数法
+dval->setNotation(QDoubleValidator::StandardNotation);
+ui.dedit->setValidator(ival);
+//正则
+QRegExpValidator *pReg new QRegExpValidator(QRegExp("\d+"),this);
+ui.email->setVlidator(pReg);
+//-------在信号函数校验--------
+const QValidator *v = ui.email->validator();
+int pos = 0;
+//返回：Invalid 0；Intermediate 1；Acceptable 2
+if v->validate(ui.email->text(),pos)!=QValidator::Acceptable{
+  ui.label->setText(QString::fromLocal8bit("格式不正确"));
+}
+```
 
 
+### 显示样式
 
-### qss样式
+|函数|说明|
+|-|-|
+|`setEchoMode(QLineEdid::Normal)`||
 
+|Flags|说明|
+|-|-|
+|Normal||
+|NoEcho||
+|Password||
+|PasswordEchoOnEdit||
 
+## QObject
+### 遍历所有QObject子节点
+- 遍历子节点，获取节点对象名称`QObjectList children()`、`objectName`，
+- 转换子节点-获取节点对象类型
+
+|函数|说明|
+|-|-|
+|`QObjectList cs = this->children()`|遍历子节点|
+|`cs[1]->objectName`|获取节点对象名称|
+|`QMetaObject *mobj = QObject->metaObject()`|获取节点对象类型的元数据|
+|`metaObject()->className`|获取类的名称|
+|`qobject_cast<QCheckBox*>(cb)`|转换子节点，转换失败返回NULL|
 
 
 ## QLayout
-## QObject
-## 选择、复选框、滑动条
-## 列表
+- 布局器依赖于QWidget
+
+|布局|说明|
+|-|-|
+|Vertical Layout|垂直布局|
+|Horizontal Layout|水平布局|
+|Grid Layout|网格布局|
+|From Layout|表单布局|
+
+|函数|说明|
+|-|-|
+|`QSize sizeHint()`|推荐尺寸只能重载修改|
+|`QSizePolicy::PolicyFlag`|尺寸策略|
+|`setContentsMargins`|设置边距|
+|`setMinimumSize(width,height)`|设置最小尺寸|
+|`setMaximumSize(width,height)`|设置最大尺寸|
+|`setSpacing(width)`|设置间距|
+|`QGridLayout::setVerticalSpacing(width)`|设置水平间距|
+|`QGridLayout::setHorizontalSpacing(width)`|设置垂直间距|
+|`QFormLayout::addRow(tr("&name"),nameLineEdit)`||
+|`QFormLayout::insertRow(row,tr("&name"),nameLineEdit)`||
+|`QLayoutItem *itemAt(row,ItemRole)`||
+|`QLayoutItem::widget()`|转为widget，否则返回null|
+
+
+|PolicyFlag|说明|
+|-|-|
+|GrowFlag |必要时超过推荐|
+|ExpandFlag|尽可能扩展|
+|ShrinkFlag|必要时小于推荐|
+|IgnoreFlag|缺省大小忽略|
+
+### 手动添加QLayout
+- 添加QVBoxLayout/QHBoxLayout
+```c
+QWidget *w = new QWidget;
+QVBoxLayout *lay = new QVBoxLayout(w); //绑定方式一
+//w->setLayout(lay)绑定方式二
+QPushButton *btn = new QPushButton("button");
+lay->addWidget(btn1);
+w.show()
+```
+
+- 添加QGridLayout
+```c
+lay->addWidget(btn,int row,int column,Qt::Alignment);
+```
+
+- 添加QFromLayout：插入项目addRow和insertRow、遍历项目、表单验证
+```c
+```
+
+
+## QCheckBox
+- 选择项，继承于QAbstractButton，支持快捷键
+
+|函数|说明|
+|-|-|
+|text()|获取文本信息|
+|setText()|设置文本信息|
+|bool isChecked() const|状态|
+|void setChecked(bool)|设置状态|
+|void toggled()|设置状态|
+|setAutoExclusive()|设置排他，同一级别的，可以放在不同的widget中，相互不影响|
+
+|事件|说明|
+|-|-|
+|clicked(bool)|点击事件|
+|toggled(bool)|变化触发|
+
+### QButtonGroup
+- QCheckBox可以放入组中管理，加入组中默认设为单选，可以设置是否排他
+
+|函数|说明|
+|-|-|
+|setEclusive(bool)|设置是否单选|
+
+|事件|说明|
+|-|-|
+|`void buttonClicked(QAbstractButton *button)`||
+|`void buttonClicked(int id)`||
+|`void buttonPressed(QAbstractButton *button)`||
+|`void buttonPressed(int id)`||
+|`void buttonReleased(QAbstractButton *button)`||
+|`void buttonReleased(int id)`||
+|`void buttonToggled(QAbstractButton *button, bool checked)`||
+|`void buttonToggled(int id,bool checked)`||
+
+```c
+QButtonGroup *group = new QButtonGroup(this);
+group->addButton(ui.checkBox1);
+group->addButton(ui.checkBox2);
+group->setEclusive(false);
+//绑定手动点击事件
+QObject::connect(group,SIGNAL(buttonClicked(QAbstractButton*)),this,SLOT(Test(QAbstractButton *)));
+```
+
+### QRadioButton
+- 类似于QCheckBox，相关属性、函数基本相同
+- 默认是单选的
+
+## QComboBox
+- 下拉列表，还可以设置选项的图标
+
+|函数|说明|
+|-|-|
+|`void addItem(const QString &text,const QVariant &userData = QVariant())`|新增数据，默认在结尾插入|
+|`void addItem(const QIcon &icon,const QString &text,const QVariant &userData=QVariant())`|新增数据以及图标|
+|`void addItems(const QStringList &texts)`|新增一组数据|
+|`void insertItems(int index,const QStringList &list)`|根据索引插入|
+|`void insertItem(int index,const QString &text,const QVariant &userData=QVariant())`||
+|`void insertItem(int index,const QIcon &icon,const QString &text,const QVariant &userData=QVariant())`||
+|`void removeItem(int index)`|删除|
+|`[slot]void QComboBox::clearEditText()`|清空|
+|`[slot]void QComboBox::clear()`|清空|
+|`QVariant itemText(int index)`|获取文字|
+|`QVariant itemData(int index)`|获取传入的userData|
+
+
+|事件|说明|
+|-|-|
+|`void activated(int index)(const QString &text)`|用户选中时触发，支持两种输入|
+|`void currentIndex(int index)(const QString &text)`|代码和用户选中都会触发|
+|`void currentTextChanged(const QString &text)`|文字变化触发，前提是可编辑模式|
+|`void editTextChanged(const QString &text)`|只有可编辑时编辑触发|
+|`void highlighted(int index)(const QString &text)`|未选中，鼠标移动到选项高亮时触发|
+
+
+- QVariant用户自定义类型
+
+|函数|说明|
+|-|-|
+|`void setValue(const T &value)`||
+|`Q_DECLARE_METATYPE(Test)`|注册类型|
+
+```c
+struct STU{
+  int a;
+  int b;
+}
+Q_DECLARE_METATYPE(STU);
+QVariant var:
+struct STU my;
+var.setValue(my);
+ui.comboBox->addItem("Item001",var);
+QVariant var2 = ui.comboBox->itemData(0);
+a = var2.value<STU>().a
+```
+
+## QSlider
+- 滑动条
+
+|函数|说明|
+|-|-|
+|`setRange(int min,int max)`|设定范围，建议设置跟像素匹配|
+|`setSingleStep(键盘操作)`|设置单步长度|
+|`setPageStep(鼠标操作)`|设置单步长度|
+|`setOrientation Horizontal Vertical`|设置方向|
+
+
+|事件|说明|
+|-|-|
+|`void setValue(int value)`|鼠标拖动时触发|
+|`void sliderMoved(int value)`|鼠标拖动时触发|
+|`void sliderPressed()`|点击滑块|
+|`void sliderReleased()`|松开滑块|
+|`void valueChanged(int value)`|点击和设置值都会触发|
+
+
+### QSlider重载鼠标事件
+- `void mousePressEvent(QMouseEvent e)`
+
+```c
+#include<QSlide>
+class XSlide:public QSlider{
+public:
+XSlide(QWidget *p=Null):QSlider(p){};~XSlide();
+virtual MousePressEvent(QMouse Event *e){
+  QSlider::mousePressEvent(e);
+  double p = (double)e->pos().x()/(double)width();
+  int val = p*(maximum()-minium())+minimum();
+  setValue(val);
+}
+}
+```
+
+## QListWidget
+- 列表
+
+|函数|说明|
+|-|-|
+|`selectionMode`|单选多选模式|
+|`flow`|从上到下还是从左到右|
+|`gridSize`|每一行的宽高|
+|`iconSize`|图标宽高|
+
+```c
+//插入数据3种方法
+QListWidgetItem *item = new QListWidgetItem;
+item.setText(itemText);
+listWidget->insertItem(row,newItem);
+new QListWidgetItem("xxx"."listWidget");
+void addItem(const QString &label)
+[slot]void QListWidget::clear();
+```
+
+|事件|说明|
+|-|-|
+|`listWidget->setEditTriggers(QAbstractItemView::AllEditTriggers)`||
+|`item->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled|Qt::ItemIsEditable)`||
+|`No EditTriggers 0 No Editing possible`||
+|`Currentchanged 1 Editing start whenever current item changes`||
+|`for(int i=0;i<ui.listWidget->count();i++){ui.listWidget->item(i)->text();}`|遍历|
+|`listWidget->sortItems(Qt::DescendingOrder|AscendingOrder)`|排序|
+
+- QListWidget还可以使用`setItemWidget`添加更多的控件。
+
+## QTableWidget
+- 表格控件
+
+|函数|说明|
+|-|-|
+|`horizontalHeader() verticalHeader`|标题显示|
+|`setVerticalScrollBarPolicy`|滚动条显示|
+|`selectionMode`|选择模式|
+|`setSelectionBehavior`|选择行、列、一项|
+|`setCornerButtonEnable`|右上角全选按钮|
+|`setShowGrid setGridStyle`|网格显示|
+|`setSortingEnable`|排序按钮|
+|`setColumnCount(5);setRowCount(5);`<br>`setHorizontalHeaderItem(int column,QTableWidgetItem *itme);`<br>`setHorizontalHeaderLabels(const QStringList &labels);`<br>`setVertivalHeaderItem(int column,QTableWidgetItem *itme);`<br>`setVertivalHeaderLabels(const QStringList &labels);`<br>`QTableWidgetItem *hotzontalHeaderItem(int column) const`|插入标题|
+|`setRowCount(5)`<br>`[slot]void insertColumn(int column);[slot]void insertRow(int row)`<br>`setCellWidget(row,column,new QLineEdit);void setItem(row,column,QTableWidgetItem *item)`|插入数据|
+|`QList<QTableWidgetItem*>selectedItems()//空行无法选择`<br>`std::set<int>vecItemIndex;QItemSelectionModel *sel = TAB->selectionModel();QModelIndexLIst list = sele->selectedIndexes();`|选择数据|
+|`setRowCount(int);[slot]void removeColumn(int column);[slot]void removeRow(int);QmodelIndex currentIndex();`|删除数据|
+
+|事件|说明|
+|-|-|
+|`cellEntered(int,int);setMouseTracking`|要先设置鼠标追踪，才能获取鼠标悬停事件，即使没有内容的表格也触发，空行有效|
+|`itemEntered(QTableWidgetItem *item);`|只有有元素的表格触发，空行无效|
+|`cellChanged(int,int)`||
+|`cellClicked(int,int)`||
+|`cellDoubleClicked(int,int)`||
+|`itemChanged(QTableWidgetItem*item)`||
+
+
+## QTreeWidget
+
+|函数|说明|
+|-|-|
+|`header()->setVisible(true)`|是否显示标题|
+|`setSortingEnabled`|点击标题排序|
+|`setAnimated`|动画展开|
+|`setVerticalScrollBarPolicy setHorizontalScrollBarPolicy`|滚动条显示|
+|`selectionMode`|选择模式|
+|`setSelectionBehavior`|选择行、列、项|
+|`QTreeWidgetItem *h=NULL;tree->setHeaderItem(new QTreeWidgetItem())//清理原来的标题，不清理数据；ui.treeWidget->clear();h=tree->headerItem();h->setText(0,QStringLiteral("text"));`|设置标题|
+|`inserTopLevelItem(int,QTreeWidgetItem*);`<br>`addTopLevelItem(QTreeWidgetItem*)`<br>`new QTreeWidgetItem(treeWidget)`<br>`int topLevelItemCount()const`<br>`void setItemWidget(QTreeWidgetItem *,int,QWidget*)`<br>`QList<QTreeWidgetItem*>selectedItems()const`<br>`void setColumnCount(int columns)`<br>`void addChild(QTreeWidgetItem*)`<br>`void addChildren(const QList<QTreeWidgetItem*>`<br>`void setText(int col,const QString &text)`<br>`QTreeWidgetItem *parent()const`<br>`QTreeWidget * treeWidget()const`|插入读取|
+
+
+|事件|说明|
+|-|-|
+|`void collapseItem(const QTreeWidgetItem*)`||
+|`void expandItem(const QTreeWidgetItem*)`||
+|`currentItemChanged`||
+|`itemActivated`||
+|`itemClicked`||
+|`itemCollapsed`||
+|`itemDoubleClicked`||
+|`itemEntered`||
+|`itemExpanded`||
+|`itmePressed`||
+
+
 ## QDIalog
-## 进度条
+- 继承于QWidget
+- 派生类：
+```c
+QColorDialog、QFileDialog、QFontDialog、QInputDialog、QProgressDialog
+QErrorMessage、QMessageBox
+```
+
+- 常用方法
+
+|函数|说明|
+|-|-|
+|`show`||
+|`exec`|阻塞有返回值 show|
+|`[slot]accept()`|确认，返回值QDialog::Accepted|
+|`[slot]reject()`|拒绝，返回值QDialog::Rejected|
+|`done(int);`|更多返回值|
+|`result()`|获取返回值|
+
+
+
+
+
+## QProgressbar
+- 进度条，一般是展示进度。要新开线程进行处理，防止主窗口堵塞。
 
 
 
 
 # QMainWindow
 ## 菜单
-## 工具栏
-## 状态栏
 
+- QMenuBar、QMenu、QAction
+
+
+## 工具栏
+- QToolBar
+
+## 状态栏
+- QStatusBar
 
 # Qt事件
 ## QEvent事件重载
 
+- `bool event(QEvent*)`返回true，则不继续向父级事件传递，直接结束。所有事件在这个函数中获取到。
+- 派生类
+```c
+QKeyEvent、QMouseEvent、QTouchEvent、QWheelEvent
+```
 
+- QWidget重载事件函数，这样防止重载event事件时，发生的强转。
+```c
+virtual void keyPressEvent(QKeyEvent* e);
+virtual void keyReleaseEvent(QKeyEvent* e);
+virtual void leaveEvent(QEvent* e);
+virtual void enterEvent(QEvent* e);
+virtual void mouseDoubleEvent(QMouseEvent* e);
+virtual void mouseMoveEvent(QMouseEvent* e);
+virtual void mousePressEvent(QMouseEvent* e);
+virtual void mouseReleaseEvent(QMouseEvent* e);
+virtual void moveEvent(QMouseEvent* e);
+virtual void resizeEvent(QResizeEvent* e);
+virtual void showEvent(QShowEvent* e);
+virtual void wheelEvent(QWheelEvent* e);
+virtual void paintEvent(QPaintEvent* e);
+```
 
-
+- QMouseEvent坐标
+  - 相对(本地)坐标：x(),y()
+  - 窗口坐标：QPoint windowPos()
+  - 屏幕坐标：screenPos()、QCursor::pos()
+  - 相对坐标转换为屏幕坐标：QWidget::mapToGlobal(ev->pos());
+  
+- 按键状态
+  - button & Qt::LeftButton|Qt::RightButton|Qt::MidButton
+  
 
 # Qt图像绘制
 ## QPainter
 ## QImage
-
-
-
-
-# 7
