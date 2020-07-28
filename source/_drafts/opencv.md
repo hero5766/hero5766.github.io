@@ -2,7 +2,7 @@ title: opencv
 author: hero576
 tags: []
 categories: []
-date: 2020-07-22 19:17:00
+date: 2020-07-27 19:17:00
 ---
 > opencv的使用
 <!--more-->
@@ -64,8 +64,6 @@ pip install pytessract
 |-|-|-|
 |namedWindow(winName,mode)|窗口设置<br>WINDOW_AUTOSIZE：根据内容自适应，不能改变窗口大小<br>WINDOW_FREERATIO：任意比例，可以改变大小<br>WINDOW_NORMAL：也可以更改||
 
-## 视频操作
-
 # 色彩空间
 ## 常见色彩空间
 ### RGB
@@ -75,6 +73,22 @@ pip install pytessract
 
 # 卷积和傅里叶变换
 ## 卷积
+### 数学描述
+- 连续定义
+$$(f*g)(n)=\int_{\infty }^{-\infty} f(\tau)g(n-\tau)d\tau$$
+
+- 离散定义
+$$(f*g)(n)=\sum_{\tau=-\infty }^{\infty} f(\tau)g(n-\tau)$$
+
+### 图像卷积的作用
+1. 模糊
+2. 梯度
+3. 边缘
+4. 锐化
+
+### 二维离散卷积
+
+
 ## 二维离散的傅里叶变换
 ## 傅里叶幅度谱与相位谱
 ## 普残差显著性监测
@@ -478,18 +492,82 @@ imshow("color",color);imshow("dst",dst);
 ## 低通滤波和高通滤波
 ## 带通和带阻滤波
 ## 自定义滤波
+### 卷积核
+
+```c
+//均值滤波卷积核
+int k=15;
+Mat meankernel = Mat::ones(k,k,CV_32F)/(float)(k*k);
+//自定义滤波 src,dst,depth,卷积核，锚点，提升亮度，边缘填充方式
+filter2D(src,dst,-1,meankernel,Point(-1,-1),0,BORDER_DEFAULT)
+//非均值滤波，此时滤波后的范围是-255~255，需要改变输出的类型，提升亮度为127，检测出轮廓
+Mat robot = (Mat_<int>(2,2)<<1,0,0,-1);
+filter2D(src,dst,CV_32F,robot,Point(-1,-1),127,BORDER_DEFAULT);
+//将正负取绝对值
+convertScaleAbs(dst,dst);
+```
+
 ## 同态滤波
 
 # 图像平滑
-## 卷积
-### 数学描述
-- 连续定义
-$$(f*g)(n)=\int_{\infty }^{-\infty} f(\tau )g(n-\tau)d\tau$$
+## 均值卷积
+### 代码实现
+- 自己实现，均值卷积，所有卷积核系数是一样的
+```c
+Mat src = imread("./1.jpg");
+Mat dst = Mar::zeros(src.size(),src.type());
+int h = src.rows,w = src.cols;
+//对于边缘不做处理
+for (int row=1;row<h-1;row++){
+  for (int col=1;col<w-1;col++){
+    int sb = src.at<Vec3b>(row-1,col-1)[0] + src.at<Vec3b>(row-1,col)[0] + src.at<Vec3b>(row-1,col+1)[0] +
+    src.at<Vec3b>(row,col-1)[0] + src.at<Vec3b>(row,col)[0] + src.at<Vec3b>(row,col+1)[0] +
+    src.at<Vec3b>(row+1,col-1)[0] + src.at<Vec3b>(row+1,col)[0] + src.at<Vec3b>(row+1,col+1)[0];
+    int sg = src.at<Vec3b>(row-1,col-1)[1] + src.at<Vec3b>(row-1,col)[1] + src.at<Vec3b>(row-1,col+1)[1] +
+    src.at<Vec3b>(row,col-1)[1] + src.at<Vec3b>(row,col)[1] + src.at<Vec3b>(row,col+1)[1] +
+    src.at<Vec3b>(row+1,col-1)[1] + src.at<Vec3b>(row+1,col)[1] + src.at<Vec3b>(row+1,col+1)[1];
+    int sr = src.at<Vec3b>(row-1,col-1)[2] + src.at<Vec3b>(row-1,col)[2] + src.at<Vec3b>(row-1,col+1)[2] +
+    src.at<Vec3b>(row,col-1)[2] + src.at<Vec3b>(row,col)[2] + src.at<Vec3b>(row,col+1)[2] +
+    src.at<Vec3b>(row+1,col-1)[2] + src.at<Vec3b>(row+1,col)[2] + src.at<Vec3b>(row+1,col+1)[2];
+    src.at<Vec3b>(row,col)[0]=sb/9;
+    src.at<Vec3b>(row,col)[1]=sg/9;
+    src.at<Vec3b>(row,col)[2]=sr/9;
+  }
+}
+imshow("conv",dst);
+```
 
-- 离散定义
-$$(f*g)(n)=\sum_{\tau=-\infty }^{\infty} f(\tau )g(n-\tau)$$
+- 用opencv的函数
+```c
+Mat src = imread("./1.jpg");
+Mat dst;
+blur(src,dst,Size(3,3),Point(-1,-1),BORDER_DEFAULT);
+imshow("conv",dst);
+//size：核的大小
+//Point(-1,-1)：锚定位置
+//BORDER_DEAULT：边缘处理的方式，使用边缘填充的方式
+```
 
-### 二维离散卷积
+- 卷积的边缘处理
+
+|函数|方法|
+|-|-|
+|BORDER_CONSTANT|0000/abcd/0000|
+|BORDER_REPLICATE|aaaa/abcd/dddd|
+|BORDER_WRAP|bcd/abcd/abc|
+|BORDER_REFLECT_101|dcb/abcd/cba|
+|BORDER_DEFAULT|dcb/abcd/cba|
+
+```c
+int border = 8;
+copyMakeBorder(src,dst,border,boder,boder,border,BORDER_DEFAULT);
+copyMakeBorder(src,dst,border,boder,boder,border,BORDER_CONSTANT,SCalar(0,0,255));
+```
+
+- 锚定位置的选择
+  - 不同锚定位置，卷积后的图像不同。选择尽量使得奇数的卷积核，尽量使得锚定点在中心位置。
+
+![锚定位置](/images/pasted-69.png)
 
 ## 高斯平滑
 ## 均值平滑
@@ -499,34 +577,433 @@ $$(f*g)(n)=\sum_{\tau=-\infty }^{\infty} f(\tau )g(n-\tau)$$
 ## 导向滤波
 
 # 图像模糊
+## 高斯模糊
+- 一阶高斯函数：$f(x)=e^{-\frac{x^2}{2\delta^2}}$
+- 二阶高斯函数：$f(x,y)=e^{-\frac{x^2+y^2}{2\delta^2}}$
+- 使用高斯函数可以尽量使得中心点的信息保留，比均匀卷积更能保留原始图像的信息。
+- 高斯模糊的锚定位置必须是中心位置。
+- 代码实现
+```c
+GaussianBlur(src,dst,Size(5,5),0);
+```
+
+## 盒子模糊
+- 盒子模糊即均值模糊，与高斯模糊不同，边缘的破坏会随着核大小增大会越严重。
+$$K=\alpha\begin{bmatrix} 1 & 1\\1  &1\end{bmatrix}$$
+$$\alpha=\begin{cases}\frac{1}{width·height}  & when \text{normalize=true} \\1  & otherwise\end{cases}$$
+
+- 代码实现
+```c
+boxBlur(src,dst,-1,Size(5,5),Point(-1,-1),true,BORDER_DEFAULT);
+//设置任意方向的模糊
+boxBlur(src,dst,-1,Size(15,1),Point(-1,-1),true,BORDER_DEFAULT);
+```
+
 ## 锐化
+### 锐化的梯度算子
+- 数学描述
+
+$$g(x,y)=f(x,y)-[f(x+1,y)+f(x-1,y)+f(x,y+1)+f(x,y-1)+4f(x,y)]$$
+
+$$\begin{bmatrix}0 & -1 & 0\\-1 & 5 & -1\\0 & -1 & 0\end{bmatrix}$$
+
+- 用原图减去二阶梯度边缘检测算子，将图像中边缘的增强加到原图中，实现锐化的效果。
+
+### 代码实现
+
+```c
+Mat mylaplacian = (Mat_<int>(3,3)<<0,-1,0,-1,5,-1,0,-1,0);
+Mat dst;
+filter2D(src,dst,CV_32F,mylaplacian,Point(-1,-1),0,BORDER_DEFAULT);
+converScaleAbs(dst,dst);
+imshow("sharpen filter",dst);
+```
+## USM锐化
+- unsharp mark filter
+- 拉普拉斯二阶卷积对于噪声非常敏感，而图像模糊则会将大的边缘变成小的边缘，将两者相减，边缘的差异就显现出来了。
+$$sharp_image=w_1·blur-w_2·laplacian$$
+
+- USM对大的边缘具有更好的锐化效果，图片效果更为自然。
+
+### 高斯与中值模糊的USM增强
+
+- 代码实现
+
+```c
+Mat meanBlur,laplac,dst;
+GaussianBlur(src,meanBlur,Size(3,3),0);
+Laplacian(src,laplac,-1,1,1.0,BORDER_DEFAULT);
+addWeight(meanBlur,1.0,laplac,-0.7,0,dst);
+```
+
 ## 噪声
+- 噪声产生的原因：设备原因，环境原因等
+- 噪声的分类：椒盐噪声（黑白点）、高斯噪声等
+
+### 椒盐噪声
+```c
+RNG rng(12345);
+Mat saltImg = src.clone();
+int h=src.rows,w=src.cols,nums=100000;
+for(int i=0;i<nums;i++){
+  int x=rng.uniform(0,w),y=rng.uniform(0,h);
+  if(i%2==1)saltImg.at<Vec3b>(y,x)=Vec3b(255,255,255);
+  else saltImg.at<Vec3b>(y,x)=Vec3b(0,0,0);
+}
+```
+
+
+### 高斯噪声
+
+```c
+Mat noise = Mat::zeros(src.size(),image.type());
+randn(noise,Scalar(15,15,15),Scalar(30,30,30));
+Mat GaussImg;
+add(image,noise,GaussImg);
+```
+
+
+## 去除噪声
+- 原理：
+  - 对于椒盐噪声，主要是处理离群点，将偏差减小，常见方法有中值、均值。均值会对原始图像造成扰动，而中值表现更好。
+  - 对于高斯噪声，中值滤波处理后效果变得更模糊，高斯滤波处理效果也不好。比较好用的是边缘保留滤波
+
+
+### 中值滤波
+- 前面的滤波都属于线性滤波，中值滤波是一种统计滤波，常见的还有最小值滤波、最大值滤波、均值滤波
+
+#### 代码实现
+
+```c
+//中值滤波
+medianBlur(src,dst,5);
+```
+
+### 高斯滤波
+- 高斯滤波对于椒盐噪声和高斯噪声处理效果都不好。
+
+#### 代码实现
+
+```c
+//中值滤波
+GaussianBlur(src,dst,Szie(5,5),0);
+```
+
+### 边缘保留滤波
+- 中值滤波和高斯滤波，并没有考虑中心像素点对整个图像的贡献。锚定的像素点实际上是贡献最大的。所以中值滤波后的图像都被模糊掉了。高斯滤波没有考虑中心像素点和周围像素差值很大的时候，可能是边缘和梯度的值，应该减少中心像素点的权重。
+- 双边滤波根据每个位置的邻域，构建不同的权重模板。简单定义：I：输入图像；w：权重；O：输出：
+$$O(s_0)=\frac{1}{K}\sum_N{W(s,s_0)·I(s)}$$
+
+
+#### 高斯双边模糊
+- 权重有高斯核函数生成，组成为$w=w_s+w_c$
+$$spatial space: w_s=\exp(\frac{-(s-s_0)^2}{2\delta_s^2})$$
+$$color range: w_c=\exp(\frac{-(I(s)-I(s_0))^2}{2\delta_c^2})$$
+
+- 代码事项
+
+```c
+// src,dst,原来的尺寸上还是扩大还是缩小，颜色值空间，高斯核大小
+bilateralFilter(src,dst,0,100,10);
+```
+
+- 高斯双边模糊，可以很好的去除图像中的噪声，经常用作于照片的磨皮。
+
+#### 非局部均值滤波
+- 相似像素块，权重比较大，不相似的权重比较小。搜索窗口为`l*l`的，i是`3*3`像素的模板，在窗口中进行均值计算。越相似权重越大，越不想死权重越小。最后将权重归一化。
+- $w_{(p,q_1)},w_{(p,q_2)},w_{(p,q_3)}$
+
+$$x_{NLM}(i)=\frac{1}{\sum_{j\in W_i}{w(i,j)}}\sum_{j\in W_i}{w(i,j)x(j)}$$
+$$w(i,j)=exp{(-\sum_{k}{\frac{[x(l^k_j)-x(l^k_i)]^2}{h^2}})}$$
+
+- h相当于$\theta$，可以决定非均质滤波模糊的程度。
+
+- 代码实现
+
+```c
+//彩色版本
+//src,dst,h,color-h,模板边长,搜索窗口l
+fastNIMeansDenoisingColored(src,dst,15,15,7,21);
+//灰度版本
+cvtColor(src,gray,COLOR_BGR2GRAY);
+fastNIMeansDenoising(gray,dst2);
+```
+
+- 这个方法非常慢，但是对于高斯模糊后的图片处理非常好。
 
 # 阈值分割
+## 二值图像
+- 灰度图像和二值图像：都是单通道，但是灰度图像取值范围是0~255，二值图像只有0和255。
+
 ## 方法概述
-### 全局阈值分割
+- 五种阈值分割的方法：设定阈值为：T
+
+|方法||
+|||
+|THRESH_BINARY|大于T：255，否则：0|
+|THRESH_BINARY_INV|小于T：255，否则：0|
+|THRESH_TRUNC|小于T：原值，否则：T|
+|THRESH_TOZERO|小于T：0，否则：原值|
+|THRESH_TOZERO_INV|大于T：0，否则：原值|
+
+- 代码实现
+
+```c
+Mat gray,binary;
+cvtColor(src,gray,COLOR_BGR2GRAY);
+imshow("gray",gray);
+threshold(gray,binary,127,255,THRESH_BINARY);
+imshow("threshold"binary);
+```
+
+## 全局阈值分割
+- 对图像进行二值化操作，最重要的就是计算阈值。前面使用一个自己定义的阈值，并不准确。
+- 全局阈值分割是一种自动查找阈值的方法
+
+### 均值阈值
+- 数学描述
+$$m=\frac{\sum_{i=0}^h\sum_{j=0}^w{p(i,j)}}{w·h}$$
+$$p(i,j)=\begin{cases} 255&>=m \\0&<m\end{cases}$$
+
+- 代码实现
+
+```c
+cvtColor(src,gray,COLOR_BGR2GRAY);
+Scalar m = mean(gray);
+threshold(gray,binary,m[0],255,THRESH_BINARY);
+```
+
+### Otsu阈值
+- 均值并不能真是反应图像的分布信息，使用直方图可以解决这个缺点
+- 大津法原理就是找到一个分隔，使得类内之间差距比较小，类类之间差距比较大，这样就可以分布不同的类别
+
+#### 过程
+- 将原图直方图进行划分为2类，前景和背景，这里选择2作为分隔，
+- 分别求取前景和背景的比重、平均值、方差
+
+![直方图](/images/pasted-71.png)
+
+- 根据求得的结果，计算类内方差
+$$/theta^2_w=w_b·/theta_b^2+w_f·/theta_f^2$$
+
+- 再选择其他作为分隔，找到最小方差的域作为分隔点
+
+- 代码实现
+
+```c
+int t = threshold(gray,binary,0,255,THRESH_BINARY|THRESH_OTSU);
+```
+
+- 大津法对单峰多峰都比较好
+
+### 三角法
+- 假设直方图效果是一个单脉冲的结构，那么做极值点到终点的辅助线就形成了一个三角，找到最长的d对应的h，保证$/alpha$和$/beta$是45°，此时的点就是阈值的分隔点T
+- 通常接近峰值的T效果并不高，通常是乘以1.2的系数，作为最终的T
+
+![三角法](/images/pasted-72.png)
+
+$$h^2=d^2+d^2-->d=\sqrt{\frac{h^2}{2}}-->d=sin(0.7854)*h$$
+
+- 代码实现
+
+```c
+int t = threshold(gray,binary,0,255,THRESH_BINARY|THRESH_TRIANGLE);
+```
+- 缺点：仅对单峰效果比较好。常用于医疗图像的阈值分隔，这类图片的峰值单一。
+
+## 自适应阈值
+- 由于光照不均匀的原因，使用全局阈值会丢失一部分信息
+- 原理：对模糊图像求差值再二值化
+
+- 步骤
+  1. 对原图进行盒子模糊，得到图像D
+  2. 原图+偏置常量C，获得图像S
+  3. 最终图像T=S-D+255
+
+- 即：$T = origin_image+C-D : 255 if >0 else 0$
+- 阈值分割的好坏取决于模糊的窗口大小、常量C，
+
+### 自适应均值模糊分割
+- 代码实现
+
+```c
+//src,dst,max_value,方法,阈值模式,模糊窗口大小,常量C
+adaptiveThreshold(gray,binary,255,ADAPTIVE_THRESH_MEAN_C,THRESH_BINARY,25,10);
+```
+
+### 自适应高斯模糊分割
+- 代码实现
+
+```c
+adaptiveThreshold(gray,binary,255,ADAPTIVE_THRESH_GAUSSIAN_C,THRESH_BINARY,25,10);
+```
+
 ### 阈值函数
 ### 局部阈值分割
 ## 直方图
 ## 熵算法
-## Otsu阈值
-## 自适应阈值
-
-# 形态学
-## 腐蚀
-## 膨胀
-## 开闭运算
-## 顶帽运算和底帽运算
-## 形态学梯度
 
 # 边缘检测
+- 边缘法线：单位向量在该方向图像像素强度变化最大
+- 边缘方向：与边缘法线垂直
+- 边缘位置或中心：图像边缘所在位置
+- 边缘强度：沿法线方向的图像局部对比越大，越是边缘
+- 边缘的种类
+  1. 跃迁类型
+  2. 屋脊类型
+
 ## 梯度
-## Roberts算则
-## PRewitt边缘检测
+- 提取方法
+  1. 高斯模糊
+  2. 基于梯度：都是基于阈值
+    - Robot算子
+    - Sobel算子
+    - Prewitt算子
+  3. Canny
+
+### Robot算子
+- 数学描述
+$$G_x=\begin{bmatrix}1 & 0 \\  0 & -1\end{bmatrix}$$
+$$G_y=\begin{bmatrix}0 & 1\\0 & 1\end{bmatrix}$$
+
+- L1梯度
+$$|G|=|G_x|+|G_y|$$
+
+- L2梯度
+$$|G|=\sqrt{G_x^2+G_y^2}$$
+
+- robot算子可以检测出比较明显的边缘，如果过图像的边缘清晰，可以使用robot算子。
+
+### 代码实现
+
+```c
+Mat robot_x = (Mat_<int>(2,2)<<1,0,0,-1);
+Mat robot_y = (Mat_<int>(2,2)<<0,1,-1,0);
+Mat grad_x,grad_y;
+filter2D(src,grad_x,CV_32F,robot_x,Point(-1,-1),0,BORDER_DEFAULT);
+filter2D(src,grad_y,CV_32F,robot_y,Point(-1,-1),0,BORDER_DEFAULT);
+convertScaleAbs(grad_x,grad_x);
+convertScaleAbs(grad_y,grad_y);
+Mat dst;
+add(grad_x,grad_y,dst);
+```
+
+
+## Roberts算子
+## Prewitt边缘检测
+- 数学描述
+
+$$G_x=\begin{bmatrix}-1 & 0 & 1\\-1 & 0 & 1\\-1 & 0 & 1\end{bmatrix}$$
+$$G_y=\begin{bmatrix}1 & 1 & 1\\0 & 0 & 0\\-1 & -1 & -1\end{bmatrix}$$
+
+
 ## Sobel边缘检测
+### Sobel算子
+- 数学描述
+
+$$G_x=\begin{bmatrix}-1 & 0 & 1\\-2 & 0 & 2\\-1 & 0 & 1\end{bmatrix}$$
+$$G_y=\begin{bmatrix}-1 & -2 & -1\\0 & 0 & 0\\1 & 2 & 1\end{bmatrix}$$
+
+- Sobel算子边缘描述能力比robot算子好一些。
+
+### 代码实现
+
+```c
+Mat grad_x,grad_y;
+Sobel(src,grad_x,CV_32F,1,0);
+Sobel(src,grad_y,CV_32F,0,1);
+convertScaleAbs(grad_x,grad_x);
+convertScaleAbs(grad_y,grad_y);
+Mat dst;
+//add(grad_x,grad_y,dst);
+addWeighted(grad_x,0.5,grad_y,0.5,0,dst);
+```
+
+
 ## Scharr算子
+### Scharr算子
+- 数学描述
+$$G_x=\begin{bmatrix}-3 & 0 & 3\\-10 & 0 & 10\\-3 & 0 & 3\end{bmatrix}$$
+$$G_y=\begin{bmatrix}-3 & -10 & -3\\0 & 0 & 0\\3 & 10 & 3\end{bmatrix}$$
+
+- Scharr算子对于图像边缘有极强的检测能力，如果图像边缘不容易获取，可以使用Scharr。
+
+### 代码实现
+
+```c
+Mat grad_x,grad_y;
+Scharr(src,grad_x,CV_32F,1,0);
+Scharr(src,grad_y,CV_32F,0,1);
+convertScaleAbs(grad_x,grad_x);
+convertScaleAbs(grad_y,grad_y);
+Mat dst;
+//add(grad_x,grad_y,dst);
+addWeighted(grad_x,0.5,grad_y,0.5,0,dst);
+```
+
 ## Kirsch算子和Robinson算子
 ## Canny边缘检测
+- 整合了很多基础算法，得到很好的边缘检测效果
+- 使用高低阈值，减少单一阈值造成图像边缘检测的不连续。
+
+### 步骤
+1. **模糊去噪声**
+ - 使用高斯滤波
+2. **提取梯度与方向**
+  - 使用sobel算子，计算x,y方向的值，获取L2梯度
+3. **非最大信号抑制**
+  - 在前面获得的梯度方向，判断该像素与方向两侧相比，是否是最大，最大保留。否则丢弃
+4. **高低阈值链接**
+  - 设高阈值T1、低阈值T2，其中T1/T2=2~3
+  - 策略：大于高阈值全部保留，小于低阈值全部丢弃，之间的可以连接到高阈值像素点的保留
+
+### 代码实现
+
+```c
+int t1=50;
+Mat src;
+void cannyChange(int,void*){
+Mat edges,dst;
+  //src,edges,低阈值,高阈值,周围几个梯度一起算,是否用l2梯度
+  Canny(src,edges,t1,t1*3,3,false);
+  imshow("edge",edges);
+  //显示边缘的颜色
+  //bitwise_and(src,src,dst,edges);
+  //imshow("edge",dst);
+}
+//创建拖动条：拖动条名称，窗体名称，变量，阈值范围，回调函数，用户数据
+imshow("input",src);
+createTrackbar("threshold value:","input",&t1,100,cannyChange);
+cannyChange(0,0);
+```
+
+## 二阶导数算子
+- 对图像进行二阶导数，那么图像的边缘将则过0点。
+
+![二阶导数](/images/pasted-70.png)
+
+
+- 四邻域拉普拉斯算子
+
+$$\begin{bmatrix}0 & 1 & 0\\1 & -4 & 1\\0 & 1 & 0\end{bmatrix}$$
+
+- 八邻域拉普拉斯算子
+
+$$\begin{bmatrix}1 & 1 & 1\\1 & -8 & 1\\1 & 1 & 1\end{bmatrix}$$
+
+- 变种拉普拉斯算子
+
+$$\begin{bmatrix}-1 & 2 & -1\\2 & -4 & 2\\-1 & 2 & -1\end{bmatrix}$$
+
+- 缺点：对于细小变化比较大的情况，以及噪声特别敏感。
+
+### 代码实现
+
+```c
+//拉普拉斯的ksize必须是大于等于1的奇数，用于结果输出是当前值，还是周围3*3合起来的值
+Laplacian(src,dst,-1,3,1.0,BORDER_DEFAULT);
+```
+
 ## Laplacian算子
 ## 高斯拉普拉斯LoG边缘检测
 ## 高斯差分DoG边缘检测
@@ -535,15 +1012,489 @@ $$(f*g)(n)=\sum_{\tau=-\infty }^{\infty} f(\tau )g(n-\tau)$$
 ## shi-tomas角点检测
 
 # 几何形状检测和拟合
+## 联通组件扫描
+- 联通性的定义，四邻域和八邻域
+- 联通组件标记CCL
+
+### 扫描方法
+- 基于像素的扫描方法
+- 基于块的扫描
+- 两部法扫描
+
+- opencv采用的是基于块的决策表的方法：BBDT
+
+- 代码实现
+
+```c
+//对原图进行高斯模糊，目的是降噪
+GaussianBlur(src,src,Size(3,3),0);
+Mat gray,binary;
+cvtColor(src,gray,COLOR_BGR2GRAY);
+threshold(gray,binary,0,255,THRESH_BINARY|THRESH_OTSH);
+//binary,与原图一样大小的CV32S的,8联通还是4联通,输出类型,使用联通方法
+Mat label=Mat::zeros(binary.size(),CV_32S);
+int num_label = connectedComponents(binary,label,8,CV_32S,CCL_DEFAULT);
+vector<Vec3b>colorTable(num_label);
+// brackgrand color
+colorTable[0] = Vec3b(0,0,0);
+for (int i=1;i<num_label;i++){
+  colorTable[i] = Vec3b(rng.uniform(0,256),rng.uniform(0,256),rng.uniform(0,256));
+}
+Mat dst = Mat::zeros(src.size(),CV_8UC3);
+int h=dst.rows,w=dst.cols;
+for(int row=0;row<h;row++){
+  for(int col=0;col<w;col++){
+    int label_index = label.at<int>(row,col);
+    dst.at<Vec3b>(row,col) = colorTable(label_index);
+  }
+}
+putText(dst,format("number:%d",num_label),Point(50,50),FONT_HERSHEY_PLAIN,1.0,Scalar(0,255,0),1);
+```
+
+- 带有统计信息的
+```c
+//stats：外接矩形位置，面积信息
+//centroids：中心位置
+Mat stats,centroids;
+int num_label = connectedComponentsWithStats(binary,label,stats,centroids,8,CV_32S,CCL_DEFAULT);
+for (int i=1;i<num_label;i++){
+  //center
+  int cx = centroids.at<double>(i,0);
+  int cy = centroids.at<double>(i,1);
+  //rectangle
+  int x = stats.at<int>(i,CC_STAT_LEFT);
+  int y = stats.at<int>(i,CC_STAT_TOP);
+  int w = stats.at<int>(i,CC_STAT_WIDTH);
+  int h = stats.at<int>(i,CC_STAT_HEIGHT);
+  int area = stats.at<int>(i,CC_STAT_AREA);
+  //绘制中心位置
+  circle(dst,Point(cx,cy),3,Scalar(255,0,0),2,8,0);
+  //最小矩形
+  Rect box(x,y,w,h);
+  rectangle(dst,box,Scalar(0,255,0),2,8);
+putText(dst,format("number:%d",num_label),Point(x,y),FONT_HERSHEY_PLAIN,1.0,Scalar(0,255,0),1);
+  //覆盖像素面积
+  putText(dst,format("number:%d",area),Point(x,y),FONT_HERSHEY_PLAIN,1.0,Scalar(0,255,0),1);
+}
+```
+## 轮廓
+- 轮廓主要针对二值图像，0-1分割的点的集合。
+### 发现
+- 基于边界跟随的轮廓发现
+
+|||
+|-|-|
+|findContours(binary,mode,method,contours)|发现轮廓的树形结构，最外层边界依次向里|
+|drawContours(src,mode,index,color,thickness,linetype)|绘制轮廓|
+
+```c
+vector<vector<Point>>contours;
+vector<Vec4i>hierarchy;//层次信息
+//RET_TREE:绘制所有的轮廓；RET_EXTERNAL：绘制最外层轮廓
+findContours(binary,contours,hierarchy,RET_TREE,CHAIN_APPROX_SIMPLE,Point());
+//src,contours,索引：-1代表绘制所有，颜色，线宽，线型：-1表示填充
+drawContours(src,contours,-1,Scalar(0,0,255),2,8);
+imshow("contour",src);
+//单独循环每个轮廓
+//for(size_t t=0;t<contours.size();t++){
+//  drawContours(src,contours,t,Scalar(0,0,255),2,8);
+//}
+```
+
+### 计算
+#### 轮廓面积
+- 格林公式
+$$\iint\limits_{D}{\frac{\partial Q}{\partial x}- \frac{\partial P}{\partial y}}=\int{Pdx+Qdy}$$
+
+- 离散版本
+$$A=\sum^{n}_{k=0}{\frac{(x_{k+1}+x_k)(y_{k+1}-y_k)}{2}}$$
+
+#### 轮廓周长
+- L2距离
+
+#### 代码实现
+
+```c
+for(size_t t=0;t<contours.size();t++){
+  double area = contourArea(contours[t]);
+  //是否是闭合区域
+  double leng = arcLength(contours[t],true);
+  if (area<20||len<10)continue;
+  //获取外接矩形
+  Rect box = boundingRect(contours[t]);
+  //绘制外接矩形
+  rectangle(src,box,)Scalar(0,0,255),2,8,0);
+  //获取最小外接椭圆
+  RotatedRect rrt = minAreaRect(contours[t]);
+  ellipse(src,rrt,Scalar(255,0,0),2,8);
+  //获取最小外接矩形
+  Point2f pts[4];
+  rrt.points(pts);
+  for (int i=0;i<4;i++){
+    line(src,pts[i],pts[(i+1)%4],Scalar(0,255,0),2,8);
+  }
+  //最小外接矩形的角度
+  printf("angle:%.2f\n",rrt.angle);
+  //绘制轮廓 -1表示填充
+  drawContours(src,contours,t,Scalar(0,0,255),-1,8);
+}
+```
+
+### 匹配
+#### 图像几何距
+- 一阶矩：p+q=1
+- 二阶矩：p+q=2
+- n阶距：p+q=n
+$$m_{p,q}=\sum_{x=0}^{M-1}\sum_{y=0}^{N-1}{f(x,y)x^py^q}$$
+
+- 输入&f(x,y)&是二值图像，只有0,1两种结果
+- $m_{1,0}$代表x方向的累积，$m_{0,1}$代表y方向的累积，$m_{0,0}$代表像素的累积。可以描述为数学期望
+- $x_{avg}=\frac{m_{1,0}}{m_{0,0}}$代表x方向的平均，$y_{avg}=\frac{m_{0,1}}{m_{0,0}}$代表y方向的平均，结合起来，就得到图像的平均中心位置
+
+- 中心距的表示方法：
+$$\mu_{p,q}=\sum_{x=0}^{M-1}\sum_{y=0}^{N-1}{f(x,y)(x-x_{avg})^p(y-y_{avg})^q}$$
+
+#### 图像Hu距
+- Hu距
+$$\eta_{p,q}=\frac{\mu_{p,q}}{m_{00}^{\frac{p+q}{2}+1}}$$
+
+- Hu距7个值性质：旋转不变形，伸缩不变性
+$$\phi_1 = \eta_{20}+ \eta_{02}$$
+$$phi_2 = (\eta_{20}- \eta_{02})^2+4\eta_{11}$
+$$phi_3 = (\eta_{30}- 3\eta_{12})^2+(3\eta_{21}- \mu_{03})^2$$
+$$phi_4 = (\eta_{30}+\eta_{12})^2+(\eta_{21}+ \mu_{03})^2$$
+$$phi_5 = (\eta_{30}-3\eta_{12})(\eta_{30}+\eta_{12})[(\eta_{30}+\eta_{12})^2-3(\eta_{21}-3\eta_{03})^2]  +(3\eta_{21}-\eta_{03})(\eta_{21}+\eta_{03})[3(\eta_{30}+\eta_{12})^2-(\eta_{21}+\eta_{03})^2]$$
+$$phi_6 = (\eta_{20}-\eta_{02})[(\eta_{30}+\eta_{12})^2-(\eta_{21}+\eta_{03})^2] +4\eta_{11}(\eta_{30}+\eta_{12})(\eta_{21}+\eta_{03})$$
+$$phi_7 = (3\eta_{21}-\eta_{03})(\eta_{30}+\eta_{12})[(\eta_{30}+\eta_{12})^2-3(\eta_{21}+\eta_{03})^2]  +(\eta_{30}-3\eta_{12})(\eta_{21}+\eta_{03})[3(\eta_{30}+\eta_{12})^2-(\eta_{21}+\eta_{03})^2]$$
+
+#### 基于Hu的轮廓匹配
+- 两个轮廓的参数计算公式：
+- 轮廓A的Hu距
+$$m_i^A=sign(h_i^A)·\log{h_i^A}$$
+
+- 轮廓B的Hu距
+$$m_i^B=sign(h_i^B)·\log{h_i^B}$$
+
+![Hu的轮廓匹配](/images/pasted-73.png)
+
+- 代码
+```c
+//获取图像的边距省略了，这里匹配src2的第一个边距
+vector<vector<Point>> contours1,contours2;
+Moments mm2=moments(contours2[0]);
+//计算src2的hu距
+Mat h2;
+HuMoments(mm2,hu2);
+//遍历src1的边距
+for(size_t t=0;t<contours1.size();t++){
+  Moments mm = moments(contours1[t]);
+  Mat hu;
+  HuMoments(mm,hu);
+  //比较hu距，Hu距具有伸缩不变形，旋转不变形，对于旋转和放缩在dist距离上只是稍微变化一点
+  double dist = matchShapes(hu,hu2,CONTOURS_MATCH_I1,0);
+  if (dist<1){
+    drawContours(src1,contours1,t,Scalar(0,0,255),2,8);
+  }
+  //绘制轮廓的中心位置
+  double cx=mm.mm10/mm.mm00;
+  double cy=mm.mm01/mm.mm00;
+  circle(src1,Point(cx,cy),3,Scalar(255,0,0),2,8,0);
+}
+```
+
+### 逼近
+- 轮廓的逼近，本质是减少编码点
+
+```c
+for(size_t t=0;t<contours1.size();t++){
+  Mat res;
+  //src,dst,多边形逼近的精度值,是不是闭合区域
+  approxPolyDP(contours[t],result,4,true);
+  prinrf("corners:%d,columns:%d\n",res.rows,res.cols);
+}
+```
+
+### 拟合
+- 拟合圆，生成最相似的圆或者椭圆
+```c
+for(size_t t=0;t<contours1.size();t++){
+  //拟合圆fitElipse，拟合线段fitLine
+  RotatedRect rrt=fitElipse(contours[t]);
+  float w=rrt.size.width,h=rrt.size.height;
+  Porint center=rrt.center;
+  circle(src,center,3,Scalar(255,0,0),2,8,0);
+  elipse(src,rrt,Scalar(0,255,0),2,8);
+}
+```
+
 ## 点集的最小外包
 ## 霍夫直线检测
+- 直线在平面坐标有两个参数决定（截距b,斜率k）：$y=(-\frac{\cos{\theta}}{\sin{\theta}})x+(\frac{r}{\sin{\theta}})$
+
+- 在极坐标空间两个参数决定（半径r,角度θ）:$r=x\cos{\theta}\sin{\theta}$
+
+- 霍夫检测的原理就是利用极坐标方程，如果边缘上的点在一条直线上，尝试使用不同的θ值，获取对应r值，那么他们肯定相交于一点。利用这个点就可以得到直线方程。
+
+![霍夫检测](/images/pasted-74.png)
+
+|针对二值图像||
+|-|-|
+|HoughLines|霍夫直线，极坐标空间参数vector(ρ,θ)|
+|HoughLinesP|霍夫直线，所有可能的线段和直线|
+
+- 代码实现
+```c
+vector<Vec3f>lines;
+//input,output,r步长,θ步长,阈值：超过多少次相交才算直线,多尺度检测
+HoughLines(binary,lines,1,CV_PI/180,100,0,0)
+//绘制检测
+Point pt1,pt2;
+for (size_t i=0;i<lines.size();i++){
+  float rho = lines[i][0]; //距离
+  float theta = lines[i][1]; //角度
+  float acc = lines[i][2];  // 累加值
+  //绘制所有的直线
+  double a=cos(theta);
+  double b=sin(theta);
+  double x0=a*rho,y0=b*rho;
+  pt1.x=cvRound(x0+1000*(-b));
+  pt1.y=cvRound(y0+1000*(a));
+  pt2.x=cvRound(x0-1000*(-b));
+  pt2.y=cvRound(x0-1000*(a));
+  //可以根据角度分别画出不同直线
+  if(rho>0){
+    line(src,pt1,pt2,Scalar(0,0,255),2,8,0);
+  }else{
+    line(src,pt1,pt2,Scalar(0,255,255),2,8,0);
+  }
+}
+```
+
+```c
+Mat src=imread("1.jpg"),binary;
+Canny(src,binary,80,160,3,false);
+vector<Vec4i> lines;
+//input,output,r步长,θ步长,阈值,线段最小长度,最大的线段剪短距离,
+HoughLinesP(binary,lines,1,CV_PI/180,100,30,10);
+Mat dst=Mat::zeros(src.size(),src.type());
+for(int i=0;i<line.size();i++){
+  line(dst,Point(line[i][0],line[i][1]),Point(line[i][2],line[i][3]),Scalar(0,0,255),2,8);
+}
+imshow("hough line p",dst);
+```
+
 ## 霍夫圆检测
-## 轮廓
-### 发现
-### 计算
-### 拟合
-### 匹配
-## 联通组件扫描
+- 圆在平面坐标由三个参数决定$(x_0,y_0,r)$
+- 参数方程描述：
+$$x=x_0+r\cos{\theta}$$
+$$y=y_0+r\sin{\theta}$$
+
+- 霍夫圆检测的原理是，在同一个圆线上的三个点，同时做半径为r的圆，如果相交于三点内的一个点，证明三点共圆，并且交点就是中心点。
+
+![霍夫圆检测](/images/pasted-75.png)
+
+- 霍夫圆检测的时候，不会遍历所有的半径，需要指定
+- 候选节点会基于梯度寻找，目的为了减少未知参数
+
+```c
+Mat src=imread("1.jpg"),gray;
+cvtColor(src,gray,COLOR_BGR2GRAY);
+GaussianBlur(gray,gray,Size(9,9),2,2);
+vector<Vec3f>circles;
+//input,output,霍夫梯度,dp,minDist,Canny边缘提取,阈值,最小半径,最大半径
+int minDist=10;
+double minRadius=20,maxRadius=100;
+HoughCircles(gray,circles,HOUGH_GRADIENT,2,minDist,100,100,minRadius,maxRadius);
+for (size_t t=0;t<>circles.size();t++){
+  Point center(circles[t][0],circles[t][1]);
+  int radius=round(circles[t][2]);
+  //圆
+  cricle(src,center,radius,Scalar(0,0,255),2,8,0);
+  //圆心
+  cricle(src,center,2,Scalar(0,255,255),2,8,0);
+}
+imshow("input",src);
+```
+
+- 霍夫检测是对噪声很敏感的检测方法，图像尽量首先进行高斯模糊进行降噪。还有很多参数属于经验参数，需要多次调整。
+
+
+# 形态学
+- 形态学是图像处理的单独分支学科
+- 灰度与二值图像处理中重要手段
+- 由数学的集合论等相关理论中发展起来的
+- 在机器视觉、ORC等领域有重要作用
+
+![形态学](/images/pasted-76.png)
+
+
+## 腐蚀与膨胀
+- 腐蚀：最小值滤波，用最小值代替中心像素。
+![upload successful](/images/pasted-78.png)
+
+- 膨胀：最大值滤波，用最大值代替中心像素。膨胀操作可以将两个分离区域合并
+![upload successful](/images/pasted-77.png)
+
+### 结构元素形状
+- 线型：水平、垂直
+- 矩形：w·h
+- 十字交叉：四邻域、八邻域
+
+### 代码实现
+
+```c
+//腐蚀操作
+//结构元素：矩形元素，大小，中心位置
+Mat kernel=getStructingElement(MORPH_RECT,Size(5,5),Point(-1,-1));
+erode(binary,binary,kernel);
+erode(src,src,kernel);
+//膨胀操作
+dilate(src,src,kernel);
+```
+
+## 开闭运算
+### 开运算
+- 开操作=腐蚀+膨胀
+- 意义：删除小的干扰块，可以用户验证码干扰的清除
+
+![开运算](/images/pasted-79.png)
+
+### 闭运算
+- 闭操作=膨胀+腐蚀
+- 意义：填充合并区域
+
+![闭运算](/images/pasted-80.png)
+
+### 代码实现
+```c
+Mat kernel=getStructingElement(MORPH_RECT,Size(5,5),Point(-1,-1));
+//input,output,形态学操作枚举,结构元素,中心位置,连续进行形态学操作
+morphologyEx(binary,dst,MORPH_OPEN,kernel,Point(-1,-1),1);
+```
+
+|||
+|-|-|
+|MORPH_OPEN|开操作|
+|MORPH_CLOSE|闭操作|
+|MORPH_GRADIENT|基本梯度|
+|MORPH_TOPHAT|顶帽操作|
+|MORPH_BLACKHAT|黑帽操作|
+|MORPH_HITMISS|击中击不中|
+
+### 结构元素的作用
+- 结构元素是矩形时，闭操作之后的空洞呈方形。可以改变结构元素枚举类型：MORPH_CIRCLE
+- 交友元素的size设置为(15,1)可以只提取横线。
+
+## 形态学梯度
+- 基本梯度 – 膨胀减去腐蚀之后的结果
+- 内梯度 – 原图减去腐蚀之后的结果
+- 外梯度 – 膨胀减去原图的结果
+
+### 代码实现
+```c
+Mat kernel=getStructingElement(MORPH_RECT,Size(5,5),Point(-1,-1));
+Mat basic_grad,inter_grad,exter_grad;
+//基本梯度
+morphologyEx(binary,basic_grad,MORPH_GRADIENT,kernel,Point(-1,-1),1);
+Mat dst1,dst2;
+//内梯度
+erode(gray,dst1,kernel);
+subtract(gray,dst1,inter_grad);
+//外梯度
+erode(gray,dst2,kernel);
+subtract(dst2,gray,exter_grad);
+//利用基本梯度进行二值化
+threshold(basic_grad,binary,0,255,THRESH_BINARY|THRESH_OTSH);
+```
+
+## 顶帽运算和底帽运算
+- 顶帽：是原图减去开操作之后的结果
+- 黑帽：是闭操作之后结果减去原图
+- 顶帽与黑帽的作用是用来提取图像中微小有用信息块
+
+```c
+Mat kernel=getStructingElement(MORPH_RECT,Size(5,5),Point(-1,-1));
+morphologyEx(binary,dst,MORPH_TOPHAT,kernel,Point(-1,-1),1);
+```
+
+## 击中击不中
+
+![击中击不中](/images/pasted-81.png)
+
+```c
+//十字交叉的结构元素
+Mat kernel=getStructingElement(MORPH_CROSS,Size(5,5),Point(-1,-1));
+morphologyEx(binary,dst,MORPH_HITMISS,kernel,Point(-1,-1),1);
+```
+
+
+# 视频分析
+## 视频文件操作
+- 支持视频文件读写
+- 摄像头与视频流
+
+### 读取摄像头设备
+
+```c
+VideoCapture capture(0);
+if(!capture.isOpened())return;
+namedWindow("frame",WINDOW_AUTOSIZE);
+Mat frame;
+while (true){
+  bool ret = capture.read(frame);
+  if(!ret)break;
+  imshow("frame");
+  char c=waitKey(50);
+  if(c==27)break; //esc则退出
+}
+```
+
+### 读取视频文件
+
+```c
+VideoCapture capture("1.mp4");
+//获取帧率
+int fps = capture.get(CAP_PROP_FPS);
+//获取宽度
+int width = capture.get(CAP_PROP_FRAME_WIDTH);
+//获取高度
+int height = capture.get(CAP_PROP_FRAME_HEIGHT);
+//获取总帧数
+int total_frams
+ = capture.get(CAP_PROP_FRAME_COUNT);
+//视频类型
+int type=capture.get(CAP_PROP_FOURCC)
+```
+### 读取网络视频文件
+
+```c
+VideoCapture capture("http://www.xxx.com/1.mp4");
+```
+
+### 保存一段视频
+
+```c
+Mat frame;
+VideoWriter writer("./res.mp4",type,fps,Size(width,height),true);//是否是彩色
+while (true){
+  bool ret = capture.read(frame);
+  if(!ret)break;
+  //写入
+  writer.write(frame);
+  imshow("frame");
+  char c=waitKey(50);
+  if(c==27)break; //esc则退出
+}
+```
+
+- opencv对于保存的限制，文件大小最好不要超过2GB
+
+### 析构
+```c
+capture.release();
+writer.release();
+```
+
 
 # 跟踪
 ## 基于颜色的对象跟踪
