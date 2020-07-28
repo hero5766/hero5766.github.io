@@ -2,16 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://blog.guoming576.cn/2020/07/17/Qt5/</loc>
+    <loc>http://blog.guoming576.cn/2020/07/26/scrapy/</loc>
     
-    <lastmod>2020-07-22T12:26:53.959Z</lastmod>
+    <lastmod>2020-07-27T09:01:46.046Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.guoming576.cn/2020/07/27/%E6%B1%87%E7%BC%96/</loc>
+    
+    <lastmod>2020-07-27T08:58:14.615Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://blog.guoming576.cn/2020/07/21/goproxy/</loc>
     
-    <lastmod>2020-07-21T08:28:01.210Z</lastmod>
+    <lastmod>2020-07-25T08:25:16.773Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.guoming576.cn/2020/07/17/Qt5/</loc>
+    
+    <lastmod>2020-07-22T12:26:53.959Z</lastmod>
     
   </url>
   
@@ -107,14 +121,14 @@
   </url>
   
   <url>
-    <loc>http://blog.guoming576.cn/2020/06/24/golang%E5%BE%AE%E6%9C%8D%E5%8A%A1/</loc>
+    <loc>http://blog.guoming576.cn/2020/06/06/gomod/</loc>
     
     <lastmod>2020-06-25T06:24:33.513Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://blog.guoming576.cn/2020/06/06/gomod/</loc>
+    <loc>http://blog.guoming576.cn/2020/06/24/golang%E5%BE%AE%E6%9C%8D%E5%8A%A1/</loc>
     
     <lastmod>2020-06-25T06:24:33.513Z</lastmod>
     

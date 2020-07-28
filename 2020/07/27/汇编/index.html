@@ -1,0 +1,617 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="汇编"><meta name="keywords" content="assembler"><meta name="author" content="hero576"><meta name="copyright" content="hero576"><title>汇编 | void land space</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.7.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="dns-prefetch" href="https://hm.baidu.com"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?5ff8fca367285c16c6dd5c16ca2ccc1b";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();</script><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  }
+} </script><meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="void land space" type="application/atom+xml">
+</head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#简介"><span class="toc-number">1.</span> <span class="toc-text"> 简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#工具"><span class="toc-number">1.1.</span> <span class="toc-text"> 工具</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#位运算"><span class="toc-number">2.</span> <span class="toc-text"> 位运算</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#操作符"><span class="toc-number">2.1.</span> <span class="toc-text"> 操作符</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#存储"><span class="toc-number">3.</span> <span class="toc-text"> 存储</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#通用寄存器"><span class="toc-number">3.1.</span> <span class="toc-text"> 通用寄存器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#寄存器组成"><span class="toc-number">3.1.1.</span> <span class="toc-text"> 寄存器组成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#寄存器读写"><span class="toc-number">3.1.2.</span> <span class="toc-text"> 寄存器读写</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#内存"><span class="toc-number">3.2.</span> <span class="toc-text"> 内存</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#内存读写"><span class="toc-number">3.2.1.</span> <span class="toc-text"> 内存读写</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#内存地址的表示"><span class="toc-number">3.2.2.</span> <span class="toc-text"> 内存地址的表示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#内存存储模式"><span class="toc-number">3.2.3.</span> <span class="toc-text"> 内存存储模式</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#常用指令"><span class="toc-number">4.</span> <span class="toc-text"> 常用指令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#写指令"><span class="toc-number">4.1.</span> <span class="toc-text"> 写指令</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#堆栈"><span class="toc-number">5.</span> <span class="toc-text"> 堆栈</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#eip寄存器"><span class="toc-number">6.</span> <span class="toc-text"> EIP寄存器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#反调试"><span class="toc-number">7.</span> <span class="toc-text"> 反调试</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#fake-f8"><span class="toc-number">7.1.</span> <span class="toc-text"> Fake F8</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#函数"><span class="toc-number">8.</span> <span class="toc-text"> 函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#函数调用"><span class="toc-number">8.1.</span> <span class="toc-text"> 函数调用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#函数参数"><span class="toc-number">8.2.</span> <span class="toc-text"> 函数参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#esp寻址"><span class="toc-number">8.3.</span> <span class="toc-text"> ESP寻址</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ebp寻址"><span class="toc-number">8.4.</span> <span class="toc-text"> EBP寻址</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#jcc指令"><span class="toc-number">9.</span> <span class="toc-text"> JCC指令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#标记寄存器"><span class="toc-number">9.1.</span> <span class="toc-text"> 标记寄存器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jcc指令-2"><span class="toc-number">9.2.</span> <span class="toc-text"> JCC指令</span></a></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/images/haimianbaobao.jpg"></div><div class="author-info__name text-center">hero576</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">25</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">11</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">分类</span><span class="pull-right">5</span></a></div></div></div><div id="content-outer"><div class="plain" id="top-container"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">void land space</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">主页</a><a class="site-page" href="/archives">文章</a><a class="site-page" href="/tags">标签</a><a class="site-page" href="/categories">分类</a><a class="site-page" href="/gallery">相册</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> 搜索</span></a></span></div></div><div class="layout" id="content-inner"><article id="post"><div class="plain" id="post-title">汇编</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-07-27</time><span class="post-meta__separator">|</span><i class="fa fa-inbox" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/programme/"> programme</a></div><div class="article-container" id="post-content"><blockquote>
+<p>汇编语言</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="简介"><a class="markdownIt-Anchor" href="#简介"></a> 简介</h1>
+<h2 id="工具"><a class="markdownIt-Anchor" href="#工具"></a> 工具</h2>
+<ul>
+<li>DTDebug</li>
+</ul>
+<h1 id="位运算"><a class="markdownIt-Anchor" href="#位运算"></a> 位运算</h1>
+<ul>
+<li>进制</li>
+</ul>
+<h2 id="操作符"><a class="markdownIt-Anchor" href="#操作符"></a> 操作符</h2>
+<table>
+<thead>
+<tr>
+<th>位运算</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>and</td>
+<td>与</td>
+</tr>
+<tr>
+<td>or</td>
+<td>或</td>
+</tr>
+<tr>
+<td>not</td>
+<td>非</td>
+</tr>
+<tr>
+<td>xor</td>
+<td>异或</td>
+</tr>
+<tr>
+<td>shl</td>
+<td>左移</td>
+</tr>
+<tr>
+<td>shr</td>
+<td>右移，高位补0，C语言使用unsigned类型时，就会补0</td>
+</tr>
+<tr>
+<td>sar</td>
+<td>右移，高位补符号位，signed</td>
+</tr>
+</tbody>
+</table>
+<h1 id="存储"><a class="markdownIt-Anchor" href="#存储"></a> 存储</h1>
+<h2 id="通用寄存器"><a class="markdownIt-Anchor" href="#通用寄存器"></a> 通用寄存器</h2>
+<ul>
+<li>计算机可以在三个地方存储数据，cpu、内存、硬盘。寄存器就是用于cpu存储数据的。</li>
+</ul>
+<h3 id="寄存器组成"><a class="markdownIt-Anchor" href="#寄存器组成"></a> 寄存器组成</h3>
+<ul>
+<li>包含8个通用寄存器可以存储任意数据。</li>
+<li>16位、32位的寄存器都指向了同一个地址，只是赋值时，影响的位数不同。</li>
+<li>8位寄存器，近用了ABCD四个寄存器，将高8位和第八位拆成了AL、BL、CL、DL、AH、BH、CH、DH，8个寄存器。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>32位通用寄存器</th>
+<th>16位通用寄存器</th>
+<th>8位通用寄存器</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>EAX</td>
+<td>AX</td>
+<td>AL</td>
+<td>作为返回值</td>
+</tr>
+<tr>
+<td>EBX</td>
+<td>BX</td>
+<td>BL</td>
+<td></td>
+</tr>
+<tr>
+<td>ECX</td>
+<td>CX</td>
+<td>CL</td>
+<td>计数寄存器</td>
+</tr>
+<tr>
+<td>EDX</td>
+<td>DX</td>
+<td>DL</td>
+<td></td>
+</tr>
+<tr>
+<td>ESP</td>
+<td>SP</td>
+<td>AH</td>
+<td>栈指针寄存器，栈顶指针</td>
+</tr>
+<tr>
+<td>EBP</td>
+<td>BP</td>
+<td>BH</td>
+<td>栈底指针</td>
+</tr>
+<tr>
+<td>ESI</td>
+<td>SI</td>
+<td>CH</td>
+<td>串赋值的源地址</td>
+</tr>
+<tr>
+<td>EDI</td>
+<td>DI</td>
+<td>DH</td>
+<td>出赋值的目的地址</td>
+</tr>
+</tbody>
+</table>
+<h3 id="寄存器读写"><a class="markdownIt-Anchor" href="#寄存器读写"></a> 寄存器读写</h3>
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>立即数到寄存器</td>
+<td><code>MOV EAX,1</code></td>
+</tr>
+<tr>
+<td>寄存器到寄存器</td>
+<td><code>MOV EAX,EBX</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="内存"><a class="markdownIt-Anchor" href="#内存"></a> 内存</h2>
+<ul>
+<li>对于32位寻址空间的计算机，内存最大可支持4GB</li>
+<li>由于内存太大了，没办法起名字，只能用地址编号代替</li>
+</ul>
+<h3 id="内存读写"><a class="markdownIt-Anchor" href="#内存读写"></a> 内存读写</h3>
+<ul>
+<li>汇编指令中，绝大多数指令，不允许从内存到内存。可以通过寄存器进行存储。</li>
+<li>MOVS指令可以实现内存到内存的移动。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>立即数到内存</td>
+<td><code>MOV BYTE ptr ds:[0018FFF0], 1</code></td>
+</tr>
+<tr>
+<td>寄存器到内存</td>
+<td><code>MOV DWORD ptr ds:[0018FFF0], EAX</code></td>
+</tr>
+<tr>
+<td>内存到寄存器</td>
+<td><code>MOV EAX,DWORD ptr ds:[0018FFF0]</code></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>写入的宽度</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BYTE</td>
+<td>一字节</td>
+</tr>
+<tr>
+<td>WORD</td>
+<td>二字节</td>
+</tr>
+<tr>
+<td>DWORD</td>
+<td>四字节</td>
+</tr>
+</tbody>
+</table>
+<h3 id="内存地址的表示"><a class="markdownIt-Anchor" href="#内存地址的表示"></a> 内存地址的表示</h3>
+<ul>
+<li>5中形式</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>表达形式</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>立即数</td>
+<td>0x13FFC4</td>
+<td><code>MOV EAX,DWORD PTR DS:[0x13FFC4]</code></td>
+</tr>
+<tr>
+<td><code>[reg]</code></td>
+<td>八个寄存器的任意一个，读取里面的地址</td>
+<td><code>MOV EAX,DWORD PTR DS:[ECX]</code></td>
+</tr>
+<tr>
+<td><code>[reg+立即数]</code></td>
+<td>寄存器+立即数，立即数表示了偏移量</td>
+<td><code>MOV EAX,DWORD PTR DS:[ECX+4]</code></td>
+</tr>
+<tr>
+<td><code>[reg+reg*{1,2,4,8}]</code></td>
+<td>寄存器+寄存器*2的倍数，后者也代表偏移量</td>
+<td><code>MOV EAX,DWORD PTR DS:[ECX+EAX*4]</code></td>
+</tr>
+<tr>
+<td><code>[reg+reg*{1,2,4,8}]+立即数</code></td>
+<td>寄存器+寄存器*2的倍数+立即数</td>
+<td><code>MOV EAX,DWORD PTR DS:[ECX+EAX*4+4]</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="内存存储模式"><a class="markdownIt-Anchor" href="#内存存储模式"></a> 内存存储模式</h3>
+<ul>
+<li>大端模式：数据高位在低位，数据低位在高位</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; 0x1A2C   高位--&gt;低位</span><br><span class="line">0x0001  2C   高位</span><br><span class="line">0x0000  1A   低位</span><br></pre></td></tr></table></figure>
+<ul>
+<li>小端模式：数据高位在高位，数据低位在低位</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; 0x1A2C</span><br><span class="line">0x0001  1A</span><br><span class="line">0x0000  2C</span><br></pre></td></tr></table></figure>
+<h1 id="常用指令"><a class="markdownIt-Anchor" href="#常用指令"></a> 常用指令</h1>
+<h2 id="写指令"><a class="markdownIt-Anchor" href="#写指令"></a> 写指令</h2>
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MOV a,b</td>
+<td>b存储到a</td>
+<td></td>
+</tr>
+<tr>
+<td>ADD a,b</td>
+<td>加法，a += b</td>
+<td></td>
+</tr>
+<tr>
+<td>SUB a,b</td>
+<td>减法，a -= b</td>
+<td></td>
+</tr>
+<tr>
+<td>AND a,b</td>
+<td>与，a &amp;= b</td>
+<td></td>
+</tr>
+<tr>
+<td>OR a,b</td>
+<td>或，a</td>
+<td>= b</td>
+</tr>
+<tr>
+<td>NOT a,b</td>
+<td>非，a != b</td>
+<td></td>
+</tr>
+<tr>
+<td>XOR a,b</td>
+<td>异或，a ^= b</td>
+<td></td>
+</tr>
+<tr>
+<td>MOVS a,b</td>
+<td>内存b存储到内存a，并a和b的指针自动+1或者-1（取决于标志位D），适合拷贝<code>MOVS DWORD PTR ES:[EDI],DWORD PTR DS:[ESI]</code></td>
+<td></td>
+</tr>
+<tr>
+<td>MOVSB a,b</td>
+<td>简写形式，移动目标为byte</td>
+<td></td>
+</tr>
+<tr>
+<td>MOVSW a,b</td>
+<td>简写形式，移动目标为word</td>
+<td></td>
+</tr>
+<tr>
+<td>MOVSD a,b</td>
+<td>简写形式，移动目标为dword</td>
+<td></td>
+</tr>
+<tr>
+<td>STOS BYTE PTR ES:[EDI]</td>
+<td>将AI、AX、EAX的值存储到EDI指定内存单元，指针自动+1或者-1</td>
+<td></td>
+</tr>
+<tr>
+<td>STOSB</td>
+<td>简写形式，移动目标为byte</td>
+<td></td>
+</tr>
+<tr>
+<td>STOSW</td>
+<td>简写形式，移动目标为word</td>
+<td></td>
+</tr>
+<tr>
+<td>STOSD</td>
+<td>简写形式，移动目标为dword</td>
+<td></td>
+</tr>
+<tr>
+<td>REP</td>
+<td>重复执行，执行次数取决于ECX的值，16进制：<code>MOV ECX 10</code><br><code>REP MOVSD a,b</code></td>
+<td></td>
+</tr>
+<tr>
+<td>CMP a,b</td>
+<td>相当于SUB，判断是否为0，只是CMP不对a进行更改</td>
+<td></td>
+</tr>
+<tr>
+<td>TEST a,b</td>
+<td>相当于AND，判断是否为0，只是TEST不对a进行更改</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h1 id="堆栈"><a class="markdownIt-Anchor" href="#堆栈"></a> 堆栈</h1>
+<ul>
+<li>程序开启后，系统会分配堆栈空间，用于存储中间状态的值。这块空间如果程序用完，就会发生栈溢出异常。</li>
+<li>堆栈从高地址开始使用，直到低地址。</li>
+<li>ESP寄存器保存了栈指针。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PUSH mem/reg/立即数</td>
+<td>将reg或者立即数存入堆栈，ESP减4，根据压入的是什么</td>
+<td></td>
+</tr>
+<tr>
+<td>POP reg/mem</td>
+<td>弹出，ESP加4</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h1 id="eip寄存器"><a class="markdownIt-Anchor" href="#eip寄存器"></a> EIP寄存器</h1>
+<ul>
+<li>cpu下一次执行的地址，EIP修改只能通过JMP、CALL修改</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>JMP reg、立即数、mem</td>
+<td>EIP更改值，mem必须是dword</td>
+<td></td>
+</tr>
+<tr>
+<td>CALL reg、立即数、mem</td>
+<td>EIP更改值，并保护现场，放入堆栈，栈顶-4</td>
+<td></td>
+</tr>
+<tr>
+<td>RET</td>
+<td>EIP更改为堆栈，恢复现场，栈顶+4</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h1 id="反调试"><a class="markdownIt-Anchor" href="#反调试"></a> 反调试</h1>
+<h2 id="fake-f8"><a class="markdownIt-Anchor" href="#fake-f8"></a> Fake F8</h2>
+<ul>
+<li>
+<p>调式中F7单步步入，F8是单步步过</p>
+</li>
+<li>
+<p>调试原理：</p>
+<ul>
+<li>在某一行下断点，实际是将对应的语句改为了<code>int 3</code>，对应的十六进制是<code>CC</code>，中断，停到调试器</li>
+<li>单步执行的原因是在EFL的TF标志位为1，cpu就会进入单步执行模式</li>
+</ul>
+</li>
+<li>
+<p>F7是单步执行，而F8在遇到CALL指令时，会在下一个语句改为<code>int 3</code>，并将当前指令存到堆栈中。</p>
+</li>
+<li>
+<p>Fake F8欺骗的是进入到CALL中时，修改了ESP的值，此时返回时，F8就失效了</p>
+</li>
+<li>
+<p>在程序中CALL比较多的时候，想跳过CALL就无法实现了，这样给反调试带来困难。</p>
+</li>
+</ul>
+<h1 id="函数"><a class="markdownIt-Anchor" href="#函数"></a> 函数</h1>
+<h2 id="函数调用"><a class="markdownIt-Anchor" href="#函数调用"></a> 函数调用</h2>
+<ul>
+<li>一般不用JMP，无法返回原来的位置</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CALL reg、立即数、mem</td>
+<td>EIP更改值，并保护现场，放入堆栈，栈顶-4</td>
+<td></td>
+</tr>
+<tr>
+<td>RET</td>
+<td>EIP更改为堆栈，恢复现场，栈顶+4</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="函数参数"><a class="markdownIt-Anchor" href="#函数参数"></a> 函数参数</h2>
+<ul>
+<li>参数放到寄存器中，返回值放在EAX中</li>
+<li>参数也可以放到堆栈中，要注意堆栈平衡</li>
+</ul>
+<h2 id="esp寻址"><a class="markdownIt-Anchor" href="#esp寻址"></a> ESP寻址</h2>
+<ul>
+<li>数据放入堆栈后的寻址，由于存储的栈指针，所以计算相对麻烦</li>
+</ul>
+<h2 id="ebp寻址"><a class="markdownIt-Anchor" href="#ebp寻址"></a> EBP寻址</h2>
+<ul>
+<li>通过改变栈底指针，可以避免新增数据导致的地址便宜计算。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">PUSH 1</span><br><span class="line">PUSH 2</span><br><span class="line">CALL XXXXX</span><br><span class="line">ADD ESP,8</span><br><span class="line">---------XXXXX---------</span><br><span class="line">PUSH EBP</span><br><span class="line">MOV EBP ESP</span><br><span class="line">SUB ESP,10</span><br><span class="line">MOV EAX,DWORD PTR SS:[EBP+8]</span><br><span class="line">ADD EAX,DWORD PTR SS:[EBP+C]</span><br><span class="line">MOV ESP,EBP</span><br><span class="line">POP EBP</span><br><span class="line">RETN</span><br></pre></td></tr></table></figure>
+<h1 id="jcc指令"><a class="markdownIt-Anchor" href="#jcc指令"></a> JCC指令</h1>
+<h2 id="标记寄存器"><a class="markdownIt-Anchor" href="#标记寄存器"></a> 标记寄存器</h2>
+<ul>
+<li>标记寄存器状态的变化是由于数据计算引起的。</li>
+</ul>
+<p><img src="/images/pasted-68.png" alt="标记寄存器" /></p>
+<ul>
+<li>CF：最高有效位发生借位，则置1。用于判断无符号数运算是否溢出</li>
+<li>PF：结果的最低有效字节包含偶数个1，则置1。用于奇偶校验检查</li>
+<li>AF：辅助进位操作，在结果的第3位发生进位或借位时置1。在BCD算数运算中使用</li>
+<li>ZF：运算结果为0，则置1。与CMP和TEST指令一起使用，查看是不是0</li>
+<li>SF：符号位，有符号整型的最高位</li>
+<li>OF：溢出标志位。用于判断有符号数运算是否溢出。</li>
+<li>DF：方向标志位，地址由低向高，则为0</li>
+</ul>
+<h2 id="jcc指令-2"><a class="markdownIt-Anchor" href="#jcc指令-2"></a> JCC指令</h2>
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th>说明</th>
+<th>判断条件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>JE JZ</td>
+<td>结果为零则跳转（相等时跳转）</td>
+<td>ZF=1</td>
+</tr>
+<tr>
+<td>JNE JNZ</td>
+<td>结果不为零则跳转（不相等时跳转）</td>
+<td>ZF=0</td>
+</tr>
+<tr>
+<td>JS</td>
+<td>结果为负则跳转</td>
+<td>SF=1</td>
+</tr>
+<tr>
+<td>JNS</td>
+<td>结果不为负则跳转</td>
+<td>SF=0</td>
+</tr>
+<tr>
+<td>JP JPE</td>
+<td>结果中1的个数为偶数则跳转</td>
+<td>PF=1</td>
+</tr>
+<tr>
+<td>JNP JPO</td>
+<td>结果中1的个数为奇数则跳转</td>
+<td>PF=0</td>
+</tr>
+<tr>
+<td>JO</td>
+<td>结果溢出了则跳转</td>
+<td>OF=1</td>
+</tr>
+<tr>
+<td>JNO</td>
+<td>结果没有溢出则跳转</td>
+<td>OF=0</td>
+</tr>
+<tr>
+<td>JB JNAE</td>
+<td>小于则跳转（无符号数）</td>
+<td>CF=1</td>
+</tr>
+<tr>
+<td>JNB JAE</td>
+<td>大于等于则跳转（无符号数）</td>
+<td>CF=0</td>
+</tr>
+<tr>
+<td>JBE JNA</td>
+<td>小于等于则跳转（无符号数）</td>
+<td>CF=1 OR ZF=1</td>
+</tr>
+<tr>
+<td>JNBE JA</td>
+<td>大于则跳转（无符号数）</td>
+<td>CF=0 AND ZF=0</td>
+</tr>
+<tr>
+<td>JL JNGE</td>
+<td>小于则跳转（有符号数）</td>
+<td>SF!=OF</td>
+</tr>
+<tr>
+<td>JNL JGE</td>
+<td>大于等于则跳转（有符号数）</td>
+<td>SF=OF</td>
+</tr>
+<tr>
+<td>JLE JNG</td>
+<td>小于等于则跳转（有符号数）</td>
+<td>ZF=1 OR SF!=OF</td>
+</tr>
+<tr>
+<td>JNLE JG</td>
+<td>大于则跳转（有符号数）</td>
+<td>ZF=0 AND SF=OF</td>
+</tr>
+</tbody>
+</table>
+</div></article><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/assembler/">assembler</a></div><nav id="pagination"><div class="next-post pull-right"><a href="/2020/07/26/scrapy/"><span>scrapy</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="vcomment"></div><script src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = 'false' == 'true';
+var verify = 'false' == 'true';
+var record_ip = '' == 'true';
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  recordIP:record_ip,
+  appId:'AdfkiqY89QUSUWbDY9xJuCh0-gzGzoHsz',
+  appKey:'2cEvHcqEWsyoKwy4AUL3kPGh',
+  placeholder:'劈个叉吧',
+  avatar:'mm',
+  guest_info:guest_info,
+  pageSize:'100',
+  lang: 'zh-cn'
+})</script></div></div><footer><div class="layout" id="footer"><div class="copyright">&copy;2020 By hero576</div><div class="framework-info"><span>驱动 - </span><a href="http://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody" target="_blank" rel="noopener"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.7.0"></script><script src="/js/fancybox.js?version=1.7.0"></script><script src="/js/sidebar.js?version=1.7.0"></script><script src="/js/copy.js?version=1.7.0"></script><script src="/js/fireworks.js?version=1.7.0"></script><script src="/js/transition.js?version=1.7.0"></script><script src="/js/scroll.js?version=1.7.0"></script><script src="/js/head.js?version=1.7.0"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css"><script src="/js/katex.js"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a href="https://github.com/wzpan/hexo-generator-search" target="_blank" rel="noopener" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>
