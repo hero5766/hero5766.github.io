@@ -1,7 +1,9 @@
 title: opencv
 author: hero576
-tags: []
-categories: []
+tags:
+  - robotic
+categories:
+  - programme
 date: 2020-07-27 19:17:00
 ---
 > opencv的使用
@@ -66,9 +68,41 @@ pip install pytessract
 
 # 色彩空间
 ## 常见色彩空间
-### RGB
-### HSV
-### HLS
+
+|色彩空间||
+|-|-|
+|RGB|非设备依赖的色彩空间|
+|HSV|直方图效果最好|
+|Lab|两通道|
+|YC<sub>b</sub>C<sub>r</sub>||
+
+## 色彩空间的相互转换
+
+### BGR2HSV
+- 公式
+
+- 使用HSV过滤绿色背景
+
+```c
+cvtColor(src,hsv,COLOR_BGR2HSV);
+inRange(hsv,Scalar(35,43,46),Scalar(77,255,255),mask);
+bitwise_not(mask,mask);
+bitwise_and(frame,frame,dst,mask);
+imshow("mask",mask);
+imshow("dst",dst);
+```
+
+
+### 代码实现
+
+```c
+Mat hsv,lab;
+cvtColor(src,hsv,COLOR_BGR2HSV);
+cvtColor(src,lab,COLOR_BGR2Lab);
+```
+
+
+
 ## 彩色图像的饱和度和亮度
 
 # 卷积和傅里叶变换
@@ -399,7 +433,7 @@ waitKey(0);
 ```
 
 ## 直方图均衡化
-- 直方图均衡化后的图像会有比较好的显示效果，举例：64*64大小的图像，8个bin，像素总数4096
+- 直方图均衡化后的图像会有比较好的显示效果，暗部变量，举例：64*64大小的图像，8个bin，像素总数4096
 
 |k|$r_k$|$n_k$|$\frac{n_k}{n}$|$S_k=\sum_{j=0}^{k}{\frac{n_j}{n}}$|$p_S(s_k)$|
 |-|-|-|-|-|-|
@@ -413,7 +447,7 @@ waitKey(0);
 |7|$\frac{7}{7}$|81|0.02|1.0->$\frac{7}{7}$->$s_4$|0.11|
 
 ```c
-Mat src = imread("./1.jpg",IMREAD_GRAYSCALE),gray,dst;;
+Mat src = imread("./1.jpg",IMREAD_GRAYSCALE),gray,dst;
 cvtColor(src,gray,COLOR_BGR2GRAY);
 imshow("gray",gray);
 equalizeHist(gray,dst);
@@ -484,6 +518,34 @@ imshow("color",color);imshow("dst",dst);
 ## 伽马变换
 ## 全局直方图均值化
 ## 直方图反向投影
+- 原理：如果有一个物品图1具有很明显的直方图特征，比如颜色或者明暗呈有规律的变化，就可以利用直方图特征，在目标图2中查找这个特征。
+
+- 步骤：
+  1. 计算直方图：计算直方图采用HSV中的H和S二维空间进行转换，并归一化
+  2. 计算比率：$R=\frac{H^1_{x.y}}{H^2_{x.y}}$目标图2肯定直方图特征较为复杂，比率结果仅在物品图直方图较高
+  3. 卷积模糊：由于bin是有大小的，一般取48，直接输出会变得很尖锐，所以需要进行模糊
+  4. 反向输出
+
+### 代码实现
+
+```c
+Mat model,src;
+Mat model_hsv,src_hsv;
+cvtColor(model,model_hsv,COLOR_BGR2HSV);
+cvtColor(src,src_hsv,COLOR_BGR2HSV);
+int h_bins=32,s_bin=32;
+int histSize[]={h_bins,s_bins};
+int channels[] = {0,1};
+Mat roiHist;
+float h_range[]={0,180},s_range[]={0,255};
+const float* ranges[]={h_range,s_range};
+calHist(&model_hsv,1,channels,Mat{},roiHist,2,histSize(),ranges,true,false);
+normalize(roiHist,roiHist,NORM_MINMAX,-1,Mat());
+MatND backproj;
+calcBackproject(&src_hsv,1channels,roiHist,backproj,ranges,1.0);
+imshow("backproject",backproj);
+```
+
 ## 限制对比度的自适应直方图均值化
 
 
@@ -1009,7 +1071,67 @@ Laplacian(src,dst,-1,3,1.0,BORDER_DEFAULT);
 ## 高斯差分DoG边缘检测
 ## Marr-Hildreth边缘检测
 ## Harris角点检测
+- 根据图像的像素点，在相互垂直的x或者y方向上，如果有较大的梯度，则这个点就是角点。
+- 数学描述：
+$$M=\begin{bmatrix} \sum_{S(p)}{(\frac{dI}{dx})^2} &\sum_{S(p)}{\frac{dI}{dx}\frac{dI}{dy}} \\ \sum_{S(p)}{\frac{dI}{dx}\frac{dI}{dy}}  &\sum_{S(p)}{(\frac{dI}{dx})^2}\end{bmatrix}$$
+
+- 计算xy方向的偏导数：`Ixy`、`Ixx`、`Iyx`、`Iyy`，计算相应最大的梯度
+- 求取梯度：
+$$E(u,v)=\sum_{x,y}{w(x,y)[I(x+u,y+v)-I(x,y)]^2}$$
+
+- 其中：$w(x,y)$：窗口算子，$I(x+u,y+v)-I(x,y)$：偏移，u和v就是移动的大小
+$$E(u,v)\cong[u,v]\;M\;\begin{bmatrix}u\\v\end{bmatrix}$$
+
+- 求解M的最大值
+$$M=\sum_{x,y}{w(x,y)\begin{bmatrix}I_x^2  &I_xI_y \\I_xI_y  &I_y^2\end{bmatrix}}$$
+
+- 求取R值越大，响应值越大。矩阵有两个变换：特征向量的变换，奇异值变换
+$$R=\det{M}-k(trace\;M)^2$$
+$$\det{M}=\lambda_1\lambda_2$$
+$$trace\;M=\lambda_1+\lambda_2$$
+
+- det求取矩阵的特征值`λ<sub>1<\sub>λ<sub>2<\sub>`
+- 在边缘区域上，`λ<sub>1<\sub>λ<sub>2<\sub>`其中一个很大，在平坦区域，`λ<sub>1<\sub>λ<sub>2<\sub>`都很小，只有在角点区域才使得R很大
+- k值是用于调节R的大小的，一般k=0.04~0.06
+
+
+### 代码实现
+
+```c
+int blocksize=2,ksize=3;double k=0.04;
+//input,output,计算偏导时区域范围,sobel计算梯度窗口大小,k
+cornerHarris(gray,dst,blocksize,ksize,k);
+Mat dst_norm = Mat::zeros(dst.size,dst.type());
+normalize(dst,dst_norm,0,255,NORM_MINMAX,-1,Mat());
+convertScaleAbs(dst_norm,dst_norm);
+//draw corners
+for (int row=0;row<src.rows;row++){
+  for (int col=0;col<src.cols;col++){
+    int rsp=dst_norm.at<uchar>(row,col);
+    if (rsp>150){
+      circle(src,Point(col,row),5,Scalar(0,255,0),2,8,0);
+    }
+  }
+}
+```
+
 ## shi-tomas角点检测
+
+- shi-tomas优化了R的求取方法，仅计算`λ<sub>1<\sub>λ<sub>2<\sub>`最小的值，假如超过了阈值，那么`λ<sub>1<\sub>λ<sub>2<\sub>`就都很大。简化了R值的计算
+
+$$R=min(\lambda_1,\lambda_2$$)$$
+
+```c
+vector<Point2f>corners;
+double quality_level=0.01;
+//input,output,最多检测多少个角点,角点检测接受的最小值,角点间最小距离,mask,blockSize,是否使用Harris角点检测器
+goodFeaturesToTrack(gray,corners,200,quality_level,3,Mat(),3,false);
+//draw corners
+for (int i=0;i<corners.size();i++){
+  circle(src,corners[i],5,Scalar(0,255,0),2,8,0);
+}
+```
+
 
 # 几何形状检测和拟合
 ## 联通组件扫描
@@ -1488,6 +1610,7 @@ while (true){
 ```
 
 - opencv对于保存的限制，文件大小最好不要超过2GB
+- 最好是保存到一定大小后，再新建文件保存。
 
 ### 析构
 ```c
@@ -1498,6 +1621,312 @@ writer.release();
 
 # 跟踪
 ## 基于颜色的对象跟踪
+- 基于HSV色彩空间，跟踪一个红色的物体
 
-# 背景分析
+```c
+//打开视频文件获取frame
+Mat hsv,mask;
+cvtColor(frame,hsv,COLOR_BGR2HSV);
+//获取红色HSV对应的色彩范围
+inRange(hsv,Scalar(0,43,46),Scalar(10,255,255),mask);
+//处理一下图像的缺失空洞
+Mat se=getStructuringElement(MORPH_RECT,Size(15,15));
+morphologyEx(mask,mask,MORPH_OPEN,se);
+//获取轮廓
+vector<vector<Point>>contours;
+vector<Vec4i>hierarchy;
+findContours(mask,contours,hierarchy,RET_EXTERNAL,CHAIN_APPROX_SIMPLE,Point());
+//drawContours(frame,contours,-1,Scalar(0,0,255),2,8);
+//求最大面积的外接轮廓
+int index=-1;
+double max_area=0;
+for(size_t t=0;t<contours.size();t++){
+  double area=contourArea(contours[t]);
+  double len=arcLength(contours[t],true);
+  //if(area<100||len<10)continue;
+  //Rectbox=boundingRect(contours[t]);
+  //drawContours(src,contours,t,Scalar(0,0,255),2,8);
+  if(max_area<area){
+    index=t;max_area=area;
+  }
+}
+if(index>0){
+  RotatedRect rrt=minAreaRect(contours[index]);
+  ellipse(frame,rrt,Scalar(255,0,0),2,8);
+  circle(frame,rrt.center,4,Scalar(0,255,0),2,8,0);
+}
+imshow("detection",frame)
+```
+
+
+## 基于背景分析的对象跟踪
+- 视频和图片的区别是视频具有连续性，每一帧相互之间有上下文的关系。合理利用前面的信息，对未来帧走势做出建模。
+
+- 常用的方法
+  1. KNN
+  2. GMM
+  3. Fuzzy lntegral模糊积分
+
+- KNN、GMM对前景和背景进行像素级别的分割(某个像素只能是背景和前景)，模糊积分会得到像素背景和前景的概率
+- GMM是基于高斯和最大似然，计算马氏距离，在一定范围内，判断当前像素是否是前景。如果大于，则会新增高斯权重模型，模型就新增一个组件，当组件满了，丢弃最开始的。这样模型就动态的更新和维护。
+
+### 代码实现
+
+```c
+//创建建模对象
+//500帧进行背景和建模,马氏距离,是否检测阴影(置为true速度会比较慢),,,,
+auto pMOG2 = createBackgroundSubtractorMOG2(500,16,false);
+//如果想过滤变动不大的目标，可以将马氏距离设置很大
+Mat mask,bg_image;
+pMOG2->apply(frame,mask);
+pMOG2->getBackgroundImage(frame,mask);
+```
+
 ## 光流法
+- 光流可以看成是图像结构光的变化或者图像亮度模式明显的移动
+- 光流法分为：稀疏光流KLT与稠密光流
+- 基于相邻视频帧进行分析
+- 光流对光照变化很敏感，一般需要进行模糊
+
+### 稀疏光流KLT
+- 假设条件：1、亮度恒定；2、近距离移动；3、空间一致；
+- 亮度恒定：假设x,y像素点移动了u,v，那么两个像素值应该相等
+$$I(x,y,t)=I(x+u,y+v,t+1)$$
+
+- 空间一致：假设窗口大小为5*5个像素点，基于亮度恒定，移动u,v
+$$O=I_t(p_i)+\nabla I(p_i)·\begin{bmatrix}u  &v\end{bmatrix}$$
+
+- 根据空间一致性，求取移动的u,v，可以使用最小二乘法求d
+$$Ad=b$$
+$$(A^TA)d=A^Tb$$
+$$A=\begin{bmatrix}I_x(p_1)  &I_y(p_1) \\...  &... \\I_x(p_{25})  &I_y(p_{25}) \end{bmatrix}$$
+$$b=\begin{bmatrix}I_x(p_1)   \\... \\ I_x(p_{25})    \end{bmatrix}$$
+$$d=\begin{bmatrix}u    \\ v    \end{bmatrix}$$
+$$M=A^TA=\begin{bmatrix}\sum{I_xI_x} &\sum{I_xI_y}  \\\sum{I_xI_y}  &\sum{I_yI_y} \end{bmatrix}$$
+$A^Tb=\begin{bmatrix}\sum{I_xI_t}    \\ \sum{I_yI_t}    \end{bmatrix}$$
+
+- M就是Harris角点检测的方程，也就是满足空间一致性的只有角点才可以
+- 使用角点检测获取到移动位置距离
+
+#### 代码实现
+
+```c
+Mat gray,old_gray;
+vector<Point2f>corners;
+double quality_level=0.01;
+int minDistance = 5;
+goodFeaturesToTrack(gray,corners,200,quality_level,minDistance,Mat(),3,false);
+vector<Point2f>pts[2];
+pts[0].insert(pts[0].end(),corners.begin(),corners.end());
+vector<unchar>status;
+vector<float>err;
+//重复迭代10，两次结果小于0.01就不再计算了
+TermCriteria cireria=TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,10,0.01);
+while (true){
+  //稀疏光流
+  //前一帧,当前帧,前一帧角点,当前帧角点,每个角点状态(只有ok才会检测),错误,光流场的大小,金字塔层数,停止条件,flag
+  calcOpticalFlowPyrLK(old_gray,gray,pts[0],pts[1],status,err,Size(21,21),3,cireria,0);
+  size_t i=0,k=0;
+  for(i=0;i<pts[1].size();i++){
+    if(status[i]){
+      //将有效的往前排
+      pts[0][k]=pts[0][i];
+      pts[1][k++]=pts[1][i];
+      circle(frame,pts[1][i],2,Scalar(0,0,255),2,8,0);
+      line(frame,pts[0][i],pts[1][i],Scalar(0,255,255),2,8,0);
+    }
+  }
+  //update key points
+  pts[0].resize(k);//把k后面全扔了
+  pts[1].resize(k);//把k后面全扔了
+  imshow("KLT",frame);
+  //update frame
+  std::swap(pts[1],pts[0]);
+  cv::swap(old_gray,gray);
+}
+```
+
+- 上面代码仅检测是否有效，会显示大量的点。下面增加移动距离的限制，使得跟踪效果更好一些
+- 加上距离判断的话，有些角点就会被抛弃，需要初始化才能在下一次检测时继续做判断
+
+```c
+Mat gray,old_gray;
+vector<Point2f>corners;
+double quality_level=0.01;
+int minDistance = 5;
+goodFeaturesToTrack(gray,corners,200,quality_level,minDistance,Mat(),3,false);
+vector<Point2f>pts[2];
+vector<Point2f>initPoints;
+pts[0].insert(pts[0].end(),corners.begin(),corners.end());
+initPoints.insert(initPoints.end(),corners.begin(),corners.end());
+vector<unchar>status;
+vector<float>err;
+TermCriteria cireria=TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,10,0.01);
+while(true){
+  calcOpticalFlowPyrLK(old_gray,gray,pts[0],pts[1],status,err,Size(21,21),3,cireria,0);
+  size_t i=0,k=0;
+  for(i=0;i<pts[1].size();i++){
+    double dist = abs(pts[0].x-pts[1].x)+abs(pts[0].y-pts[1].y);
+    if(status[i] && dist>2){
+      //将有效的往前排
+      initPoints[k]=initPoints[i];
+      pts[0][k]=pts[0][i];
+      pts[1][k++]=pts[1][i];
+      circle(frame,pts[1][i],2,Scalar(0,0,255),2,8,0);
+      line(frame,pts[0][i],pts[1][i],Scalar(0,255,255),2,8,0);
+    }
+  }
+  //update key points
+  pts[0].resize(k);//把k后面全扔了
+  pts[1].resize(k);//把k后面全扔了
+  initPoints.resize(k);//把k后面全扔了
+  //绘制光流线
+  //线的彩色
+  vector<Scalar> lut;
+  for (size_t t=0;t<initPoints.size();t++){
+    int b=rng.uniform(0,255),g=rng.uniform(0,255),r=rng.uniform(0,255);
+    lut.push_back(Scalar(b,g,r));
+  }
+  for (size_t t=0;t<initPoints.size();t++){
+    line(frame,initPoints[t],pts[1][t],lut[t],2,8,0);
+  }
+  imshow("KLT",frame);
+  //update frame
+  std::swap(pts[1],pts[0]);
+  cv::swap(old_gray,gray);
+  //re-init
+  if (pts[0].size()<40){
+    goodFeaturesToTrack(gray,corners,200,quality_level,minDistance,Mat(),3,false);
+    pts[0].insert(pts[0].end(),corners.begin(),corners.end());
+  }
+}
+```
+
+### 稠密光流
+- 稠密光流法有很多种
+
+### 基于多项式的稠密光流法
+- 像素点跟周围的像素点是相关性的
+- 基于二次多项式实现光流评估算法
+- 对每个像素点都计算移动距离
+- 基于总位移与均值评估
+
+- 数学描述，x是一个2*2的矩阵，代表(x,y)
+$$f_1(x)=x^TA_1x+b_1^Tx+c_1$$
+
+- 移动d后
+$$f_2(x)=f_1(x-d)=(x-d)^TA_1(x-d)+b_1^T(x-d)+c_1=x^TA_2x+b^T_2x+c_2$$
+$$A_2=A_1$$
+$$b_2=b_1-2A_1d$$
+$$c2=d^TA_1d-b^T_1d+c_1$$
+
+- 可以看到系数A不变，b和c的变化和d相关。求取d转成了求取系数
+- 假定ROI窗口共用相同的系数，组成多约束方程求解，用最小二乘拟合，得到系数结果求解d，全局总位移。根据求解的d，又可以反推系数，不断迭代循环，直至系数足够精准。得到光流场
+
+### 代码实现
+- 笛卡尔坐标系转成极坐标系，使用HSV色彩空间进行展现出稠密光流场
+
+```c
+Mat frame,preFrame,gray,preGray;
+capture.read(preFrame);
+cvtColor(preFrame,preGray,COLOR_BGR2GRAY);
+Mat hsv=Mat::zeros(preFrame.size(),preFrame.type());
+Mat mag=Mat::zeros(hsv.size(),CV_32FC1);
+//角度
+Mat ang=Mat::zeros(hsv.size(),CV_32FC1);
+//x
+Mat xpts=Mat::zeros(hsv.size(),CV_32FC1);
+//y
+Mat ypts=Mat::zeros(hsv.size(),CV_32FC1);
+//光流输出
+Mat_<Point2f>flow;
+vector<Point2f>mv;
+split(hsv,mv);
+Mat dst;
+while(true){
+  cvtColor(frame,gray,COLOR_BGR2GRAY);
+  //preframe,curframe,flow,金字塔层间的scale,金字塔层数,窗口大小,迭代次数,多项式,高斯配置权重,flag
+  calcOpticalFlowFarneback(preGray,gray,flow,0.5,3,15,3,5,1.2,0);
+  for(int row=0;row<flow.rows;row++){
+    for(int col=0;col<flow.cols;col++){
+      const Point2f &flow_xy=flow.at<Point2f>(row,col);
+      xpts.at<float>(row,col)=flow_xy.x;
+      ypts.at<float>(row,col)=flow_xy.y;
+    }
+  }
+  //变为极坐标
+  cartToPolar(xpts,ypts,mag,ang);
+  ang=ang*180/CV_PI/2.0;
+  normalize(mag,mag,0,255,NORM_MINMAX);
+  convertScaleAbs(mag,mag);
+  convertScaleAbs(ang,ang);
+  mv[0]=ang;
+  mv[1]=Scalar(255);
+  mv[2]=mag;
+  merge(mv,hsv);
+  cvtColor(hsv,dst,COLOR_HSV2BRGR);
+  imshow("dst",dst);
+  imshow("frame",frame);
+}
+```
+
+## 基于均值迁移的视频分析
+
+### 均值迁移算法原理
+- 随机在空间中画圆，计算包含在圆中的点的均值$\bar{x}\bar{y}$，计算圆的中心位置和均值x,y的位置距离，圆不断向均值移动，直到稳定位置，就到了目标。
+
+### 均值迁移-MeanShift
+- 基于直方图反向投影，提供ROI区域
+
+### 自适应均值迁移-CA-MeanShift
+- 在均值迁移的基础上，每次都重新拟合椭圆，自适应变化窗口大小。
+
+
+### 代码实现
+```c
+Mat frame,hsv,hue,mask,hist,backproj;
+capture.read(frame);
+int hsize=16;
+float hranges[]={0,180};
+Rect trackWindow;
+bool init=true;
+const float* ranges=hranges;
+Rect selection=selectROI("window name",frame,true,false);
+while(true){
+  capture.read(frame);
+  cvtColor(frame,hsv,COLOR_BGR2HSV);
+  //选取黄色作为跟踪目标
+  inRange(hsv,Scalar(26,43,46),Scalar(34,255,255),mask);
+  //这里只搜索H通道，加快速度
+  int ch[]={0,0};
+  hue.create(hsv.size(),hsv.depth());
+  //只取出1个通道：H
+  //src,1,dst,
+  mixChannels(&hsv,1,&hue,1,ch,1);
+  if(init){
+    //计算ROI的直方图
+    init=false;
+    //只计算H通道的
+    Mat roi(hue,selection),maskroi(mask,selection);
+    calcHist(&roi,1,0,maskroi,hist,1,&hsize,&ranges);
+    normalize(hist,hist,0,255,NORM_MINMAX);
+    trackWindow=selection;
+  }
+  //ht通道，通道数，0，hist，dst，ranges
+  calcBackProject(&hue,1,0,hist,backproj,&ranges);
+  //meanshift：
+  //将backproj中不在mask部分去除
+  backproj &= mask;
+  meanShift(backproj,trackWindow,TermCriteria(TermCriteria::COUNT|
+  //连续自适应均值偏移
+  //RotatedRect rrt=CamShift(backproj,trackWindow,TermCriteria(TermCriteria::COUNT| TermCriteria::EPS),10,1);
+  //ellipse(frame,rrt,Scalar(0,0,255),2,8);
+  rectangle(frame,trackWindow,Scalar(0,0,255),3,LINE_AA);
+  imshow("meanshift",frame);
+}
+```
+
+
+
+
+

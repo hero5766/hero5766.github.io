@@ -2,6 +2,9 @@ title: katex语法
 author: hero576
 date: 2020-06-04 23:39:14
 tags:
+  - skills
+categories:
+  - common
 ---
 > latex就是一个方便编辑数学公式的一个库，简单汇总一下他的用法。
 <!--more-->

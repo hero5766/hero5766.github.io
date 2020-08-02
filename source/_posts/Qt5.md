@@ -2,6 +2,9 @@ title: Qt5
 author: hero576
 date: 2020-07-17 21:21:09
 tags:
+  - C/C++
+categories:
+  - programme
 ---
 > qt界面开发
 <!--more-->

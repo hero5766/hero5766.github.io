@@ -39,6 +39,8 @@ date: 2020-06-22 22:21:00
 |Microsoft Visio previewer|{21E17C2F-AD3A-4b89-841F-09CFE02D16B7}|预览visio文件|
 |Microsoft PowerPoint previewer|{65235197-874B-4A07-BDC5-E65EA825B718}|预览ppt|
 |Microsoft Word previewer|{84F66100-FF7C-4fb4-B0C0-02CD7FB668FE}|预览word|
+|{00020827-0000-0000-C000-000000000046}|Microsoft Excel previewer|
+|{FFBD7029-84D7-4E1E-BE44-B6619BC545ED}|Foxit PDF Preview Handler|
 
 - 这些都是`Windows 10`自带的预览器。除此之外，这里也会列出很多第三方程序提供的预览器。像PDF文档的预览器，在安装`Adobe`时，程序会自动注册预览器，将`pdf`文件与之关联。
 - `.opml`文件我们选择`Windows TXT Previewer`作为默认预览器，将`{1531d583-8375-4d3f-b5fb-d23bbd169f22}`数值名称复制到剪贴板备用。
@@ -54,3 +56,4 @@ date: 2020-06-22 22:21:00
 
 
 > 完成上述操作之后，现在我们就可以在文件资源管理器直接预览.opml格式的文件，此时看到的就不再只是冷冰冰的`没有预览`的提示信息了。按照类似的步骤，我们在正确选择预览器、注册文件格式之后，记住`“有子项直接编辑，无子项手工创建”`这句话即可，很快就可以让`Windows 10`正常预览相应格式的文件。
+> 最近发现不需要新建opmlfile项，直接在.opml下新建shellex即可，也同样能达到预览的效果。
