@@ -1,0 +1,94 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="ts文件解密"><meta name="keywords" content="python"><meta name="author" content="hero576"><meta name="copyright" content="hero576"><title>ts文件解密 | void land space</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.7.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="dns-prefetch" href="https://hm.baidu.com"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?5ff8fca367285c16c6dd5c16ca2ccc1b";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();</script><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  }
+} </script><meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="void land space" type="application/atom+xml">
+</head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ts文件加密方式"><span class="toc-number">1.</span> <span class="toc-text"> ts文件加密方式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#python实现加密算法"><span class="toc-number">2.</span> <span class="toc-text"> python实现加密算法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#cbc"><span class="toc-number">2.1.</span> <span class="toc-text"> CBC</span></a></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/images/haimianbaobao.jpg"></div><div class="author-info__name text-center">hero576</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">30</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">12</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">分类</span><span class="pull-right">5</span></a></div></div></div><div id="content-outer"><div class="plain" id="top-container"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">void land space</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">主页</a><a class="site-page" href="/archives">文章</a><a class="site-page" href="/tags">标签</a><a class="site-page" href="/categories">分类</a><a class="site-page" href="/gallery">相册</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> 搜索</span></a></span></div></div><div class="layout" id="content-inner"><article id="post"><div class="plain" id="post-title">ts文件解密</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-08-07</time><span class="post-meta__separator">|</span><i class="fa fa-inbox" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/programme/"> programme</a></div><div class="article-container" id="post-content"><blockquote>
+<p>通过m3u8下载视频文件，下载完成后无法播放。查看m3u8文件，发现视频文件被加密，所以直接下载后不能直接播放。</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="ts文件加密方式"><a class="markdownIt-Anchor" href="#ts文件加密方式"></a> ts文件加密方式</h1>
+<table>
+<thead>
+<tr>
+<th>AES加密方式</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ECB</td>
+<td>Electronic CodeBook，电子密码本模式</td>
+</tr>
+<tr>
+<td>CBC</td>
+<td>Cipher-block chaining，密码块连接模式</td>
+</tr>
+<tr>
+<td>PCBC</td>
+<td>Propagating cipher-block chaining，填充密码块链接模式</td>
+</tr>
+<tr>
+<td>CTR</td>
+<td>Counter mode，计数器模式</td>
+</tr>
+<tr>
+<td>CFB</td>
+<td>Cipher feedback，密文反馈模式</td>
+</tr>
+<tr>
+<td>OFB</td>
+<td>Output feedback，输出反馈模式</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><a href="https://blog.csdn.net/u013073067/article/details/87086562" target="_blank" rel="noopener">加密方式详细介绍</a></li>
+</ul>
+<h1 id="python实现加密算法"><a class="markdownIt-Anchor" href="#python实现加密算法"></a> python实现加密算法</h1>
+<ul>
+<li>安装环境</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#Windows</span></span><br><span class="line">pip install pycryptodome </span><br><span class="line"><span class="comment">#Linux</span></span><br><span class="line">pip install pycrypto</span><br></pre></td></tr></table></figure>
+<h2 id="cbc"><a class="markdownIt-Anchor" href="#cbc"></a> CBC</h2>
+<ul>
+<li>cbc模式使用了AES-128加密，需要一个十六位的key(密钥)和一个十六位iv(偏移量)</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> AES</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> Crypto <span class="keyword">import</span> Random</span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AESUtil</span>:</span></span><br><span class="line">    __BLOCK_SIZE_16 = BLOCK_SIZE_16 = AES.block_size</span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">encryt</span><span class="params">(data, key, iv=None)</span>:</span></span><br><span class="line">        bs = AES.block_size</span><br><span class="line">        pad = <span class="keyword">lambda</span> s: s + ((bs - len(s) % bs) * chr(bs - len(s) % bs)).encode()</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> iv:</span><br><span class="line">            iv = Random.new().read(bs)</span><br><span class="line">        cipher = AES.new(key, AES.MODE_CBC, iv)</span><br><span class="line">        data = cipher.encrypt(pad(data))</span><br><span class="line">        data = iv + data</span><br><span class="line">        <span class="keyword">return</span> data</span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">decrypt</span><span class="params">(data, key, iv=None)</span>:</span></span><br><span class="line">        bs = AES.block_size</span><br><span class="line">        <span class="keyword">if</span> len(data) &lt;= bs:</span><br><span class="line">            <span class="keyword">return</span> data</span><br><span class="line">        <span class="comment">#unpad = lambda s : s[0:-ord(s[-1])]</span></span><br><span class="line">        unpad = <span class="keyword">lambda</span> s : s[<span class="number">0</span>:-(s[<span class="number">-1</span>])]</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> iv:</span><br><span class="line">            iv = data[:bs]</span><br><span class="line">        cipher = AES.new(key, AES.MODE_CBC, iv)</span><br><span class="line">        data  = unpad(cipher.decrypt(data[bs:]))</span><br><span class="line">        <span class="keyword">return</span> data</span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    key = <span class="string">"1234567812345678"</span></span><br><span class="line">    iv = <span class="string">"1234567812345678"</span></span><br><span class="line">    res = AESUtil.encryt(<span class="string">"123456"</span>, key, iv)</span><br><span class="line">    print(res) <span class="comment"># 2eDiseYiSX62qk/WS/ZDmg==</span></span><br><span class="line">    print(AESUtil.decrypt(res, key, iv)) <span class="comment"># 123456</span></span><br></pre></td></tr></table></figure>
+</div></article><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/python/">python</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2020/08/10/tesseract%E8%AF%86%E5%88%AB%E9%AA%8C%E8%AF%81%E7%A0%81/"><i class="fa fa-chevron-left">  </i><span>tesseract识别验证码</span></a></div><div class="next-post pull-right"><a href="/2020/08/03/supervisor/"><span>supervisor</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="vcomment"></div><script src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = 'false' == 'true';
+var verify = 'false' == 'true';
+var record_ip = '' == 'true';
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  recordIP:record_ip,
+  appId:'AdfkiqY89QUSUWbDY9xJuCh0-gzGzoHsz',
+  appKey:'2cEvHcqEWsyoKwy4AUL3kPGh',
+  placeholder:'劈个叉吧',
+  avatar:'mm',
+  guest_info:guest_info,
+  pageSize:'100',
+  lang: 'zh-cn'
+})</script></div></div><footer><div class="layout" id="footer"><div class="copyright">&copy;2020 By hero576</div><div class="framework-info"><span>驱动 - </span><a href="http://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody" target="_blank" rel="noopener"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.7.0"></script><script src="/js/fancybox.js?version=1.7.0"></script><script src="/js/sidebar.js?version=1.7.0"></script><script src="/js/copy.js?version=1.7.0"></script><script src="/js/fireworks.js?version=1.7.0"></script><script src="/js/transition.js?version=1.7.0"></script><script src="/js/scroll.js?version=1.7.0"></script><script src="/js/head.js?version=1.7.0"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css"><script src="/js/katex.js"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a href="https://github.com/wzpan/hexo-generator-search" target="_blank" rel="noopener" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>
