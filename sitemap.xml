@@ -2,234 +2,413 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://blog.guoming576.cn/2020/08/03/supervisor/</loc>
+    <loc>http://blog.guoming576.cn/2020/08/21/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/</loc>
     
-    <lastmod>2020-08-12T02:13:19.946Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.guoming576.cn/2020/08/07/ts%E6%96%87%E4%BB%B6%E8%A7%A3%E5%AF%86/</loc>
-    
-    <lastmod>2020-08-12T02:12:31.139Z</lastmod>
+    <lastmod>2020-08-21</lastmod>
     
   </url>
   
   <url>
-    <loc>http://blog.guoming576.cn/2020/08/10/tesseract%E8%AF%86%E5%88%AB%E9%AA%8C%E8%AF%81%E7%A0%81/</loc>
+    <loc>http://blog.guoming576.cn/2020/08/02/cmd/</loc>
     
-    <lastmod>2020-08-12T02:12:20.238Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.guoming576.cn/2020/06/22/indows%E5%A2%9E%E5%8A%A0%E9%A2%84%E8%A7%88/</loc>
-    
-    <lastmod>2020-08-09T01:56:08.117Z</lastmod>
+    <lastmod>2020-08-21</lastmod>
     
   </url>
   
   <url>
-    <loc>http://blog.guoming576.cn/2020/07/30/elasticsearch/</loc>
+    <loc>http://blog.guoming576.cn/2020/08/20/matplotlib/</loc>
     
-    <lastmod>2020-08-03T12:34:39.446Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.guoming576.cn/2020/06/04/latex/</loc>
-    
-    <lastmod>2020-08-03T04:56:46.045Z</lastmod>
+    <lastmod>2020-08-21</lastmod>
     
   </url>
   
   <url>
-    <loc>http://blog.guoming576.cn/2020/07/07/wsl2/</loc>
+    <loc>http://blog.guoming576.cn/2020/06/25/%E6%A6%82%E7%8E%87%E8%AE%BA/</loc>
     
-    <lastmod>2020-08-03T04:55:36.290Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.guoming576.cn/2020/07/17/Qt5/</loc>
-    
-    <lastmod>2020-08-03T04:55:01.051Z</lastmod>
+    <lastmod>2020-08-21</lastmod>
     
   </url>
   
   <url>
-    <loc>http://blog.guoming576.cn/2020/07/27/opencv/</loc>
+    <loc>http://blog.guoming576.cn/2020/08/20/%E6%B7%BB%E5%8A%A0%E6%80%9D%E7%BB%B4%E5%AF%BC%E5%9B%BE/</loc>
     
-    <lastmod>2020-07-31T08:15:28.164Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.guoming576.cn/2020/07/26/scrapy/</loc>
-    
-    <lastmod>2020-07-27T09:01:46.046Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.guoming576.cn/2020/07/27/%E6%B1%87%E7%BC%96/</loc>
-    
-    <lastmod>2020-07-27T08:58:14.615Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.guoming576.cn/2020/07/21/goproxy/</loc>
-    
-    <lastmod>2020-07-25T08:25:16.773Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.guoming576.cn/2020/07/13/C/</loc>
-    
-    <lastmod>2020-07-18T07:26:09.528Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.guoming576.cn/2020/07/15/python%E5%BA%93%E6%95%B4%E7%90%86/</loc>
-    
-    <lastmod>2020-07-15T06:55:54.530Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.guoming576.cn/2020/07/01/c%E8%AF%AD%E8%A8%80/</loc>
-    
-    <lastmod>2020-07-14T14:25:01.910Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.guoming576.cn/2020/07/13/yaml%E6%96%87%E4%BB%B6/</loc>
-    
-    <lastmod>2020-07-13T15:22:07.693Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.guoming576.cn/2020/06/27/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/</loc>
-    
-    <lastmod>2020-07-12T03:50:57.939Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.guoming576.cn/2020/06/21/%E6%8D%AE%E7%B1%BB%E5%9E%8B/</loc>
-    
-    <lastmod>2020-07-02T00:53:37.665Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.guoming576.cn/2020/07/01/i/</loc>
-    
-    <lastmod>2020-07-02T00:31:46.493Z</lastmod>
+    <lastmod>2020-08-20</lastmod>
     
   </url>
   
   <url>
     <loc>http://blog.guoming576.cn/2020/05/30/first/</loc>
     
-    <lastmod>2020-06-27T16:18:43.825Z</lastmod>
+    <lastmod>2020-08-20</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.guoming576.cn/2020/08/18/numpy/</loc>
+    
+    <lastmod>2020-08-20</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.guoming576.cn/2020/08/03/supervisor/</loc>
+    
+    <lastmod>2020-08-12</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.guoming576.cn/2020/08/07/ts%E6%96%87%E4%BB%B6%E8%A7%A3%E5%AF%86/</loc>
+    
+    <lastmod>2020-08-12</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.guoming576.cn/2020/08/10/tesseract%E8%AF%86%E5%88%AB%E9%AA%8C%E8%AF%81%E7%A0%81/</loc>
+    
+    <lastmod>2020-08-12</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.guoming576.cn/2020/06/22/indows%E5%A2%9E%E5%8A%A0%E9%A2%84%E8%A7%88/</loc>
+    
+    <lastmod>2020-08-09</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.guoming576.cn/2020/07/30/elasticsearch/</loc>
+    
+    <lastmod>2020-08-03</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.guoming576.cn/2020/06/04/latex/</loc>
+    
+    <lastmod>2020-08-03</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.guoming576.cn/2020/07/07/wsl2/</loc>
+    
+    <lastmod>2020-08-03</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.guoming576.cn/2020/07/17/Qt5/</loc>
+    
+    <lastmod>2020-08-03</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.guoming576.cn/2020/07/27/opencv/</loc>
+    
+    <lastmod>2020-07-31</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.guoming576.cn/2020/07/26/scrapy/</loc>
+    
+    <lastmod>2020-07-27</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.guoming576.cn/2020/07/27/%E6%B1%87%E7%BC%96/</loc>
+    
+    <lastmod>2020-07-27</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.guoming576.cn/2020/07/21/goproxy/</loc>
+    
+    <lastmod>2020-07-25</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.guoming576.cn/2020/07/13/C/</loc>
+    
+    <lastmod>2020-07-18</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.guoming576.cn/2020/07/15/python%E5%BA%93%E6%95%B4%E7%90%86/</loc>
+    
+    <lastmod>2020-07-15</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.guoming576.cn/2020/07/01/c%E8%AF%AD%E8%A8%80/</loc>
+    
+    <lastmod>2020-07-14</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.guoming576.cn/2020/07/13/yaml%E6%96%87%E4%BB%B6/</loc>
+    
+    <lastmod>2020-07-13</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.guoming576.cn/2020/06/27/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/</loc>
+    
+    <lastmod>2020-07-12</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.guoming576.cn/2020/06/21/%E6%8D%AE%E7%B1%BB%E5%9E%8B/</loc>
+    
+    <lastmod>2020-07-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.guoming576.cn/2020/07/01/i/</loc>
+    
+    <lastmod>2020-07-02</lastmod>
     
   </url>
   
   <url>
     <loc>http://blog.guoming576.cn/2020/06/25/%E7%BC%96%E7%A0%81/</loc>
     
-    <lastmod>2020-06-27T13:42:29.607Z</lastmod>
+    <lastmod>2020-06-27</lastmod>
     
   </url>
   
   <url>
     <loc>http://blog.guoming576.cn/2020/06/25/%E7%8B%AC/</loc>
     
-    <lastmod>2020-06-27T04:01:58.706Z</lastmod>
+    <lastmod>2020-06-27</lastmod>
     
   </url>
   
   <url>
     <loc>http://blog.guoming576.cn/2020/06/04/%E5%BE%AE%E7%A7%AF%E5%88%86/</loc>
     
-    <lastmod>2020-06-25T09:13:41.087Z</lastmod>
+    <lastmod>2020-06-25</lastmod>
     
   </url>
   
   <url>
     <loc>http://blog.guoming576.cn/2020/06/06/govender/</loc>
     
-    <lastmod>2020-06-25T06:24:33.514Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.guoming576.cn/2020/06/24/golang%E5%BE%AE%E6%9C%8D%E5%8A%A1/</loc>
-    
-    <lastmod>2020-06-25T06:24:33.513Z</lastmod>
+    <lastmod>2020-06-25</lastmod>
     
   </url>
   
   <url>
     <loc>http://blog.guoming576.cn/2020/06/06/gomod/</loc>
     
-    <lastmod>2020-06-25T06:24:33.513Z</lastmod>
+    <lastmod>2020-06-25</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.guoming576.cn/2020/06/24/golang%E5%BE%AE%E6%9C%8D%E5%8A%A1/</loc>
+    
+    <lastmod>2020-06-25</lastmod>
     
   </url>
   
   <url>
     <loc>http://blog.guoming576.cn/2020/06/23/%E5%8A%A0%E8%A7%86%E9%A2%91/</loc>
     
-    <lastmod>2020-06-23T07:36:10.120Z</lastmod>
+    <lastmod>2020-06-23</lastmod>
     
   </url>
   
   <url>
     <loc>http://blog.guoming576.cn/2020/06/03/%E9%9F%B3%E4%B9%90%E5%90%88%E9%9B%86/</loc>
     
-    <lastmod>2020-06-23T07:00:52.751Z</lastmod>
+    <lastmod>2020-06-23</lastmod>
     
   </url>
   
   <url>
     <loc>http://blog.guoming576.cn/gallery/index.html</loc>
     
-    <lastmod>2020-06-23T06:59:35.264Z</lastmod>
+    <lastmod>2020-06-23</lastmod>
     
   </url>
   
   <url>
     <loc>http://blog.guoming576.cn/2020/06/03/%E9%9F%B3%E4%B9%90%E5%88%97%E8%A1%A8/</loc>
     
-    <lastmod>2020-06-23T02:56:18.428Z</lastmod>
+    <lastmod>2020-06-23</lastmod>
     
   </url>
   
   <url>
     <loc>http://blog.guoming576.cn/2020/06/04/markdown/</loc>
     
-    <lastmod>2020-06-21T02:46:17.059Z</lastmod>
+    <lastmod>2020-06-21</lastmod>
     
   </url>
   
   <url>
     <loc>http://blog.guoming576.cn/tags/index.html</loc>
     
-    <lastmod>2020-06-05T11:21:28.604Z</lastmod>
+    <lastmod>2020-06-05</lastmod>
     
   </url>
   
   <url>
     <loc>http://blog.guoming576.cn/categories/index.html</loc>
     
-    <lastmod>2020-06-05T11:21:28.591Z</lastmod>
+    <lastmod>2020-06-05</lastmod>
     
+  </url>
+  
+
+  <url>
+    <loc>http://blog.guoming576.cn/</loc>
+    <lastmod>2020-08-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  
+  <url>
+    <loc>http://blog.guoming576.cn/tags/robotic/</loc>
+    <lastmod>2020-08-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.guoming576.cn/tags/linux/</loc>
+    <lastmod>2020-08-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.guoming576.cn/tags/python/</loc>
+    <lastmod>2020-08-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.guoming576.cn/tags/data-structure/</loc>
+    <lastmod>2020-08-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.guoming576.cn/tags/algorithm/</loc>
+    <lastmod>2020-08-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.guoming576.cn/tags/golang/</loc>
+    <lastmod>2020-08-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.guoming576.cn/tags/windows/</loc>
+    <lastmod>2020-08-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.guoming576.cn/tags/skills/</loc>
+    <lastmod>2020-08-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.guoming576.cn/tags/mathematics/</loc>
+    <lastmod>2020-08-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.guoming576.cn/tags/probability/</loc>
+    <lastmod>2020-08-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.guoming576.cn/tags/assembler/</loc>
+    <lastmod>2020-08-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.guoming576.cn/tags/funny/</loc>
+    <lastmod>2020-08-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.guoming576.cn/tags/C-C/</loc>
+    <lastmod>2020-08-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+
+  
+  <url>
+    <loc>http://blog.guoming576.cn/categories/programme/</loc>
+    <lastmod>2020-08-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.guoming576.cn/categories/algorithm/</loc>
+    <lastmod>2020-08-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.guoming576.cn/categories/math/</loc>
+    <lastmod>2020-08-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.guoming576.cn/categories/AI/</loc>
+    <lastmod>2020-08-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.guoming576.cn/categories/common/</loc>
+    <lastmod>2020-08-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
   </url>
   
 </urlset>

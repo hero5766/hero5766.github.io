@@ -1,0 +1,740 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="matplotlib"><meta name="keywords" content="python"><meta name="author" content="hero576"><meta name="copyright" content="hero576"><title>matplotlib | void land space</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.7.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="dns-prefetch" href="https://hm.baidu.com"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?5ff8fca367285c16c6dd5c16ca2ccc1b";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();</script><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  }
+} </script><meta name="generator" content="Hexo 5.0.2"><link rel="alternate" href="/atom.xml" title="void land space" type="application/atom+xml">
+</head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text"> 简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.1.</span> <span class="toc-text"> 输入类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#matplotlib-inline"><span class="toc-number">1.2.</span> <span class="toc-text"> ％matplotlib inline</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#pyplotplt"><span class="toc-number">2.</span> <span class="toc-text"> pyplot.plt()</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8"><span class="toc-number">2.1.</span> <span class="toc-text"> 使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#format_string%E7%BA%BF%E5%9E%8B%E9%A3%8E%E6%A0%BC%E5%AD%97%E7%AC%A6"><span class="toc-number">2.2.</span> <span class="toc-text"> format_string线型风格字符</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#linestyle"><span class="toc-number">2.2.1.</span> <span class="toc-text"> linestyle</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#marker%E6%A0%87%E8%AE%B0%E5%AD%97%E7%AC%A6"><span class="toc-number">2.2.2.</span> <span class="toc-text"> marker标记字符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%9C%E8%89%B2%E5%AD%97%E7%AC%A6"><span class="toc-number">2.2.3.</span> <span class="toc-text"> 颜色字符</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BD%B4%E6%A0%87%E7%AD%BE"><span class="toc-number">2.3.</span> <span class="toc-text"> 轴标签</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BD%B4%E7%9A%84%E8%8C%83%E5%9B%B4"><span class="toc-number">2.4.</span> <span class="toc-text"> 轴的范围</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%BF%E5%9E%8B%E9%A3%8E%E6%A0%BC"><span class="toc-number">2.5.</span> <span class="toc-text"> 线型风格</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8C%BA%E5%9F%9F%E7%9D%80%E8%89%B2"><span class="toc-number">2.6.</span> <span class="toc-text"> 区域着色</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#spines"><span class="toc-number">2.7.</span> <span class="toc-text"> Spines</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9D%90%E6%A0%87%E8%BD%B4%E5%88%BB%E5%BA%A6"><span class="toc-number">2.8.</span> <span class="toc-text"> 坐标轴刻度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E5%9B%BE%E4%BE%8B"><span class="toc-number">2.9.</span> <span class="toc-text"> 添加图例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%87%E9%A2%98"><span class="toc-number">2.10.</span> <span class="toc-text"> 标题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%87%E6%B3%A8"><span class="toc-number">2.11.</span> <span class="toc-text"> 标注</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E6%A0%BC%E7%BA%BF"><span class="toc-number">2.12.</span> <span class="toc-text"> 网格线</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E6%96%87%E5%AD%97%E4%BD%93"><span class="toc-number">2.13.</span> <span class="toc-text"> 中文字体</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%9D%E5%AD%98%E5%9B%BE%E5%BD%A2"><span class="toc-number">2.14.</span> <span class="toc-text"> 保存图形</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A0%E8%BD%BD%E5%9B%BE%E5%BD%A2"><span class="toc-number">2.15.</span> <span class="toc-text"> 加载图形</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%AB%98%E8%B4%A8%E9%87%8Fsvg%E7%9F%A2%E9%87%8F%E5%9B%BE%E8%BE%93%E5%87%BA"><span class="toc-number">2.16.</span> <span class="toc-text"> 高质量svg矢量图输出</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%9A%84api%E7%BB%98%E5%9B%BE"><span class="toc-number">2.17.</span> <span class="toc-text"> 面向对象的API绘图</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%AE%9E%E4%BE%8B%E5%AF%B9%E8%B1%A1%E7%BB%98%E5%88%B6%E5%9B%BE%E4%B8%AD%E5%9B%BE"><span class="toc-number">2.17.1.</span> <span class="toc-text"> 使用实例对象绘制图中图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E5%AE%9A%E7%BB%98%E5%9B%BE%E8%8C%83%E5%9B%B4"><span class="toc-number">2.17.2.</span> <span class="toc-text"> 设定绘图范围</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#logarithmic-scale%E5%AF%B9%E6%95%B0%E5%B0%BA%E5%BA%A6"><span class="toc-number">2.17.3.</span> <span class="toc-text"> Logarithmic Scale对数尺度</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%9A%E5%AD%90%E5%9B%BE"><span class="toc-number">3.</span> <span class="toc-text"> 多子图</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#subplot"><span class="toc-number">3.1.</span> <span class="toc-text"> subplot</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#gridspec"><span class="toc-number">3.2.</span> <span class="toc-text"> gridspec</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9B%B4%E5%A4%9A%E5%9B%BE%E5%BD%A2%E7%A7%8D%E7%B1%BB"><span class="toc-number">4.</span> <span class="toc-text"> 更多图形种类</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9D%A1%E5%BD%A2%E5%9B%BE"><span class="toc-number">4.1.</span> <span class="toc-text"> 条形图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A5%BC%E5%9B%BE"><span class="toc-number">4.2.</span> <span class="toc-text"> 饼图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%A3%E7%82%B9%E5%9B%BE"><span class="toc-number">4.3.</span> <span class="toc-text"> 散点图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B4%E6%96%B9%E5%9B%BE"><span class="toc-number">4.4.</span> <span class="toc-text"> 直方图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AD%89%E5%80%BC%E7%BA%BF%E5%9B%BE"><span class="toc-number">4.5.</span> <span class="toc-text"> 等值线图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%92%E9%A1%BB%E5%9B%BE"><span class="toc-number">4.6.</span> <span class="toc-text"> 盒须图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A3%89%E6%A3%92%E5%9B%BE"><span class="toc-number">4.7.</span> <span class="toc-text"> 棉棒图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%81%E5%9D%90%E6%A0%87%E5%9B%BE"><span class="toc-number">4.8.</span> <span class="toc-text"> 极坐标图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9B%B7%E8%BE%BE%E5%9B%BE"><span class="toc-number">4.9.</span> <span class="toc-text"> 雷达图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%81%E5%8C%BA%E5%9B%BE"><span class="toc-number">4.10.</span> <span class="toc-text"> 极区图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%B4%E6%81%A9%E5%9B%BE"><span class="toc-number">4.11.</span> <span class="toc-text"> 维恩图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%A2%E7%8A%B6%E5%9B%BE"><span class="toc-number">4.12.</span> <span class="toc-text"> 面状图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%91%E5%9C%B0%E5%9B%BE"><span class="toc-number">4.13.</span> <span class="toc-text"> 树地图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%8D%E4%BA%91%E5%9B%BE"><span class="toc-number">4.14.</span> <span class="toc-text"> 词云图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3d%E7%BB%98%E5%9B%BE"><span class="toc-number">4.15.</span> <span class="toc-text"> 3D绘图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9F%A9%E9%98%B5%E5%8F%AF%E8%A7%86%E5%8C%96"><span class="toc-number">4.16.</span> <span class="toc-text"> 矩阵可视化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B7%B7%E6%B7%86%E7%9F%A9%E9%98%B5"><span class="toc-number">4.17.</span> <span class="toc-text"> 混淆矩阵</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%83%AD%E5%9B%BE"><span class="toc-number">4.18.</span> <span class="toc-text"> 热图</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%BE%E5%83%8F%E6%98%BE%E7%A4%BA"><span class="toc-number">5.</span> <span class="toc-text"> 图像显示</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%BE%E5%83%8F%E6%8F%92%E5%80%BC"><span class="toc-number">5.1.</span> <span class="toc-text"> 图像插值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%86%E5%9B%BE%E5%83%8F%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5numpy%E6%95%B0%E7%BB%84"><span class="toc-number">5.2.</span> <span class="toc-text"> 将图像数据导入Numpy数组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%86numpy%E6%95%B0%E7%BB%84%E7%BB%98%E5%88%B6%E4%B8%BA%E5%9B%BE%E5%83%8F"><span class="toc-number">5.3.</span> <span class="toc-text"> 将numpy数组绘制为图像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8pil%E6%93%8D%E4%BD%9C%E5%9B%BE%E5%83%8F"><span class="toc-number">5.4.</span> <span class="toc-text"> 使用PIL操作图像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%AA%E5%BD%A9%E8%89%B2"><span class="toc-number">5.5.</span> <span class="toc-text"> 伪彩色</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A3%80%E6%9F%A5%E7%89%B9%E5%AE%9A%E6%95%B0%E6%8D%AE%E8%8C%83%E5%9B%B4"><span class="toc-number">5.6.</span> <span class="toc-text"> 检查特定数据范围</span></a></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/images/haimianbaobao.jpg"></div><div class="author-info__name text-center">hero576</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">36</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">13</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">分类</span><span class="pull-right">5</span></a></div></div></div><div id="content-outer"><div class="plain" id="top-container"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">void land space</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">主页</a><a class="site-page" href="/archives">文章</a><a class="site-page" href="/tags">标签</a><a class="site-page" href="/categories">分类</a><a class="site-page" href="/gallery">相册</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> 搜索</span></a></span></div></div><div class="layout" id="content-inner"><article id="post"><div class="plain" id="post-title">matplotlib</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-08-20</time><span class="post-meta__separator">|</span><i class="fa fa-inbox" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/programme/"> programme</a></div><div class="article-container" id="post-content"><blockquote>
+<p>matplotlib基本使用汇总</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="简介"><a class="markdownIt-Anchor" href="#简介"></a> 简介</h1>
+<ul>
+<li>Matplotlib是Python的一个模块，是一个绘图库。</li>
+<li><a target="_blank" rel="noopener" href="https://matplotlib.org">官方网址</a></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import matplotlib</span><br><span class="line">print(matplotlib.__version__)</span><br><span class="line">print(matplotlib.get_backend())</span><br></pre></td></tr></table></figure>
+<h2 id="输入类型"><a class="markdownIt-Anchor" href="#输入类型"></a> 输入类型</h2>
+<ul>
+<li>所有绘图函数都接收np.array或np.ma.masked_array作为输入。</li>
+</ul>
+<h2 id="matplotlib-inline"><a class="markdownIt-Anchor" href="#matplotlib-inline"></a> ％matplotlib inline</h2>
+<ul>
+<li>如果使用Jupyter Notebook，命令％matplotlib inline确保图形将被描绘在文档内部而不是独立窗口</li>
+</ul>
+<h1 id="pyplotplt"><a class="markdownIt-Anchor" href="#pyplotplt"></a> pyplot.plt()</h1>
+<h2 id="使用"><a class="markdownIt-Anchor" href="#使用"></a> 使用</h2>
+<ul>
+<li><code>plt.plot(x, y, format_string,[label,color,alpha=1,linestyle,linewidth], **kwargs)</code>
+<ul>
+<li>x : X轴数据，列表或数组，可选</li>
+<li>y : Y轴数据，列表或数组</li>
+<li>format_string: 控制曲线的格式字符串，可选</li>
+<li>**kwargs : 第二组或更多(x,y,format_string)</li>
+</ul>
+</li>
+<li>当绘制多条曲线时，各条曲线的x不能省略</li>
+</ul>
+<h2 id="format_string线型风格字符"><a class="markdownIt-Anchor" href="#format_string线型风格字符"></a> format_string线型风格字符</h2>
+<h3 id="linestyle"><a class="markdownIt-Anchor" href="#linestyle"></a> linestyle</h3>
+<table>
+<thead>
+<tr>
+<th>线型风格字符</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>‘-’</td>
+<td>solid line style (实线)</td>
+</tr>
+<tr>
+<td>‘–’</td>
+<td>dashed line style (虚线)</td>
+</tr>
+<tr>
+<td>‘-.’</td>
+<td>dash-dot line style (点划线)</td>
+</tr>
+<tr>
+<td>‘:’</td>
+<td>dotted line style (点线)</td>
+</tr>
+</tbody>
+</table>
+<p><img src="/images/pasted-85.png" alt="线型风格" /></p>
+<h3 id="marker标记字符"><a class="markdownIt-Anchor" href="#marker标记字符"></a> marker标记字符</h3>
+<table>
+<thead>
+<tr>
+<th>标记字符</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>‘.’</td>
+<td>point marker</td>
+</tr>
+<tr>
+<td>‘,’</td>
+<td>pixel marker</td>
+</tr>
+<tr>
+<td>‘o’</td>
+<td>circle marker</td>
+</tr>
+<tr>
+<td>‘v’</td>
+<td>triangle_down marker</td>
+</tr>
+<tr>
+<td>‘^’</td>
+<td>triangle_up marker</td>
+</tr>
+<tr>
+<td>‘&lt;’</td>
+<td>triangle_left marker</td>
+</tr>
+<tr>
+<td>‘&gt;’</td>
+<td>triangle_right marker</td>
+</tr>
+<tr>
+<td>‘1’</td>
+<td>tri_down marker</td>
+</tr>
+<tr>
+<td>‘2’</td>
+<td>tri_up marker</td>
+</tr>
+<tr>
+<td>‘3’</td>
+<td>tri_left marker</td>
+</tr>
+<tr>
+<td>‘4’</td>
+<td>tri_right marker</td>
+</tr>
+<tr>
+<td>‘s’</td>
+<td>square marker</td>
+</tr>
+<tr>
+<td>‘p’</td>
+<td>pentagon marker</td>
+</tr>
+<tr>
+<td>‘*’</td>
+<td>star marker</td>
+</tr>
+<tr>
+<td>‘h’</td>
+<td>hexagon1 marker</td>
+</tr>
+<tr>
+<td>‘H’</td>
+<td>hexagon2 marker</td>
+</tr>
+<tr>
+<td>‘+’</td>
+<td>plus marker</td>
+</tr>
+<tr>
+<td>‘x’</td>
+<td>x marker</td>
+</tr>
+<tr>
+<td>‘D’</td>
+<td>diamond marker</td>
+</tr>
+<tr>
+<td>‘d’</td>
+<td>thin_diamond marker</td>
+</tr>
+<tr>
+<td>‘|’</td>
+<td>vline marker</td>
+</tr>
+</tbody>
+</table>
+<p><img src="/images/pasted-86.png" alt="填充" /><br />
+<img src="/images/pasted-87.png" alt="非填充" /></p>
+<h3 id="颜色字符"><a class="markdownIt-Anchor" href="#颜色字符"></a> 颜色字符</h3>
+<table>
+<thead>
+<tr>
+<th>颜色字符</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>‘b’</td>
+<td>blue (蓝色)</td>
+</tr>
+<tr>
+<td>‘g’</td>
+<td>green (绿色)</td>
+</tr>
+<tr>
+<td>‘r’</td>
+<td>red (红色)</td>
+</tr>
+<tr>
+<td>‘c’</td>
+<td>cyan (青绿色)</td>
+</tr>
+<tr>
+<td>‘m’</td>
+<td>magenta (洋红色)</td>
+</tr>
+<tr>
+<td>‘y’</td>
+<td>yellow (黄色)</td>
+</tr>
+<tr>
+<td>‘k’</td>
+<td>black (黑色)</td>
+</tr>
+<tr>
+<td>‘w’</td>
+<td>白色</td>
+</tr>
+<tr>
+<td>‘#008000’</td>
+<td>RGB某颜色</td>
+</tr>
+<tr>
+<td>‘0.8’</td>
+<td>灰度值字符串</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>风格字符、标记字符和颜色字符可以组合使用</li>
+</ul>
+<h2 id="轴标签"><a class="markdownIt-Anchor" href="#轴标签"></a> 轴标签</h2>
+<ul>
+<li>ylabel和xlabel</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">celsius_values = [<span class="number">25.6</span>, <span class="number">24.1</span>, <span class="number">26.7</span>, <span class="number">28.3</span>, <span class="number">27.5</span>, <span class="number">30.5</span>, <span class="number">32.8</span>, <span class="number">33.1</span>]</span><br><span class="line">plt.plot(days, celsius_values)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;Day&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;Degrees Celsius&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<h2 id="轴的范围"><a class="markdownIt-Anchor" href="#轴的范围"></a> 轴的范围</h2>
+<ul>
+<li>axis查看和定义轴的范围</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">celsius_min = [<span class="number">19.6</span>, <span class="number">24.1</span>, <span class="number">26.7</span>, <span class="number">28.3</span>, <span class="number">27.5</span>, <span class="number">30.5</span>, <span class="number">32.8</span>, <span class="number">33.1</span>]</span><br><span class="line">celsius_max = [<span class="number">24.8</span>, <span class="number">28.9</span>, <span class="number">31.3</span>, <span class="number">33.0</span>, <span class="number">34.9</span>, <span class="number">35.6</span>, <span class="number">38.4</span>, <span class="number">39.2</span>]</span><br><span class="line">plt.xlabel(<span class="string">&#x27;Day&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;Degrees Celsius&#x27;</span>)</span><br><span class="line">plt.plot(days, celsius_min,days, celsius_min, <span class="string">&quot;oy&quot;</span>,</span><br><span class="line">         days, celsius_max,days, celsius_max, <span class="string">&quot;or&quot;</span>)</span><br><span class="line">print(plt.axis())</span><br><span class="line">xmin, xmax, ymin, ymax = <span class="number">0</span>, <span class="number">10</span>, <span class="number">14</span>, <span class="number">45</span></span><br><span class="line">print(xmin, xmax, ymin, ymax)</span><br><span class="line">plt.axis([xmin, xmax, ymin, ymax])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<h2 id="线型风格"><a class="markdownIt-Anchor" href="#线型风格"></a> 线型风格</h2>
+<ul>
+<li><code>linestyle</code>可以设置更多的线型风格</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">X = np.linspace(<span class="number">0</span>, <span class="number">2</span> * np.pi, <span class="number">50</span>, endpoint=<span class="literal">True</span>)</span><br><span class="line">F3 = <span class="number">0.3</span> * np.sin(X)</span><br><span class="line">plt.plot(X, F3, color=<span class="string">&quot;green&quot;</span>, linewidth=<span class="number">2</span>, linestyle=(<span class="number">0</span>,(<span class="number">5</span>,<span class="number">1</span>)))</span><br></pre></td></tr></table></figure>
+<p><img src="/images/pasted-88.png" alt="线型风格" /></p>
+<h2 id="区域着色"><a class="markdownIt-Anchor" href="#区域着色"></a> 区域着色</h2>
+<ul>
+<li>
+<p><code>fill_between(x, y1, y2=0, where=None, interpolate=False, **kwargs)</code></p>
+<ul>
+<li><code>x</code> <code>x</code>数据的N长度数组</li>
+<li><code>y1</code> <code>y</code>数据的N长度数组（或标量）</li>
+<li><code>y2</code> <code>y</code>数据的N长度数组（或标量）</li>
+<li><code>where</code> 如果是<code>None</code>，则默认在所有位置之间填充。 如果不是<code>None</code>，则它是一个N长度的numpy布尔数组，并且填充只会在<code>where == True</code>的区域上发生。</li>
+<li><code>interpolate</code> 如果为<code>True</code>，则在两条线之间进行插值以找到精确的交点。 否则，填充区域的起点和终点将仅出现在x数组中的显式值上。</li>
+<li><code>kwargs</code> 传递给PolyCollection</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">n = <span class="number">256</span></span><br><span class="line">X = np.linspace(-np.pi,np.pi,n,endpoint=<span class="literal">True</span>)</span><br><span class="line">Y = np.sin(<span class="number">2</span>*X)</span><br><span class="line">plt.plot (X, Y, color=<span class="string">&#x27;blue&#x27;</span>, alpha=<span class="number">1.00</span>)</span><br><span class="line">plt.fill_between(X, <span class="number">0</span>, Y, color=<span class="string">&#x27;blue&#x27;</span>, alpha=<span class="number">.1</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/images/pasted-89.png" alt="区域着色" /></p>
+<h2 id="spines"><a class="markdownIt-Anchor" href="#spines"></a> Spines</h2>
+<ul>
+<li>
+<p>matplotlib中的Spine是连接轴刻度标记并指示数据区域边界的线。</p>
+</li>
+<li>
+<p>设置坐标轴位置，plt.gca()返回figure上的当前的axes实例。</p>
+</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">X = np.linspace(<span class="number">-2</span> * np.pi, <span class="number">2</span> * np.pi, <span class="number">70</span>, endpoint=<span class="literal">True</span>)</span><br><span class="line">F1 = np.sin(<span class="number">2</span>* X)</span><br><span class="line"><span class="comment"># get the current axes, creating them if necessary:</span></span><br><span class="line">ax = plt.gca()</span><br><span class="line"><span class="comment"># making the top and right spine invisible: </span></span><br><span class="line">ax.spines[<span class="string">&#x27;top&#x27;</span>].set_color(<span class="string">&#x27;none&#x27;</span>) <span class="comment"># 设置不可见</span></span><br><span class="line">ax.spines[<span class="string">&#x27;right&#x27;</span>].set_color(<span class="string">&#x27;none&#x27;</span>) <span class="comment"># 设置不可见 </span></span><br><span class="line"><span class="comment"># moving bottom spine up to y=0 position:</span></span><br><span class="line">ax.xaxis.set_ticks_position(<span class="string">&#x27;bottom&#x27;</span>) <span class="comment"># 刻度位置</span></span><br><span class="line">ax.spines[<span class="string">&#x27;bottom&#x27;</span>].set_position((<span class="string">&#x27;data&#x27;</span>,<span class="number">0</span>)) <span class="comment"># 轴位置</span></span><br><span class="line"><span class="comment"># moving left spine to the right to position x == 0:</span></span><br><span class="line">ax.yaxis.set_ticks_position(<span class="string">&#x27;left&#x27;</span>)</span><br><span class="line">ax.spines[<span class="string">&#x27;left&#x27;</span>].set_position((<span class="string">&#x27;data&#x27;</span>,<span class="number">0</span>))</span><br><span class="line">plt.plot(X, F1)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<h2 id="坐标轴刻度"><a class="markdownIt-Anchor" href="#坐标轴刻度"></a> 坐标轴刻度</h2>
+<ul>
+<li>使用xticks或yticks可获取或设置当前的刻度位置和标签</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">ax = plt.gca()</span><br><span class="line"><span class="comment"># 获取</span></span><br><span class="line">locs, labels = plt.xticks()</span><br><span class="line">locs, labels = plt.yticks()</span><br><span class="line"><span class="comment"># 设置位置</span></span><br><span class="line">plt.xticks( np.arange(<span class="number">10</span>) )</span><br><span class="line"><span class="comment"># 设置位置和标签</span></span><br><span class="line">plt.xticks( np.arange(<span class="number">4</span>), </span><br><span class="line">           (<span class="string">&#x27;Berlin&#x27;</span>, <span class="string">&#x27;London&#x27;</span>, <span class="string">&#x27;Paris&#x27;</span>, <span class="string">&#x27;Toronto&#x27;</span>) )</span><br><span class="line"><span class="comment"># LaTeX表示法设置标签</span></span><br><span class="line">plt.xticks( [<span class="number">-6.28</span>, <span class="number">-3.14</span>, <span class="number">3.14</span>, <span class="number">6.28</span>],[<span class="string">r&#x27;$-2\pi$&#x27;</span>, <span class="string">r&#x27;$-\pi$&#x27;</span>, <span class="string">r&#x27;$+\pi$&#x27;</span>, <span class="string">r&#x27;$+2\pi$&#x27;</span>])</span><br></pre></td></tr></table></figure>
+<ul>
+<li>调整刻度标签</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> xtick <span class="keyword">in</span> ax.get_xticklabels():</span><br><span class="line">    print(xtick.get_text()) <span class="comment"># 获取text</span></span><br><span class="line">    xtick.set_fontsize(<span class="number">18</span>)</span><br><span class="line">    xtick.set_bbox(dict(facecolor=<span class="string">&#x27;white&#x27;</span>, edgecolor=<span class="string">&#x27;None&#x27;</span>, alpha=<span class="number">0.7</span> ))</span><br></pre></td></tr></table></figure>
+<h2 id="添加图例"><a class="markdownIt-Anchor" href="#添加图例"></a> 添加图例</h2>
+<ul>
+<li>图例（Legend）常在地图中使用。 Legend用来描述地图的图形语言或符号系统。</li>
+<li><code>legend(*args, **kwargs)</code>Matplotlib可以使用图例来解释图中函数或值的代表的含义。</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">x = np.linspace(<span class="number">0</span>, <span class="number">25</span>, <span class="number">1000</span>);y1 = np.sin(x);y2 = np.cos(x);</span><br><span class="line">plt.plot(x, y1, <span class="string">&#x27;-b&#x27;</span>, label=<span class="string">&#x27;sine&#x27;</span>)  <span class="comment"># 显示plot标签</span></span><br><span class="line">plt.plot(x, y2, <span class="string">&#x27;-r&#x27;</span>, label=<span class="string">&#x27;cosine&#x27;</span>)  <span class="comment"># 显示plot标签</span></span><br><span class="line">plt.legend(loc=<span class="string">&#x27;upper left&#x27;</span>) <span class="comment"># 位置参数</span></span><br><span class="line">plt.ylim(<span class="number">-1.5</span>, <span class="number">2.0</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在许多情况下，我们不知道在plot之前结果可能是什么样子。 例如，legend将使线条的重要部分蒙上阴影。 如果不知道数据的显示情况，最好使用’best’作为loc的参数。 Matplotlib将自动尝试为图例找到最佳位置</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">plt.legend(loc=<span class="string">&#x27;best&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="标题"><a class="markdownIt-Anchor" href="#标题"></a> 标题</h2>
+<ul>
+<li><code>pyplot.title(label, fontdict=None, loc=None, pad=None, **kwargs)</code></li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">plt.title(<span class="string">&#x27;Change of Celsius Degrees&#x27;</span>, size=<span class="number">11</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="标注"><a class="markdownIt-Anchor" href="#标注"></a> 标注</h2>
+<ul>
+<li><code>annotate(label,xy,xytext,textcoords,fontsize,arrowprops)</code>用于标出某一点在图中的位置
+<ul>
+<li>xy： coordinates of the arrow tip</li>
+<li>xytext： coordinates of the text location</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>xycoords字符串值</th>
+<th>坐标系统</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>‘figure points’</td>
+<td>Points from the lower left of the figure</td>
+</tr>
+<tr>
+<td>‘figure pixels’</td>
+<td>Pixels from the lower left of the figure</td>
+</tr>
+<tr>
+<td>‘figure fraction’</td>
+<td>Fraction of figure from lower left</td>
+</tr>
+<tr>
+<td>‘axes points’</td>
+<td>Points from lower left corner of axes</td>
+</tr>
+<tr>
+<td>‘axes pixels’</td>
+<td>Pixels from lower left corner of axes</td>
+</tr>
+<tr>
+<td>‘axes fraction’</td>
+<td>Fraction of axes from lower left</td>
+</tr>
+<tr>
+<td>‘data’</td>
+<td>Use the coordinate system of the object being annotated (default)</td>
+</tr>
+<tr>
+<td>‘polar’</td>
+<td>(theta, r) if not native ‘data’ coordinates</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>arrowprops key</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>width</td>
+<td>The width of the arrow in points</td>
+</tr>
+<tr>
+<td>headwidth</td>
+<td>The width of the base of the arrow head in points</td>
+</tr>
+<tr>
+<td>headlength</td>
+<td>The length of the arrow head in points</td>
+</tr>
+<tr>
+<td>shrink</td>
+<td>Fraction of total length to shrink from both ends</td>
+</tr>
+<tr>
+<td>**kwargs</td>
+<td>any key for matplotlib.patches.Polygon, e.g., facecolor</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">X = np.linspace(<span class="number">-2</span> * np.pi, <span class="number">3</span> * np.pi, <span class="number">70</span>, endpoint=<span class="literal">True</span>)</span><br><span class="line">F1 = np.sin(X)</span><br><span class="line">F2 = <span class="number">3</span> * np.sin(X)</span><br><span class="line">ax = plt.gca()</span><br><span class="line">plt.xticks( [<span class="number">-6.28</span>, <span class="number">-3.14</span>, <span class="number">3.14</span>, <span class="number">6.28</span>],</span><br><span class="line">        [<span class="string">r&#x27;$-2\pi$&#x27;</span>, <span class="string">r&#x27;$-\pi$&#x27;</span>, <span class="string">r&#x27;$+\pi$&#x27;</span>, <span class="string">r&#x27;$+2\pi$&#x27;</span>])</span><br><span class="line">plt.yticks([<span class="number">-3</span>, <span class="number">-1</span>, <span class="number">0</span>, +<span class="number">1</span>, <span class="number">3</span>])</span><br><span class="line">x = <span class="number">3</span> * np.pi / <span class="number">4</span></span><br><span class="line">plt.scatter([x,],[<span class="number">3</span> * np.sin(x),], <span class="number">50</span>, color =<span class="string">&#x27;blue&#x27;</span>)</span><br><span class="line">plt.annotate(<span class="string">r&#x27;$(3\sin(\frac&#123;3\pi&#125;&#123;4&#125;),\frac&#123;3&#125;&#123;\sqrt&#123;2&#125;&#125;)$&#x27;</span>,</span><br><span class="line">         xy=(x, <span class="number">3</span> * np.sin(x)), </span><br><span class="line">         xycoords=<span class="string">&#x27;data&#x27;</span>,</span><br><span class="line">         xytext=(+<span class="number">20</span>, +<span class="number">20</span>), </span><br><span class="line">         textcoords=<span class="string">&#x27;offset points&#x27;</span>, </span><br><span class="line">         fontsize=<span class="number">16</span>,</span><br><span class="line">         arrowprops=dict(facecolor=<span class="string">&#x27;blue&#x27;</span>, headwidth=<span class="number">10</span>, headlength=<span class="number">10</span>, width=<span class="number">2</span>, shrink=<span class="number">0.1</span>))</span><br><span class="line">plt.plot(X, F1, label=<span class="string">&quot;$sin(x)$&quot;</span>)</span><br><span class="line">plt.plot(X, F2, label=<span class="string">&quot;$3 sin(x)$&quot;</span>)</span><br><span class="line">plt.legend(loc=<span class="string">&#x27;lower left&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/images/pasted-90.png" alt="标注" /></p>
+<h2 id="网格线"><a class="markdownIt-Anchor" href="#网格线"></a> 网格线</h2>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">plt.grid(color=<span class="string">&#x27;b&#x27;</span>, alpha=<span class="number">0.5</span>, linestyle=<span class="string">&#x27;dashed&#x27;</span>, linewidth=<span class="number">1.0</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="中文字体"><a class="markdownIt-Anchor" href="#中文字体"></a> 中文字体</h2>
+<ul>
+<li>
+<p>Matplotlib默认是不支持显示中文字符的，可以使用 rc 配置（rcParams）来自定义图形的各种默认属性。</p>
+</li>
+<li>
+<p>Windows操作系统支持的中文字体和代码：</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>字体</th>
+<th>代码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>黑体</td>
+<td>SimHei</td>
+</tr>
+<tr>
+<td>仿宋</td>
+<td>FangSong</td>
+</tr>
+<tr>
+<td>楷体</td>
+<td>KaiTi</td>
+</tr>
+<tr>
+<td>微软雅黑</td>
+<td>Microsoft YaHei</td>
+</tr>
+<tr>
+<td>宋体</td>
+<td>SimSun</td>
+</tr>
+<tr>
+<td>隶书</td>
+<td>LiSu</td>
+</tr>
+<tr>
+<td>幼圆</td>
+<td>YouYuan</td>
+</tr>
+<tr>
+<td>华文细黑</td>
+<td>STXihei</td>
+</tr>
+<tr>
+<td>华文楷体</td>
+<td>STKaiti</td>
+</tr>
+<tr>
+<td>华文宋体</td>
+<td>STSong</td>
+</tr>
+<tr>
+<td>华文中宋</td>
+<td>STZhongsong</td>
+</tr>
+<tr>
+<td>华文仿宋</td>
+<td>STFangsong</td>
+</tr>
+<tr>
+<td>方正舒体</td>
+<td>FZShuTi</td>
+</tr>
+<tr>
+<td>方正姚体</td>
+<td>FZYaoti</td>
+</tr>
+<tr>
+<td>华文彩云</td>
+<td>STCaiyun</td>
+</tr>
+<tr>
+<td>华文琥珀</td>
+<td>STHupo</td>
+</tr>
+<tr>
+<td>华文隶书</td>
+<td>STLiti</td>
+</tr>
+<tr>
+<td>华文行楷</td>
+<td>STXingkai</td>
+</tr>
+<tr>
+<td>华文新魏</td>
+<td>STXinwei</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>配置方法：<br />
+<code>plt.rcParams['font.family'] = ['sans-serif'] plt.rcParams['font.sans-serif'] = ['SimHei']</code></li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 全局设置：在jupyter notebook 中，设置下面两行来显示中文</span></span><br><span class="line">plt.rcParams[<span class="string">&#x27;font.family&#x27;</span>] = [<span class="string">&#x27;sans-serif&#x27;</span>]</span><br><span class="line"><span class="comment"># 在 PyCharm 中，只需要下面一行 </span></span><br><span class="line">plt.rcParams[<span class="string">&#x27;font.sans-serif&#x27;</span>] = [<span class="string">&#x27;SimHei&#x27;</span>]</span><br><span class="line"><span class="comment"># 单独设置：在每一处使用到中文输出的地方，都加上一个字体属性fontproperties</span></span><br><span class="line">plt.xlabel(<span class="string">&#x27;日期&#x27;</span>, fontproperties=<span class="string">&#x27;SimHei&#x27;</span>, size=<span class="number">16</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;摄氏度&#x27;</span>, fontproperties=<span class="string">&#x27;SimHei&#x27;</span>, size=<span class="number">16</span>)</span><br><span class="line">plt.title(<span class="string">&#x27;温度变化&#x27;</span>, fontproperties=<span class="string">&#x27;SimHei&#x27;</span>, size=<span class="number">16</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="保存图形"><a class="markdownIt-Anchor" href="#保存图形"></a> 保存图形</h2>
+<ul>
+<li><code>fig.savefig(&quot;filename.png&quot;)</code></li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">fig = plt.figure()</span><br><span class="line">plt.plot([<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>], [<span class="number">0</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">9</span>, <span class="number">11</span>])</span><br><span class="line">plt.xlabel(<span class="string">&#x27;Months&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;Books Read&#x27;</span>)</span><br><span class="line">plt.show()</span><br><span class="line">fig.savefig(<span class="string">&#x27;books_read.png&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="加载图形"><a class="markdownIt-Anchor" href="#加载图形"></a> 加载图形</h2>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.image <span class="keyword">as</span> mpimg</span><br><span class="line">img = mpimg.imread(<span class="string">&#x27;books_read.png&#x27;</span>)</span><br><span class="line">plt.imshow(img)</span><br></pre></td></tr></table></figure>
+<h2 id="高质量svg矢量图输出"><a class="markdownIt-Anchor" href="#高质量svg矢量图输出"></a> 高质量svg矢量图输出</h2>
+<ul>
+<li>
+<p>Jupyter Notebook中显示svg矢量图的设置： %config InlineBackend.figure_format = ‘svg’</p>
+</li>
+<li>
+<p>保存svg矢量图</p>
+</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">%config InlineBackend.figure_format = <span class="string">&#x27;svg&#x27;</span></span><br><span class="line">fig = plt.figure()</span><br><span class="line">fig.savefig(<span class="string">&#x27;celsius_degrees.svg&#x27;</span>)  <span class="comment"># 设置保存格式</span></span><br></pre></td></tr></table></figure>
+<h2 id="面向对象的api绘图"><a class="markdownIt-Anchor" href="#面向对象的api绘图"></a> 面向对象的API绘图</h2>
+<ul>
+<li>Matplotlib绘图库的操作是通过API实现的，一种操作方法是类似MATLAB的函数接口的API；另一种操作方法是面向对象的API。这两种API可以并行使用，不过函数接口的API的易用性明显好于面向对象的API。</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="comment"># --------------面向对象------------------</span></span><br><span class="line">fig = plt.figure()  <span class="comment"># 实例化对象</span></span><br><span class="line">X = np.arange(<span class="number">0</span>,<span class="number">10</span>)</span><br><span class="line">Y = np.random.randint(<span class="number">1</span>,<span class="number">20</span>, size=<span class="number">10</span>)</span><br><span class="line">left, bottom, width, height = <span class="number">0.1</span>, <span class="number">0.1</span>, <span class="number">0.8</span>, <span class="number">0.8</span></span><br><span class="line">axes = fig.add_axes([left, bottom, width, height]) <span class="comment"># 创建轴的实例</span></span><br><span class="line">axes.plot(X, Y, <span class="string">&#x27;b&#x27;</span>)</span><br><span class="line">axes.set_xlabel(<span class="string">&#x27;x&#x27;</span>)</span><br><span class="line">axes.set_ylabel(<span class="string">&#x27;y&#x27;</span>)</span><br><span class="line">axes.set_title(<span class="string">&#x27;title&#x27;</span>)</span><br><span class="line">plt.show(fig)</span><br><span class="line"><span class="comment"># ----------------调用函数----------------</span></span><br><span class="line">X = np.arange(<span class="number">0</span>,<span class="number">10</span>)</span><br><span class="line">Y = np.random.randint(<span class="number">1</span>,<span class="number">20</span>, size=<span class="number">10</span>)</span><br><span class="line">plt.plot(X, Y, <span class="string">&#x27;b&#x27;</span>)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;x&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;y&#x27;</span>)</span><br><span class="line">plt.title(<span class="string">&#x27;title&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<h3 id="使用实例对象绘制图中图"><a class="markdownIt-Anchor" href="#使用实例对象绘制图中图"></a> 使用实例对象绘制图中图</h3>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">fig = plt.figure()</span><br><span class="line">X = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>]</span><br><span class="line">Y = [<span class="number">1</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">8</span>, <span class="number">6</span>]</span><br><span class="line">axes1 = fig.add_axes([<span class="number">0.1</span>, <span class="number">0.1</span>, <span class="number">0.9</span>, <span class="number">0.9</span>]) <span class="comment"># main axes</span></span><br><span class="line"><span class="comment"># add_axes 参数rect The dimensions [left, bottom, width, height] of the new axes. </span></span><br><span class="line"><span class="comment"># All quantities are in fractions of figure width and height.</span></span><br><span class="line">axes2 = fig.add_axes([<span class="number">0.2</span>, <span class="number">0.6</span>, <span class="number">0.4</span>, <span class="number">0.3</span>]) <span class="comment"># inside axes</span></span><br><span class="line"><span class="comment"># main figure</span></span><br><span class="line">axes1.plot(X, Y, <span class="string">&#x27;r&#x27;</span>)</span><br><span class="line">axes1.set_xlabel(<span class="string">&#x27;x&#x27;</span>)</span><br><span class="line">axes1.set_ylabel(<span class="string">&#x27;y&#x27;</span>)</span><br><span class="line">axes1.set_title(<span class="string">&#x27;title&#x27;</span>)</span><br><span class="line"><span class="comment"># insert</span></span><br><span class="line">axes2.plot(Y, X, <span class="string">&#x27;g&#x27;</span>)</span><br><span class="line">axes2.set_xlabel(<span class="string">&#x27;y&#x27;</span>)</span><br><span class="line">axes2.set_ylabel(<span class="string">&#x27;x&#x27;</span>)</span><br><span class="line">axes2.set_title(<span class="string">&#x27;title inside&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="设定绘图范围"><a class="markdownIt-Anchor" href="#设定绘图范围"></a> 设定绘图范围</h3>
+<ul>
+<li><code>set_ylim</code>和<code>set_xlim</code>：配置轴的范围可以通过在轴对象中使用set_ylim和set_xlim方法来完成</li>
+<li>使用axis(‘tight’)，可以自动创建&quot;tightly fitted&quot; 的轴范围：</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">fig, axes = plt.subplots(<span class="number">1</span>, <span class="number">3</span>, figsize=(<span class="number">10</span>, <span class="number">4</span>))</span><br><span class="line"><span class="comment"># axes[0] default axes ranges</span></span><br><span class="line">axes[<span class="number">1</span>].axis(<span class="string">&#x27;tight&#x27;</span>) </span><br><span class="line">axes[<span class="number">2</span>].set_ylim([<span class="number">0</span>, <span class="number">60</span>])</span><br><span class="line">axes[<span class="number">2</span>].set_xlim([<span class="number">2</span>, <span class="number">5</span>])</span><br></pre></td></tr></table></figure>
+<h3 id="logarithmic-scale对数尺度"><a class="markdownIt-Anchor" href="#logarithmic-scale对数尺度"></a> Logarithmic Scale对数尺度</h3>
+<ul>
+<li><code>set_xscale和set_yscale</code></li>
+<li>可以为一个或两个轴设置对数尺度，默认是线型尺度</li>
+<li>使用接受一个参数（值为log）的set_xscale和set_yscale方法分别设置每个轴的scale</li>
+</ul>
+<p><img src="/images/pasted-91.png" alt="对数尺度" /></p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">fig = plt.figure()</span><br><span class="line">ax = fig.add_subplot(<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>)</span><br><span class="line">x = np.arange(<span class="number">0</span>, <span class="number">5</span>, <span class="number">0.25</span>)</span><br><span class="line">ax.plot(x, x**<span class="number">2</span>, x, x**<span class="number">3</span>)</span><br><span class="line">ax.set_yscale(<span class="string">&quot;log&quot;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<h1 id="多子图"><a class="markdownIt-Anchor" href="#多子图"></a> 多子图</h1>
+<h2 id="subplot"><a class="markdownIt-Anchor" href="#subplot"></a> subplot</h2>
+<ul>
+<li><code>subplot(nrows, ncols, plot_number)</code> nrows * ncols个子轴</li>
+<li>参数plot_number标识函数调用创建的subplot。 plot_number的范围可以从1到最大nrows * ncols。</li>
+<li>如果三个参数的值小于10，则可以使用一个int参数调用函数subplot，其中百位数表示nrows，十位数表示ncols，个位数表示plot_number。 这意味着：可以写subplot(234)来代替subplot(2, 3, 4) 。</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">plt.figure(figsize=(<span class="number">6</span>, <span class="number">4</span>))</span><br><span class="line">plt.subplot(<span class="number">221</span>)</span><br><span class="line">plt.text(<span class="number">0.5</span>, <span class="comment"># x coordinate, 0 leftmost positioned, 1 rightmost</span></span><br><span class="line">         <span class="number">0.5</span>, <span class="comment"># y coordinate, 0 topmost positioned, 1 bottommost</span></span><br><span class="line">         <span class="string">&#x27;subplot(2,2,1)&#x27;</span>, <span class="comment"># the text which will be printed</span></span><br><span class="line">         horizontalalignment=<span class="string">&#x27;center&#x27;</span>, <span class="comment"># shortcut &#x27;ha&#x27; </span></span><br><span class="line">         verticalalignment=<span class="string">&#x27;center&#x27;</span>, <span class="comment"># shortcut &#x27;va&#x27;</span></span><br><span class="line">         fontsize=<span class="number">20</span>, <span class="comment"># can be named &#x27;font&#x27; as well</span></span><br><span class="line">         alpha=<span class="number">.7</span> <span class="comment"># float (0.0 transparent through 1.0 opaque)</span></span><br><span class="line">         )</span><br><span class="line">python_course_green = <span class="string">&quot;#90EE90&quot;</span></span><br><span class="line">plt.subplot(<span class="number">224</span>, facecolor=python_course_green)</span><br><span class="line">plt.xticks(())  <span class="comment"># 去除刻度</span></span><br><span class="line">plt.yticks(())</span><br><span class="line">plt.text(<span class="number">0.5</span>, <span class="number">0.5</span>, </span><br><span class="line">         <span class="string">&#x27;subplot(2,2,4)&#x27;</span>, </span><br><span class="line">         ha=<span class="string">&#x27;center&#x27;</span>, va=<span class="string">&#x27;center&#x27;</span>,</span><br><span class="line">         fontsize=<span class="number">20</span>, </span><br><span class="line">         color=<span class="string">&quot;b&quot;</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>add_subplot()</code>面向对象的方法</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">fig = plt.figure(figsize=(<span class="number">6</span>, <span class="number">4</span>))</span><br><span class="line">sub1 = fig.add_subplot(<span class="number">221</span>) <span class="comment"># equivalent to: plt.subplot(2, 2, 1)</span></span><br><span class="line">sub1.text(<span class="number">0.5</span>, <span class="comment"># x coordinate, 0 leftmost positioned, 1 rightmost</span></span><br><span class="line">          <span class="number">0.5</span>, <span class="comment"># y coordinate, 0 topmost positioned, 1 bottommost</span></span><br><span class="line">          <span class="string">&#x27;subplot(2,2,1)&#x27;</span>, <span class="comment"># the text which will be printed</span></span><br><span class="line">          horizontalalignment=<span class="string">&#x27;center&#x27;</span>, <span class="comment"># shortcut &#x27;ha&#x27; </span></span><br><span class="line">          verticalalignment=<span class="string">&#x27;center&#x27;</span>, <span class="comment"># shortcut &#x27;va&#x27;</span></span><br><span class="line">          fontsize=<span class="number">20</span>, <span class="comment"># can be named &#x27;font&#x27; as well</span></span><br><span class="line">          alpha=<span class="number">.7</span> <span class="comment"># float (0.0 transparent through 1.0 opaque)</span></span><br><span class="line">          )</span><br><span class="line">python_course_green = <span class="string">&quot;#90EE90&quot;</span></span><br><span class="line">sub2 = fig.add_subplot(<span class="number">224</span>, facecolor=python_course_green)</span><br><span class="line">sub2.text(<span class="number">0.5</span>, <span class="number">0.5</span>, </span><br><span class="line">          <span class="string">&#x27;subplot(2,2,4)&#x27;</span>, </span><br><span class="line">          ha=<span class="string">&#x27;center&#x27;</span>, va=<span class="string">&#x27;center&#x27;</span>,</span><br><span class="line">          fontsize=<span class="number">20</span>, </span><br><span class="line">          color=<span class="string">&quot;b&quot;</span>)</span><br><span class="line">sub2.set_xticks([])</span><br><span class="line">sub2.set_yticks([]) </span><br><span class="line">sub4 = fig.add_subplot(<span class="number">224</span>, facecolor=<span class="string">&quot;lightgrey&quot;</span>)</span><br><span class="line">sub4.plot(x, y)</span><br><span class="line">plt.plot(x, y)</span><br><span class="line">plt.tight_layout()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">fig =plt.figure(figsize=(<span class="number">6</span>,<span class="number">4</span>))</span><br><span class="line">fig.subplots_adjust(bottom=<span class="number">0.025</span>, left=<span class="number">0.025</span>, top = <span class="number">0.975</span>, right=<span class="number">0.975</span>) <span class="comment"># 调整大小</span></span><br><span class="line">X = [ (<span class="number">2</span>,<span class="number">1</span>,<span class="number">1</span>), (<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>), (<span class="number">2</span>,<span class="number">3</span>,<span class="number">5</span>), (<span class="number">2</span>,<span class="number">3</span>,<span class="number">6</span>) ] <span class="comment"># 211合并了一整行</span></span><br><span class="line"><span class="keyword">for</span> nrows, ncols, plot_number <span class="keyword">in</span> X:</span><br><span class="line">    plt.subplot(nrows, ncols, plot_number)</span><br><span class="line">    sub.set_xticks([])</span><br><span class="line">    sub.set_yticks([])</span><br><span class="line"><span class="comment"># -----------元组的形式-------------</span></span><br><span class="line">X = [ (<span class="number">2</span>,<span class="number">3</span>,(<span class="number">1</span>,<span class="number">3</span>)), (<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>), (<span class="number">2</span>,<span class="number">3</span>,<span class="number">5</span>), (<span class="number">2</span>,<span class="number">3</span>,<span class="number">6</span>) ]</span><br><span class="line"><span class="keyword">for</span> nrows, ncols, plot_number <span class="keyword">in</span> X:</span><br><span class="line">    sub = fig.add_subplot(nrows, ncols, plot_number)</span><br><span class="line">    sub.set_xticks([])</span><br><span class="line">    sub.set_yticks([])</span><br></pre></td></tr></table></figure>
+<h2 id="gridspec"><a class="markdownIt-Anchor" href="#gridspec"></a> gridspec</h2>
+<ul>
+<li>GridSpec类。 它可以替代subplot来指定要创建的子图的几何布局。 GridSpec背后的基本思想是“grid”。 一个grid(网格)有多个行和列。 必须在此之后定义一个subplot应该跨越多少网格。</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> matplotlib.gridspec <span class="keyword">import</span> GridSpec</span><br><span class="line">fig = plt.figure()</span><br><span class="line"><span class="comment"># 定义图形从可用figure区域的底部的20％、左侧的15％开始</span></span><br><span class="line">gs = GridSpec(<span class="number">1</span>, <span class="number">1</span>, </span><br><span class="line">              bottom=<span class="number">0.2</span>,</span><br><span class="line">              left=<span class="number">0.15</span>,</span><br><span class="line">              top=<span class="number">0.8</span>)</span><br><span class="line">ax = fig.add_subplot(gs[<span class="number">0</span>,<span class="number">0</span>])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>精细化设置</li>
+<li><code>figsize(float, float)</code>: optional, default: None
+<ul>
+<li>width, height in inches. If not provided, defaults to rcParams[“figure.figsize”] (default: [6.4, 4.8]) = [6.4, 4.8].</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.gridspec <span class="keyword">as</span> gridspec</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> pl</span><br><span class="line">pl.figure(figsize=(<span class="number">6</span>, <span class="number">4</span>))</span><br><span class="line">G = gridspec.GridSpec(<span class="number">3</span>, <span class="number">3</span>) <span class="comment"># 定义3*3大小</span></span><br><span class="line">axes_1 = pl.subplot(G[<span class="number">0</span>, :]) <span class="comment"># 占据0行，3列</span></span><br><span class="line">pl.text(<span class="number">0.5</span>, <span class="number">0.5</span>, <span class="string">&#x27;Axes 1&#x27;</span>, ha=<span class="string">&#x27;center&#x27;</span>, va=<span class="string">&#x27;center&#x27;</span>, size=<span class="number">24</span>, alpha=<span class="number">.5</span>)</span><br><span class="line">axes_2 = pl.subplot(G[<span class="number">1</span>, :<span class="number">-1</span>]) <span class="comment"># 占据1行前2列</span></span><br><span class="line">pl.text(<span class="number">0.5</span>, <span class="number">0.5</span>, <span class="string">&#x27;Axes 2&#x27;</span>, ha=<span class="string">&#x27;center&#x27;</span>, va=<span class="string">&#x27;center&#x27;</span>, size=<span class="number">24</span>, alpha=<span class="number">.5</span>)</span><br><span class="line">axes_3 = pl.subplot(G[<span class="number">1</span>:, <span class="number">-1</span>]) <span class="comment"># 占据1行到最后一行得最后1列</span></span><br><span class="line">pl.text(<span class="number">0.5</span>, <span class="number">0.5</span>, <span class="string">&#x27;Axes 3&#x27;</span>, ha=<span class="string">&#x27;center&#x27;</span>, va=<span class="string">&#x27;center&#x27;</span>, size=<span class="number">24</span>, alpha=<span class="number">.5</span>)</span><br><span class="line">axes_4 = pl.subplot(G[<span class="number">-1</span>, <span class="number">0</span>]) <span class="comment"># 占据最后1行0列</span></span><br><span class="line">pl.text(<span class="number">0.5</span>, <span class="number">0.5</span>, <span class="string">&#x27;Axes 4&#x27;</span>, ha=<span class="string">&#x27;center&#x27;</span>, va=<span class="string">&#x27;center&#x27;</span>, size=<span class="number">24</span>, alpha=<span class="number">.5</span>)</span><br><span class="line">axes_5 = pl.subplot(G[<span class="number">-1</span>, <span class="number">-2</span>]) <span class="comment"># 占据最后一行导数第二列</span></span><br><span class="line">pl.text(<span class="number">0.5</span>, <span class="number">0.5</span>, <span class="string">&#x27;Axes 5&#x27;</span>, ha=<span class="string">&#x27;center&#x27;</span>, va=<span class="string">&#x27;center&#x27;</span>, size=<span class="number">24</span>, alpha=<span class="number">.5</span>)</span><br><span class="line">pl.tight_layout()</span><br><span class="line">pl.show()</span><br></pre></td></tr></table></figure>
+<h1 id="更多图形种类"><a class="markdownIt-Anchor" href="#更多图形种类"></a> 更多图形种类</h1>
+<ul>
+<li>详细使用案例可以<a target="_blank" rel="noopener" href="https://matplotlib.org/api/pyplot_summary.html">参考官网</a></li>
+</ul>
+<h2 id="条形图"><a class="markdownIt-Anchor" href="#条形图"></a> 条形图</h2>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">years = (<span class="string">&#x27;2015&#x27;</span>, <span class="string">&#x27;2016&#x27;</span>, <span class="string">&#x27;2017&#x27;</span>, <span class="string">&#x27;2018&#x27;</span>, <span class="string">&#x27;2019&#x27;</span>)</span><br><span class="line">visitors = (<span class="number">1241</span>, <span class="number">50927</span>, <span class="number">162242</span>, <span class="number">222093</span>, <span class="number">296665</span> / <span class="number">8</span> * <span class="number">12</span>)</span><br><span class="line">index = np.arange(len(visitors))</span><br><span class="line">bar_width = <span class="number">1.0</span></span><br><span class="line">plt.bar(index, visitors, bar_width,  color=<span class="string">&quot;green&quot;</span>)</span><br><span class="line">plt.xticks(index + bar_width / <span class="number">2</span>, years) <span class="comment"># labels get centered</span></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>分组条形图</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">labels = [<span class="string">&#x27;G1&#x27;</span>, <span class="string">&#x27;G2&#x27;</span>, <span class="string">&#x27;G3&#x27;</span>, <span class="string">&#x27;G4&#x27;</span>, <span class="string">&#x27;G5&#x27;</span>]</span><br><span class="line">men_means = [<span class="number">20</span>, <span class="number">34</span>, <span class="number">30</span>, <span class="number">35</span>, <span class="number">27</span>]</span><br><span class="line">women_means = [<span class="number">25</span>, <span class="number">32</span>, <span class="number">34</span>, <span class="number">20</span>, <span class="number">25</span>]</span><br><span class="line">x = np.arange(len(labels))  <span class="comment"># the label locations</span></span><br><span class="line">width = <span class="number">0.35</span>  <span class="comment"># the width of the bars</span></span><br><span class="line">fig, ax = plt.subplots()</span><br><span class="line">rects1 = ax.bar(x - width/<span class="number">2</span>, men_means, width, label=<span class="string">&#x27;Men&#x27;</span>)</span><br><span class="line">rects2 = ax.bar(x + width/<span class="number">2</span>, women_means, width, label=<span class="string">&#x27;Women&#x27;</span>)</span><br><span class="line"><span class="comment"># Add some text for labels, title and custom x-axis tick labels, etc.</span></span><br><span class="line">ax.set_ylabel(<span class="string">&#x27;Scores&#x27;</span>)</span><br><span class="line">ax.set_title(<span class="string">&#x27;Scores by group and gender&#x27;</span>)</span><br><span class="line">ax.set_xticks(x)</span><br><span class="line">ax.set_xticklabels(labels)</span><br><span class="line">ax.legend()</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">autolabel</span>(<span class="params">rects</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;Attach a text label above each bar in *rects*, displaying its height.&quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">for</span> rect <span class="keyword">in</span> rects:</span><br><span class="line">        height = rect.get_height()</span><br><span class="line">        ax.annotate(<span class="string">&#x27;&#123;&#125;&#x27;</span>.format(height),</span><br><span class="line">                    xy=(rect.get_x() + rect.get_width() / <span class="number">2</span>, height),</span><br><span class="line">                    xytext=(<span class="number">0</span>, <span class="number">3</span>),  <span class="comment"># 3 points vertical offset</span></span><br><span class="line">                    textcoords=<span class="string">&quot;offset points&quot;</span>,</span><br><span class="line">                    ha=<span class="string">&#x27;center&#x27;</span>, va=<span class="string">&#x27;bottom&#x27;</span>)</span><br><span class="line">autolabel(rects1)</span><br><span class="line">autolabel(rects2)</span><br><span class="line">fig.tight_layout()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>堆叠条形图</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">labels = [<span class="string">&#x27;G1&#x27;</span>, <span class="string">&#x27;G2&#x27;</span>, <span class="string">&#x27;G3&#x27;</span>, <span class="string">&#x27;G4&#x27;</span>, <span class="string">&#x27;G5&#x27;</span>]</span><br><span class="line">men_means = [<span class="number">20</span>, <span class="number">35</span>, <span class="number">30</span>, <span class="number">35</span>, <span class="number">27</span>]</span><br><span class="line">women_means = [<span class="number">25</span>, <span class="number">32</span>, <span class="number">34</span>, <span class="number">20</span>, <span class="number">25</span>]</span><br><span class="line">men_std = [<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">1</span>, <span class="number">2</span>]</span><br><span class="line">women_std = [<span class="number">3</span>, <span class="number">5</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>]</span><br><span class="line">width = <span class="number">0.35</span>       <span class="comment"># the width of the bars: can also be len(x) sequence</span></span><br><span class="line">fig, ax = plt.subplots()</span><br><span class="line">ax.bar(labels, men_means, width, yerr=men_std, label=<span class="string">&#x27;Men&#x27;</span>)</span><br><span class="line">ax.bar(labels, women_means, width, yerr=women_std, bottom=men_means,</span><br><span class="line">       label=<span class="string">&#x27;Women&#x27;</span>)</span><br><span class="line">ax.set_ylabel(<span class="string">&#x27;Scores&#x27;</span>)</span><br><span class="line">ax.set_title(<span class="string">&#x27;Scores by group and gender&#x27;</span>)</span><br><span class="line">ax.legend()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<h2 id="饼图"><a class="markdownIt-Anchor" href="#饼图"></a> 饼图</h2>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="comment"># Pie chart, where the slices will be ordered and plotted counter-clockwise:</span></span><br><span class="line">labels = <span class="string">&#x27;Frogs&#x27;</span>, <span class="string">&#x27;Hogs&#x27;</span>, <span class="string">&#x27;Dogs&#x27;</span>, <span class="string">&#x27;Logs&#x27;</span></span><br><span class="line">sizes = [<span class="number">15</span>, <span class="number">30</span>, <span class="number">45</span>, <span class="number">10</span>]</span><br><span class="line">explode = (<span class="number">0</span>, <span class="number">0.1</span>, <span class="number">0</span>, <span class="number">0</span>)  <span class="comment"># only &quot;explode&quot; the 2nd slice (i.e. &#x27;Hogs&#x27;)</span></span><br><span class="line">fig1, ax1 = plt.subplots()</span><br><span class="line">ax1.pie(sizes, explode=explode, labels=labels, autopct=<span class="string">&#x27;%1.1f%%&#x27;</span>,</span><br><span class="line">        shadow=<span class="literal">True</span>, startangle=<span class="number">90</span>)</span><br><span class="line">ax1.axis(<span class="string">&#x27;equal&#x27;</span>)  <span class="comment"># Equal aspect ratio ensures that pie is drawn as a circle.</span></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>x</td>
+<td>(每一块)的比例，如果sum(x) &gt; 1会使用sum(x)归一化；</td>
+</tr>
+<tr>
+<td>labels</td>
+<td>(每一块)饼图外侧显示的说明文字；</td>
+</tr>
+<tr>
+<td>explode</td>
+<td>(每一块)离开中心距离；</td>
+</tr>
+<tr>
+<td>startangle</td>
+<td>起始绘制角度,默认图是从x轴正方向逆时针画起,如设定=90则从y轴正方向画起；</td>
+</tr>
+<tr>
+<td>shadow</td>
+<td>在饼图下面画一个阴影。默认值：False，即不画阴影；</td>
+</tr>
+<tr>
+<td>labeldistance</td>
+<td>label标记的绘制位置,相对于半径的比例，默认值为1.1, 如&lt;1则绘制在饼图内侧；</td>
+</tr>
+<tr>
+<td>autopct</td>
+<td>控制饼图内百分比设置,可以使用format字符串或者format function;’%1.1f’指小数点前后位数(没有用空格补齐)；</td>
+</tr>
+<tr>
+<td>pctdistance</td>
+<td>类似于labeldistance,指定autopct的位置刻度,默认值为0.6；</td>
+</tr>
+<tr>
+<td>radius</td>
+<td>控制饼图半径，默认值为1；counterclock ：指定指针方向；布尔值，可选参数，默认为：True，即逆时针。将值改为False即可改为顺时针。</td>
+</tr>
+<tr>
+<td>wedgeprops</td>
+<td>字典类型，可选参数，默认值：None。参数字典传递给wedge对象用来画一个饼图。例如：wedgeprops={‘linewidth’:3}设置wedge线宽为3。</td>
+</tr>
+<tr>
+<td>textprops</td>
+<td>设置标签（labels）和比例文字的格式；字典类型，可选参数，默认值为：None。传递给text对象的字典参数。</td>
+</tr>
+<tr>
+<td>center</td>
+<td>浮点类型的列表，可选参数，默认值：(0,0)。图标中心位置。</td>
+</tr>
+<tr>
+<td>frame</td>
+<td>布尔类型，可选参数，默认值：False。如果是true，绘制带有表的轴框架。</td>
+</tr>
+<tr>
+<td>rotatelabels</td>
+<td>布尔类型，可选参数，默认为：False。如果为True，旋转每个label到指定的角度。</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>甜甜圈图</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">my_circle = plt.Circle((<span class="number">0</span>, <span class="number">0</span>), <span class="number">0.7</span>, color=<span class="string">&#x27;white&#x27;</span>)</span><br><span class="line">d = plt.pie(sizes, labels=labels, autopct=<span class="string">&#x27;%1.1f%%&#x27;</span>,</span><br><span class="line">            startangle=<span class="number">90</span>, labeldistance=<span class="number">1.05</span>)</span><br><span class="line">plt.axis(<span class="string">&#x27;equal&#x27;</span>)</span><br><span class="line">plt.gca().add_artist(my_circle)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>嵌套饼图</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">labels = [<span class="string">&#x27;vegetable&#x27;</span>, <span class="string">&#x27;fruit&#x27;</span>]</span><br><span class="line">sizes = [<span class="number">300</span>, <span class="number">200</span>]</span><br><span class="line">labels_vegefruit = [<span class="string">&#x27;potato&#x27;</span>, <span class="string">&#x27;tomato&#x27;</span>, <span class="string">&#x27;onion&#x27;</span>, <span class="string">&#x27;apple&#x27;</span>,</span><br><span class="line">                    <span class="string">&#x27;banana&#x27;</span>, <span class="string">&#x27;cherry&#x27;</span>, <span class="string">&#x27;durian&#x27;</span>]</span><br><span class="line">sizes_vegefruit = [<span class="number">170</span>, <span class="number">70</span>, <span class="number">60</span>, <span class="number">70</span>, <span class="number">60</span>, <span class="number">50</span>, <span class="number">20</span>]</span><br><span class="line">colors = [<span class="string">&#x27;#FFB600&#x27;</span>, <span class="string">&#x27;#09A0DA&#x27;</span>]</span><br><span class="line">colors_vegefruit = [<span class="string">&#x27;#FFCE53&#x27;</span>, <span class="string">&#x27;#FFDA7E&#x27;</span>, <span class="string">&#x27;#FFE9B2&#x27;</span>, <span class="string">&#x27;#30B7EA&#x27;</span>,</span><br><span class="line">                    <span class="string">&#x27;#56C7F2&#x27;</span>,<span class="string">&#x27;#7FD6F7&#x27;</span>, <span class="string">&#x27;#B3E7FB&#x27;</span>]</span><br><span class="line">bigger = plt.pie(sizes, labels=labels, colors=colors,</span><br><span class="line">                 startangle=<span class="number">90</span>, frame=<span class="literal">True</span>)</span><br><span class="line">smaller = plt.pie(sizes_vegefruit, labels=labels_vegefruit,</span><br><span class="line">                  colors=colors_vegefruit, radius=<span class="number">0.7</span>,</span><br><span class="line">                  startangle=<span class="number">90</span>, labeldistance=<span class="number">0.7</span>)</span><br><span class="line">centre_circle = plt.Circle((<span class="number">0</span>, <span class="number">0</span>), <span class="number">0.4</span>, color=<span class="string">&#x27;white&#x27;</span>, linewidth=<span class="number">0</span>)</span><br><span class="line">fig = plt.gcf()</span><br><span class="line">fig.gca().add_artist(centre_circle)</span><br><span class="line">plt.axis(<span class="string">&#x27;equal&#x27;</span>)</span><br><span class="line">plt.tight_layout()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<h2 id="散点图"><a class="markdownIt-Anchor" href="#散点图"></a> 散点图</h2>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">%matplotlib inline</span><br><span class="line">%config InlineBackend.figure_format = <span class="string">&#x27;svg&#x27;</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">plt.scatter(x=range(<span class="number">77</span>, <span class="number">770</span>, <span class="number">10</span>),</span><br><span class="line">            y=np.random.randn(<span class="number">70</span>)*<span class="number">55</span>+range(<span class="number">77</span>, <span class="number">770</span>, <span class="number">10</span>),</span><br><span class="line">            s=<span class="number">200</span>, alpha=<span class="number">0.6</span>)</span><br><span class="line">plt.tick_params(labelsize=<span class="number">12</span>)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;Surface(m2)&#x27;</span>, size=<span class="number">12</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;Turnover (K dollars)&#x27;</span>, size=<span class="number">12</span>)</span><br><span class="line">plt.xlim(left=<span class="number">0</span>)</span><br><span class="line">plt.ylim(bottom=<span class="number">0</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>连接散点图</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">turnover = [<span class="number">30</span>, <span class="number">38</span>, <span class="number">26</span>, <span class="number">20</span>, <span class="number">21</span>, <span class="number">15</span>, <span class="number">8</span>, <span class="number">5</span>, <span class="number">3</span>, <span class="number">9</span>, <span class="number">25</span>, <span class="number">27</span>]</span><br><span class="line">plt.plot(np.arange(<span class="number">12</span>), turnover, marker=<span class="string">&#x27;o&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>气泡图</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">nbclients = range(<span class="number">10</span>, <span class="number">494</span>, <span class="number">7</span>)</span><br><span class="line">plt.scatter(x=range(<span class="number">77</span>, <span class="number">770</span>, <span class="number">10</span>),</span><br><span class="line">            y=np.random.randn(<span class="number">70</span>)*<span class="number">55</span>+range(<span class="number">77</span>, <span class="number">770</span>, <span class="number">10</span>),</span><br><span class="line">            s=nbclients, alpha=<span class="number">0.6</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>不同颜色的散点图</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">plt.scatter(x=range(<span class="number">40</span>, <span class="number">70</span>, <span class="number">1</span>),</span><br><span class="line">            y=np.abs(np.random.randn(<span class="number">30</span>)*<span class="number">20</span>),</span><br><span class="line">            s=<span class="number">200</span>, </span><br><span class="line">            <span class="comment">#c = &#x27;blue&#x27;,</span></span><br><span class="line">            alpha=<span class="number">0.6</span>,</span><br><span class="line">            label=<span class="string">&#x27;40-69&#x27;</span>)</span><br><span class="line">plt.scatter(x=range(<span class="number">20</span>, <span class="number">40</span>, <span class="number">1</span>),</span><br><span class="line">            y=np.abs(np.random.randn(<span class="number">20</span>)*<span class="number">40</span>),</span><br><span class="line">            s=<span class="number">200</span>,   </span><br><span class="line">            <span class="comment">#c = &#x27;red&#x27;,</span></span><br><span class="line">            alpha=<span class="number">0.6</span>,</span><br><span class="line">            label=<span class="string">&#x27;20-39&#x27;</span>)</span><br><span class="line">plt.legend()  <span class="comment"># 每次都要执行</span></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<h2 id="直方图"><a class="markdownIt-Anchor" href="#直方图"></a> 直方图</h2>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">%matplotlib inline</span><br><span class="line">%config InlineBackend.figure_format = <span class="string">&#x27;svg&#x27;</span></span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">gaussian_numbers = np.random.normal(size=<span class="number">10000</span>)</span><br><span class="line">plt.hist(gaussian_numbers)</span><br><span class="line">plt.title(<span class="string">&quot;Gaussian Histogram&quot;</span>)</span><br><span class="line">plt.xlabel(<span class="string">&quot;Value&quot;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&quot;Frequency&quot;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<h2 id="等值线图"><a class="markdownIt-Anchor" href="#等值线图"></a> 等值线图</h2>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">%matplotlib inline</span><br><span class="line">%config InlineBackend.figure_format = <span class="string">&#x27;svg&#x27;</span></span><br><span class="line"><span class="keyword">import</span> matplotlib</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.cm <span class="keyword">as</span> cm</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">delta = <span class="number">0.025</span></span><br><span class="line">x = np.arange(<span class="number">-3.0</span>, <span class="number">3.0</span>, delta)</span><br><span class="line">y = np.arange(<span class="number">-2.0</span>, <span class="number">2.0</span>, delta)</span><br><span class="line">X, Y = np.meshgrid(x, y)</span><br><span class="line">Z1 = np.exp(-X**<span class="number">2</span> - Y**<span class="number">2</span>)</span><br><span class="line">Z2 = np.exp(-(X - <span class="number">1</span>)**<span class="number">2</span> - (Y - <span class="number">1</span>)**<span class="number">2</span>)</span><br><span class="line">Z = (Z1 - Z2) * <span class="number">2</span></span><br><span class="line">fig, ax = plt.subplots()</span><br><span class="line">CS = ax.contour(X, Y, Z)</span><br><span class="line">ax.clabel(CS, inline=<span class="number">1</span>, fontsize=<span class="number">10</span>)</span><br><span class="line">ax.set_title(<span class="string">&#x27;Simplest default with labels&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="盒须图"><a class="markdownIt-Anchor" href="#盒须图"></a> 盒须图</h2>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">%matplotlib inline</span><br><span class="line">%config InlineBackend.figure_format = <span class="string">&#x27;svg&#x27;</span></span><br><span class="line"><span class="keyword">import</span> matplotlib</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"><span class="comment"># Fixing random state for reproducibility</span></span><br><span class="line">np.random.seed(<span class="number">19680801</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># fake up some data</span></span><br><span class="line">spread = np.random.rand(<span class="number">50</span>) * <span class="number">100</span></span><br><span class="line">center = np.ones(<span class="number">25</span>) * <span class="number">50</span></span><br><span class="line">flier_high = np.random.rand(<span class="number">10</span>) * <span class="number">100</span> + <span class="number">100</span></span><br><span class="line">flier_low = np.random.rand(<span class="number">10</span>) * <span class="number">-100</span></span><br><span class="line">data = np.concatenate((spread, center, flier_high, flier_low))</span><br><span class="line">fig1, ax1 = plt.subplots()</span><br><span class="line">ax1.set_title(<span class="string">&#x27;Basic Plot&#x27;</span>)</span><br><span class="line">ax1.boxplot(data)</span><br></pre></td></tr></table></figure>
+<h2 id="棉棒图"><a class="markdownIt-Anchor" href="#棉棒图"></a> 棉棒图</h2>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">%matplotlib inline</span><br><span class="line">%config InlineBackend.figure_format = <span class="string">&#x27;svg&#x27;</span></span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">x = np.linspace(<span class="number">0.1</span>, <span class="number">2</span> * np.pi, <span class="number">41</span>)</span><br><span class="line">y = np.exp(np.sin(x))</span><br><span class="line">plt.stem(x, y, use_line_collection=<span class="literal">True</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<h2 id="极坐标图"><a class="markdownIt-Anchor" href="#极坐标图"></a> 极坐标图</h2>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="comment"># 极坐标下需要的数据有极径和角度</span></span><br><span class="line">r = np.arange(<span class="number">1</span>,<span class="number">6</span>,<span class="number">1</span>)  <span class="comment"># 极径</span></span><br><span class="line">theta = [i*np.pi/<span class="number">2</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>)]  <span class="comment">#角度</span></span><br><span class="line"><span class="comment"># 指定画图坐标为极坐标,projection=&#x27;polar&#x27;</span></span><br><span class="line">ax = plt.subplot(<span class="number">111</span>, projection=<span class="string">&#x27;polar&#x27;</span>)</span><br><span class="line">ax.plot(theta,r,linewidth=<span class="number">3</span>,color=<span class="string">&#x27;r&#x27;</span>)</span><br><span class="line">ax.grid(<span class="literal">True</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<h2 id="雷达图"><a class="markdownIt-Anchor" href="#雷达图"></a> 雷达图</h2>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Libraries</span></span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">from</span> math <span class="keyword">import</span> pi</span><br><span class="line"><span class="comment"># Set data</span></span><br><span class="line">df = pd.DataFrame(&#123;</span><br><span class="line"><span class="string">&#x27;group&#x27;</span>: [<span class="string">&#x27;A&#x27;</span>,<span class="string">&#x27;B&#x27;</span>,<span class="string">&#x27;C&#x27;</span>,<span class="string">&#x27;D&#x27;</span>],</span><br><span class="line"><span class="string">&#x27;var1&#x27;</span>: [<span class="number">38</span>, <span class="number">1.5</span>, <span class="number">30</span>, <span class="number">4</span>],</span><br><span class="line"><span class="string">&#x27;var2&#x27;</span>: [<span class="number">29</span>, <span class="number">10</span>, <span class="number">9</span>, <span class="number">34</span>],</span><br><span class="line"><span class="string">&#x27;var3&#x27;</span>: [<span class="number">8</span>, <span class="number">39</span>, <span class="number">23</span>, <span class="number">24</span>],</span><br><span class="line"><span class="string">&#x27;var4&#x27;</span>: [<span class="number">7</span>, <span class="number">31</span>, <span class="number">33</span>, <span class="number">14</span>],</span><br><span class="line"><span class="string">&#x27;var5&#x27;</span>: [<span class="number">28</span>, <span class="number">15</span>, <span class="number">32</span>, <span class="number">14</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment"># number of variable</span></span><br><span class="line">categories=list(df)[<span class="number">1</span>:]</span><br><span class="line">N = len(categories)</span><br><span class="line"><span class="comment"># We are going to plot the first line of the data frame.</span></span><br><span class="line"><span class="comment"># But we need to repeat the first value to close the circular graph:</span></span><br><span class="line">values=df.loc[<span class="number">0</span>].drop(<span class="string">&#x27;group&#x27;</span>).values.flatten().tolist()</span><br><span class="line">values += values[:<span class="number">1</span>]</span><br><span class="line"><span class="comment"># What will be the angle of each axis in the plot? (we divide the plot / number of variable)</span></span><br><span class="line">angles = [n / float(N) * <span class="number">2</span> * pi <span class="keyword">for</span> n <span class="keyword">in</span> range(N)]</span><br><span class="line">angles += angles[:<span class="number">1</span>] </span><br><span class="line"><span class="comment"># Initialise the spider plot</span></span><br><span class="line">ax = plt.subplot(<span class="number">111</span>, polar=<span class="literal">True</span>)</span><br><span class="line"><span class="comment"># Draw one axe per variable + add labels labels yet</span></span><br><span class="line">plt.xticks(angles[:<span class="number">-1</span>], categories, color=<span class="string">&#x27;grey&#x27;</span>, size=<span class="number">8</span>)</span><br><span class="line"><span class="comment"># Draw ylabels</span></span><br><span class="line">ax.set_rlabel_position(<span class="number">0</span>)</span><br><span class="line">plt.yticks([<span class="number">10</span>,<span class="number">20</span>,<span class="number">30</span>], [<span class="string">&quot;10&quot;</span>,<span class="string">&quot;20&quot;</span>,<span class="string">&quot;30&quot;</span>], color=<span class="string">&quot;grey&quot;</span>, size=<span class="number">7</span>)</span><br><span class="line">plt.ylim(<span class="number">0</span>,<span class="number">40</span>)</span><br><span class="line"><span class="comment"># Plot data</span></span><br><span class="line">ax.plot(angles, values, linewidth=<span class="number">1</span>, linestyle=<span class="string">&#x27;solid&#x27;</span>)</span><br><span class="line"><span class="comment"># Fill area</span></span><br><span class="line">ax.fill(angles, values, <span class="string">&#x27;b&#x27;</span>, alpha=<span class="number">0.1</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="极区图"><a class="markdownIt-Anchor" href="#极区图"></a> 极区图</h2>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="comment"># Fixing random state for reproducibility</span></span><br><span class="line">np.random.seed(<span class="number">19680801</span>)</span><br><span class="line"><span class="comment"># Compute pie slices</span></span><br><span class="line">N = <span class="number">10</span></span><br><span class="line">theta = np.linspace(<span class="number">0.0</span>, <span class="number">2</span> * np.pi, N, endpoint=<span class="literal">False</span>)</span><br><span class="line">radii = <span class="number">10</span> * np.random.rand(N)</span><br><span class="line">width = np.pi / <span class="number">4</span> * np.random.rand(N)</span><br><span class="line">colors = plt.cm.viridis(radii / <span class="number">10.</span>)</span><br><span class="line">ax = plt.subplot(<span class="number">111</span>, projection=<span class="string">&#x27;polar&#x27;</span>)</span><br><span class="line">ax.bar(theta, radii, width=width, bottom=<span class="number">0.0</span>, color=colors, alpha=<span class="number">0.5</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<h2 id="维恩图"><a class="markdownIt-Anchor" href="#维恩图"></a> 维恩图</h2>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> matplotlib_venn <span class="keyword">import</span> venn2</span><br><span class="line"><span class="comment"># First way to call the 2 group Venn diagram:</span></span><br><span class="line">venn2(subsets = (<span class="number">10</span>, <span class="number">5</span>, <span class="number">2</span>), set_labels = (<span class="string">&#x27;Group A&#x27;</span>, <span class="string">&#x27;Group B&#x27;</span>))</span><br><span class="line">plt.show()</span><br><span class="line"><span class="comment"># Second way</span></span><br><span class="line"><span class="comment">#venn2([set([&#x27;A&#x27;, &#x27;B&#x27;, &#x27;C&#x27;, &#x27;D&#x27;]), set([&#x27;D&#x27;, &#x27;E&#x27;, &#x27;F&#x27;])])</span></span><br><span class="line"><span class="comment">#plt.show()</span></span><br></pre></td></tr></table></figure>
+<h2 id="面状图"><a class="markdownIt-Anchor" href="#面状图"></a> 面状图</h2>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">plt.figure(figsize=(<span class="number">6</span>, <span class="number">4</span>))</span><br><span class="line">turnover = [<span class="number">2</span>, <span class="number">7</span>, <span class="number">14</span>, <span class="number">17</span>, <span class="number">20</span>, <span class="number">27</span>, <span class="number">30</span>, <span class="number">38</span>, <span class="number">25</span>, <span class="number">18</span>, <span class="number">6</span>, <span class="number">1</span>]</span><br><span class="line">plt.fill_between(np.arange(<span class="number">12</span>), turnover, color=<span class="string">&quot;skyblue&quot;</span>, alpha=<span class="number">0.4</span>)</span><br><span class="line">plt.plot(np.arange(<span class="number">12</span>), turnover, color=<span class="string">&quot;Slateblue&quot;</span>, alpha=<span class="number">0.6</span>, linewidth=<span class="number">2</span>)</span><br><span class="line">plt.tick_params(labelsize=<span class="number">12</span>)</span><br><span class="line">plt.xticks(np.arange(<span class="number">12</span>), np.arange(<span class="number">1</span>,<span class="number">13</span>))</span><br><span class="line">plt.xlabel(<span class="string">&#x27;Month&#x27;</span>, size=<span class="number">12</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;Turnover (K dollars) of ice-cream&#x27;</span>, size=<span class="number">12</span>)</span><br><span class="line">plt.ylim(bottom=<span class="number">0</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<h2 id="树地图"><a class="markdownIt-Anchor" href="#树地图"></a> 树地图</h2>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> squarify</span><br><span class="line"><span class="comment">#中文及负号处理办法</span></span><br><span class="line">plt.rcParams[<span class="string">&#x27;font.sans-serif&#x27;</span>] = <span class="string">&#x27;Microsoft YaHei&#x27;</span></span><br><span class="line"><span class="comment">#plt.rcParams[&#x27;axes.unicode_minus&#x27;] = False</span></span><br><span class="line"><span class="comment"># 数据创建</span></span><br><span class="line">name = [<span class="string">&#x27;上海GDP&#x27;</span>,<span class="string">&#x27;北京GDP&#x27;</span>,<span class="string">&#x27;深圳GDP&#x27;</span>,<span class="string">&#x27;广州GDP&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;重庆GDP&#x27;</span>,<span class="string">&#x27;苏州GDP&#x27;</span>,<span class="string">&#x27;成都GDP&#x27;</span>,<span class="string">&#x27;武汉GDP&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;杭州GDP&#x27;</span>,<span class="string">&#x27;天津GDP&#x27;</span>,<span class="string">&#x27;南京GDP&#x27;</span>,<span class="string">&#x27;长沙GDP&#x27;</span>,</span><br><span class="line">         <span class="string">&#x27;宁波GDP&#x27;</span>,<span class="string">&#x27;无锡GDP&#x27;</span>,<span class="string">&#x27;青岛GDP&#x27;</span>,<span class="string">&#x27;郑州GDP&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;佛山GDP&#x27;</span>,<span class="string">&#x27;泉州GDP&#x27;</span>,<span class="string">&#x27;东莞GDP&#x27;</span>,<span class="string">&#x27;济南GDP&#x27;</span>]</span><br><span class="line">income =[<span class="number">38155</span>,<span class="number">35371</span>,<span class="number">26927</span>,<span class="number">23628</span>,<span class="number">23605</span>,<span class="number">19235</span>,<span class="number">17012</span>,<span class="number">16900</span>,<span class="number">15373</span>,<span class="number">14104</span>,</span><br><span class="line">          <span class="number">14030</span>,<span class="number">12580</span>,<span class="number">11985</span>,<span class="number">11852</span>,<span class="number">11741</span>,<span class="number">11380</span>,<span class="number">10751</span>,<span class="number">9946</span>,<span class="number">9482</span>,<span class="number">9443</span>]</span><br><span class="line"><span class="comment"># 绘图details</span></span><br><span class="line">colors = [<span class="string">&#x27;steelblue&#x27;</span>,<span class="string">&#x27;#9999ff&#x27;</span>,<span class="string">&#x27;red&#x27;</span>,<span class="string">&#x27;indianred&#x27;</span>,<span class="string">&#x27;deepskyblue&#x27;</span>,<span class="string">&#x27;lime&#x27;</span>,<span class="string">&#x27;magenta&#x27;</span>,<span class="string">&#x27;violet&#x27;</span>,<span class="string">&#x27;peru&#x27;</span>,  <span class="string">&#x27;green&#x27;</span>,<span class="string">&#x27;yellow&#x27;</span>,<span class="string">&#x27;orange&#x27;</span>,<span class="string">&#x27;tomato&#x27;</span>,<span class="string">&#x27;lawngreen&#x27;</span>,<span class="string">&#x27;cyan&#x27;</span>,<span class="string">&#x27;darkcyan&#x27;</span>,<span class="string">&#x27;dodgerblue&#x27;</span>,<span class="string">&#x27;teal&#x27;</span>,<span class="string">&#x27;tan&#x27;</span>,<span class="string">&#x27;royalblue&#x27;</span>]</span><br><span class="line">plot = squarify.plot(sizes = income, <span class="comment"># 指定绘图数据</span></span><br><span class="line">                     label = name, <span class="comment"># 指定标签</span></span><br><span class="line">                     color = colors, <span class="comment"># 指定自定义颜色</span></span><br><span class="line">                     alpha = <span class="number">0.6</span>, <span class="comment"># 指定透明度</span></span><br><span class="line">                     value = income, <span class="comment"># 添加数值标签</span></span><br><span class="line">                     edgecolor = <span class="string">&#x27;white&#x27;</span>, <span class="comment"># 设置边界框为白色</span></span><br><span class="line">                     linewidth =<span class="number">3</span> <span class="comment"># 设置边框宽度为3</span></span><br><span class="line">                    )</span><br><span class="line"><span class="comment"># 设置标签大小为10</span></span><br><span class="line">plt.rc(<span class="string">&#x27;font&#x27;</span>, size=<span class="number">10</span>)</span><br><span class="line"><span class="comment"># 设置标题和字体大小</span></span><br><span class="line">plot.set_title(<span class="string">&#x27;2019年城市GDP排名前20(亿元)&#x27;</span>,fontdict = &#123;<span class="string">&#x27;fontsize&#x27;</span>:<span class="number">15</span>&#125;)</span><br><span class="line"><span class="comment"># 去除坐标轴</span></span><br><span class="line">plt.axis(<span class="string">&#x27;off&#x27;</span>)</span><br><span class="line"><span class="comment"># 除上边框和右边框刻度</span></span><br><span class="line">plt.tick_params(top = <span class="string">&#x27;off&#x27;</span>, right = <span class="string">&#x27;off&#x27;</span>)</span><br><span class="line"><span class="comment"># 图形展示</span></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<h2 id="词云图"><a class="markdownIt-Anchor" href="#词云图"></a> 词云图</h2>
+<ul>
+<li>需要安装wordcloud模块：pip install wordcloud</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">%matplotlib inline</span><br><span class="line"><span class="keyword">from</span> wordcloud <span class="keyword">import</span> WordCloud</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">text = (<span class="string">&#x27;Data science is an interdisciplinary field that uses scientific methods, processes, algorithms and systems to extract knowledge and insights from data in various forms, both structured and unstructured, similar to data mining. Data science is a concept to unify statistics, data analysis, machine learning and their related methods in order to understand and analyze actual phenomena with data. It employs techniques and theories drawn from many fields within the context of mathematics, statistics, information science, and computer science. Turing award winner Jim Gray imagined data science as a fourth paradigm of science (empirical, theoretical, computational and now data-driven) and asserted that everything about science is changing because of the impact of information technology and the data deluge. In 2012, when Harvard Business Review called it The Sexiest Job of the 21st Century, the term data science became a buzzword. It is now often used interchangeably with earlier concepts like business analytics, business intelligence, predictive modeling, and statistics. Even the suggestion that data science is sexy was paraphrasing Hans Rosling, featured in a 2011 BBC documentary with the quote, Statistics is now the sexiest subject around. Nate Silver referred to data science as a sexed up term for statistics. In many cases, earlier approaches and solutions are now simply rebranded as data science to be more attractive, which can cause the term to become dilute beyond usefulness. While many university programs now offer a data science degree, there exists no consensus on a definition or suitable curriculum contents. To its discredit, however, many data-science and big-data projects fail to deliver useful results, often as a result of poor management and utilization of resources&#x27;</span>)</span><br><span class="line">wordcloud = WordCloud(width=<span class="number">1280</span>, height=<span class="number">853</span>, margin=<span class="number">0</span>, colormap=<span class="string">&#x27;Blues&#x27;</span>).generate(text)</span><br><span class="line">plt.figure(figsize=(<span class="number">13</span>, <span class="number">8.6</span>))</span><br><span class="line">plt.imshow(wordcloud, interpolation=<span class="string">&#x27;bilinear&#x27;</span>)</span><br><span class="line">plt.axis(<span class="string">&quot;off&quot;</span>)</span><br><span class="line">plt.margins(x=<span class="number">0</span>, y=<span class="number">0</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<h2 id="3d绘图"><a class="markdownIt-Anchor" href="#3d绘图"></a> 3D绘图</h2>
+<ul>
+<li>2D数据</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> mpl_toolkits.mplot3d <span class="keyword">import</span> Axes3D</span><br><span class="line">fig = plt.figure()</span><br><span class="line">ax = fig.gca(projection=<span class="string">&#x27;3d&#x27;</span>)</span><br><span class="line"><span class="comment"># Plot a sin curve using the x and y axes.</span></span><br><span class="line">x = np.linspace(<span class="number">0</span>, <span class="number">1</span>, <span class="number">100</span>)</span><br><span class="line">y = np.sin(x * <span class="number">2</span> * np.pi) / <span class="number">2</span> + <span class="number">0.5</span></span><br><span class="line">ax.plot(x, y, zs=<span class="number">0</span>, zdir=<span class="string">&#x27;z&#x27;</span>, label=<span class="string">&#x27;curve in (x, y)&#x27;</span>)</span><br><span class="line"><span class="comment"># Plot scatterplot data (20 2D points per colour) on the x and z axes.</span></span><br><span class="line">colors = (<span class="string">&#x27;r&#x27;</span>, <span class="string">&#x27;g&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;k&#x27;</span>)</span><br><span class="line"><span class="comment"># Fixing random state for reproducibility</span></span><br><span class="line">np.random.seed(<span class="number">19680801</span>)</span><br><span class="line">x = np.random.sample(<span class="number">20</span> * len(colors))</span><br><span class="line">y = np.random.sample(<span class="number">20</span> * len(colors))</span><br><span class="line">c_list = []</span><br><span class="line"><span class="keyword">for</span> c <span class="keyword">in</span> colors:</span><br><span class="line">    c_list.extend([c] * <span class="number">20</span>)</span><br><span class="line"><span class="comment"># By using zdir=&#x27;y&#x27;, the y value of these points is fixed to the zs value 0</span></span><br><span class="line"><span class="comment"># and the (x, y) points are plotted on the x and z axes.</span></span><br><span class="line">ax.scatter(x, y, zs=<span class="number">0</span>, zdir=<span class="string">&#x27;y&#x27;</span>, c=c_list, label=<span class="string">&#x27;points in (x, z)&#x27;</span>)</span><br><span class="line"><span class="comment"># Make legend, set axes limits and labels</span></span><br><span class="line">ax.legend()</span><br><span class="line">ax.set_xlim(<span class="number">0</span>, <span class="number">1</span>)</span><br><span class="line">ax.set_ylim(<span class="number">0</span>, <span class="number">1</span>)</span><br><span class="line">ax.set_zlim(<span class="number">0</span>, <span class="number">1</span>)</span><br><span class="line">ax.set_xlabel(<span class="string">&#x27;X&#x27;</span>)</span><br><span class="line">ax.set_ylabel(<span class="string">&#x27;Y&#x27;</span>)</span><br><span class="line">ax.set_zlabel(<span class="string">&#x27;Z&#x27;</span>)</span><br><span class="line"><span class="comment"># Customize the view angle so it&#x27;s easier to see that the scatter points lie</span></span><br><span class="line"><span class="comment"># on the plane y=0</span></span><br><span class="line">ax.view_init(elev=<span class="number">20.</span>, azim=<span class="number">-35</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>散点图</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="comment"># Fixing random state for reproducibility</span></span><br><span class="line">np.random.seed(<span class="number">19680801</span>)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">randrange</span>(<span class="params">n, vmin, vmax</span>):</span></span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    Helper function to make an array of random numbers having shape (n, )</span></span><br><span class="line"><span class="string">    with each number distributed Uniform(vmin, vmax).</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">return</span> (vmax - vmin)*np.random.rand(n) + vmin</span><br><span class="line">fig = plt.figure()</span><br><span class="line">ax = fig.add_subplot(<span class="number">111</span>, projection=<span class="string">&#x27;3d&#x27;</span>)</span><br><span class="line">n = <span class="number">100</span></span><br><span class="line"><span class="comment"># For each set of style and range settings, plot n random points in the box</span></span><br><span class="line"><span class="comment"># defined by x in [23, 32], y in [0, 100], z in [zlow, zhigh].</span></span><br><span class="line"><span class="keyword">for</span> m, zlow, zhigh <span class="keyword">in</span> [(<span class="string">&#x27;o&#x27;</span>, <span class="number">-50</span>, <span class="number">-25</span>), (<span class="string">&#x27;^&#x27;</span>, <span class="number">-30</span>, <span class="number">-5</span>)]:</span><br><span class="line">    xs = randrange(n, <span class="number">23</span>, <span class="number">32</span>)</span><br><span class="line">    ys = randrange(n, <span class="number">0</span>, <span class="number">100</span>)</span><br><span class="line">    zs = randrange(n, zlow, zhigh)</span><br><span class="line">    ax.scatter(xs, ys, zs, marker=m)</span><br><span class="line"></span><br><span class="line">ax.set_xlabel(<span class="string">&#x27;X Label&#x27;</span>)</span><br><span class="line">ax.set_ylabel(<span class="string">&#x27;Y Label&#x27;</span>)</span><br><span class="line">ax.set_zlabel(<span class="string">&#x27;Z Label&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>3D平面</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> cm</span><br><span class="line"><span class="keyword">from</span> matplotlib.ticker <span class="keyword">import</span> LinearLocator, FormatStrFormatter</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">fig = plt.figure()</span><br><span class="line">ax = fig.gca(projection=<span class="string">&#x27;3d&#x27;</span>)</span><br><span class="line"><span class="comment"># Make data.</span></span><br><span class="line">X = np.arange(<span class="number">-5</span>, <span class="number">5</span>, <span class="number">0.25</span>)</span><br><span class="line">Y = np.arange(<span class="number">-5</span>, <span class="number">5</span>, <span class="number">0.25</span>)</span><br><span class="line">X, Y = np.meshgrid(X, Y)</span><br><span class="line">R = np.sqrt(X**<span class="number">2</span> + Y**<span class="number">2</span>)</span><br><span class="line">Z = np.sin(R)</span><br><span class="line"><span class="comment"># Plot the surface.</span></span><br><span class="line">surf = ax.plot_surface(X, Y, Z, cmap=cm.coolwarm,</span><br><span class="line">                       linewidth=<span class="number">0</span>, antialiased=<span class="literal">False</span>)</span><br><span class="line"><span class="comment"># Customize the z axis.</span></span><br><span class="line">ax.set_zlim(<span class="number">-1.01</span>, <span class="number">1.01</span>)</span><br><span class="line">ax.zaxis.set_major_locator(LinearLocator(<span class="number">10</span>))</span><br><span class="line">ax.zaxis.set_major_formatter(FormatStrFormatter(<span class="string">&#x27;%.02f&#x27;</span>))</span><br><span class="line"><span class="comment"># Add a color bar which maps values to colors.</span></span><br><span class="line">fig.colorbar(surf, shrink=<span class="number">0.5</span>, aspect=<span class="number">5</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<h2 id="矩阵可视化"><a class="markdownIt-Anchor" href="#矩阵可视化"></a> 矩阵可视化</h2>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">samplemat</span>(<span class="params">dims</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;Make a matrix with all zeros and increasing elements on the diagonal&quot;&quot;&quot;</span></span><br><span class="line">    aa = np.zeros(dims)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(min(dims)):</span><br><span class="line">        aa[i, i] = i</span><br><span class="line">    <span class="keyword">return</span> aa</span><br><span class="line"><span class="comment"># Display matrix</span></span><br><span class="line">plt.matshow(samplemat((<span class="number">15</span>, <span class="number">15</span>)))</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<h2 id="混淆矩阵"><a class="markdownIt-Anchor" href="#混淆矩阵"></a> 混淆矩阵</h2>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">%matplotlib inline</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> itertools</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plot_confusion_matrix</span>(<span class="params">cm,</span></span></span><br><span class="line"><span class="function"><span class="params">                          target_names,</span></span></span><br><span class="line"><span class="function"><span class="params">                          title=<span class="string">&#x27;Confusion matrix&#x27;</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">                          cmap=None,</span></span></span><br><span class="line"><span class="function"><span class="params">                          normalize=True</span>):</span></span><br><span class="line">    accuracy = np.trace(cm) / float(np.sum(cm))</span><br><span class="line">    misclass = <span class="number">1</span> - accuracy</span><br><span class="line">    <span class="keyword">if</span> cmap <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        cmap = plt.get_cmap(<span class="string">&#x27;Blues&#x27;</span>)</span><br><span class="line">    plt.figure(figsize=(<span class="number">8</span>, <span class="number">6</span>))</span><br><span class="line">    plt.imshow(cm, interpolation=<span class="string">&#x27;nearest&#x27;</span>, cmap=cmap)</span><br><span class="line">    plt.title(title)</span><br><span class="line">    plt.colorbar()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> target_names <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">        tick_marks = np.arange(len(target_names))</span><br><span class="line">        plt.xticks(tick_marks, target_names, rotation=<span class="number">45</span>)</span><br><span class="line">        plt.yticks(tick_marks, target_names)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> normalize:</span><br><span class="line">        cm = cm.astype(<span class="string">&#x27;float&#x27;</span>) / cm.sum(axis=<span class="number">1</span>)[:, np.newaxis]</span><br><span class="line">    thresh = cm.max() / <span class="number">1.5</span> <span class="keyword">if</span> normalize <span class="keyword">else</span> cm.max() / <span class="number">2</span></span><br><span class="line">    <span class="keyword">for</span> i, j <span class="keyword">in</span> itertools.product(range(cm.shape[<span class="number">0</span>]), range(cm.shape[<span class="number">1</span>])):</span><br><span class="line">        <span class="keyword">if</span> normalize:</span><br><span class="line">            plt.text(j, i, <span class="string">&quot;&#123;:0.4f&#125;&quot;</span>.format(cm[i, j]),</span><br><span class="line">                     horizontalalignment=<span class="string">&quot;center&quot;</span>,</span><br><span class="line">                     color=<span class="string">&quot;white&quot;</span> <span class="keyword">if</span> cm[i, j] &gt; thresh <span class="keyword">else</span> <span class="string">&quot;black&quot;</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            plt.text(j, i, <span class="string">&quot;&#123;:,&#125;&quot;</span>.format(cm[i, j]),</span><br><span class="line">                     horizontalalignment=<span class="string">&quot;center&quot;</span>,</span><br><span class="line">                     color=<span class="string">&quot;white&quot;</span> <span class="keyword">if</span> cm[i, j] &gt; thresh <span class="keyword">else</span> <span class="string">&quot;black&quot;</span>)</span><br><span class="line">    plt.tight_layout()</span><br><span class="line">    plt.ylabel(<span class="string">&#x27;True label&#x27;</span>)</span><br><span class="line">    plt.xlabel(<span class="string">&#x27;Predicted label\naccuracy=&#123;:0.4f&#125;; misclass=&#123;:0.4f&#125;&#x27;</span>.format(accuracy, misclass))</span><br><span class="line">    plt.show()</span><br><span class="line">plot_confusion_matrix(cm           = np.array([[ <span class="number">1098</span>,  <span class="number">1934</span>,   <span class="number">807</span>],</span><br><span class="line">                                              [  <span class="number">604</span>,  <span class="number">4392</span>,  <span class="number">6233</span>],</span><br><span class="line">                                              [  <span class="number">162</span>,  <span class="number">2362</span>, <span class="number">31760</span>]]), </span><br><span class="line">                      normalize    = <span class="literal">False</span>,</span><br><span class="line">                      target_names = [<span class="string">&#x27;high&#x27;</span>, <span class="string">&#x27;medium&#x27;</span>, <span class="string">&#x27;low&#x27;</span>],</span><br><span class="line">                      title        = <span class="string">&quot;Confusion Matrix&quot;</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="热图"><a class="markdownIt-Anchor" href="#热图"></a> 热图</h2>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">vegetables = [<span class="string">&quot;cucumber&quot;</span>, <span class="string">&quot;tomato&quot;</span>, <span class="string">&quot;lettuce&quot;</span>, <span class="string">&quot;asparagus&quot;</span>,</span><br><span class="line">              <span class="string">&quot;potato&quot;</span>, <span class="string">&quot;wheat&quot;</span>, <span class="string">&quot;barley&quot;</span>]</span><br><span class="line">farmers = [<span class="string">&quot;Farmer Joe&quot;</span>, <span class="string">&quot;Upland Bros.&quot;</span>, <span class="string">&quot;Smith Gardening&quot;</span>,</span><br><span class="line">           <span class="string">&quot;Agrifun&quot;</span>, <span class="string">&quot;Organiculture&quot;</span>, <span class="string">&quot;BioGoods Ltd.&quot;</span>, <span class="string">&quot;Cornylee Corp.&quot;</span>]</span><br><span class="line">harvest = np.array([[<span class="number">0.8</span>, <span class="number">2.4</span>, <span class="number">2.5</span>, <span class="number">3.9</span>, <span class="number">0.0</span>, <span class="number">4.0</span>, <span class="number">0.0</span>],</span><br><span class="line">                    [<span class="number">2.4</span>, <span class="number">0.0</span>, <span class="number">4.0</span>, <span class="number">1.0</span>, <span class="number">2.7</span>, <span class="number">0.0</span>, <span class="number">0.0</span>],</span><br><span class="line">                    [<span class="number">1.1</span>, <span class="number">2.4</span>, <span class="number">0.8</span>, <span class="number">4.3</span>, <span class="number">1.9</span>, <span class="number">4.4</span>, <span class="number">0.0</span>],</span><br><span class="line">                    [<span class="number">0.6</span>, <span class="number">0.0</span>, <span class="number">0.3</span>, <span class="number">0.0</span>, <span class="number">3.1</span>, <span class="number">0.0</span>, <span class="number">0.0</span>],</span><br><span class="line">                    [<span class="number">0.7</span>, <span class="number">1.7</span>, <span class="number">0.6</span>, <span class="number">2.6</span>, <span class="number">2.2</span>, <span class="number">6.2</span>, <span class="number">0.0</span>],</span><br><span class="line">                    [<span class="number">1.3</span>, <span class="number">1.2</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">3.2</span>, <span class="number">5.1</span>],</span><br><span class="line">                    [<span class="number">0.1</span>, <span class="number">2.0</span>, <span class="number">0.0</span>, <span class="number">1.4</span>, <span class="number">0.0</span>, <span class="number">1.9</span>, <span class="number">6.3</span>]])</span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(<span class="number">16</span>,<span class="number">16</span>))</span><br><span class="line">fig, ax = plt.subplots()</span><br><span class="line">im = ax.imshow(harvest)</span><br><span class="line"><span class="comment"># We want to show all ticks...</span></span><br><span class="line">ax.set_xticks(np.arange(len(farmers)))</span><br><span class="line">ax.set_yticks(np.arange(len(vegetables)))</span><br><span class="line"><span class="comment"># ... and label them with the respective list entries</span></span><br><span class="line">ax.set_xticklabels(farmers)</span><br><span class="line">ax.set_yticklabels(vegetables)</span><br><span class="line"><span class="comment"># Rotate the tick labels and set their alignment.</span></span><br><span class="line">plt.setp(ax.get_xticklabels(), rotation=<span class="number">45</span>, ha=<span class="string">&quot;right&quot;</span>,</span><br><span class="line">         rotation_mode=<span class="string">&quot;anchor&quot;</span>)</span><br><span class="line"><span class="comment"># Loop over data dimensions and create text annotations.</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(vegetables)):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(len(farmers)):</span><br><span class="line">        text = ax.text(j, i, harvest[i, j],</span><br><span class="line">                       ha=<span class="string">&quot;center&quot;</span>, va=<span class="string">&quot;center&quot;</span>, color=<span class="string">&quot;w&quot;</span>)</span><br><span class="line">ax.set_title(<span class="string">&quot;Harvest of local farmers (in tons/year)&quot;</span>)</span><br><span class="line"><span class="comment">#fig.tight_layout()</span></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<h1 id="图像显示"><a class="markdownIt-Anchor" href="#图像显示"></a> 图像显示</h1>
+<ul>
+<li>在Matplotlib中绘制图像的最常见方法是使用imshow()</li>
+<li>PIL（Python Imaging Library）是Python常用的图像处理库，而Pillow是PIL的一个友好Fork，提供了广泛的文件格式支持，强大的图像处理能力，主要包括图像储存、图像显示、格式转换以及基本的图像处理操作等</li>
+</ul>
+<h2 id="图像插值"><a class="markdownIt-Anchor" href="#图像插值"></a> 图像插值</h2>
+<ul>
+<li>插值方式分为：nearest bilinear bicubic</li>
+<li>不同的插值方法将多个具有不同大小的图像相互层叠。 复杂的内插还意味着性能下降； 为了获得最佳性能或非常大的图像，建议使用插值interpolation=‘nearest’</li>
+</ul>
+<h2 id="将图像数据导入numpy数组"><a class="markdownIt-Anchor" href="#将图像数据导入numpy数组"></a> 将图像数据导入Numpy数组</h2>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">img = mpimg.imread(<span class="string">&#x27;cat.png&#x27;</span>)</span><br><span class="line">print(img)</span><br></pre></td></tr></table></figure>
+<h2 id="将numpy数组绘制为图像"><a class="markdownIt-Anchor" href="#将numpy数组绘制为图像"></a> 将numpy数组绘制为图像</h2>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">imgplot = plt.imshow(img)</span><br></pre></td></tr></table></figure>
+<h2 id="使用pil操作图像"><a class="markdownIt-Anchor" href="#使用pil操作图像"></a> 使用PIL操作图像</h2>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line">img = Image.open(<span class="string">&#x27;cat.png&#x27;</span>)</span><br><span class="line">gray = img.convert(<span class="string">&#x27;L&#x27;</span>) <span class="comment"># 　其中img.convert指定一种色彩模式：L (8-bit pixels, black and white)</span></span><br><span class="line"><span class="comment"># 分离rgba</span></span><br><span class="line">r, g, b, a  = img.split()  </span><br><span class="line">plt.figure(<span class="string">&quot;girl&quot;</span>)</span><br><span class="line"><span class="comment"># src</span></span><br><span class="line">plt.subplot(<span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>)</span><br><span class="line">plt.title(title)</span><br><span class="line">plt.axis(<span class="string">&#x27;off&#x27;</span>)</span><br><span class="line">plt.imshow(img)</span><br><span class="line"><span class="comment"># grey r g b a</span></span><br></pre></td></tr></table></figure>
+<h2 id="伪彩色"><a class="markdownIt-Anchor" href="#伪彩色"></a> 伪彩色</h2>
+<ul>
+<li>使用colormap根据灰度图生成彩色的图像</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">lum_img = img[:, :, <span class="number">0</span>]</span><br><span class="line"><span class="comment"># This is array slicing.  </span></span><br><span class="line">plt.imshow(lum_img)</span><br><span class="line">plt.imshow(lum_img, cmap=<span class="string">&quot;hot&quot;</span>)</span><br><span class="line"><span class="comment"># 设定</span></span><br><span class="line"><span class="comment"># imgplot.set_cmap(&#x27;nipy_spectral&#x27;)</span></span><br><span class="line">plt.colorbar() <span class="comment"># 色系参考</span></span><br></pre></td></tr></table></figure>
+<h2 id="检查特定数据范围"><a class="markdownIt-Anchor" href="#检查特定数据范围"></a> 检查特定数据范围</h2>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">plt.hist(lum_img.ravel(), bins=<span class="number">256</span>, range=(<span class="number">0.0</span>, <span class="number">1.0</span>), fc=<span class="string">&#x27;k&#x27;</span>, ec=<span class="string">&#x27;k&#x27;</span>)</span><br><span class="line">imgplot = plt.imshow(lum_img, clim=(<span class="number">0</span>, <span class="number">0.7</span>))</span><br><span class="line"><span class="comment"># imgplot.set_clim(0.0, 0.7)</span></span><br></pre></td></tr></table></figure>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css"></div></article><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/python/">python</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2020/08/21/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"><i class="fa fa-chevron-left">  </i><span>神经网络</span></a></div><div class="next-post pull-right"><a href="/2020/08/20/%E6%B7%BB%E5%8A%A0%E6%80%9D%E7%BB%B4%E5%AF%BC%E5%9B%BE/"><span>添加思维导图</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="vcomment"></div><script src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = 'false' == 'true';
+var verify = 'false' == 'true';
+var record_ip = '' == 'true';
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  recordIP:record_ip,
+  appId:'AdfkiqY89QUSUWbDY9xJuCh0-gzGzoHsz',
+  appKey:'2cEvHcqEWsyoKwy4AUL3kPGh',
+  placeholder:'劈个叉吧',
+  avatar:'mm',
+  guest_info:guest_info,
+  pageSize:'100',
+  lang: 'zh-cn'
+})</script></div></div><footer><div class="layout" id="footer"><div class="copyright">&copy;2020 By hero576</div><div class="framework-info"><span>驱动 - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.7.0"></script><script src="/js/fancybox.js?version=1.7.0"></script><script src="/js/sidebar.js?version=1.7.0"></script><script src="/js/copy.js?version=1.7.0"></script><script src="/js/fireworks.js?version=1.7.0"></script><script src="/js/transition.js?version=1.7.0"></script><script src="/js/scroll.js?version=1.7.0"></script><script src="/js/head.js?version=1.7.0"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css"><script src="/js/katex.js"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>
