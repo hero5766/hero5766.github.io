@@ -9,11 +9,11 @@
     "server": "hexo server"
   },
   "hexo": {
-    "version": "4.2.1"
+    "version": "5.0.2"
   },
   "dependencies": {
     "@upupming/hexo-renderer-markdown-it-plus": "^2.0.2",
-    "hexo": "^4.2.1",
+    "hexo": "^5.0.2",
     "hexo-admin": "^2.3.0",
     "hexo-browsersync": "^0.3.0",
     "hexo-deployer-git": "^2.1.0",
@@ -22,12 +22,13 @@
     "hexo-generator-feed": "^2.2.0",
     "hexo-generator-index": "^1.0.0",
     "hexo-generator-search": "^2.4.0",
-    "hexo-generator-sitemap": "^2.0.0",
+    "hexo-generator-sitemap": "^2.1.0",
     "hexo-generator-tag": "^1.0.0",
     "hexo-renderer-ejs": "^1.0.0",
     "hexo-renderer-jade": "^0.5.0",
     "hexo-renderer-stylus": "^1.1.0",
     "hexo-server": "^1.0.0",
+    "hexo-simple-mindmap": "^0.2.0",
     "hexo-tag-aplayer": "^3.0.4",
     "hexo-tag-dplayer": "^0.3.3"
   },

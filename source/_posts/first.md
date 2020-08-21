@@ -763,7 +763,7 @@ you need to install hexo-generator-json-content before using Insight Search
 
 ### [表情配置](https://haojen.github.io/2016/09/03/Emoji-Demo/)
 - 使用方法:
-  - 比如你想发一个笑脸😄 直接输入笑脸对应的 emmoji 编码 :smile:就可以。[查看全部 emoji 表情编码](http://emoji.codes/)
+  - 比如你想发一个笑脸😄 直接输入笑脸对应的 emmoji 编码 `:smile:`就可以。[查看全部 emoji 表情编码](http://emoji.codes/)
 - 启用 emoji 的方法:
   - 卸载默认的`markdown`引擎: 打开终端, 去往博客的根目录下执行 `npm un hexo-renderer-marked --save`
   - 然后安装新的解析引擎: `npm i hexo-renderer-markdown-it --save` 和其`emoji`插件 : `npm install markdown-it-emoji --save`

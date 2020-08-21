@@ -1,7 +1,11 @@
+---
 title: wsl2
 author: hero576
 date: 2020-07-07 21:46:52
 tags:
+  - windows
+categories:
+  - common
 ---
 > windows对linux的支持
 <!--more-->
