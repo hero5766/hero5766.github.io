@@ -284,6 +284,41 @@
 
   
   <url>
+    <loc>http://blog.guoming576.cn/tags/robotic/</loc>
+    <lastmod>2020-08-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.guoming576.cn/tags/linux/</loc>
+    <lastmod>2020-08-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.guoming576.cn/tags/python/</loc>
+    <lastmod>2020-08-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.guoming576.cn/tags/data-structure/</loc>
+    <lastmod>2020-08-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.guoming576.cn/tags/algorithm/</loc>
+    <lastmod>2020-08-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://blog.guoming576.cn/tags/golang/</loc>
     <lastmod>2020-08-24</lastmod>
     <changefreq>daily</changefreq>
@@ -298,35 +333,7 @@
   </url>
   
   <url>
-    <loc>http://blog.guoming576.cn/tags/linux/</loc>
-    <lastmod>2020-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://blog.guoming576.cn/tags/skills/</loc>
-    <lastmod>2020-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://blog.guoming576.cn/tags/python/</loc>
-    <lastmod>2020-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://blog.guoming576.cn/tags/mathematics/</loc>
-    <lastmod>2020-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://blog.guoming576.cn/tags/data-structure/</loc>
     <lastmod>2020-08-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -354,14 +361,7 @@
   </url>
   
   <url>
-    <loc>http://blog.guoming576.cn/tags/algorithm/</loc>
-    <lastmod>2020-08-24</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://blog.guoming576.cn/tags/robotic/</loc>
+    <loc>http://blog.guoming576.cn/tags/mathematics/</loc>
     <lastmod>2020-08-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -384,7 +384,7 @@
   </url>
   
   <url>
-    <loc>http://blog.guoming576.cn/categories/common/</loc>
+    <loc>http://blog.guoming576.cn/categories/algorithm/</loc>
     <lastmod>2020-08-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -398,14 +398,14 @@
   </url>
   
   <url>
-    <loc>http://blog.guoming576.cn/categories/algorithm/</loc>
+    <loc>http://blog.guoming576.cn/categories/AI/</loc>
     <lastmod>2020-08-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://blog.guoming576.cn/categories/AI/</loc>
+    <loc>http://blog.guoming576.cn/categories/common/</loc>
     <lastmod>2020-08-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
