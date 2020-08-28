@@ -17,10 +17,23 @@ date: 2020-07-27 19:17:00
 - opencv4.0，机器学习库的增加；
 
 ## c++环境配置
-- 添加include库文件目录；
-- 添加lib动态链接库目录；
-- 添加附加依赖性，lib中的*.lib文件，在调试时使用带_d的；
-- 添加opencv的dll文件到系统路径；
+- 添加include库文件目录:`视图->其他窗口->属性管理器->[对应项目名]->Debug|x64->Microsoft.Cpp.x64.user->右键属性->VC++目录->包含目录`，添加：`opencv/build/include`,`opencv/build/include/opencv2`
+- 添加lib动态链接库目录：`库目录`，添加：`opencv/build/x64/vc14/lib`
+- 添加附加依赖性，lib中的*.lib文件，在调试时使用带_d的：`连接器->输入->附加依赖项`，添加：`opencv_world410d.lib`
+- 添加opencv的dll文件到系统环境变量；
+- 重启VS
+
+vs版本|目录
+-|-
+Visual Studio 6 | vc6 
+Visual Studio 2003 | vc7 
+Visual Studio 2005 | vc8 
+Visual Studio 2008 | vc9 
+Visual Studio 2010 | vc10 
+Visual Studio 2012 | vc11 
+Visual Studio 2013 | vc12 
+Visual Studio 2015 | vc14 
+Visual Studio 2017 | vc15
 
 - 测试是否成功
 ```c

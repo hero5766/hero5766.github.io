@@ -1,3 +1,47 @@
+## :tada: 1.8.2 (2020-08-09)
+
+
+### :bug: Bug Fixes
+
+* decodeURL -> decodeURI ([6929e58](https://github.com/Molunerfinn/hexo-theme-melody/commit/6929e58))
+
+
+
+## :tada: 1.8.1 (2020-08-09)
+
+
+### :bug: Bug Fixes
+
+* toc-item's href will be encoded in hexo v5 ([bed1f19](https://github.com/Molunerfinn/hexo-theme-melody/commit/bed1f19)), closes [#286](https://github.com/Molunerfinn/hexo-theme-melody/issues/286)
+
+
+
+# :tada: 1.8.0 (2020-08-09)
+
+
+### :sparkles: Features
+
+* add hexo 5.0 support ([68e605c](https://github.com/Molunerfinn/hexo-theme-melody/commit/68e605c))
+
+
+### :bug: Bug Fixes
+
+* [#277](https://github.com/Molunerfinn/hexo-theme-melody/issues/277) and add new feature ([#278](https://github.com/Molunerfinn/hexo-theme-melody/issues/278)) ([b801ea6](https://github.com/Molunerfinn/hexo-theme-melody/commit/b801ea6))
+* img style can effect custom image on footer ([#264](https://github.com/Molunerfinn/hexo-theme-melody/issues/264)) ([e7b2a04](https://github.com/Molunerfinn/hexo-theme-melody/commit/e7b2a04))
+
+
+### :pencil: Documentation
+
+* replace demo site ([b355099](https://github.com/Molunerfinn/hexo-theme-melody/commit/b355099))
+* update demo sites ([1296062](https://github.com/Molunerfinn/hexo-theme-melody/commit/1296062))
+
+
+### :package: Chore
+
+* add funding url ([165f338](https://github.com/Molunerfinn/hexo-theme-melody/commit/165f338))
+
+
+
 # :tada: 1.7.0 (2020-01-29)
 
 
