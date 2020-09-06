@@ -19,12 +19,12 @@ date: 2020-07-31 20:03:00
 [^1]:Simultaneous Localisation and Mapping (SLAM):Part I The Essential Algorithms
 [^2]:Simultaneous Localisation and Mapping (SLAM):Part II State of the Art
 
-|$P(x_k,m|Z_{k:0},U_{k:0},x_0)$|在x0初始状态，观测和控制已知的条件下，对应x_k和m的概率|
-|-|-|
-|$x_k$|状态|
-|$m$|地图|
-|$Z_{k:0}$|观测|
-|$U_{k:0}$|控制|
+$P(x_k,m \vdots Z_{k:0},U_{k:0},x_0)$|在x0初始状态，观测和控制已知的条件下，对应x_k和m的概率
+-|-
+$x_k$|状态
+$m$|地图
+$Z_{k:0}$|观测
+$U_{k:0}$|控制
 
 - SLAM提出了一个基本架构，根据输入（可见光、IMU、激光雷达、声呐），求得输出（环境及环境位置）。
 
@@ -55,11 +55,33 @@ date: 2020-07-31 20:03:00
 [kitti](http://www.evlibs.net/datasets/kitti)
 
 ## 书籍
-- [slam十四讲]
+- [slam十四讲]()
+- [Multiple View Geometry]()
+- [State Estimation For Robotics]()
+- [机器人学中的状态估计]()
+
 
 ## 资料
 - [无人驾驶平台](https://github.com/topics/autonomous-vehicles)
 - [日本无人驾驶平台](https://github.com/CFFL/Autoware)
+
+<!-- ## 相关企业 -->
+<!-- 百度：https://iv.baidu.com/employ.html -->
+<!-- 图森未来 -->
+<!-- 腾讯：https://careers.tencent.com/home.html -->
+<!-- 四维图新：https://navinfo.com/joinus -->
+<!-- 驭势科技：https://www.uisee.com/joinus/index.aspx -->
+<!-- 纵目科技：https://zongmu.zhiye.com -->
+<!-- 滴滴：https://talent.didiglobal.com -->
+
+## 环境配置
+
+环境|说明
+-|-
+linux操作系统|16.04以上
+开发环境|`sudo apt-get install cmake gcc g++ build-essential`
+.deb文件|`sudo dpkg install *.deb PATH:*.deb`<br>`sudo dpky --list`<br>`sudo dpkg --remove [package name]`
+cmake|
 
 # SLAM理论基础
 ## 数学表达

@@ -1,3 +1,4 @@
+---
 title: markdown语法
 author: hero576
 tags:
@@ -178,13 +179,46 @@ a  | b | c
 ```
 
 - 代码块：代码之间分别用三个反引号包起来，且两边的反引号单独占一行
-```
+```key
 (```)
   代码...
   代码...
   代码...
 (```)
 ```
+
+
+language 	|key|language 	|key|language 	|key|language 	|key|
+-|-|-|-|-|-|-|-|
+1C| 	1c|Mathematica| 	mathematica|Erlang REPL| 	erlang-replOracle| Rules| Language 	ruleslanguage
+ActionScript| 	actionscript|Matlab| 	matlab|Erlang| 	erlang|Rust| 	rust|
+Apache| 	apache|MEL (Maya Embedded Language) 	|mel|FIX| 	fix|Scala| 	scala|
+AppleScript| 	applescript|Mercury| 	mercury|F#| 	fsharp|Scheme| 	scheme|
+AsciiDoc| 	asciidoc|Mizar| 	mizar|G-code(ISO 6983) 	|gcode|Scilab| 	scilab|
+AspectJ| 	asciidoc|Monkey| 	monkey|Gherkin| 	gherkin|SCSS| 	scss|
+AutoHotkey| 	autohotkey|Nginx| 	nginx|GLSL| 	glsl|Smali| 	smali|
+AVR| Assembler| 	avrasmNimrod| 	nimrod|Go| 	go|SmallTalk| 	smalltalk|
+Axapta| 	axapta|Nix| 	nix|Gradle| 	gradle|SML| 	sml|
+Bash| 	bash|NSIS| 	nsis|Groovy| 	groovy|SQL| 	sql|
+BrainFuck| 	brainfuck|Objective C| 	objectivec|Haml| 	haml|Stata| 	stata|
+Cap’n| Proto| 	capnprotoOCaml| 	ocaml|Handlebars| 	handlebars|STEP Part21(ISO 10303-21) 	|step21|
+Clojure| REPL| 	clojureOxygene| 	oxygene|Haskell| 	haskell|Stylus| 	stylus|
+Clojure| 	clojure|Parser 3| 	parser3|Haxe| 	haxe|Swift| 	swift|
+CMake| 	cmake|Perl| 	perl|HTML| 	html|Tcl| 	tcl|
+CoffeeScript| 	coffeescript|PHP| 	php|HTTP| 	http|Tex| 	tex|
+C++| 	cppPowerShell| 	powershell|Ini file| 	ini|text| 	text/plain
+C#| 	cs|Processing| 	processing|Java| 	java|Thrift| 	thrift|
+CSS| 	css|Python’s profiler output 	|profile|JavaScript| 	javascript|Twig| 	twig|
+D| 	d|Protocol Buffers| 	protobuf|JSON| 	json|TypeScript| 	typescript|
+Dart| 	d|Puppet| 	puppet|Lasso| 	lasso|Vala| 	vala|
+Delphi| 	delphi|Python| 	python|Less| 	less|VB.NET| 	vbnet|
+Diff| 	diff|Q| 	q|Lisp| 	lisp|VBScript| in| HTML 	vbscript-html
+Django| 	django|R| 	r|LiveCode| 	livecodeserver|VBScript| 	vbscript|
+DOS.bat 	dos|RenderMan RIB| 	rib|LiveScript| 	livescript|Verilog| 	verilog|
+Dust| 	dust|Roboconf| 	roboconf|Lua| 	lua|VHDL| 	vhdl|
+Elixir| 	elixir|RenderMan| RSL| 	rslMakefile| 	makefile|Vim Script| 	vim|
+ERB(Embedded Ruby) 	erbRuby| 	ruby|Markdown| 	markdown|Intel x86 Assembly 	|x86asm|
+XL| 	xl|XML| 	xml|YAML| 	yml|
 
 ## 任务列表
 - 兼容性一般 要隔开一行
