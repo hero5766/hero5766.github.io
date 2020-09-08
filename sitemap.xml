@@ -2,6 +2,48 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.guoming576.cn/2020/06/04/latex/</loc>
+    
+    <lastmod>2020-09-08</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.guoming576.cn/2020/06/04/%E5%BE%AE%E7%A7%AF%E5%88%86/</loc>
+    
+    <lastmod>2020-09-08</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.guoming576.cn/2020/09/04/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/</loc>
+    
+    <lastmod>2020-09-08</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.guoming576.cn/2020/07/27/opencv/</loc>
+    
+    <lastmod>2020-09-07</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.guoming576.cn/2020/08/21/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/</loc>
+    
+    <lastmod>2020-09-07</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.guoming576.cn/2020/06/04/markdown/</loc>
+    
+    <lastmod>2020-09-07</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://blog.guoming576.cn/2020/09/01/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/</loc>
     
     <lastmod>2020-09-06</lastmod>
@@ -16,37 +58,9 @@
   </url>
   
   <url>
-    <loc>http://blog.guoming576.cn/2020/06/04/markdown/</loc>
-    
-    <lastmod>2020-09-05</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.guoming576.cn/2020/09/04/%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/</loc>
-    
-    <lastmod>2020-09-04</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://blog.guoming576.cn/2020/09/03/%E5%9B%BE%E7%89%87%E6%8B%BC%E6%8E%A5/</loc>
     
     <lastmod>2020-09-04</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.guoming576.cn/2020/07/27/opencv/</loc>
-    
-    <lastmod>2020-09-03</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.guoming576.cn/2020/08/21/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/</loc>
-    
-    <lastmod>2020-08-28</lastmod>
     
   </url>
   
@@ -122,13 +136,6 @@
   
   <url>
     <loc>http://blog.guoming576.cn/2020/07/30/elasticsearch/</loc>
-    
-    <lastmod>2020-08-03</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.guoming576.cn/2020/06/04/latex/</loc>
     
     <lastmod>2020-08-03</lastmod>
     
@@ -233,13 +240,6 @@
   </url>
   
   <url>
-    <loc>http://blog.guoming576.cn/2020/06/04/%E5%BE%AE%E7%A7%AF%E5%88%86/</loc>
-    
-    <lastmod>2020-06-25</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://blog.guoming576.cn/2020/06/06/govender/</loc>
     
     <lastmod>2020-06-25</lastmod>
@@ -305,7 +305,7 @@
 
   <url>
     <loc>http://blog.guoming576.cn/</loc>
-    <lastmod>2020-09-06</lastmod>
+    <lastmod>2020-09-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -313,91 +313,91 @@
   
   <url>
     <loc>http://blog.guoming576.cn/tags/algorithm/</loc>
-    <lastmod>2020-09-06</lastmod>
+    <lastmod>2020-09-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://blog.guoming576.cn/tags/robotic/</loc>
-    <lastmod>2020-09-06</lastmod>
+    <lastmod>2020-09-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://blog.guoming576.cn/tags/linux/</loc>
-    <lastmod>2020-09-06</lastmod>
+    <lastmod>2020-09-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://blog.guoming576.cn/tags/python/</loc>
-    <lastmod>2020-09-06</lastmod>
+    <lastmod>2020-09-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://blog.guoming576.cn/tags/data-structure/</loc>
-    <lastmod>2020-09-06</lastmod>
+    <lastmod>2020-09-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://blog.guoming576.cn/tags/golang/</loc>
-    <lastmod>2020-09-06</lastmod>
+    <lastmod>2020-09-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://blog.guoming576.cn/tags/windows/</loc>
-    <lastmod>2020-09-06</lastmod>
+    <lastmod>2020-09-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://blog.guoming576.cn/tags/skills/</loc>
-    <lastmod>2020-09-06</lastmod>
+    <lastmod>2020-09-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://blog.guoming576.cn/tags/mathematics/</loc>
-    <lastmod>2020-09-06</lastmod>
+    <lastmod>2020-09-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://blog.guoming576.cn/tags/probability/</loc>
-    <lastmod>2020-09-06</lastmod>
+    <lastmod>2020-09-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://blog.guoming576.cn/tags/assembler/</loc>
-    <lastmod>2020-09-06</lastmod>
+    <lastmod>2020-09-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://blog.guoming576.cn/tags/funny/</loc>
-    <lastmod>2020-09-06</lastmod>
+    <lastmod>2020-09-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://blog.guoming576.cn/tags/C-C/</loc>
-    <lastmod>2020-09-06</lastmod>
+    <lastmod>2020-09-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
@@ -406,35 +406,35 @@
   
   <url>
     <loc>http://blog.guoming576.cn/categories/AI/</loc>
-    <lastmod>2020-09-06</lastmod>
+    <lastmod>2020-09-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://blog.guoming576.cn/categories/programme/</loc>
-    <lastmod>2020-09-06</lastmod>
+    <lastmod>2020-09-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://blog.guoming576.cn/categories/algorithm/</loc>
-    <lastmod>2020-09-06</lastmod>
+    <lastmod>2020-09-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://blog.guoming576.cn/categories/math/</loc>
-    <lastmod>2020-09-06</lastmod>
+    <lastmod>2020-09-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://blog.guoming576.cn/categories/common/</loc>
-    <lastmod>2020-09-06</lastmod>
+    <lastmod>2020-09-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
