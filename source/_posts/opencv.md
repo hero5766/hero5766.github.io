@@ -37,7 +37,7 @@ Visual Studio 2015 | vc14
 Visual Studio 2017 | vc15
 
 - 测试是否成功
-```c
+```c++
 #include <opencv/opecv.hpp>
 #include <iostream>
 using namespace std;
@@ -97,7 +97,7 @@ pip install pytessract
 
 - 使用HSV过滤绿色背景
 
-```c
+```c++
 cvtColor(src,hsv,COLOR_BGR2HSV);
 inRange(hsv,Scalar(35,43,46),Scalar(77,255,255),mask);
 bitwise_not(mask,mask);
@@ -109,7 +109,7 @@ imshow("dst",dst);
 
 ### 代码实现
 
-```c
+```c++
 Mat hsv,lab;
 cvtColor(src,hsv,COLOR_BGR2HSV);
 cvtColor(src,lab,COLOR_BGR2Lab);
@@ -190,7 +190,7 @@ $$(f*g)(n)=\sum_{\tau=-\infty }^{\infty} f(\tau)g(n-\tau)$$
 
 ### 遍历与访问像素值
 - 基于数组的遍历
-```c
+```c++
 for(int row=0;row<src.rows;row++){
   for(int col=0;col<src.cols;col++){
     if (src.channels()==3){
@@ -204,7 +204,7 @@ for(int row=0;row<src.rows;row++){
 ```
 
 - 基于指针的遍历
-```c
+```c++
 for(int row=0;row<src.rows;row++){
   unchar* curr_row = src.ptr<unchar>(row);
   for(int col=0;col<src.cols;col++) {
@@ -240,7 +240,7 @@ for(int row=0;row<src.rows;row++){
 |Mat divide(src1,src2)|除||
 |void addWeighted(src1,weight1,src2,weight2,base,dst)|两个图片分别乘以系数相加，可以通过提高系数增加对比度||
 
-```c
+```c++
 Mat src1 = imread("./1.jpg");
 Mat src2 = imread("./2.jpg");
 Mat dst1 = add(src1,src2);
@@ -262,7 +262,7 @@ Mat dst5; addWeighted(src1,1.2,src2,0.5,0.0,dst5);
 |bitwise_or(src1,src2,dst,mask)|或||
 |bitwise_xor(src1,src2,dst,mask)|异或||
 
-```c
+```c++
 Mat src = imread("./1.jpg");
 Mat mask = Mat::zeros(src.size(),CV_8UC1);
 for(int row=0;row<src.rows;row++)
@@ -284,7 +284,7 @@ Mat dst4; bitwise_xor(src,src,dst1,Mat());
 |void meanStdDev(src,meanMat,stdMat)|均值和方差||
 
 - 均值和方差
-```c
+```c++
 Mat src = imread("./1.jpg",IMREAD_GRAYSCALE);
 double xmin,xmax;Point xminloc,xmaxloc;
 minMaxLoc(src,&xmin,&xmax,&xminloc,&xmaxloc);
@@ -296,7 +296,7 @@ printf("stddev:%2.f,%2.f,%2.f",mstd.at<double>(0,0),mstd.at<double>(1,0),mstd.at
 ```
 
 - 像素值统计-直方图
-```c
+```c++
 Mat src = imread("./1.jpg",IMREAD_GRAYSCALE);
 vector<int>hist(256);
 for (int i=0;i<256;i++){
@@ -322,7 +322,7 @@ for(int row=0;row<src.rows;row++){
 |ellipse(src,RotatedRect,Scalar color,int lineWeight,int lineType)|||
 |putText(src,string,Point,int fontFace,double scale,Scalar color,int lineThickness,int lineType)|||
 
-```c
+```c++
 Mat canvas=Mat::zeros(Size(512,512),CV_8UC3);
 line(canvas,Point(10,10),Point(20,123),Scalar(0,0,255),LINE_8);
 Rect rect(100,100,200,200);
@@ -338,7 +338,7 @@ imshow("canvas",canvas);
 ```
 
 - 随机绘制
-```c
+```c++
 Mat canvas=Mat::zeros(Size(512,512),CV_8UC3);
 int x1=0,x2=0,y1=0,y2=0;
 RNG rng(12345);
@@ -368,7 +368,7 @@ while(true){
 |split(src,Vector<mat>)|||
 |merge(Vector<mat>,dst)|||
 
-```c
+```c++
 //分离
 vector<Mat> rgbCh(3);
 split(src, rgbCh);
@@ -379,7 +379,7 @@ merge_src.push_back(blue);merge_src.push_back(green);merge_src.push_back(red); /
 merge(merge_src,dst);
 ```
 
-```c
+```c++
 Mat src = imread("./1.jpg",IMREAD_GRAYSCALE);
 if(src.empty())return -1;
 vector<Mat> rgbCh;split(src, rgbCh);
@@ -391,7 +391,7 @@ imshow("merge",dst);
 ```
 
 ## 截取兴趣域
-```c
+```c++
 Mat src = imread("./1.jpg",IMREAD_GRAYSCALE);
 Rect roi;roi.x=100,roi.y=100,roi.width=200;roi.height=200;
 Mat dst = src(roi).clone()  //不克隆的话，兴趣域指向同一块地址
@@ -415,7 +415,7 @@ waitKey(0);destroyAllWindows();
 |calcHist()|计算直方图||
 |normalize(src,dst,)|归一化||
 
-```c
+```c++
 Mat src = imread("./1.jpg",IMREAD_GRAYSCALE);
 if(src.empty())return -1;
 vector<Mat> rgbCh;split(src, rgbCh);
@@ -460,7 +460,7 @@ waitKey(0);
 |6|$\frac{6}{7}$|122|0.03|0.98->$\frac{7}{7}$->$s_4$|0.11|
 |7|$\frac{7}{7}$|81|0.02|1.0->$\frac{7}{7}$->$s_4$|0.11|
 
-```c
+```c++
 Mat src = imread("./1.jpg",IMREAD_GRAYSCALE),gray,dst;
 cvtColor(src,gray,COLOR_BGR2GRAY);
 imshow("gray",gray);
@@ -485,7 +485,7 @@ $$d(H_1,H_2)=\sum_I{min(H_1(I),H_2(I))}$$
 - 巴氏距离
 $$d(H_1,H_2)=\sqrt{1-\frac{1}{\sqrt{H_1H_2N^2}}\sum_I{\sqrt{H_1(I)-H_2(I)}}}$$
 
-```c
+```c++
 Mat src1 = imread("./1.jpg",IMREAD_GRAYSCALE);
 Mat src2 = imread("./2.jpg",IMREAD_GRAYSCALE);
 int histSize[] = {256,256,256};
@@ -515,7 +515,7 @@ printf("%.2f,%.2f",h12,h11)
 |applyColorMap(src,dst,COLORMAP_AUTUMIN)|自带12种颜色查找表替换||
 
 
-```c
+```c++
 Mat src = imread("./1.jpg");
 Mat color = imread("./lut.jpg");
 Mat lut = Mar::zeros(256,i,CV_8U3);
@@ -542,7 +542,7 @@ imshow("color",color);imshow("dst",dst);
 
 ### 代码实现
 
-```c
+```c++
 Mat model,src;
 Mat model_hsv,src_hsv;
 cvtColor(model,model_hsv,COLOR_BGR2HSV);
@@ -570,7 +570,7 @@ imshow("backproject",backproj);
 ## 自定义滤波
 ### 卷积核
 
-```c
+```c++
 //均值滤波卷积核
 int k=15;
 Mat meankernel = Mat::ones(k,k,CV_32F)/(float)(k*k);
@@ -589,7 +589,7 @@ convertScaleAbs(dst,dst);
 ## 均值卷积
 ### 代码实现
 - 自己实现，均值卷积，所有卷积核系数是一样的
-```c
+```c++
 Mat src = imread("./1.jpg");
 Mat dst = Mar::zeros(src.size(),src.type());
 int h = src.rows,w = src.cols;
@@ -614,7 +614,7 @@ imshow("conv",dst);
 ```
 
 - 用opencv的函数
-```c
+```c++
 Mat src = imread("./1.jpg");
 Mat dst;
 blur(src,dst,Size(3,3),Point(-1,-1),BORDER_DEFAULT);
@@ -634,7 +634,7 @@ imshow("conv",dst);
 |BORDER_REFLECT_101|dcb/abcd/cba|
 |BORDER_DEFAULT|dcb/abcd/cba|
 
-```c
+```c++
 int border = 8;
 copyMakeBorder(src,dst,border,boder,boder,border,BORDER_DEFAULT);
 copyMakeBorder(src,dst,border,boder,boder,border,BORDER_CONSTANT,SCalar(0,0,255));
@@ -659,7 +659,7 @@ copyMakeBorder(src,dst,border,boder,boder,border,BORDER_CONSTANT,SCalar(0,0,255)
 - 使用高斯函数可以尽量使得中心点的信息保留，比均匀卷积更能保留原始图像的信息。
 - 高斯模糊的锚定位置必须是中心位置。
 - 代码实现
-```c
+```c++
 GaussianBlur(src,dst,Size(5,5),0);
 ```
 
@@ -669,7 +669,7 @@ $$K=\alpha\begin{bmatrix} 1 & 1\\1  &1\end{bmatrix}$$
 $$\alpha=\begin{cases}\frac{1}{width·height}  & when \text{normalize=true} \\1  & otherwise\end{cases}$$
 
 - 代码实现
-```c
+```c++
 boxBlur(src,dst,-1,Size(5,5),Point(-1,-1),true,BORDER_DEFAULT);
 //设置任意方向的模糊
 boxBlur(src,dst,-1,Size(15,1),Point(-1,-1),true,BORDER_DEFAULT);
@@ -687,7 +687,7 @@ $$\begin{bmatrix}0 & -1 & 0\\-1 & 5 & -1\\0 & -1 & 0\end{bmatrix}$$
 
 ### 代码实现
 
-```c
+```c++
 Mat mylaplacian = (Mat_<int>(3,3)<<0,-1,0,-1,5,-1,0,-1,0);
 Mat dst;
 filter2D(src,dst,CV_32F,mylaplacian,Point(-1,-1),0,BORDER_DEFAULT);
@@ -705,7 +705,7 @@ $$sharp_image=w_1·blur-w_2·laplacian$$
 
 - 代码实现
 
-```c
+```c++
 Mat meanBlur,laplac,dst;
 GaussianBlur(src,meanBlur,Size(3,3),0);
 Laplacian(src,laplac,-1,1,1.0,BORDER_DEFAULT);
@@ -717,7 +717,7 @@ addWeight(meanBlur,1.0,laplac,-0.7,0,dst);
 - 噪声的分类：椒盐噪声（黑白点）、高斯噪声等
 
 ### 椒盐噪声
-```c
+```c++
 RNG rng(12345);
 Mat saltImg = src.clone();
 int h=src.rows,w=src.cols,nums=100000;
@@ -731,7 +731,7 @@ for(int i=0;i<nums;i++){
 
 ### 高斯噪声
 
-```c
+```c++
 Mat noise = Mat::zeros(src.size(),image.type());
 randn(noise,Scalar(15,15,15),Scalar(30,30,30));
 Mat GaussImg;
@@ -750,7 +750,7 @@ add(image,noise,GaussImg);
 
 #### 代码实现
 
-```c
+```c++
 //中值滤波
 medianBlur(src,dst,5);
 ```
@@ -760,7 +760,7 @@ medianBlur(src,dst,5);
 
 #### 代码实现
 
-```c
+```c++
 //中值滤波
 GaussianBlur(src,dst,Szie(5,5),0);
 ```
@@ -778,7 +778,7 @@ $$color range: w_c=\exp(\frac{-(I(s)-I(s_0))^2}{2\delta_c^2})$$
 
 - 代码事项
 
-```c
+```c++
 // src,dst,原来的尺寸上还是扩大还是缩小，颜色值空间，高斯核大小
 bilateralFilter(src,dst,0,100,10);
 ```
@@ -796,7 +796,7 @@ $$w(i,j)=exp{(-\sum_{k}{\frac{[x(l^k_j)-x(l^k_i)]^2}{h^2}})}$$
 
 - 代码实现
 
-```c
+```c++
 //彩色版本
 //src,dst,h,color-h,模板边长,搜索窗口l
 fastNIMeansDenoisingColored(src,dst,15,15,7,21);
@@ -824,7 +824,7 @@ fastNIMeansDenoising(gray,dst2);
 
 - 代码实现
 
-```c
+```c++
 Mat gray,binary;
 cvtColor(src,gray,COLOR_BGR2GRAY);
 imshow("gray",gray);
@@ -843,7 +843,7 @@ $$p(i,j)=\begin{cases} 255&>=m \\0&<m\end{cases}$$
 
 - 代码实现
 
-```c
+```c++
 cvtColor(src,gray,COLOR_BGR2GRAY);
 Scalar m = mean(gray);
 threshold(gray,binary,m[0],255,THRESH_BINARY);
@@ -866,7 +866,7 @@ $$/theta^2_w=w_b·/theta_b^2+w_f·/theta_f^2$$
 
 - 代码实现
 
-```c
+```c++
 int t = threshold(gray,binary,0,255,THRESH_BINARY|THRESH_OTSU);
 ```
 
@@ -882,7 +882,7 @@ $$h^2=d^2+d^2-->d=\sqrt{\frac{h^2}{2}}-->d=sin(0.7854)*h$$
 
 - 代码实现
 
-```c
+```c++
 int t = threshold(gray,binary,0,255,THRESH_BINARY|THRESH_TRIANGLE);
 ```
 - 缺点：仅对单峰效果比较好。常用于医疗图像的阈值分隔，这类图片的峰值单一。
@@ -902,7 +902,7 @@ int t = threshold(gray,binary,0,255,THRESH_BINARY|THRESH_TRIANGLE);
 ### 自适应均值模糊分割
 - 代码实现
 
-```c
+```c++
 //src,dst,max_value,方法,阈值模式,模糊窗口大小,常量C
 adaptiveThreshold(gray,binary,255,ADAPTIVE_THRESH_MEAN_C,THRESH_BINARY,25,10);
 ```
@@ -910,7 +910,7 @@ adaptiveThreshold(gray,binary,255,ADAPTIVE_THRESH_MEAN_C,THRESH_BINARY,25,10);
 ### 自适应高斯模糊分割
 - 代码实现
 
-```c
+```c++
 adaptiveThreshold(gray,binary,255,ADAPTIVE_THRESH_GAUSSIAN_C,THRESH_BINARY,25,10);
 ```
 
@@ -952,7 +952,7 @@ $$|G|=\sqrt{G_x^2+G_y^2}$$
 
 ### 代码实现
 
-```c
+```c++
 Mat robot_x = (Mat_<int>(2,2)<<1,0,0,-1);
 Mat robot_y = (Mat_<int>(2,2)<<0,1,-1,0);
 Mat grad_x,grad_y;
@@ -984,7 +984,7 @@ $$G_y=\begin{bmatrix}-1 & -2 & -1\\0 & 0 & 0\\1 & 2 & 1\end{bmatrix}$$
 
 ### 代码实现
 
-```c
+```c++
 Mat grad_x,grad_y;
 Sobel(src,grad_x,CV_32F,1,0);
 Sobel(src,grad_y,CV_32F,0,1);
@@ -1006,7 +1006,7 @@ $$G_y=\begin{bmatrix}-3 & -10 & -3\\0 & 0 & 0\\3 & 10 & 3\end{bmatrix}$$
 
 ### 代码实现
 
-```c
+```c++
 Mat grad_x,grad_y;
 Scharr(src,grad_x,CV_32F,1,0);
 Scharr(src,grad_y,CV_32F,0,1);
@@ -1035,7 +1035,7 @@ addWeighted(grad_x,0.5,grad_y,0.5,0,dst);
 
 ### 代码实现
 
-```c
+```c++
 int t1=50;
 Mat src;
 void cannyChange(int,void*){
@@ -1075,7 +1075,7 @@ $$\begin{bmatrix}-1 & 2 & -1\\2 & -4 & 2\\-1 & 2 & -1\end{bmatrix}$$
 
 ### 代码实现
 
-```c
+```c++
 //拉普拉斯的ksize必须是大于等于1的奇数，用于结果输出是当前值，还是周围3*3合起来的值
 Laplacian(src,dst,-1,3,1.0,BORDER_DEFAULT);
 ```
@@ -1111,7 +1111,7 @@ $$trace\;M=\lambda_1+\lambda_2$$
 
 ### 代码实现
 
-```c
+```c++
 int blocksize=2,ksize=3;double k=0.04;
 //input,output,计算偏导时区域范围,sobel计算梯度窗口大小,k
 cornerHarris(gray,dst,blocksize,ksize,k);
@@ -1135,7 +1135,7 @@ for (int row=0;row<src.rows;row++){
 
 $$R=min(\lambda_1,\lambda_2$$)$$
 
-```c
+```c++
 vector<Point2f>corners;
 double quality_level=0.01;
 //input,output,最多检测多少个角点,角点检测接受的最小值,角点间最小距离,mask,blockSize,是否使用Harris角点检测器
@@ -1161,7 +1161,7 @@ for (int i=0;i<corners.size();i++){
 
 - 代码实现
 
-```c
+```c++
 //对原图进行高斯模糊，目的是降噪
 GaussianBlur(src,src,Size(3,3),0);
 Mat gray,binary;
@@ -1188,7 +1188,7 @@ putText(dst,format("number:%d",num_label),Point(50,50),FONT_HERSHEY_PLAIN,1.0,Sc
 ```
 
 - 带有统计信息的
-```c
+```c++
 //stats：外接矩形位置，面积信息
 //centroids：中心位置
 Mat stats,centroids;
@@ -1223,7 +1223,7 @@ putText(dst,format("number:%d",num_label),Point(x,y),FONT_HERSHEY_PLAIN,1.0,Scal
 |findContours(binary,mode,method,contours)|发现轮廓的树形结构，最外层边界依次向里|
 |drawContours(src,mode,index,color,thickness,linetype)|绘制轮廓|
 
-```c
+```c++
 vector<vector<Point>>contours;
 vector<Vec4i>hierarchy;//层次信息
 //RET_TREE:绘制所有的轮廓；RET_EXTERNAL：绘制最外层轮廓
@@ -1250,7 +1250,7 @@ $$A=\sum^{n}_{k=0}{\frac{(x_{k+1}+x_k)(y_{k+1}-y_k)}{2}}$$
 
 #### 代码实现
 
-```c
+```c++
 for(size_t t=0;t<contours.size();t++){
   double area = contourArea(contours[t]);
   //是否是闭合区域
@@ -1314,7 +1314,7 @@ $$m_i^B=sign(h_i^B)·\log{h_i^B}$$
 ![Hu的轮廓匹配](/images/pasted-73.png)
 
 - 代码
-```c
+```c++
 //获取图像的边距省略了，这里匹配src2的第一个边距
 vector<vector<Point>> contours1,contours2;
 Moments mm2=moments(contours2[0]);
@@ -1341,7 +1341,7 @@ for(size_t t=0;t<contours1.size();t++){
 ### 逼近
 - 轮廓的逼近，本质是减少编码点
 
-```c
+```c++
 for(size_t t=0;t<contours1.size();t++){
   Mat res;
   //src,dst,多边形逼近的精度值,是不是闭合区域
@@ -1352,7 +1352,7 @@ for(size_t t=0;t<contours1.size();t++){
 
 ### 拟合
 - 拟合圆，生成最相似的圆或者椭圆
-```c
+```c++
 for(size_t t=0;t<contours1.size();t++){
   //拟合圆fitElipse，拟合线段fitLine
   RotatedRect rrt=fitElipse(contours[t]);
@@ -1379,7 +1379,7 @@ for(size_t t=0;t<contours1.size();t++){
 |HoughLinesP|霍夫直线，所有可能的线段和直线|
 
 - 代码实现
-```c
+```c++
 vector<Vec3f>lines;
 //input,output,r步长,θ步长,阈值：超过多少次相交才算直线,多尺度检测
 HoughLines(binary,lines,1,CV_PI/180,100,0,0)
@@ -1406,7 +1406,7 @@ for (size_t i=0;i<lines.size();i++){
 }
 ```
 
-```c
+```c++
 Mat src=imread("1.jpg"),binary;
 Canny(src,binary,80,160,3,false);
 vector<Vec4i> lines;
@@ -1432,7 +1432,7 @@ $$y=y_0+r\sin{\theta}$$
 - 霍夫圆检测的时候，不会遍历所有的半径，需要指定
 - 候选节点会基于梯度寻找，目的为了减少未知参数
 
-```c
+```c++
 Mat src=imread("1.jpg"),gray;
 cvtColor(src,gray,COLOR_BGR2GRAY);
 GaussianBlur(gray,gray,Size(9,9),2,2);
@@ -1478,7 +1478,7 @@ imshow("input",src);
 
 ### 代码实现
 
-```c
+```c++
 //腐蚀操作
 //结构元素：矩形元素，大小，中心位置
 Mat kernel=getStructingElement(MORPH_RECT,Size(5,5),Point(-1,-1));
@@ -1502,7 +1502,7 @@ dilate(src,src,kernel);
 ![闭运算](/images/pasted-80.png)
 
 ### 代码实现
-```c
+```c++
 Mat kernel=getStructingElement(MORPH_RECT,Size(5,5),Point(-1,-1));
 //input,output,形态学操作枚举,结构元素,中心位置,连续进行形态学操作
 morphologyEx(binary,dst,MORPH_OPEN,kernel,Point(-1,-1),1);
@@ -1527,7 +1527,7 @@ morphologyEx(binary,dst,MORPH_OPEN,kernel,Point(-1,-1),1);
 - 外梯度 – 膨胀减去原图的结果
 
 ### 代码实现
-```c
+```c++
 Mat kernel=getStructingElement(MORPH_RECT,Size(5,5),Point(-1,-1));
 Mat basic_grad,inter_grad,exter_grad;
 //基本梯度
@@ -1548,7 +1548,7 @@ threshold(basic_grad,binary,0,255,THRESH_BINARY|THRESH_OTSH);
 - 黑帽：是闭操作之后结果减去原图
 - 顶帽与黑帽的作用是用来提取图像中微小有用信息块
 
-```c
+```c++
 Mat kernel=getStructingElement(MORPH_RECT,Size(5,5),Point(-1,-1));
 morphologyEx(binary,dst,MORPH_TOPHAT,kernel,Point(-1,-1),1);
 ```
@@ -1557,7 +1557,7 @@ morphologyEx(binary,dst,MORPH_TOPHAT,kernel,Point(-1,-1),1);
 
 ![击中击不中](/images/pasted-81.png)
 
-```c
+```c++
 //十字交叉的结构元素
 Mat kernel=getStructingElement(MORPH_CROSS,Size(5,5),Point(-1,-1));
 morphologyEx(binary,dst,MORPH_HITMISS,kernel,Point(-1,-1),1);
@@ -1571,7 +1571,7 @@ morphologyEx(binary,dst,MORPH_HITMISS,kernel,Point(-1,-1),1);
 
 ### 读取摄像头设备
 
-```c
+```c++
 VideoCapture capture(0);
 if(!capture.isOpened())return;
 namedWindow("frame",WINDOW_AUTOSIZE);
@@ -1587,7 +1587,7 @@ while (true){
 
 ### 读取视频文件
 
-```c
+```c++
 VideoCapture capture("1.mp4");
 //获取帧率
 int fps = capture.get(CAP_PROP_FPS);
@@ -1603,13 +1603,13 @@ int type=capture.get(CAP_PROP_FOURCC)
 ```
 ### 读取网络视频文件
 
-```c
+```c++
 VideoCapture capture("http://www.xxx.com/1.mp4");
 ```
 
 ### 保存一段视频
 
-```c
+```c++
 Mat frame;
 VideoWriter writer("./res.mp4",type,fps,Size(width,height),true);//是否是彩色
 while (true){
@@ -1627,7 +1627,7 @@ while (true){
 - 最好是保存到一定大小后，再新建文件保存。
 
 ### 析构
-```c
+```c++
 capture.release();
 writer.release();
 ```
@@ -1637,7 +1637,7 @@ writer.release();
 ## 基于颜色的对象跟踪
 - 基于HSV色彩空间，跟踪一个红色的物体
 
-```c
+```c++
 //打开视频文件获取frame
 Mat hsv,mask;
 cvtColor(frame,hsv,COLOR_BGR2HSV);
@@ -1686,7 +1686,7 @@ imshow("detection",frame)
 
 ### 代码实现
 
-```c
+```c++
 //创建建模对象
 //500帧进行背景和建模,马氏距离,是否检测阴影(置为true速度会比较慢),,,,
 auto pMOG2 = createBackgroundSubtractorMOG2(500,16,false);
@@ -1724,7 +1724,7 @@ $A^Tb=\begin{bmatrix}\sum{I_xI_t}    \\ \sum{I_yI_t}    \end{bmatrix}$$
 
 #### 代码实现
 
-```c
+```c++
 Mat gray,old_gray;
 vector<Point2f>corners;
 double quality_level=0.01;
@@ -1763,7 +1763,7 @@ while (true){
 - 上面代码仅检测是否有效，会显示大量的点。下面增加移动距离的限制，使得跟踪效果更好一些
 - 加上距离判断的话，有些角点就会被抛弃，需要初始化才能在下一次检测时继续做判断
 
-```c
+```c++
 Mat gray,old_gray;
 vector<Point2f>corners;
 double quality_level=0.01;
@@ -1840,7 +1840,7 @@ $$c2=d^TA_1d-b^T_1d+c_1$$
 ### 代码实现
 - 笛卡尔坐标系转成极坐标系，使用HSV色彩空间进行展现出稠密光流场
 
-```c
+```c++
 Mat frame,preFrame,gray,preGray;
 capture.read(preFrame);
 cvtColor(preFrame,preGray,COLOR_BGR2GRAY);
@@ -1897,7 +1897,7 @@ while(true){
 
 
 ### 代码实现
-```c
+```c++
 Mat frame,hsv,hue,mask,hist,backproj;
 capture.read(frame);
 int hsize=16;
