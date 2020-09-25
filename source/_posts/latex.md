@@ -826,7 +826,10 @@ $\log_{ABC}{ABC}$|`\log_{ABC}{ABC}`|对数
 $\lg_{ABC}{ABC}$|`\lg_{ABC}{ABC}`|常用对数
 $\ln_{ABC}{ABC}$|`\ln_{ABC}{ABC}`|自然对数
 $\exp$|`\exp`|指数
-$$|``|界限 Bounds
+
+#### 界限 Bounds
+tag|latex|descript
+-|-|-
 $\min x$|`\min x`|最小
 $\max y$|`\max y`|最大
 $\sup t$|`\sup t`|最小上界（上确界）
