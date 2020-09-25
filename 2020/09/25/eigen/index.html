@@ -1,0 +1,399 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="三维数学基础"><meta name="keywords" content="robotic"><meta name="author" content="hero576"><meta name="copyright" content="hero576"><title>三维数学基础 | void land space</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.8.2"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.8.2"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="dns-prefetch" href="https://hm.baidu.com"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?5ff8fca367285c16c6dd5c16ca2ccc1b";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();</script><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  hexoVersion: '5.0.2'
+} </script><meta name="generator" content="Hexo 5.0.2"><link rel="alternate" href="/atom.xml" title="void land space" type="application/atom+xml">
+</head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#eigen%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text"> Eigen简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">1.1.</span> <span class="toc-text"> 安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#linux"><span class="toc-number">1.1.1.</span> <span class="toc-text"> linux</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#windows"><span class="toc-number">1.1.2.</span> <span class="toc-text"> windows</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8"><span class="toc-number">2.</span> <span class="toc-text"> 使用[1][2][3]</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%93%E4%B8%8E%E5%A4%B4%E6%96%87%E4%BB%B6"><span class="toc-number">2.1.</span> <span class="toc-text"> 库与头文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#matrix%E7%B1%BB"><span class="toc-number">2.2.</span> <span class="toc-text"> Matrix类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#matrix%E6%A8%A1%E6%9D%BF%E7%B1%BB"><span class="toc-number">2.2.1.</span> <span class="toc-text"> Matrix模板类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#matrix%E6%B4%BE%E7%94%9F%E7%B1%BB%E5%AF%B9%E8%B1%A1"><span class="toc-number">2.2.2.</span> <span class="toc-text"> Matrix派生类对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E6%95%B0dynamic"><span class="toc-number">2.2.3.</span> <span class="toc-text"> 参数Dynamic</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="toc-number">2.2.4.</span> <span class="toc-text"> 构造函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%83%E7%B4%A0%E8%8E%B7%E5%8F%96"><span class="toc-number">2.2.5.</span> <span class="toc-text"> 元素获取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%97%E5%8F%B7%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">2.2.6.</span> <span class="toc-text"> 逗号初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B0%83%E6%95%B4%E5%B0%BA%E5%AF%B8"><span class="toc-number">2.2.7.</span> <span class="toc-text"> 调整尺寸</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#assignment%E5%92%8Cresizing"><span class="toc-number">2.2.8.</span> <span class="toc-text"> Assignment和resizing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BA%E5%AE%9A%E5%B0%BA%E5%AF%B8vs%E5%8A%A8%E6%80%81%E5%B0%BA%E5%AF%B8"><span class="toc-number">2.2.9.</span> <span class="toc-text"> 固定尺寸VS动态尺寸</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9F%A9%E9%98%B5%E4%B8%8E%E5%90%91%E9%87%8F%E7%9A%84%E8%BF%90%E7%AE%97"><span class="toc-number">2.3.</span> <span class="toc-text"> 矩阵与向量的运算</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A0%E5%87%8F"><span class="toc-number">2.3.1.</span> <span class="toc-text"> 加减</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%87%E9%87%8F%E7%9A%84%E4%B9%98%E9%99%A4"><span class="toc-number">2.3.2.</span> <span class="toc-text"> 标量的乘除</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%A8%A1%E6%9D%BF"><span class="toc-number">2.3.3.</span> <span class="toc-text"> 表达式模板</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AC%E7%BD%AE%E5%92%8C%E5%85%B1%E8%BD%AD"><span class="toc-number">2.3.4.</span> <span class="toc-text"> 转置和共轭</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9F%A9%E9%98%B5%E7%9B%B8%E4%B9%98%E7%9F%A9%E9%98%B5%E4%B9%98%E5%90%91%E9%87%8F"><span class="toc-number">2.3.5.</span> <span class="toc-text"> 矩阵相乘，矩阵乘向量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%82%B9%E7%A7%AF%E5%92%8C%E5%8F%89%E7%A7%AF"><span class="toc-number">2.3.6.</span> <span class="toc-text"> 点积和叉积</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E7%9A%84%E7%AE%97%E6%9C%AF%E8%A7%84%E7%BA%A6%E6%93%8D%E4%BD%9C"><span class="toc-number">2.3.7.</span> <span class="toc-text"> 基础的算术规约操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E7%9A%84%E6%9C%89%E6%95%88%E6%80%A7"><span class="toc-number">2.3.8.</span> <span class="toc-text"> 操作的有效性</span></a></li></ol></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/images/haimianbaobao.jpg"></div><div class="author-info__name text-center">hero576</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">47</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">13</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">分类</span><span class="pull-right">5</span></a></div></div></div><div id="content-outer"><div class="plain" id="top-container"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">void land space</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">主页</a><a class="site-page" href="/archives">文章</a><a class="site-page" href="/tags">标签</a><a class="site-page" href="/categories">分类</a><a class="site-page" href="/gallery">相册</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> 搜索</span></a></span></div></div><div class="layout" id="content-inner"><article id="post"><div class="plain" id="post-title">三维数学基础</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-09-25</time><span class="post-meta__separator">|</span><i class="fa fa-inbox" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/programme/"> programme</a></div><div class="article-container" id="post-content"><h1 id="eigen简介"><a class="markdownIt-Anchor" href="#eigen简介"></a> Eigen简介</h1>
+<h2 id="安装"><a class="markdownIt-Anchor" href="#安装"></a> 安装</h2>
+<h3 id="linux"><a class="markdownIt-Anchor" href="#linux"></a> linux</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get install libeigen3-dev</span><br></pre></td></tr></table></figure>
+<ul>
+<li>查找安装包，一般在<code>/usr/include/eigen3</code></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo updatedb</span><br><span class="line">locate eigen3</span><br></pre></td></tr></table></figure>
+<h3 id="windows"><a class="markdownIt-Anchor" href="#windows"></a> windows</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vcpkg install eigen3</span><br></pre></td></tr></table></figure>
+<h1 id="使用"><a class="markdownIt-Anchor" href="#使用"></a> 使用<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup><sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup><sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup></h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://eigen.tuxfamily.org/dox/modules.html">官方文档</a>，网站访问需要vpn</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/qixianyu-buaa/EigenChineseDocument">翻译注释的工程文件</a></li>
+</ul>
+<h2 id="库与头文件"><a class="markdownIt-Anchor" href="#库与头文件"></a> 库与头文件</h2>
+<ul>
+<li>Eigen库被分为了一个Core模块和几个其他额外的模块，每个模块都有对应的头文件，使用时需要进行包含。其中通过Dense和Eigen头文件可以很方便的使用其他的模块，因此一般情况下使用这俩就够了。</li>
+</ul>
+<p><img src="/images/pasted-274.png" alt="库与头文件" /></p>
+<h2 id="matrix类"><a class="markdownIt-Anchor" href="#matrix类"></a> Matrix类</h2>
+<ul>
+<li>在Eigen中，所有的矩阵和向量都是Matrix模板类的对象，向量只是特殊的矩阵而已，无论是行向量还是列向量。</li>
+</ul>
+<h3 id="matrix模板类"><a class="markdownIt-Anchor" href="#matrix模板类"></a> Matrix模板类</h3>
+<ul>
+<li><code>Matrix &lt;typename Scalar,int RowsAtCompileTime,int ColsAtCompileTime,int Options=0,int MaxRowsAtCompileTime=RowsAtCompileTime,MaxColsAtCompileTime=ColsAtCompileTime&gt;</code></li>
+<li>Matrix类共有6个模板参数，主要使用的是前三个参数，剩余的都有默认值。前三个参数分别是&lt;变量类型 ,行 , 列&gt;</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>typename</td>
+<td>变量类型</td>
+</tr>
+<tr>
+<td>RowsAtCompileTime</td>
+<td>行</td>
+</tr>
+<tr>
+<td>ColsAtCompileTime</td>
+<td>列</td>
+</tr>
+<tr>
+<td>Options</td>
+<td>是一个标志位，表明矩阵的存储方式，RowMajor表示按行存储。默认是按列存储的。例如：<code>Matrix&lt;float, 3, 3, RowMajor&gt;</code></td>
+</tr>
+<tr>
+<td>MaxRowsAtCompileTime</td>
+<td>表示编译时矩阵尺寸的上限，主要是为了避免动态内存分配。</td>
+</tr>
+<tr>
+<td>MaxColsAtCompileTime</td>
+<td>矩阵尺寸列的上限</td>
+</tr>
+</tbody>
+</table>
+<h3 id="matrix派生类对象"><a class="markdownIt-Anchor" href="#matrix派生类对象"></a> Matrix派生类对象</h3>
+<table>
+<thead>
+<tr>
+<th>对象</th>
+<th>定义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Vector3f</td>
+<td><code>typedef Matrix&lt;float,3,1&gt; Vector3f;</code></td>
+</tr>
+<tr>
+<td>RowVector2i</td>
+<td><code>typedef Matrix&lt;int,1,2&gt; RowVector2i;</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="参数dynamic"><a class="markdownIt-Anchor" href="#参数dynamic"></a> 参数Dynamic</h3>
+<ul>
+<li>RowsAtCompileTIme和ColsAtCompileTIme参数可以取特殊值Dynamic，这代表编译时不能确定矩阵的尺寸，必须在运行时确定。Eigen中称为动态尺寸，编译时确定尺寸的矩阵称为固定尺寸的矩阵</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>对象</th>
+<th>定义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MatrixXd</td>
+<td><code>typedef Matrix &lt;double，Dynamic，Dynamic&gt; MatrixXd ;</code></td>
+</tr>
+<tr>
+<td>VectorXi</td>
+<td><code>typedef Matrix &lt;int，Dynamic，1&gt; VectorXi ;</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="构造函数"><a class="markdownIt-Anchor" href="#构造函数"></a> 构造函数</h3>
+<ul>
+<li>默认的构造函数不执行动态内存分配，也不初始化矩阵的元素。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">Matrix3f a;  <span class="comment">//a是3x3的矩阵，分配了float[9]的空间但是没有进行初始化</span></span><br><span class="line">MatrixXf b; <span class="comment">//b是个0x0的矩阵</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>对于构造函数指定尺寸也是可以的，对于矩阵首先传递的是行参数，对于向量则只传递尺寸就好，构造函数会分配相应的空间但是不进行初始化工作。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function">MatrixXf <span class="title">a</span><span class="params">(<span class="number">10</span>,<span class="number">15</span>)</span></span>; <span class="comment">//a是10x15的矩阵，分配了空间没有进行初始化</span></span><br><span class="line"><span class="function">VectorXf <span class="title">b</span><span class="params">(<span class="number">30</span>)</span></span>; <span class="comment">//b是个尺寸为30的向量同样没有初始化</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>尺寸小于4的向量可以直接在定义时初始化</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">Vector2d a（<span class="number">5.0</span>,<span class="number">6.0</span>）;</span><br><span class="line">Vector3d b（<span class="number">5.0</span>,<span class="number">6.0</span>,<span class="number">7.0</span>）;</span><br><span class="line">Vector4d c（<span class="number">5.0</span>,<span class="number">6.0</span>,<span class="number">7.0</span>,<span class="number">8.0</span>）;</span><br></pre></td></tr></table></figure>
+<h3 id="元素获取"><a class="markdownIt-Anchor" href="#元素获取"></a> 元素获取</h3>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function">MatrixXd <span class="title">m</span><span class="params">(<span class="number">2</span>,<span class="number">2</span>)</span></span>;</span><br><span class="line">m(<span class="number">0</span>,<span class="number">0</span>)=<span class="number">3</span>;m(<span class="number">1</span>,<span class="number">0</span>)=<span class="number">4</span>;m(<span class="number">0</span>,<span class="number">1</span>)=<span class="number">5</span>;m(<span class="number">1</span>,<span class="number">1</span>)=<span class="number">-3</span>;</span><br><span class="line"><span class="built_in">cout</span>&lt;&lt;m&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">MatrixXcf a = MatrixXcf::Random(<span class="number">2</span>,<span class="number">2</span>);</span><br><span class="line"><span class="built_in">cout</span>&lt;&lt;a&lt;&lt;<span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="逗号初始化"><a class="markdownIt-Anchor" href="#逗号初始化"></a> 逗号初始化</h3>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">Matrix3f m;</span><br><span class="line">m&lt;&lt; <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,</span><br><span class="line">    <span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,</span><br><span class="line">    <span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>;</span><br><span class="line"><span class="built_in">cout</span>&lt;&lt;m&lt;&lt;<span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="调整尺寸"><a class="markdownIt-Anchor" href="#调整尺寸"></a> 调整尺寸</h3>
+<ul>
+<li>矩阵的大小可以通过rows(), cols(), size()方法获取。对动态尺寸的矩阵调整尺寸时使用resize()方法</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function">Matrix3d <span class="title">m</span><span class="params">(<span class="number">2</span>,<span class="number">5</span>)</span></span>;</span><br><span class="line">m.resize(<span class="number">4</span>,<span class="number">5</span>);</span><br><span class="line"><span class="built_in">cout</span>&lt;&lt;m.rows()&lt;&lt;m.cols()&lt;&lt;m.size()&lt;&lt;<span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="assignment和resizing"><a class="markdownIt-Anchor" href="#assignment和resizing"></a> Assignment和resizing</h3>
+<ul>
+<li>Assignment是将一个矩阵赋值给另一个，如果尺寸不同时Eigen会将左边的矩阵的尺寸自动resize成和右边的矩阵相同的尺寸</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function">MatrixXf <span class="title">m</span><span class="params">(<span class="number">2</span>,<span class="number">2</span>)</span></span>;</span><br><span class="line"><span class="built_in">cout</span>&lt;&lt;m.rows()&lt;&lt;m.cols()&lt;&lt;m.size()&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line"><span class="function">MatrixXf <span class="title">n</span><span class="params">(<span class="number">3</span>,<span class="number">3</span>)</span></span>;</span><br><span class="line">m = n;</span><br><span class="line"><span class="built_in">cout</span>&lt;&lt;n.rows()&lt;&lt;n.cols()&lt;&lt;n.size()&lt;&lt;<span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="固定尺寸vs动态尺寸"><a class="markdownIt-Anchor" href="#固定尺寸vs动态尺寸"></a> 固定尺寸VS动态尺寸</h3>
+<ul>
+<li>
+<p>对于小的矩阵，尤其是小于16个元素的，使用固定尺寸有利于代码性能，因为会避免动态内存的分配，固定尺寸的矩阵实际上就是个数组，</p>
+</li>
+<li>
+<p>比如<code>Matrix4f mymatrix</code>等价于<code>float mymatrix[16]</code>。</p>
+</li>
+<li>
+<p>而动态尺寸的矩阵总是在堆上申请内存，因此<code>MatrixXf mymatrix[rows,cols]</code>相当于<code>float *mymatrix = new float[rows*cols]</code>，并且MatrixXf对象还会存储它的行和列作为成员变量。</p>
+</li>
+<li>
+<p>使用固定尺寸的局限在于仅仅当你能提前确定矩阵的尺寸。对于较大的矩阵，如大于32,使用固定尺寸带来的性能效果就变得可以忽略了，更糟糕的是，当试图在函数内部创建一个很大的固定尺寸的矩阵时可能会导致栈溢出</p>
+</li>
+</ul>
+<h2 id="矩阵与向量的运算"><a class="markdownIt-Anchor" href="#矩阵与向量的运算"></a> 矩阵与向量的运算</h2>
+<ul>
+<li>Eigen提供了一些矩阵和向量的数值运算，其中一些是通过通用的C++运算符重载实现，如<code>+</code>,<code>-</code>,<code>*</code>等，另一些通过特殊的方法实现，如dot()，cross()等方法。对于Matrix类，这些操作只支持线性代数运算，比如<code>matrix1*matrix2</code>代表矩阵的乘积，而向量+标量则是不允许的。</li>
+</ul>
+<h3 id="加减"><a class="markdownIt-Anchor" href="#加减"></a> 加减</h3>
+<ul>
+<li>运算符两侧必须有相同的行和列。而且还要有相同的数据类型，因为Eigen并不做自动类型转换</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>可用的操作符</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>二元运算+</td>
+<td><code>a+b</code></td>
+</tr>
+<tr>
+<td>二元运算-</td>
+<td><code>a-b</code></td>
+</tr>
+<tr>
+<td>一元运算-</td>
+<td><code>-a</code></td>
+</tr>
+<tr>
+<td>复合运算+=</td>
+<td><code>a+=b</code></td>
+</tr>
+<tr>
+<td>复合运算-=</td>
+<td><code>a-=b</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="标量的乘除"><a class="markdownIt-Anchor" href="#标量的乘除"></a> 标量的乘除</h3>
+<table>
+<thead>
+<tr>
+<th>可用的操作符</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>二元运算符*</td>
+<td><code>matrix*scalar，scalar*matrix</code></td>
+</tr>
+<tr>
+<td>二元运算符/</td>
+<td><code>matrix/scalar</code></td>
+</tr>
+<tr>
+<td>复合运算符*=</td>
+<td><code>matrix*=scalar</code></td>
+</tr>
+<tr>
+<td>复合运算符/=</td>
+<td><code>matrix/=scalar</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="表达式模板"><a class="markdownIt-Anchor" href="#表达式模板"></a> 表达式模板</h3>
+<ul>
+<li>不需要担心在Eigen中使用大的算法表达式。它仅仅是给了Eigen更多的优化机会。</li>
+<li>Eigen中数值运算符如+并不执行任何计算，而是返回一个表达式对象描述需要执行的计算。一般是当整个表达式被评估完之后（典型的比如遇到符号=）实际的计算才进行。这样做主要是为了优化提高效率，比如当你写</li>
+</ul>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">VectorXf a(50), b(50), c(50), d(50);...a = 3*b + 4*c + 5*d;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Eigen会把他们编译成一个循环以便数组们只需要访问一次，比如会编译成如下形式</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">50</span>; ++i)</span><br><span class="line">  a[i] = <span class="number">3</span>*b[i] + <span class="number">4</span>*c[i] + <span class="number">5</span>*d[i];</span><br></pre></td></tr></table></figure>
+<h3 id="转置和共轭"><a class="markdownIt-Anchor" href="#转置和共轭"></a> 转置和共轭</h3>
+<ul>
+<li>对矩阵的转置、共轭和共轭转置由成员函数transpose(),  conjugate(),  adjoint()实现</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>transpose()</td>
+<td>转置a.transpose()</td>
+</tr>
+<tr>
+<td>conjugate()</td>
+<td>共轭a.conjugate()</td>
+</tr>
+<tr>
+<td>adjoint()</td>
+<td>共轭转置a.adjoint()</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>对于实数矩阵，conjugate()不做任何操作，所以adjoint()等同于transpose()。</li>
+<li>基本的数值运算符、transpose()和adjoint()会简单的返回一个中间对象而不是对原对象做处理。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">Matrix2i a;a&lt;&lt;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>;</span><br><span class="line"><span class="built_in">cout</span>&lt;&lt;a&lt;&lt;<span class="built_in">endl</span>;  <span class="comment">//1,2\n3,4</span></span><br><span class="line">a = a.transpose();<span class="comment">//!!!不要这样做!!!</span></span><br><span class="line"><span class="built_in">cout</span>&lt;&lt;a&lt;&lt;<span class="built_in">endl</span>; <span class="comment">//1,2\n2,4</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>这称为别名问题，在debug模式下当assertions没有禁止时，这种问题会被自动检测到。要避免错误，可以使用in-place转置。类似的还有adjointInPlace()。</li>
+</ul>
+<h3 id="矩阵相乘矩阵乘向量"><a class="markdownIt-Anchor" href="#矩阵相乘矩阵乘向量"></a> 矩阵相乘，矩阵乘向量</h3>
+<ul>
+<li>矩阵相乘使用运算符*实现，由于向量也是一种特殊的矩阵，因此矩阵乘以向量和向量间的外积是一样的方法。所有这些情况都由两个运算符处理</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>可用的操作符</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>二元运算符*</td>
+<td>a*b</td>
+</tr>
+<tr>
+<td>复合运算符*=</td>
+<td>a*=b，等于a = a*b。</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Eigen对矩阵相乘这种情况进行特殊处理，不用担心别名问题，比如<code>m = m*m</code>会被编译成<code>tmp = m*m; m = tmp</code></p>
+</blockquote>
+<h3 id="点积和叉积"><a class="markdownIt-Anchor" href="#点积和叉积"></a> 点积和叉积</h3>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>点积</td>
+<td><code>v.dot(w)</code></td>
+</tr>
+<tr>
+<td>叉积</td>
+<td><code>v.cross(w)</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="基础的算术规约操作"><a class="markdownIt-Anchor" href="#基础的算术规约操作"></a> 基础的算术规约操作</h3>
+<ul>
+<li>Eigen提供了一些对于矩阵或向量的规约操作，</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>和</td>
+<td>sum()</td>
+</tr>
+<tr>
+<td>各元素相乘</td>
+<td>prod()</td>
+</tr>
+<tr>
+<td>矩阵行的最大值和索引</td>
+<td>maxCoeff()</td>
+</tr>
+<tr>
+<td>矩阵行的最小值和索引</td>
+<td>minCoeff()</td>
+</tr>
+<tr>
+<td>迹</td>
+<td>trace为矩阵的迹，也可以由a.diagonal().sum()得到。</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>minCoeff和maxCoeff函数也可以返回相应的元素的位置信息</p>
+</blockquote>
+<h3 id="操作的有效性"><a class="markdownIt-Anchor" href="#操作的有效性"></a> 操作的有效性</h3>
+<ul>
+<li>Eigen会检查你的操作的有效性，如果可能的话会在编译阶段产生，输出信息。这些信息可能比较长并且难看，不过重要的信息都用了大写的语句标出了，可以很容易找到。如</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">Matrix3f m;</span><br><span class="line">Vector4f v;</span><br><span class="line">v = m*v;      <span class="comment">// Compile-time error: YOU_MIXED_MATRICES_OF_DIFFERENT_SIZES</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>但是另一些情况下，比如对于动态尺寸的检查不能在编译阶段完成，那么Eigen会在运行期间检查，如果出错，那么程序会崩溃并输出一些信息。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function">MatrixXf <span class="title">m</span><span class="params">(<span class="number">3</span>,<span class="number">3</span>)</span></span>;</span><br><span class="line"><span class="function">VectorXf <span class="title">v</span><span class="params">(<span class="number">4</span>)</span></span>;</span><br><span class="line">v = m * v; <span class="comment">// Run-time assertion failure here: &quot;invalid matrix product&quot;</span></span><br></pre></td></tr></table></figure>
+<hr class="footnotes-sep" />
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/xuezhisdc/article/details/54619853">链接</a> <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/SKANK911/article/details/89259272">链接</a> <a href="#fnref2" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn3" class="footnote-item"><p><a target="_blank" rel="noopener" href="https://github.com/qixianyu-buaa/EigenChineseDocument">链接</a> <a href="#fnref3" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css"></div></article><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/robotic/">robotic</a></div><nav id="pagination"><div class="next-post pull-right"><a href="/2020/09/24/tensorRT/"><span>TensorRT</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="vcomment"></div><script src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = 'false' == 'true';
+var verify = 'false' == 'true';
+var record_ip = '' == 'true';
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  recordIP:record_ip,
+  appId:'AdfkiqY89QUSUWbDY9xJuCh0-gzGzoHsz',
+  appKey:'2cEvHcqEWsyoKwy4AUL3kPGh',
+  placeholder:'劈个叉吧',
+  avatar:'mm',
+  guest_info:guest_info,
+  pageSize:'100',
+  lang: 'zh-cn'
+})</script></div></div><footer><div class="layout" id="footer"><div class="copyright">&copy;2020 By hero576</div><div class="framework-info"><span>驱动 - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.8.2"></script><script src="/js/fancybox.js?version=1.8.2"></script><script src="/js/sidebar.js?version=1.8.2"></script><script src="/js/copy.js?version=1.8.2"></script><script src="/js/fireworks.js?version=1.8.2"></script><script src="/js/transition.js?version=1.8.2"></script><script src="/js/scroll.js?version=1.8.2"></script><script src="/js/head.js?version=1.8.2"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css"><script src="/js/katex.js"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>

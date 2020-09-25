@@ -1,0 +1,203 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="TensorRT"><meta name="keywords" content="algorithm"><meta name="author" content="hero576"><meta name="copyright" content="hero576"><title>TensorRT | void land space</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.8.2"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.8.2"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="dns-prefetch" href="https://hm.baidu.com"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?5ff8fca367285c16c6dd5c16ca2ccc1b";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();</script><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  hexoVersion: '5.0.2'
+} </script><meta name="generator" content="Hexo 5.0.2"><link rel="alternate" href="/atom.xml" title="void land space" type="application/atom+xml">
+</head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text"> 简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.1.</span> <span class="toc-text"> 介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%94%AF%E6%8C%81%E7%9A%84%E5%B1%82"><span class="toc-number">1.2.</span> <span class="toc-text"> 支持的层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%98%E5%8C%96%E6%96%B9%E5%BC%8F"><span class="toc-number">1.3.</span> <span class="toc-text"> 优化方式</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">2.</span> <span class="toc-text"> 安装</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#linux"><span class="toc-number">2.1.</span> <span class="toc-text"> linux</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#windows"><span class="toc-number">2.2.</span> <span class="toc-text"> windows</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8"><span class="toc-number">3.</span> <span class="toc-text"> 使用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B"><span class="toc-number">4.</span> <span class="toc-text"> 实例</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/images/haimianbaobao.jpg"></div><div class="author-info__name text-center">hero576</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">47</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">13</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">分类</span><span class="pull-right">5</span></a></div></div></div><div id="content-outer"><div class="plain" id="top-container"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">void land space</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">主页</a><a class="site-page" href="/archives">文章</a><a class="site-page" href="/tags">标签</a><a class="site-page" href="/categories">分类</a><a class="site-page" href="/gallery">相册</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> 搜索</span></a></span></div></div><div class="layout" id="content-inner"><article id="post"><div class="plain" id="post-title">TensorRT</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-09-24</time><span class="post-meta__separator">|</span><i class="fa fa-inbox" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/AI/"> AI</a></div><div class="article-container" id="post-content"><blockquote>
+<p>TensorRT</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="简介"><a class="markdownIt-Anchor" href="#简介"></a> 简介</h1>
+<h2 id="介绍"><a class="markdownIt-Anchor" href="#介绍"></a> 介绍</h2>
+<ul>
+<li>
+<p>TensorRT是一个高性能的深度学习推理（Inference）优化器，可以为深度学习应用提供低延迟、高吞吐率的部署推理。TensorRT可用于对超大规模数据中心、嵌入式平台或自动驾驶平台进行推理加速。TensorRT现已能支持TensorFlow、Caffe、Mxnet、Pytorch等几乎所有的深度学习框架，将TensorRT和NVIDIA的GPU结合起来，能在几乎所有的框架中进行快速和高效的部署推理。</p>
+</li>
+<li>
+<p>TensorRT 是一个C<ins>库，从 TensorRT 3 开始提供C</ins> API和Python API，主要用来针对 NVIDIA GPU进行 高性能推理（Inference）加速。现在最新版TensorRT是4.0版本。</p>
+</li>
+<li>
+<p>可以认为tensorRT是一个只有前向传播的深度学习框架，这个框架可以将 Caffe，TensorFlow的网络模型解析，然后与tensorRT中对应的层进行一一映射，把其他框架的模型统一全部 转换到tensorRT中，然后在tensorRT中可以针对NVIDIA自家GPU实施优化策略，并进行部署加速。</p>
+</li>
+<li>
+<p>目前TensorRT4.0 几乎可以支持所有常用的深度学习框架，对于caffe和TensorFlow来说，tensorRT可以直接解析他们的网络模型；对于caffe2，pytorch，mxnet，chainer，CNTK等框架则是首先要将模型转为 ONNX 的通用深度学习模型，然后对ONNX模型做解析。而tensorflow和MATLAB已经将TensorRT集成到框架中去了。</p>
+</li>
+<li>
+<p>ONNX（Open Neural Network Exchange ）是微软和Facebook携手开发的开放式神经网络交换工具，也就是说不管用什么框架训练，只要转换为ONNX模型，就可以放在其他框架上面去inference。这是一种统一的神经网络模型定义和保存方式，上面提到的除了tensorflow之外的其他框架官方应该都对onnx做了支持，而ONNX自己开发了对tensorflow的支持。从深度学习框架方面来说，这是各大厂商对抗谷歌tensorflow垄断地位的一种有效方式；从研究人员和开发者方面来说，这可以使开发者轻易地在不同机器学习工具之间进行转换，并为项目选择最好的组合方式，加快从研究到生产的速度。</p>
+</li>
+</ul>
+<p><img src="/images/pasted-271.png" alt="tensorRT" /></p>
+<h2 id="支持的层"><a class="markdownIt-Anchor" href="#支持的层"></a> 支持的层</h2>
+<table>
+<thead>
+<tr>
+<th>层</th>
+<th>支持</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Activation</td>
+<td>ReLU, tanh and sigmoid</td>
+</tr>
+<tr>
+<td>Concatenation</td>
+<td>: Link together multiple tensors across the channel dimension.</td>
+</tr>
+<tr>
+<td>Convolution</td>
+<td>3D，2D</td>
+</tr>
+<tr>
+<td>Deconvolution</td>
+<td>Fully</td>
+</tr>
+<tr>
+<td>ElementWise</td>
+<td>sum, product or max of two tensors</td>
+</tr>
+<tr>
+<td>Pooling</td>
+<td>max and average</td>
+</tr>
+<tr>
+<td>Padding</td>
+<td>Flatten</td>
+</tr>
+<tr>
+<td>SoftMax</td>
+<td>cross-channel only</td>
+</tr>
+<tr>
+<td>RNN</td>
+<td>RNN, GRU, and LSTM</td>
+</tr>
+<tr>
+<td>Scale</td>
+<td>Affine transformation and/or exponentiation by constant values</td>
+</tr>
+<tr>
+<td>Shuffle</td>
+<td>Reshuffling of tensors , reshape or transpose data</td>
+</tr>
+<tr>
+<td>Squeeze</td>
+<td>Removes dimensions of size 1 from the shape of a tensor</td>
+</tr>
+<tr>
+<td>Unary</td>
+<td>Supported operations are exp, log, sqrt, recip, abs and neg</td>
+</tr>
+<tr>
+<td>Plugin</td>
+<td>integrate custom layer implementations that TensorRT does not natively support.</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>
+<p>基本上比较经典的层比如，卷积，反卷积，全连接，RNN，softmax等，在tensorRT中都是有对应的实现方式的，tensorRT是可以直接解析的。</p>
+</li>
+<li>
+<p>但是由于现在深度学习技术发展日新月异，各种不同结构的自定义层（比如：STN）层出不穷，所以tensorRT是不可能全部支持当前存在的所有层的。那对于这些自定义的层tensorRT中有一个 Plugin 层，这个层提供了 API 可以由用户自己定义tensorRT不支持的层。</p>
+</li>
+</ul>
+<p><img src="/images/pasted-272.png" alt="TensorRT-plugin" /></p>
+<h2 id="优化方式"><a class="markdownIt-Anchor" href="#优化方式"></a> 优化方式</h2>
+<ul>
+<li>
+<p>TensorRT优化方法主要有以下几种方式，最主要的是两种：层间融合或张量融合（Layer &amp; Tensor Fusion）、数据精度校准（Weight &amp;Activation Precision Calibration）。<br />
+<img src="/images/pasted-273.png" alt="TensorRT-optimize-method" /></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/qccz123456/p/11767858.html">详细介绍</a></p>
+</li>
+</ul>
+<h1 id="安装"><a class="markdownIt-Anchor" href="#安装"></a> 安装</h1>
+<h2 id="linux"><a class="markdownIt-Anchor" href="#linux"></a> linux</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://docs.nvidia.com/deeplearning/sdk/tensorrt-install-guide/index.html">官方指导</a></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 这里改为自己对应的cuda版本</span></span><br><span class="line">$ sudo dpkg -i nv-tensorrt-repo-ubuntu1604-ga-cuda8.0-trt3.0-20171128_1-1_amd64.deb</span><br><span class="line">$ sudo apt-get update</span><br><span class="line">$ sudo apt-get install tensorrt</span><br><span class="line">$ sudo apt-get install python3-libnvinfer-doc</span><br><span class="line">$ sudo apt-get install uff-converter-tf</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>安装好后，使用 <code>$ dpkg -l | grep TensorRT</code> 命令检测是否成功</p>
+</li>
+<li>
+<p>安装后会在 /usr/src 目录下生成一个 tensorrt 文件夹，里面包含 bin , data , python , samples 四个文件夹， samples 文件夹中是官方例程的源码； data , python 文件中存放官方例程用到的资源文件，比如caffemodel文件，TensorFlow模型文件，一些图片等；bin 文件夹用于存放编译后的二进制文件。</p>
+</li>
+<li>
+<p>可以把 tensorrt 文件夹拷贝到用户目录下，方便自己修改测试例程中的代码。</p>
+</li>
+<li>
+<p>进入 samples 文件夹直接 make，会在 bin 目录中生成可执行文件，可以一一进行测试学习。</p>
+</li>
+<li>
+<p>另外tensorRT是不开源的， 它的头文件位于 /usr/include/x86_64-linux-gnu 目录下，共有七个</p>
+</li>
+<li>
+<p>tensorRT的库文件位于 /usr/lib/x86_64-linux-gnu 目录下</p>
+</li>
+</ul>
+<h2 id="windows"><a class="markdownIt-Anchor" href="#windows"></a> windows</h2>
+<ul>
+<li>
+<p><a target="_blank" rel="noopener" href="https://developer.nvidia.com/nvidia-tensorrt-7x-download">下载安装包</a></p>
+</li>
+<li>
+<p>解压，设置系统环境变量</p>
+</li>
+<li>
+<p>复制dll文件到cuda安装目录</p>
+</li>
+<li>
+<p>完成tensorRT安装后，测试看安装是否成功，可以直接编译刚才解压的TensorRT里的案例来测试。这里我们选用sampleMNIST来测试。<a target="_blank" rel="noopener" href="https://blog.csdn.net/yangzzguang/article/details/85570663">流程</a></p>
+</li>
+</ul>
+<h1 id="使用"><a class="markdownIt-Anchor" href="#使用"></a> 使用</h1>
+<ul>
+<li>下面代码是一个简单的build过程</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">IBuilder* builder = createInferBuilder(gLogger);</span><br><span class="line"><span class="comment">// parse the caffe model to populate the network, then set the outputs</span></span><br><span class="line"><span class="comment">// 创建一个network对象，不过这时network对象只是一个空架子</span></span><br><span class="line">INetworkDefinition* network = builder-&gt;createNetwork();</span><br><span class="line"><span class="comment">//tensorRT提供一个高级别的API：CaffeParser，用于解析Caffe模型</span></span><br><span class="line"><span class="comment">//parser.parse函数接受的参数就是上面提到的文件，和network对象</span></span><br><span class="line"><span class="comment">//这一步之后network对象里面的参数才被填充，才具有实际的意义</span></span><br><span class="line">CaffeParser parser;</span><br><span class="line"><span class="keyword">auto</span> blob_name_to_tensor = parser.parse(“deploy.prototxt”,trained_file.c_str(),*network,DataType::kFLOAT);</span><br><span class="line"><span class="comment">// 标记输出 tensors</span></span><br><span class="line"><span class="comment">// specify which tensors are outputs</span></span><br><span class="line">network-&gt;markOutput(*blob_name_to_tensor-&gt;find(<span class="string">&quot;prob&quot;</span>));</span><br><span class="line"><span class="comment">// Build the engine</span></span><br><span class="line"><span class="comment">// 设置batchsize和工作空间，然后创建inference engine</span></span><br><span class="line">builder-&gt;setMaxBatchSize(<span class="number">1</span>);</span><br><span class="line">builder-&gt;setMaxWorkspaceSize(<span class="number">1</span> &lt;&lt; <span class="number">30</span>);</span><br><span class="line"><span class="comment">//调用buildCudaEngine时才会进行前述的层间融合或精度校准优化方式</span></span><br><span class="line">ICudaEngine* engine = builder-&gt;buildCudaEngine(*network);</span><br></pre></td></tr></table></figure>
+<h1 id="实例"><a class="markdownIt-Anchor" href="#实例"></a> 实例</h1>
+<ul>
+<li>之后补充</li>
+</ul>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css"></div></article><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/algorithm/">algorithm</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2020/09/25/eigen/"><i class="fa fa-chevron-left">  </i><span>三维数学基础</span></a></div><div class="next-post pull-right"><a href="/2020/09/20/onnx/"><span>ONNX</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="vcomment"></div><script src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = 'false' == 'true';
+var verify = 'false' == 'true';
+var record_ip = '' == 'true';
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  recordIP:record_ip,
+  appId:'AdfkiqY89QUSUWbDY9xJuCh0-gzGzoHsz',
+  appKey:'2cEvHcqEWsyoKwy4AUL3kPGh',
+  placeholder:'劈个叉吧',
+  avatar:'mm',
+  guest_info:guest_info,
+  pageSize:'100',
+  lang: 'zh-cn'
+})</script></div></div><footer><div class="layout" id="footer"><div class="copyright">&copy;2020 By hero576</div><div class="framework-info"><span>驱动 - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.8.2"></script><script src="/js/fancybox.js?version=1.8.2"></script><script src="/js/sidebar.js?version=1.8.2"></script><script src="/js/copy.js?version=1.8.2"></script><script src="/js/fireworks.js?version=1.8.2"></script><script src="/js/transition.js?version=1.8.2"></script><script src="/js/scroll.js?version=1.8.2"></script><script src="/js/head.js?version=1.8.2"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css"><script src="/js/katex.js"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>
