@@ -1,5 +1,5 @@
 ---
-title: 三维数学基础
+title: eigen
 author: hero576
 tags:
   - robotic
@@ -7,6 +7,9 @@ categories:
   - programme
 date: 2020-09-25 12:28:50
 ---
+> eigen
+
+<!-- more -->
 
 # Eigen简介
 

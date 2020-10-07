@@ -542,6 +542,7 @@ $\equiv$|`\equiv`|-
 $\ll$|`\ll`|-
 $\gg$|`\gg`|-
 $\doteq$|`\doteq`|-
+$\triangleq$ |`\triangleq` |-
 $\prec$|`\prec`|-
 $\succ$|`\succ`|-
 $\sim$|`\sim`|-

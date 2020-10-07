@@ -1,0 +1,10 @@
+[core]
+	repositoryformatversion = 0
+	filemode = false
+	bare = false
+	logallrefupdates = true
+	symlinks = false
+	ignorecase = true
+[remote "origin"]
+	url = http://github.com/hero5766/hero5766.github.io
+	fetch = +refs/heads/*:refs/remotes/origin/*
