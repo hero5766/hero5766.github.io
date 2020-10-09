@@ -396,13 +396,6 @@
   </url>
   
   <url>
-    <loc>http://blog.guoming576.cn/tags/linux/</loc>
-    <lastmod>2020-10-09</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://blog.guoming576.cn/tags/golang/</loc>
     <lastmod>2020-10-09</lastmod>
     <changefreq>daily</changefreq>
@@ -411,6 +404,13 @@
   
   <url>
     <loc>http://blog.guoming576.cn/tags/skills/</loc>
+    <lastmod>2020-10-09</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.guoming576.cn/tags/linux/</loc>
     <lastmod>2020-10-09</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>

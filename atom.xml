@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.guoming576.cn/"/>
-  <updated>2020-10-09T02:53:22.227Z</updated>
+  <updated>2020-10-09T08:40:53.710Z</updated>
   <id>http://blog.guoming576.cn/</id>
   
   <author>
@@ -21,16 +21,13 @@
     <link href="http://blog.guoming576.cn/2020/10/05/opengl/"/>
     <id>http://blog.guoming576.cn/2020/10/05/opengl/</id>
     <published>2020-10-05T08:54:13.000Z</published>
-    <updated>2020-10-09T02:53:22.227Z</updated>
+    <updated>2020-10-09T08:40:53.710Z</updated>
     
-    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><a id="more"></a><h1 id="简介"><a class="markdownIt-Anchor" href="#简介"></a> 简介</h1><h2 id="介绍"><a class="markdownIt-Anchor" href="#介绍"></a> 介绍</h2><ul><li><a href="https://www.opengl.org">官方网址</a></li></ul><h2 id="环境安装"><a class="markdownIt-Anchor" href="#环境安装"></a> 环境安装</h2><ul><li><a href="https://www.opengl.org/sdk/libs/GLEW">下载glew</a></li><li><a href="http://glm.g-truc.net">GLM</a></li><li><a href="https://www.libsdl.org/release/">SDL</a></li></ul><h1 id="opengl渲染管道"><a class="markdownIt-Anchor" href="#opengl渲染管道"></a> OpenGL渲染管道</h1><h2 id="整体流程"><a class="markdownIt-Anchor" href="#整体流程"></a> 整体流程</h2><ul><li>byte data-&gt;Vertex Shader-&gt;Rasterization-&gt;Fragment shalder-&gt;output image-&gt;I/O</li></ul><h2 id="顶点着色器vertex-shader"><a class="markdownIt-Anchor" href="#顶点着色器vertex-shader"></a> 顶点着色器Vertex Shader</h2><ul><li>生成空间点</li></ul><h2 id="光栅化rasterization"><a class="markdownIt-Anchor" href="#光栅化rasterization"></a> 光栅化Rasterization</h2><ul><li>对点进行三角化并填充</li></ul><h2 id="片元着色器fragment-shalder"><a class="markdownIt-Anchor" href="#片元着色器fragment-shalder"></a> 片元着色器Fragment shalder</h2><ul><li>为三角形每个顶点生成颜色信息</li></ul><h2 id="output-image"><a class="markdownIt-Anchor" href="#output-image"></a> output image</h2><ul><li>结合顶点信息和颜色信息输出最终图像</li></ul><h1 id="例子"><a class="markdownIt-Anchor" href="#例子"></a> 例子</h1><ul><li><a href="https://github.com/hero576/gl_test">代码链接</a></li></ul><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><blockquote></blockquote><a id="more"></a><h1 id="简介"><a class="markdownIt-Anchor" href="#简介"></a> 简介</h1><h2 id="介绍"><a class="markdownIt-Anchor" href="#介绍"></a> 介绍</h2><ul><li><a href="https://www.opengl.org">官方网址</a></li></ul><h2 id="环境安装"><a class="markdownIt-Anchor" href="#环境安装"></a> 环境安装</h2><ul><li><a href="https://www.opengl.org/sdk/libs/GLEW">下载glew</a></li><li><a href="http://glm.g-truc.net">GLM</a></li><li><a href="https://www.libsdl.org/release/">SDL</a></li></ul><h1 id="opengl渲染管道"><a class="markdownIt-Anchor" href="#opengl渲染管道"></a> OpenGL渲染管道</h1><h2 id="整体流程"><a class="markdownIt-Anchor" href="#整体流程"></a> 整体流程</h2><ul><li>byte data-&gt;Vertex Shader-&gt;Rasterization-&gt;Fragment shalder-&gt;output image-&gt;I/O</li></ul><h2 id="顶点着色器vertex-shader"><a class="markdownIt-Anchor" href="#顶点着色器vertex-shader"></a> 顶点着色器Vertex Shader</h2><ul><li>生成空间点</li></ul><h2 id="光栅化rasterization"><a class="markdownIt-Anchor" href="#光栅化rasterization"></a> 光栅化Rasterization</h2><ul><li>对点进行三角化并填充</li></ul><h2 id="片元着色器fragment-shalder"><a class="markdownIt-Anchor" href="#片元着色器fragment-shalder"></a> 片元着色器Fragment shalder</h2><ul><li>为三角形每个顶点生成颜色信息</li></ul><h2 id="output-image"><a class="markdownIt-Anchor" href="#output-image"></a> output image</h2><ul><li>结合顶点信息和颜色信息输出最终图像</li></ul><h1 id="例子"><a class="markdownIt-Anchor" href="#例子"></a> 例子</h1><ul><li><a href="https://github.com/hero576/gl_test">代码链接</a></li></ul><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
     
     <summary type="html">
     
-      
-      
-        &lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;\assets\css\APlayer.min.css&quot;&gt;&lt;script src=&quot;\assets\js\APlayer.min.js&quot; cla
-      
+      &lt;blockquote&gt;&lt;/blockquote&gt;
     
     </summary>
     
