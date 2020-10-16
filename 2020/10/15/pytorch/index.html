@@ -1,0 +1,731 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="PyTorch"><meta name="keywords" content="robotic"><meta name="author" content="hero576"><meta name="copyright" content="hero576"><title>PyTorch | void land space</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.8.2"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.8.2"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="dns-prefetch" href="https://hm.baidu.com"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?5ff8fca367285c16c6dd5c16ca2ccc1b";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();</script><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  hexoVersion: '5.0.2'
+} </script><meta name="generator" content="Hexo 5.0.2"><link rel="alternate" href="/atom.xml" title="void land space" type="application/atom+xml">
+</head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text"> 简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.1.</span> <span class="toc-text"> 介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">1.2.</span> <span class="toc-text"> 安装</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%98%E9%87%8F"><span class="toc-number">2.</span> <span class="toc-text"> 变量</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-number">2.1.</span> <span class="toc-text"> 数据类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B9%E6%B3%95"><span class="toc-number">2.2.</span> <span class="toc-text"> 方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%87%E9%87%8F"><span class="toc-number">2.3.</span> <span class="toc-text"> 标量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%91%E9%87%8F%E5%BC%A0%E9%87%8F"><span class="toc-number">2.4.</span> <span class="toc-text"> 向量&#x2F;张量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">2.5.</span> <span class="toc-text"> 初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E5%92%8C%E5%88%87%E7%89%87"><span class="toc-number">2.6.</span> <span class="toc-text"> 索引和切片</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%B4%E5%BA%A6%E5%8F%98%E6%8D%A2"><span class="toc-number">2.7.</span> <span class="toc-text"> 维度变换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#broadcasting%E8%87%AA%E5%8A%A8%E6%89%A9%E5%B1%95"><span class="toc-number">2.8.</span> <span class="toc-text"> broadcasting自动扩展</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#merge-split"><span class="toc-number">2.9.</span> <span class="toc-text"> Merge Split</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BF%90%E7%AE%97"><span class="toc-number">3.</span> <span class="toc-text"> 运算</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%AE%97%E6%95%B0"><span class="toc-number">3.1.</span> <span class="toc-text"> 基本算数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%9F%E8%AE%A1%E8%BF%90%E7%AE%97"><span class="toc-number">3.2.</span> <span class="toc-text"> 统计运算</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9D%A1%E4%BB%B6%E6%93%8D%E4%BD%9C"><span class="toc-number">3.3.</span> <span class="toc-text"> 条件操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%BC%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6"><span class="toc-number">3.4.</span> <span class="toc-text"> 导数和梯度</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C"><span class="toc-number">4.</span> <span class="toc-text"> 网络</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0"><span class="toc-number">4.1.</span> <span class="toc-text"> 激活函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="toc-number">4.2.</span> <span class="toc-text"> 损失函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E5%B1%82"><span class="toc-number">4.3.</span> <span class="toc-text"> 网络层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#gpu%E5%8A%A0%E9%80%9F"><span class="toc-number">4.4.</span> <span class="toc-text"> GPU加速</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%AA%8C%E8%AF%81%E6%B5%8B%E8%AF%95"><span class="toc-number">4.5.</span> <span class="toc-text"> 验证测试</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%AF%E8%A7%86%E5%8C%96%E5%B7%A5%E5%85%B7"><span class="toc-number">5.</span> <span class="toc-text"> 可视化工具</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#tensorboardx"><span class="toc-number">5.1.</span> <span class="toc-text"> tensorboardX</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#visdom-from-facebook"><span class="toc-number">5.2.</span> <span class="toc-text"> visdom from facebook</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BC%98%E5%8C%96%E5%B7%A5%E5%85%B7"><span class="toc-number">6.</span> <span class="toc-text"> 优化工具</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%87%E6%8B%9F%E5%90%88%E5%92%8C%E6%AC%A0%E6%8B%9F%E5%90%88"><span class="toc-number">6.1.</span> <span class="toc-text"> 过拟合和欠拟合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%88%92%E5%88%86"><span class="toc-number">6.2.</span> <span class="toc-text"> 数据划分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%A3%E5%88%99%E5%8C%96"><span class="toc-number">6.3.</span> <span class="toc-text"> 正则化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#l2%E6%AD%A3%E5%88%99%E5%8C%96"><span class="toc-number">6.3.1.</span> <span class="toc-text"> L2正则化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#l1%E6%AD%A3%E5%88%99%E5%8C%96"><span class="toc-number">6.3.2.</span> <span class="toc-text"> L1正则化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E9%87%8F"><span class="toc-number">6.4.</span> <span class="toc-text"> 动量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#learning-rate-decay"><span class="toc-number">6.5.</span> <span class="toc-text"> Learning Rate Decay</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#early-stop%E5%92%8Cdropout"><span class="toc-number">6.6.</span> <span class="toc-text"> Early Stop和Dropout</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C"><span class="toc-number">7.</span> <span class="toc-text"> 卷积神经网络</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%B7%E7%A7%AF%E5%B1%82"><span class="toc-number">7.1.</span> <span class="toc-text"> 卷积层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B1%A0%E5%8C%96%E5%B1%82"><span class="toc-number">7.2.</span> <span class="toc-text"> 池化层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8A%E9%87%87%E6%A0%B7"><span class="toc-number">7.3.</span> <span class="toc-text"> 上采样</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bn"><span class="toc-number">7.4.</span> <span class="toc-text"> BN</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E7%9A%84%E5%B1%9E%E6%80%A7"><span class="toc-number">7.4.1.</span> <span class="toc-text"> 网络的属性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nnmodule"><span class="toc-number">7.5.</span> <span class="toc-text"> nn.Module</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#nnsequential"><span class="toc-number">7.5.1.</span> <span class="toc-text"> nn.Sequential</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#nnparameter"><span class="toc-number">7.5.2.</span> <span class="toc-text"> nn.Parameter</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%A2%9E%E5%BC%BA"><span class="toc-number">7.6.</span> <span class="toc-text"> 数据增强</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#transformscompose"><span class="toc-number">7.6.1.</span> <span class="toc-text"> transforms.Compose</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#rnn"><span class="toc-number">8.</span> <span class="toc-text"> RNN</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#rnn-2"><span class="toc-number">8.1.</span> <span class="toc-text"> RNN</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#lstm"><span class="toc-number">8.2.</span> <span class="toc-text"> LSTM</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="toc-number">9.</span> <span class="toc-text"> 数据集</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="toc-number">9.1.</span> <span class="toc-text"> 自定义数据集</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BF%81%E7%A7%BB%E7%BD%91%E7%BB%9C"><span class="toc-number">10.</span> <span class="toc-text"> 迁移网络</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E6%80%BB%E7%BB%93"><span class="toc-number">11.</span> <span class="toc-text"> 代码总结</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B1%80%E9%83%A8%E6%9E%81%E5%B0%8F%E7%82%B9%E8%8E%B7%E5%8F%96"><span class="toc-number">11.1.</span> <span class="toc-text"> 局部极小点获取</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#lr%E5%AE%9E%E7%8E%B0%E5%A4%9A%E5%88%86%E7%B1%BB"><span class="toc-number">11.2.</span> <span class="toc-text"> LR实现多分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#flatten"><span class="toc-number">11.3.</span> <span class="toc-text"> Flatten</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#linear"><span class="toc-number">11.4.</span> <span class="toc-text"> Linear</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mlp"><span class="toc-number">11.5.</span> <span class="toc-text"> MLP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#resnet"><span class="toc-number">11.6.</span> <span class="toc-text"> ResNet</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#rnn%E9%A2%84%E6%B5%8Bsin%E5%87%BD%E6%95%B0"><span class="toc-number">11.7.</span> <span class="toc-text"> RNN预测sin函数</span></a></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/images/haimianbaobao.jpg"></div><div class="author-info__name text-center">hero576</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">50</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">13</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">分类</span><span class="pull-right">5</span></a></div></div></div><div id="content-outer"><div class="plain" id="top-container"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">void land space</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">主页</a><a class="site-page" href="/archives">文章</a><a class="site-page" href="/tags">标签</a><a class="site-page" href="/categories">分类</a><a class="site-page" href="/gallery">相册</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> 搜索</span></a></span></div></div><div class="layout" id="content-inner"><article id="post"><div class="plain" id="post-title">PyTorch</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-10-15</time><span class="post-meta__separator">|</span><i class="fa fa-inbox" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/programme/"> programme</a></div><div class="article-container" id="post-content"><a id="more"></a>
+<h1 id="简介"><a class="markdownIt-Anchor" href="#简介"></a> 简介</h1>
+<h2 id="介绍"><a class="markdownIt-Anchor" href="#介绍"></a> 介绍</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/">官网</a></li>
+</ul>
+<h2 id="安装"><a class="markdownIt-Anchor" href="#安装"></a> 安装</h2>
+<ul>
+<li>在<a target="_blank" rel="noopener" href="https://pytorch.org/">官网</a>选择自己的环境安装<br />
+<code>conda install pytorch torchvision cudatoolkit=10.1 -c pytorch</code></li>
+</ul>
+<h1 id="变量"><a class="markdownIt-Anchor" href="#变量"></a> 变量</h1>
+<h2 id="数据类型"><a class="markdownIt-Anchor" href="#数据类型"></a> 数据类型</h2>
+<table>
+<thead>
+<tr>
+<th>cpu类型</th>
+<th>gpu类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>torch.ShortTensor</td>
+<td>torch.cuda.ShortTensor</td>
+<td>16-bit</td>
+</tr>
+<tr>
+<td>torch.IntTensor</td>
+<td>torch.cuda.IntTensor</td>
+<td>32-bit</td>
+</tr>
+<tr>
+<td>torch.LongTensor</td>
+<td>torch.cuda.LongTensor</td>
+<td>64-bit</td>
+</tr>
+<tr>
+<td>torch.FloatTensor</td>
+<td>torch.cuda.FloatTensor</td>
+<td>32-bit</td>
+</tr>
+<tr>
+<td>torch.DoubleTensor</td>
+<td>torch.cuda.DoubleTensor</td>
+<td>64-bit</td>
+</tr>
+<tr>
+<td>torch.ByteTensor</td>
+<td>torch.cuda.ByteTensor</td>
+<td>8-bit</td>
+</tr>
+<tr>
+<td>torch.CharTensor</td>
+<td>torch.cuda.CharTensor</td>
+<td>8-bit</td>
+</tr>
+<tr>
+<td>torch.MalfTensor</td>
+<td>torch.cuda.MalfTensor</td>
+<td>16-bit</td>
+</tr>
+</tbody>
+</table>
+<h2 id="方法"><a class="markdownIt-Anchor" href="#方法"></a> 方法</h2>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>类型推断</td>
+<td><code>a.type()</code></td>
+</tr>
+<tr>
+<td>类型判断</td>
+<td><code>isinstance(a,torch.FloatTensor)</code></td>
+</tr>
+<tr>
+<td>gpu转化</td>
+<td><code>data=data.cuda()</code></td>
+</tr>
+<tr>
+<td>张量形状</td>
+<td><code>a.shape</code></td>
+</tr>
+<tr>
+<td>张量尺寸</td>
+<td><code>a.size()</code></td>
+</tr>
+<tr>
+<td>内存</td>
+<td><code>a.numel()</code></td>
+</tr>
+<tr>
+<td>维度</td>
+<td><code>a.dim()</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="标量"><a class="markdownIt-Anchor" href="#标量"></a> 标量</h2>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>创建标量</td>
+<td><code>a = torch.tensor(1.)</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="向量张量"><a class="markdownIt-Anchor" href="#向量张量"></a> 向量/张量</h2>
+<table>
+<thead>
+<tr>
+<th>创建矩阵</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>list矩阵</td>
+<td><code>a = torch.tensor([1.])</code></td>
+</tr>
+<tr>
+<td>numpy矩阵</td>
+<td><code>torch.from_numpy(np.ones(2))</code></td>
+</tr>
+<tr>
+<td>给定维度</td>
+<td><code>a = torch.FloatTensor(1)</code></td>
+</tr>
+<tr>
+<td>list矩阵</td>
+<td><code>a = torch.FloatTensor([2,3])</code></td>
+</tr>
+<tr>
+<td>全一矩阵</td>
+<td><code>torch.ones(2)</code></td>
+</tr>
+<tr>
+<td>全零矩阵</td>
+<td><code>torch.zeros(3)</code></td>
+</tr>
+<tr>
+<td>对角矩阵</td>
+<td><code>torch.eye(3)</code></td>
+</tr>
+<tr>
+<td>随机正态分布矩阵</td>
+<td><code>torch.randn(2,3)</code><br><code>torch.normal(mean=torch.full([10],0),std=torch.arange(1,0,-0.1))</code></td>
+</tr>
+<tr>
+<td>随机均匀[0,1]矩阵</td>
+<td><code>torch.rand(2,3)</code></td>
+</tr>
+<tr>
+<td>随机聚云分布</td>
+<td><code>torch.randint(1,10)</code></td>
+</tr>
+<tr>
+<td>给定值的矩阵</td>
+<td><code>torch.full([2,3],7)</code></td>
+</tr>
+<tr>
+<td>递增矩阵</td>
+<td><code>torch.arange(0,10,2)</code></td>
+</tr>
+<tr>
+<td>等分数列</td>
+<td><code>torch.linspace(0,10,steps=4)</code></td>
+</tr>
+<tr>
+<td>等指数列</td>
+<td><code>torch.logspace(0,-1,steps=4)</code></td>
+</tr>
+<tr>
+<td>随机打散</td>
+<td><code>torch.randperm(10)</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="初始化"><a class="markdownIt-Anchor" href="#初始化"></a> 初始化</h2>
+<table>
+<thead>
+<tr>
+<th>创建矩阵</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>未初始化数据</td>
+<td><code>torch.empty(2,3)</code><br><code>a = torch.FloatTensor(2,3)</code>,易出现nan，inf等数据</td>
+</tr>
+<tr>
+<td>随机均匀初始化</td>
+<td><code>torch.rand(2,3)</code></td>
+</tr>
+<tr>
+<td>根据传入的tensor随机初始化</td>
+<td><code>torch.rand_like(a)</code></td>
+</tr>
+<tr>
+<td>随机种子</td>
+<td><code>torch.manual_seed(23);np.random.seed(23)</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="索引和切片"><a class="markdownIt-Anchor" href="#索引和切片"></a> 索引和切片</h2>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>索引</td>
+<td><code>a[0,0]</code></td>
+</tr>
+<tr>
+<td>切片</td>
+<td><code>a[1:,2:,:,::2]</code></td>
+</tr>
+<tr>
+<td>索引</td>
+<td><code>a.index_select(1,[1,2])</code></td>
+</tr>
+<tr>
+<td>索引</td>
+<td><code>a[:,0,...]</code></td>
+</tr>
+<tr>
+<td>掩码索引</td>
+<td><code>mask = x.ge(0.5)</code><br><code>torch.masked_select(a,mask)</code></td>
+</tr>
+<tr>
+<td>打平后根据索引取</td>
+<td><code>torch.take(a,torch.torch.tensor([0,2,0]))</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="维度变换"><a class="markdownIt-Anchor" href="#维度变换"></a> 维度变换</h2>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>更改维度</td>
+<td>view/reshape两者相同，<code>a.view(4,28*28)</code></td>
+</tr>
+<tr>
+<td>减少、增加维度</td>
+<td>squeeze/unsqueeze，squeeze挤压维度不为1则返回原值。<code>a.unsqueeze(0)</code></td>
+</tr>
+<tr>
+<td>扩展</td>
+<td>expand扩展数据/repeat扩展数据并复制数据，<code>a.expand(-1,32,14,14)</code>,<code>a.repeat(1,32,14,14)</code>拷贝次数</td>
+</tr>
+<tr>
+<td>转置</td>
+<td>transpose/t/permute，t只适应于2维，transpose即可实现转置，还可维度交换。<code>a.transpose(1,3).contiguous().view(4,3*32*32).view(4,3,32,32)</code>维度污染<br><code>a.transpose(1,3).contiguous().view(4,3*32*32).view(4,32,32,3).transpose(1,3)</code><br>a.permute(0,2,3,1)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="broadcasting自动扩展"><a class="markdownIt-Anchor" href="#broadcasting自动扩展"></a> broadcasting自动扩展</h2>
+<ul>
+<li>broadcasting是一种机制，可以维度自动扩展，以适应大小维度不同的向量的运算或者叠加</li>
+</ul>
+<h2 id="merge-split"><a class="markdownIt-Anchor" href="#merge-split"></a> Merge Split</h2>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cat</td>
+<td><code>torch.cat([a,b],dim=0)</code>，不支持broadcasting时，需要除0维度外的col维度相同</td>
+</tr>
+<tr>
+<td>stack</td>
+<td><code>torch.stack([a,b],dim=0)</code>，与cat不同，会在dim=0新增维度，组合ab，ab维度必须完全一致</td>
+</tr>
+<tr>
+<td>split</td>
+<td>根据长度拆分a.size(5,1,1)，长度相同<code>a.split(2,dim=0)</code>，长度不同<code>a.split([1,1,3],dim=0)</code></td>
+</tr>
+<tr>
+<td>chunk</td>
+<td>根据数量拆分<code>a.chunk(2,dim=0)</code></td>
+</tr>
+</tbody>
+</table>
+<h1 id="运算"><a class="markdownIt-Anchor" href="#运算"></a> 运算</h1>
+<h2 id="基本算数"><a class="markdownIt-Anchor" href="#基本算数"></a> 基本算数</h2>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>加减乘除</td>
+<td>add,sub,mul,div<code>torch.all(torch.eq(a-b,torch.sub(a,b)))</code></td>
+</tr>
+<tr>
+<td>矩阵乘法</td>
+<td>2维：<code>torch.mm</code><br>2维或3维：<code>torch.matmul</code>、<code>@</code></td>
+</tr>
+<tr>
+<td>平方</td>
+<td><code>a.pow(2)</code>，<code>a**2</code></td>
+</tr>
+<tr>
+<td>根号</td>
+<td><code>a.sqrt()</code>，<code>a**0.5</code></td>
+</tr>
+<tr>
+<td>平方根的导数</td>
+<td><code>a.rsqrt()</code></td>
+</tr>
+<tr>
+<td>指数</td>
+<td><code>torch.exp(a)</code></td>
+</tr>
+<tr>
+<td>对数</td>
+<td><code>torch.log(a)</code>，默认以e为底</td>
+</tr>
+<tr>
+<td>近似解</td>
+<td>向下取整<code>floor</code><br>向上取整<code>ceil</code><br>四舍五入<code>round</code><br>整数部分<code>trunc</code><br>小数部分<code>frac</code></td>
+</tr>
+<tr>
+<td>裁剪</td>
+<td><code>a.clamp(10)</code>小于10的变为10<br><code>a.clamp(0,10)</code>小于0的变为0，大于10取10</td>
+</tr>
+</tbody>
+</table>
+<h2 id="统计运算"><a class="markdownIt-Anchor" href="#统计运算"></a> 统计运算</h2>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>分布</td>
+<td>范数：<code>norm(n=1)</code>,<code>mean</code>,<code>sum</code>,累乘<code>prod</code></td>
+</tr>
+<tr>
+<td>最值</td>
+<td><code>max</code>,<code>min</code>,<code>argmin</code>,<code>argmax</code>,参数<code>dim</code>,<code>keepdim</code></td>
+</tr>
+<tr>
+<td>最值</td>
+<td><code>kthvalue</code>,前几名的top-5的值<code>topk</code></td>
+</tr>
+<tr>
+<td>比较</td>
+<td>判断每个元素<code>eq</code>,判断是否相等<code>equal</code>,<code>gt</code>,<code>&gt;,&gt;=,&lt;,&lt;=,!=,==</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="条件操作"><a class="markdownIt-Anchor" href="#条件操作"></a> 条件操作</h2>
+<ul>
+<li>为了更好的利用gpu的功能，pytorch的很多操作都进行了封装，实现高度并行</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>条件</td>
+<td><code>torch.where(condition,x,y)</code>condition用来表示是从x还是y取值</td>
+</tr>
+<tr>
+<td>查表</td>
+<td><code>gather(input,dim,index,out=None)</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="导数和梯度"><a class="markdownIt-Anchor" href="#导数和梯度"></a> 导数和梯度</h2>
+<ul>
+<li>导数derivate</li>
+<li>偏微分partial derivate、梯度gradient(偏微分的集合，是一个标量)</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">x = torch.ones(<span class="number">1</span>);w=torch.full([<span class="number">1</span>],<span class="number">2.</span>);w.requires_grad_();mse=F.mse_loss(torch.ones(<span class="number">1</span>),x*w)</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>手动导数</td>
+<td><code>torch.autograd.grad(mse,[w])</code>，这里需要对w配置求导，<code>w.requires_grad_()</code>，求导一次会对生成图进行清理，可以设置<code>retain_graph=True</code>多次求导</td>
+</tr>
+<tr>
+<td>自动化</td>
+<td>对mse进行反向传播<code>mse.backword()</code>，在<code>w.grad</code>中查看w的梯度</td>
+</tr>
+</tbody>
+</table>
+<h1 id="网络"><a class="markdownIt-Anchor" href="#网络"></a> 网络</h1>
+<h2 id="激活函数"><a class="markdownIt-Anchor" href="#激活函数"></a> 激活函数</h2>
+<ul>
+<li>除了torch库，<code>from torch.nn import funtional as F</code>也有sigmoid函数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>sigmoid</td>
+<td><code>torch.sigmoid(a)</code></td>
+</tr>
+<tr>
+<td>tanh</td>
+<td><code>torch.tanh(a)</code></td>
+</tr>
+<tr>
+<td>ReLU</td>
+<td><code>torch.relu(a)</code><br><code>F.leaky_relu</code><br><code>F.selu</code><br><code>F.softplus</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="损失函数"><a class="markdownIt-Anchor" href="#损失函数"></a> 损失函数</h2>
+<ul>
+<li>MSE(Mean Squared Error)均方差</li>
+<li>Cross Entropy Loss：可用于二分类和多分类，与softmax搭配使用</li>
+<li>Hinge Loss：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mo>∑</mo><mi>i</mi></msub><mrow></mrow><mrow><mi>m</mi><mi>a</mi><mi>x</mi><mo stretchy="false">(</mo><mn>0</mn><mo separator="true">,</mo><mn>1</mn><mo>−</mo><msub><mi>y</mi><mi>i</mi></msub><mo>∗</mo><msub><mi>h</mi><mi>θ</mi></msub><mo stretchy="false">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo stretchy="false">)</mo><mo stretchy="false">)</mo></mrow></mrow><annotation encoding="application/x-tex">\sum_i{}{max(0,1-y_i*h_\theta(x_i))}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0497100000000001em;vertical-align:-0.29971000000000003em;"></span><span class="mop"><span class="mop op-symbol small-op" style="position:relative;top:-0.0000050000000000050004em;">∑</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.16195399999999993em;"><span style="top:-2.40029em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.29971000000000003em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"></span><span class="mord"><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">x</span><span class="mopen">(</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathdefault">h</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">θ</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mclose">)</span></span></span></span></span></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MSE</td>
+<td><code>F.mse_loss(y,pred)</code>与<code>torch.norm(y,pred).pow(2)</code>相同</td>
+</tr>
+<tr>
+<td>Cross Entropy</td>
+<td><code>F.cross_entropy(x,y)</code>与<code>pred=F.softmax(y,dim=1);pre_log=torch.log(pred);F.nil_loss(pre_log,y)</code>相同</td>
+</tr>
+<tr>
+<td>softmax</td>
+<td><code>F.softmax(y,dim=1)</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="网络层"><a class="markdownIt-Anchor" href="#网络层"></a> 网络层</h2>
+<ul>
+<li>模型类创建过程
+<ul>
+<li>引入<code>import torch.nn as nn</code></li>
+<li>类继承<code>nn.Module</code></li>
+<li>完成init、forward函数，pytorch会自动推导反向传播的函数</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MLP</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        super(MLP, self).__init__()</span><br><span class="line">        self.model = nn.Sequential( <span class="comment"># 容器，可以传入任意继承nn.module的类</span></span><br><span class="line">            nn.Linear(<span class="number">784</span>, <span class="number">200</span>),nn.ReLU(inplace=<span class="literal">True</span>),</span><br><span class="line">            nn.Linear(<span class="number">200</span>, <span class="number">200</span>),nn.ReLU(inplace=<span class="literal">True</span>),</span><br><span class="line">            nn.Linear(<span class="number">200</span>, <span class="number">10</span>),nn.ReLU(inplace=<span class="literal">True</span>),</span><br><span class="line">        )</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self, x</span>):</span></span><br><span class="line">        x = self.model(x)</span><br><span class="line">        <span class="keyword">return</span> x</span><br></pre></td></tr></table></figure>
+<h2 id="gpu加速"><a class="markdownIt-Anchor" href="#gpu加速"></a> GPU加速</h2>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">device = torch.device(<span class="string">&#x27;cuda:0&#x27;</span>)</span><br><span class="line">net = MLP().to(device) <span class="comment"># 转为cuda</span></span><br><span class="line">optimizer = optim.SGD(net.parameters(),lr=learning_rate)</span><br><span class="line">criten = nn.CrossEntropyLoss().to(device)</span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(epochs):</span><br><span class="line">  <span class="keyword">for</span> batch_idx,(data,target) <span class="keyword">in</span> enumerate(train_loader):</span><br><span class="line">    data = data.view(<span class="number">-1</span>,<span class="number">28</span>*<span class="number">28</span>)</span><br><span class="line">    data,target = data.to(device),target.cuda() <span class="comment"># cuda是老版本方法，这种方法没有使用配置的device，不方便更改</span></span><br></pre></td></tr></table></figure>
+<h2 id="验证测试"><a class="markdownIt-Anchor" href="#验证测试"></a> 验证测试</h2>
+<ul>
+<li>在训练每次迭代时，统计验证集的准确率，查看模型是否过拟合</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(epochs):</span><br><span class="line">    <span class="keyword">for</span> batch_idx, (data, target) <span class="keyword">in</span> enumerate(train_loader):</span><br><span class="line">        data = data.view(<span class="number">-1</span>, <span class="number">28</span>*<span class="number">28</span>)</span><br><span class="line">        data, target = data.to(device), target.cuda()</span><br><span class="line">        logits = net(data)</span><br><span class="line">        loss = criteon(logits, target)</span><br><span class="line">        optimizer.zero_grad()</span><br><span class="line">        loss.backward()</span><br><span class="line">        <span class="comment"># print(w1.grad.norm(), w2.grad.norm())</span></span><br><span class="line">        optimizer.step()</span><br><span class="line">        <span class="keyword">if</span> batch_idx % <span class="number">100</span> == <span class="number">0</span>:</span><br><span class="line">            print(<span class="string">&#x27;Train Epoch: &#123;&#125; [&#123;&#125;/&#123;&#125; (&#123;:.0f&#125;%)]\tLoss: &#123;:.6f&#125;&#x27;</span>.format(epoch, batch_idx * len(data), len(train_loader.dataset),<span class="number">100.</span> * batch_idx / len(train_loader), loss.item()))</span><br><span class="line">    test_loss = <span class="number">0</span></span><br><span class="line">    correct = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> data, target <span class="keyword">in</span> test_loader:</span><br><span class="line">        data = data.view(<span class="number">-1</span>, <span class="number">28</span> * <span class="number">28</span>)</span><br><span class="line">        data, target = data.to(device), target.cuda()</span><br><span class="line">        logits = net(data)</span><br><span class="line">        test_loss += criteon(logits, target).item()</span><br><span class="line">        pred = logits.argmax(dim=<span class="number">1</span>)</span><br><span class="line">        correct += pred.eq(target).float().sum().item()</span><br><span class="line">    test_loss /= len(test_loader.dataset)</span><br><span class="line">    print(<span class="string">&#x27;\nTest set: Average loss: &#123;:.4f&#125;, Accuracy: &#123;&#125;/&#123;&#125; (&#123;:.0f&#125;%)\n&#x27;</span>.format(test_loss, correct, len(test_loader.dataset),<span class="number">100.</span> * correct / len(test_loader.dataset)))</span><br></pre></td></tr></table></figure>
+<h1 id="可视化工具"><a class="markdownIt-Anchor" href="#可视化工具"></a> 可视化工具</h1>
+<h2 id="tensorboardx"><a class="markdownIt-Anchor" href="#tensorboardx"></a> tensorboardX</h2>
+<ul>
+<li>安装<code>pip install tensorboardX</code></li>
+<li>使用tensorboardX，主要监听的是numpy数据，使用torch是，必须<code>param.clone().cpu().data.numpy()</code>转换才能完成可视化过程</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> tensorboardX <span class="keyword">import</span> SummaryWritter</span><br><span class="line">writer = SummaryWriter()</span><br><span class="line">writer.add_scalar(<span class="string">&#x27;data/scalar1&#x27;</span>,dummy_s1[<span class="number">0</span>],n_iter)<span class="comment">#监听一个数据</span></span><br><span class="line">writer.add_scalars(<span class="string">&#x27;data/scalar_group&#x27;</span>,&#123;<span class="string">&#x27;xsinx&#x27;</span>:n_iter*np.sin(n_iter),<span class="string">&#x27;xcosx&#x27;</span>:n_iter*np.cos(n_iter),<span class="string">&#x27;arctanx&#x27;</span>:np.arctan(n_iter)&#125;,n_iter)</span><br><span class="line">writer.add_image(<span class="string">&#x27;image&#x27;</span>,x,n_iter)<span class="comment">#监听多个数据</span></span><br><span class="line">writer.add_text(<span class="string">&#x27;Text&#x27;</span>,<span class="string">&#x27;text logged at step:&#x27;</span>+str(n_iter),n_iter)</span><br><span class="line"><span class="keyword">for</span> name,param <span class="keyword">in</span> resnet18.named_parameters():</span><br><span class="line">  writer.add_histogram(name,param.clone().cpu().data.numpy(),n_iter)</span><br><span class="line">writer.close()</span><br></pre></td></tr></table></figure>
+<h2 id="visdom-from-facebook"><a class="markdownIt-Anchor" href="#visdom-from-facebook"></a> visdom from facebook</h2>
+<ul>
+<li>visdom简化了转化过程，直接就可以展示torch的数据</li>
+<li>安装<code>pip install visdom</code></li>
+<li>开启服务：<code>python -m visdom.server</code></li>
+<li>使用visdom</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> visdom <span class="keyword">import</span> Visdom</span><br><span class="line">viz=Visdom()</span><br><span class="line"><span class="comment"># 一条线</span></span><br><span class="line">viz.line([<span class="number">0.</span>],[<span class="number">0.</span>],win=<span class="string">&#x27;train_loss&#x27;</span>,opts=dict(title=<span class="string">&#x27;train loss&#x27;</span>))</span><br><span class="line">viz.line([loss.item()],[global_step],win=<span class="string">&#x27;train_loss&#x27;</span>,update=<span class="string">&#x27;append&#x27;</span>)</span><br><span class="line"><span class="comment"># 多条线</span></span><br><span class="line">viz.line([<span class="number">0.</span>,<span class="number">0.</span>],[<span class="number">0.</span>],win=<span class="string">&#x27;test&#x27;</span>,opts=dict(title=<span class="string">&#x27;test loss&#x27;</span>),legend=[<span class="string">&#x27;loss&#x27;</span>,<span class="string">&#x27;acc&#x27;</span>])</span><br><span class="line">viz.line([[test.loss,correct/len(test_loader.dataset)]],[global_step],win=<span class="string">&#x27;test&#x27;</span>,update=<span class="string">&#x27;append&#x27;</span>)</span><br><span class="line">viz.images(data.view(<span class="number">-1</span>,<span class="number">1</span>,<span class="number">28</span>,<span class="number">28</span>),win=<span class="string">&#x27;x&#x27;</span>)</span><br><span class="line">viz.text(str(pre.detach().cpu().numpy()),win=<span class="string">&#x27;pred&#x27;</span>,opts=dict(title=<span class="string">&#x27;pred&#x27;</span>))</span><br></pre></td></tr></table></figure>
+<h1 id="优化工具"><a class="markdownIt-Anchor" href="#优化工具"></a> 优化工具</h1>
+<h2 id="过拟合和欠拟合"><a class="markdownIt-Anchor" href="#过拟合和欠拟合"></a> 过拟合和欠拟合</h2>
+<ul>
+<li>欠拟合：即使数据增加，acc和loss都无法得到更好的结果的时候，考虑是否模型表征能力不足。可以通过小量的数据训练模型，查看是否会过拟合来判断。</li>
+<li>过拟合：训练数据表现越来越好，测试数据表现变得更差。</li>
+</ul>
+<h2 id="数据划分"><a class="markdownIt-Anchor" href="#数据划分"></a> 数据划分</h2>
+<ul>
+<li>数据划分：<code>train,val = torch.utils.data.random_split(train_db,[50000,100o0])</code></li>
+<li>训练数据：<code>train_loader = torch.utils.data.DataLoader(train,batch_size=1,shuffle=True)</code></li>
+<li>验证数据：<code>val_loader = torch.utils.data.DataLoader(val,batch_size=1,shuffle=False)</code></li>
+</ul>
+<h2 id="正则化"><a class="markdownIt-Anchor" href="#正则化"></a> 正则化</h2>
+<h3 id="l2正则化"><a class="markdownIt-Anchor" href="#l2正则化"></a> L2正则化</h3>
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>J</mi><mo stretchy="false">(</mo><mi>θ</mi><mo stretchy="false">)</mo><mo>=</mo><mi>J</mi><mo stretchy="false">(</mo><mi>θ</mi><mo stretchy="false">)</mo><mo>+</mo><mfrac><mi>λ</mi><mrow><mn>2</mn><mi>n</mi></mrow></mfrac><msub><mo>∑</mo><msubsup><mi>w</mi><mi>i</mi><mn>2</mn></msubsup></msub></mrow><annotation encoding="application/x-tex">J(\theta)=J(\theta)+\frac{\lambda}{2n}\sum_{w_i^2}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.09618em;">J</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.09618em;">J</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.405418em;vertical-align:-0.52531em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8801079999999999em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span><span class="mord mathdefault mtight">n</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">λ</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop"><span class="mop op-symbol small-op" style="position:relative;top:-0.0000050000000000050004em;">∑</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.26386999999999994em;"><span style="top:-2.40029em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8051142857142857em;"><span style="top:-2.177714285714286em;margin-left:-0.02691em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathdefault mtight">i</span></span></span><span style="top:-2.8448em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3222857142857143em;"><span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.52531em;"><span></span></span></span></span></span></span></span></span></span></li>
+<li>在pytorch只需设置<code>weight_decay</code>即可实现L2正则化，代表<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>λ</mi></mrow><annotation encoding="application/x-tex">\lambda</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">λ</span></span></span></span></li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">net=MLP()</span><br><span class="line">optimizer = optim.SGD(net.paramters(),lr=<span class="number">0.01</span>,weight_decay=<span class="number">0.01</span>)</span><br><span class="line">criteon=nn.CrossEntropyLoss()</span><br></pre></td></tr></table></figure>
+<h3 id="l1正则化"><a class="markdownIt-Anchor" href="#l1正则化"></a> L1正则化</h3>
+<ul>
+<li>L1正则化需要手动实现</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">regularization_loss=<span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> param <span class="keyword">in</span> model.parameters():</span><br><span class="line">    regularization_loss=torch.sum(torch.abs(param))</span><br><span class="line">classify_class=criteon(logits,target)</span><br><span class="line">loss=classify_class+<span class="number">0.01</span>*regularization_loss</span><br><span class="line">optimizer.zero_grad()<span class="comment"># 调用backward()函数之前都要将梯度清零，因为如果梯度不清零，pytorch中会将上次计算的梯度和本次计算的梯度累加。这样逻辑的好处是，当我们的硬件限制不能使用更大的bachsize时，使用多次计算较小的bachsize的梯度平均值来代替，更方便，坏处当然是每次都要清零梯度。</span></span><br><span class="line">loss.backward()</span><br><span class="line">optimizer.step()</span><br></pre></td></tr></table></figure>
+<h2 id="动量"><a class="markdownIt-Anchor" href="#动量"></a> 动量</h2>
+<ul>
+<li>
+<p>梯度更新公式：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>w</mi><mrow><mi>k</mi><mo>+</mo><mn>1</mn></mrow></msup><mo>=</mo><msup><mi>w</mi><mi>k</mi></msup><mo>−</mo><mi>α</mi><mi mathvariant="normal">▽</mi><mi>f</mi><mo stretchy="false">(</mo><msup><mi>w</mi><mi>k</mi></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">w^{k+1}=w^k-\alpha\triangledown f(w^k)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8491079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.932438em;vertical-align:-0.08333em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.849108em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.099108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.0037em;">α</span><span class="mord amsrm">▽</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.849108em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>，梯度方向减小</p>
+</li>
+<li>
+<p>增加动量后：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>w</mi><mrow><mi>k</mi><mo>+</mo><mn>1</mn></mrow></msup><mo>=</mo><msup><mi>w</mi><mi>k</mi></msup><mo>−</mo><mi>α</mi><msup><mi>z</mi><mrow><mi>k</mi><mo>+</mo><mn>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">w^{k+1}=w^k-\alpha z^{k+1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8491079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.932438em;vertical-align:-0.08333em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.849108em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8491079999999999em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.0037em;">α</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span></span></span></span>,<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>z</mi><mrow><mi>k</mi><mo>+</mo><mn>1</mn></mrow></msup><mo>=</mo><mi>β</mi><msup><mi>z</mi><mi>k</mi></msup><mo>+</mo><mi mathvariant="normal">▽</mi><mi>f</mi><mo stretchy="false">(</mo><msup><mi>w</mi><mi>k</mi></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">z^{k+1}=\beta z^k+\triangledown f(w^k)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8491079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.043548em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05278em;">β</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.849108em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.099108em;vertical-align:-0.25em;"></span><span class="mord amsrm">▽</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.849108em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>，增加了系数为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>β</mi></mrow><annotation encoding="application/x-tex">\beta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05278em;">β</span></span></span></span>的动量</p>
+</li>
+<li>
+<p>pytorch的支持，只需更改<code>momentum</code>参数</p>
+</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">optimizer = optim.SGD(model.paramters(),lr=<span class="number">0.01</span>,momentum=<span class="number">0.78</span>,weight_decay=<span class="number">0.01</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="learning-rate-decay"><a class="markdownIt-Anchor" href="#learning-rate-decay"></a> Learning Rate Decay</h2>
+<ul>
+<li>衰减lr在大多数情况下，都可以加快模型的训练</li>
+<li>pytorch实现衰减:</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 方法一</span></span><br><span class="line">optimizer = optim.SGD(model.paramters(),lr=<span class="number">0.01</span>,momentum=<span class="number">0.78</span>,weight_decay=<span class="number">0.01</span>)</span><br><span class="line">scheduler = torch.optim.lr_scheduler.ReduceLROnplateau(optimizer,<span class="string">&#x27;min&#x27;</span>)`</span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(epochs):</span><br><span class="line">    train(train_loader,model,criterion,optimizer,epoch)</span><br><span class="line">    avg,loss=validate(val_loader,model,criterion,epoch)</span><br><span class="line">    scheduler.step(loss)</span><br><span class="line"><span class="comment"># 方法二</span></span><br><span class="line">scheduler = StepLR(optimizer,step_size=<span class="number">30</span>,gamma=<span class="number">0.1</span>)`</span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(epochs):</span><br><span class="line">    train(train_loader,model,criterion,optimizer,epoch)</span><br><span class="line">    avg,loss=validate(val_loader,model,criterion,epoch)</span><br><span class="line">    scheduler.step(loss)</span><br></pre></td></tr></table></figure>
+<h2 id="early-stop和dropout"><a class="markdownIt-Anchor" href="#early-stop和dropout"></a> Early Stop和Dropout</h2>
+<ul>
+<li>防止过拟合</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 增加dropout</span></span><br><span class="line">net_dropped = torch.nn.Sequential(</span><br><span class="line">    torch.nn.Linear(<span class="number">784</span>,<span class="number">200</span>),</span><br><span class="line">    torch.nn.Dropout(<span class="number">0.5</span>),</span><br><span class="line">    torch.nn.ReLU(),</span><br><span class="line">    torch.nn.Linear(<span class="number">200</span>,<span class="number">10</span>),</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在test时，不需要进行dropout，需要设置网络为evaluation</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">net_dropout.train5()</span><br><span class="line">net_dropout.eval()</span><br></pre></td></tr></table></figure>
+<h1 id="卷积神经网络"><a class="markdownIt-Anchor" href="#卷积神经网络"></a> 卷积神经网络</h1>
+<h2 id="卷积层"><a class="markdownIt-Anchor" href="#卷积层"></a> 卷积层</h2>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 类实现</span></span><br><span class="line">layer=nn.Conv2d(<span class="number">1</span>,<span class="number">3</span>,kernal_size=<span class="number">3</span>,stride=<span class="number">1</span>,padding=<span class="number">0</span>)</span><br><span class="line">x=torch.rand(<span class="number">1</span>,<span class="number">1</span>,<span class="number">28</span>,<span class="number">28</span>)</span><br><span class="line">out=layer.forward(x)</span><br><span class="line">out=layer(x)<span class="comment"># 与-layer.forward(x)不同，pytorch会执行内置的一些机制</span></span><br><span class="line"><span class="comment"># 函数实现</span></span><br><span class="line">w=torch.rand(<span class="number">16</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">5</span>)</span><br><span class="line">b=torch.rand(<span class="number">16</span>)</span><br><span class="line">out=F.conv2d(x,w,b,stride=<span class="number">1</span>,padding=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="池化层"><a class="markdownIt-Anchor" href="#池化层"></a> 池化层</h2>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">layer=nn.MaxPool2d(<span class="number">2</span>,stride=<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="上采样"><a class="markdownIt-Anchor" href="#上采样"></a> 上采样</h2>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">layer=F.interpolate(x,scale_factor=<span class="number">2</span>,mode=<span class="string">&#x27;nearest&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="bn"><a class="markdownIt-Anchor" href="#bn"></a> BN</h2>
+<ul>
+<li>Image Normalization，图像数据一般为0~255，在训练时一般归一化</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">normalize = transform.Normalize(mean=[<span class="number">0.485</span>,<span class="number">0.456</span>,<span class="number">0.406</span>],std=[<span class="number">0.229</span>,<span class="number">0.224</span>,<span class="number">0.225</span>])</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Batch Normalization，在必须使用sigmoid函数时，超出0的范围越大，梯度变化越微弱，所以通过BN将数据归一化到N(0,1)的分布中，可以加速数据的收敛。<br />
+<img src="/images/pasted-292.png" alt="BN" /></li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">x=torch.rand(<span class="number">100</span>,<span class="number">16</span>,<span class="number">784</span>)</span><br><span class="line">layer=nn.BatchNorm1d(<span class="number">16</span>)</span><br><span class="line">out=layer(x)</span><br><span class="line">layer.running_mean</span><br><span class="line">layer.running_var</span><br></pre></td></tr></table></figure>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">x=torch.rand(<span class="number">100</span>,<span class="number">16</span>,<span class="number">28</span>,<span class="number">28</span>)</span><br><span class="line">layer=nn.BatchNorm2d(<span class="number">16</span>)</span><br><span class="line">out=layer(x)</span><br><span class="line">layer.weight <span class="comment"># gamma</span></span><br><span class="line">layer.bias <span class="comment"># beta</span></span><br><span class="line">vars(layer)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在进行测试时，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>γ</mi><mo separator="true">,</mo><mi>β</mi></mrow><annotation encoding="application/x-tex">\gamma,\beta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05556em;">γ</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05278em;">β</span></span></span></span>无法获得，一般需要对running_mean、running_var赋值为全局的，同时将网络设定为预测模式</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">layer.eval()</span><br><span class="line">BatchNorm1d(<span class="number">16</span>,eps=<span class="number">1e-5</span>,momentum=<span class="number">0.1</span>,affine=<span class="literal">True</span>,track_running_stats=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="网络的属性"><a class="markdownIt-Anchor" href="#网络的属性"></a> 网络的属性</h3>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>权重</td>
+<td><code>layer.weight</code><br><code>layer.weight.shape</code></td>
+</tr>
+<tr>
+<td>偏置</td>
+<td><code>layer.bias</code><br><code>layer.bias.shape</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="nnmodule"><a class="markdownIt-Anchor" href="#nnmodule"></a> nn.Module</h2>
+<ul>
+<li>是layer最基本的父类，linear、BatchNorm2d、conv2d、dropout</li>
+<li>继承Module可以嵌套，使用容器Sequential()传入即可实现多个层的串联</li>
+<li>参数可以有效管理，<code>net.parameter</code>还可以自动命名</li>
+<li>方便管理所有的层，<code>net.0.net</code>，0号是自己本身</li>
+<li>方便转义gpu，<code>net.to(device)</code></li>
+<li>加载和保存，<code>net.load_state_dict(torch.load('ckpt.mdl'))</code>，<code>net.save(net.state_dict(),'ckpt.mdl')</code></li>
+<li>train和test状态切换，<code>net.train()</code>，<code>net.eval()</code></li>
+<li>方便自定义类</li>
+</ul>
+<h3 id="nnsequential"><a class="markdownIt-Anchor" href="#nnsequential"></a> nn.Sequential</h3>
+<ul>
+<li>容器Sequential()传入即可实现多个层的串联</li>
+</ul>
+<h3 id="nnparameter"><a class="markdownIt-Anchor" href="#nnparameter"></a> nn.Parameter</h3>
+<ul>
+<li>通过Parameter包装后的变量，才可以加到<code>nn.parameter()</code>中进行优化。torch.Tensor则不会被优化</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">self.w = nn.Parameter(torch.randn(outp,inp))</span><br></pre></td></tr></table></figure>
+<h2 id="数据增强"><a class="markdownIt-Anchor" href="#数据增强"></a> 数据增强</h2>
+<ul>
+<li>常用的图像增强的手段：flip、rotate、scale、random move、crop、GAN、Noise</li>
+<li>Noise需要自己实现</li>
+</ul>
+<h3 id="transformscompose"><a class="markdownIt-Anchor" href="#transformscompose"></a> transforms.Compose</h3>
+<ul>
+<li>容器<code>transforms.Compose</code>可以实现多个操作的串联</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">train_loader = torch.utils.data.DataLoader(</span><br><span class="line">    datasets.MNIST(<span class="string">&#x27;../data&#x27;</span>, train=<span class="literal">True</span>, download=<span class="literal">True</span>,</span><br><span class="line">    transform=transforms.Compose([</span><br><span class="line">        transforms.RandomHorizontalFlip(),<span class="comment"># 随机的水平翻转</span></span><br><span class="line">        transforms.RandomVerticalFlip(),<span class="comment"># 随机的垂直翻转</span></span><br><span class="line">        transforms.RandomRotate(<span class="number">15</span>),<span class="comment"># 随机的在[-15,15]中旋转</span></span><br><span class="line">        transforms.RandomRotate([<span class="number">90</span>,<span class="number">180</span>,<span class="number">270</span>]),<span class="comment"># 随机的在[90,180,270]中旋转</span></span><br><span class="line">        transforms.Resize([<span class="number">32</span>,<span class="number">32</span>]), <span class="comment"># 从28*28，resize为32*32的大小</span></span><br><span class="line">        transforms.RandomCrop([<span class="number">28</span>,<span class="number">28</span>]), <span class="comment"># 随机裁剪</span></span><br><span class="line">        transforms.ToTensor(),</span><br><span class="line">        transforms.Normalize((<span class="number">0.1307</span>,), (<span class="number">0.3081</span>,)) </span><br><span class="line">    ])),batch_size=batch_size, shuffle=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<h1 id="rnn"><a class="markdownIt-Anchor" href="#rnn"></a> RNN</h1>
+<h2 id="rnn-2"><a class="markdownIt-Anchor" href="#rnn-2"></a> RNN</h2>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">rnn = nn.RNN(input_size=<span class="number">100</span>,hidden_size=<span class="number">10</span>,num_layers=<span class="number">1</span>)</span><br><span class="line">out,ht = rnn.forward(x,h0)</span><br></pre></td></tr></table></figure>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">rnn = nn.RNNCell(input_size=<span class="number">100</span>,hidden_size=<span class="number">10</span>,num_layers=<span class="number">1</span>)</span><br><span class="line">out,ht = rnn.forward(x,h0)</span><br></pre></td></tr></table></figure>
+<h2 id="lstm"><a class="markdownIt-Anchor" href="#lstm"></a> LSTM</h2>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">rnn = nn.LSTM(input_size=<span class="number">100</span>,hidden_size=<span class="number">10</span>,num_layers=<span class="number">1</span>)</span><br><span class="line">out,(ht,ct) = rnn.forward(x,[h0,c0])</span><br></pre></td></tr></table></figure>
+<h1 id="数据集"><a class="markdownIt-Anchor" href="#数据集"></a> 数据集</h1>
+<h2 id="自定义数据集"><a class="markdownIt-Anchor" href="#自定义数据集"></a> 自定义数据集</h2>
+<ul>
+<li>继承dataset类，实现<code>__len__</code>和<code>__getitem__</code>两个方法</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NumberDataset</span>(<span class="params">Dataset</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self,training=True</span>):</span></span><br><span class="line">        <span class="keyword">if</span> training:</span><br><span class="line">            self.samples = list(range(<span class="number">1</span>,<span class="number">1000</span>))</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self.samples = list(range(<span class="number">1001</span>,<span class="number">1500</span>))</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__len__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> len(self.samples)</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getitem__</span>(<span class="params">self,idx</span>):</span></span><br><span class="line">        <span class="keyword">return</span> self.samples[idx]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果文件目录是按照类别存储的，可以使用内置函数，方便的转化</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">tf = transforms.Compose([</span><br><span class="line">    transforms.Resize((<span class="number">224</span>,<span class="number">224</span>)),</span><br><span class="line">    transforms.ToTensor(),</span><br><span class="line">])</span><br><span class="line">db = torchvision.datasets.ImageFolder(root=<span class="string">&#x27;image&#x27;</span>,transform=tf)</span><br><span class="line">loader = DataLoader(db,batch_size=<span class="number">32</span>,shuffle=<span class="literal">True</span>,num_works=<span class="number">8</span>)</span><br><span class="line">print(db.class_to_idx)</span><br><span class="line"><span class="keyword">for</span> x,y <span class="keyword">in</span> loader:</span><br><span class="line">    viz.images(x,nrow=<span class="number">8</span>,win=<span class="string">&quot;batch&quot;</span>,opts=dict(title=<span class="string">&#x27;batch&#x27;</span>))</span><br><span class="line">    viz.text(str(y.numpy()),win=<span class="string">&quot;batch&quot;</span>,opts=dict(title=<span class="string">&quot;batch-y&quot;</span>))</span><br></pre></td></tr></table></figure>
+<h1 id="迁移网络"><a class="markdownIt-Anchor" href="#迁移网络"></a> 迁移网络</h1>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> torchvision.models <span class="keyword">import</span> resnet18</span><br><span class="line">trained_model = resnet18(pretrained=<span class="literal">True</span>)</span><br><span class="line">model = nn.Sequential(</span><br><span class="line">    *list(trained_model.children())[:<span class="number">-1</span>],</span><br><span class="line">    nn.Flatten(),</span><br><span class="line">    nn.Linear(<span class="number">512</span>,<span class="number">5</span>),</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h1 id="代码总结"><a class="markdownIt-Anchor" href="#代码总结"></a> 代码总结</h1>
+<h2 id="局部极小点获取"><a class="markdownIt-Anchor" href="#局部极小点获取"></a> 局部极小点获取</h2>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">himmelblau</span>(<span class="params">x</span>):</span></span><br><span class="line">    <span class="keyword">return</span> (x[<span class="number">0</span>]**<span class="number">2</span>+x[<span class="number">1</span>]<span class="number">-11</span>)**<span class="number">2</span>+(x[<span class="number">0</span>]+x[<span class="number">1</span>]**<span class="number">2</span><span class="number">-7</span>)**<span class="number">2</span></span><br><span class="line">a = np.arange(<span class="number">-6</span>,<span class="number">6</span>,<span class="number">0.1</span>)</span><br><span class="line">b = np.arange(<span class="number">-6</span>,<span class="number">6</span>,<span class="number">0.1</span>)</span><br><span class="line">X,Y = np.meshgrid(a,b)</span><br><span class="line">z = himmelblau([X,Y])</span><br><span class="line">fig = plt.figure(<span class="string">&quot;himm&quot;</span>)</span><br><span class="line">ax = fig.gca(projection=<span class="string">&#x27;3d&#x27;</span>)</span><br><span class="line">ax.plot_surface(X,Y,z)</span><br><span class="line">ax.view_init(<span class="number">60</span>,<span class="number">-30</span>)</span><br><span class="line">plt.show()</span><br><span class="line">x = torch.tensor([<span class="number">0.</span>,<span class="number">0.</span>],requires_grad=<span class="literal">True</span>)</span><br><span class="line">optimizer = torch.optim.Adam([x],lr=<span class="number">1e-3</span>)</span><br><span class="line"><span class="keyword">for</span> step <span class="keyword">in</span> range(<span class="number">20000</span>):</span><br><span class="line">  pred = himmelblau(x)</span><br><span class="line">  optimizer.zero_grad()</span><br><span class="line">  pred.backward()</span><br><span class="line">  optimizer.step()</span><br><span class="line">  <span class="keyword">if</span> <span class="keyword">not</span> step%<span class="number">2000</span>:</span><br><span class="line">    print(<span class="string">&#x27;step&#123;&#125;:x=&#123;&#125;,f(x)=&#123;&#125;&#x27;</span>.format(step,x.tolist(),pred.item()))</span><br></pre></td></tr></table></figure>
+<h2 id="lr实现多分类"><a class="markdownIt-Anchor" href="#lr实现多分类"></a> LR实现多分类</h2>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"><span class="keyword">import</span> torch.nn.functional <span class="keyword">as</span> F</span><br><span class="line"><span class="keyword">import</span> torch.optim <span class="keyword">as</span> optim</span><br><span class="line"><span class="keyword">from</span> torchvision <span class="keyword">import</span> datasets, transforms</span><br><span class="line">batch_size=<span class="number">200</span></span><br><span class="line">learning_rate=<span class="number">0.01</span></span><br><span class="line">epochs=<span class="number">10</span></span><br><span class="line">train_loader = torch.utils.data.DataLoader(datasets.MNIST(<span class="string">&#x27;../data&#x27;</span>, train=<span class="literal">True</span>, download=<span class="literal">True</span>,transform=transforms.Compose([transforms.ToTensor(),transforms.Normalize((<span class="number">0.1307</span>,), (<span class="number">0.3081</span>,)) ])),batch_size=batch_size, shuffle=<span class="literal">True</span>)</span><br><span class="line">test_loader = torch.utils.data.DataLoader(datasets.MNIST(<span class="string">&#x27;../data&#x27;</span>, train=<span class="literal">False</span>, transform=transforms.Compose([transforms.ToTensor(),transforms.Normalize((<span class="number">0.1307</span>,), (<span class="number">0.3081</span>,))])),batch_size=batch_size, shuffle=<span class="literal">True</span>)</span><br><span class="line">w1, b1 = torch.randn(<span class="number">200</span>, <span class="number">784</span>, requires_grad=<span class="literal">True</span>), torch.zeros(<span class="number">200</span>, requires_grad=<span class="literal">True</span>)</span><br><span class="line">w2, b2 = torch.randn(<span class="number">200</span>, <span class="number">200</span>, requires_grad=<span class="literal">True</span>),torch.zeros(<span class="number">200</span>, requires_grad=<span class="literal">True</span>)</span><br><span class="line">w3, b3 = torch.randn(<span class="number">10</span>, <span class="number">200</span>, requires_grad=<span class="literal">True</span>),torch.zeros(<span class="number">10</span>, requires_grad=<span class="literal">True</span>)</span><br><span class="line">torch.nn.init.kaiming_normal_(w1)</span><br><span class="line">torch.nn.init.kaiming_normal_(w2)</span><br><span class="line">torch.nn.init.kaiming_normal_(w3)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">x</span>):</span></span><br><span class="line">    x = x@w1.t() + b1</span><br><span class="line">    x = F.relu(x)</span><br><span class="line">    x = x@w2.t() + b2</span><br><span class="line">    x = F.relu(x)</span><br><span class="line">    x = x@w3.t() + b3</span><br><span class="line">    x = F.relu(x)</span><br><span class="line">    <span class="keyword">return</span> x</span><br><span class="line">optimizer = optim.SGD([w1, b1, w2, b2, w3, b3], lr=learning_rate)</span><br><span class="line">criteon = nn.CrossEntropyLoss()</span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(epochs):</span><br><span class="line">    <span class="keyword">for</span> batch_idx, (data, target) <span class="keyword">in</span> enumerate(train_loader):</span><br><span class="line">        data = data.view(<span class="number">-1</span>, <span class="number">28</span>*<span class="number">28</span>)</span><br><span class="line">        logits = forward(data)</span><br><span class="line">        loss = criteon(logits, target)</span><br><span class="line">        optimizer.zero_grad()</span><br><span class="line">        loss.backward()</span><br><span class="line">        <span class="comment"># print(w1.grad.norm(), w2.grad.norm())</span></span><br><span class="line">        optimizer.step()</span><br><span class="line">        <span class="keyword">if</span> batch_idx % <span class="number">100</span> == <span class="number">0</span>:</span><br><span class="line">            print(<span class="string">&#x27;Train Epoch: &#123;&#125; [&#123;&#125;/&#123;&#125; (&#123;:.0f&#125;%)]\tLoss: &#123;:.6f&#125;&#x27;</span>.format(epoch, batch_idx * len(data), len(train_loader.dataset),<span class="number">100.</span> * batch_idx / len(train_loader), loss.item()))</span><br><span class="line">    test_loss = <span class="number">0</span></span><br><span class="line">    correct = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> data, target <span class="keyword">in</span> test_loader:</span><br><span class="line">        data = data.view(<span class="number">-1</span>, <span class="number">28</span> * <span class="number">28</span>)</span><br><span class="line">        logits = forward(data)</span><br><span class="line">        test_loss += criteon(logits, target).item()</span><br><span class="line">        pred = logits.data.max(<span class="number">1</span>)[<span class="number">1</span>]</span><br><span class="line">        correct += pred.eq(target.data).sum()</span><br><span class="line">    test_loss /= len(test_loader.dataset)</span><br><span class="line">    print(<span class="string">&#x27;\nTest set: Average loss: &#123;:.4f&#125;, Accuracy: &#123;&#125;/&#123;&#125; (&#123;:.0f&#125;%)\n&#x27;</span>.format(test_loss, correct, len(test_loader.dataset),<span class="number">100.</span> * correct / len(test_loader.dataset)))</span><br></pre></td></tr></table></figure>
+<h2 id="flatten"><a class="markdownIt-Anchor" href="#flatten"></a> Flatten</h2>
+<ul>
+<li>自定义展平功能并调用</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Flatten</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        super(Flatten,self).__init__()</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self,input</span>):</span></span><br><span class="line">        <span class="keyword">return</span> input.view(input.size(<span class="number">0</span>),<span class="number">-1</span>)</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestNet</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        super(TestNet,self).__init__()</span><br><span class="line">        self.net = nn.Sequential(nn.Conv2d(<span class="number">1</span>,<span class="number">16</span>,stride=<span class="number">1</span>,padding=<span class="number">1</span>),</span><br><span class="line">            nn.MaxPool2d(<span class="number">2</span>,<span class="number">2</span>),</span><br><span class="line">            Flatten(),</span><br><span class="line">            nn.Linear(<span class="number">1</span>*<span class="number">14</span>*<span class="number">14</span>,<span class="number">10</span>)</span><br><span class="line">        )</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self,x</span>):</span></span><br><span class="line">        <span class="keyword">return</span> self.net(x)</span><br></pre></td></tr></table></figure>
+<h2 id="linear"><a class="markdownIt-Anchor" href="#linear"></a> Linear</h2>
+<ul>
+<li>实现线型层</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyLinear</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self,inp,outp</span>):</span></span><br><span class="line">        super(MyLinear,self).__init__()</span><br><span class="line">        self.w = nn.Parameter(torch.randn(outp,inp))</span><br><span class="line">        self.b = nn.Parameter(torch.randn(outp))</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self,x</span>):</span></span><br><span class="line">        x = x@self.w.t()+self.b</span><br><span class="line">        <span class="keyword">return</span> x</span><br></pre></td></tr></table></figure>
+<h2 id="mlp"><a class="markdownIt-Anchor" href="#mlp"></a> MLP</h2>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"><span class="keyword">import</span> torch.nn.functional <span class="keyword">as</span> F</span><br><span class="line"><span class="keyword">import</span> torch.optim <span class="keyword">as</span> optim</span><br><span class="line"><span class="keyword">from</span> torchvision <span class="keyword">import</span> datasets, transforms</span><br><span class="line">batch_size=<span class="number">200</span></span><br><span class="line">learning_rate=<span class="number">0.01</span></span><br><span class="line">epochs=<span class="number">10</span></span><br><span class="line">train_loader = torch.utils.data.DataLoader(datasets.MNIST(<span class="string">&#x27;../data&#x27;</span>, train=<span class="literal">True</span>, download=<span class="literal">True</span>,transform=transforms.Compose([transforms.ToTensor(),transforms.Normalize((<span class="number">0.1307</span>,), (<span class="number">0.3081</span>,))])),batch_size=batch_size, shuffle=<span class="literal">True</span>)</span><br><span class="line">test_loader = torch.utils.data.DataLoader(datasets.MNIST(<span class="string">&#x27;../data&#x27;</span>, train=<span class="literal">False</span>, transform=transforms.Compose([transforms.ToTensor(),transforms.Normalize((<span class="number">0.1307</span>,), (<span class="number">0.3081</span>,))])),batch_size=batch_size, shuffle=<span class="literal">True</span>)</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MLP</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        super(MLP, self).__init__()</span><br><span class="line">        self.model = nn.Sequential(</span><br><span class="line">            nn.Linear(<span class="number">784</span>, <span class="number">200</span>),nn.ReLU(inplace=<span class="literal">True</span>),</span><br><span class="line">            nn.Linear(<span class="number">200</span>, <span class="number">200</span>),nn.ReLU(inplace=<span class="literal">True</span>),</span><br><span class="line">            nn.Linear(<span class="number">200</span>, <span class="number">10</span>),nn.ReLU(inplace=<span class="literal">True</span>),</span><br><span class="line">        )</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self, x</span>):</span></span><br><span class="line">        x = self.model(x)</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line">net = MLP()</span><br><span class="line">optimizer = optim.SGD(net.parameters(), lr=learning_rate)</span><br><span class="line">criteon = nn.CrossEntropyLoss()</span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(epochs):</span><br><span class="line">    <span class="keyword">for</span> batch_idx, (data, target) <span class="keyword">in</span> enumerate(train_loader):</span><br><span class="line">        data = data.view(<span class="number">-1</span>, <span class="number">28</span>*<span class="number">28</span>)</span><br><span class="line">        logits = net(data)</span><br><span class="line">        loss = criteon(logits, target)</span><br><span class="line">        optimizer.zero_grad()</span><br><span class="line">        loss.backward()</span><br><span class="line">        <span class="comment"># print(w1.grad.norm(), w2.grad.norm())</span></span><br><span class="line">        optimizer.step()</span><br><span class="line">        <span class="keyword">if</span> batch_idx % <span class="number">100</span> == <span class="number">0</span>:</span><br><span class="line">            print(<span class="string">&#x27;Train Epoch: &#123;&#125; [&#123;&#125;/&#123;&#125; (&#123;:.0f&#125;%)]\tLoss: &#123;:.6f&#125;&#x27;</span>.format(epoch, batch_idx * len(data), len(train_loader.dataset),<span class="number">100.</span> * batch_idx / len(train_loader), loss.item()))</span><br><span class="line">    test_loss = <span class="number">0</span></span><br><span class="line">    correct = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> data, target <span class="keyword">in</span> test_loader:</span><br><span class="line">        data = data.view(<span class="number">-1</span>, <span class="number">28</span> * <span class="number">28</span>)</span><br><span class="line">        logits = net(data)</span><br><span class="line">        test_loss += criteon(logits, target).item()</span><br><span class="line">        pred = logits.data.max(<span class="number">1</span>)[<span class="number">1</span>]</span><br><span class="line">        correct += pred.eq(target.data).sum()</span><br><span class="line">    test_loss /= len(test_loader.dataset)</span><br><span class="line">    print(<span class="string">&#x27;\nTest set: Average loss: &#123;:.4f&#125;, Accuracy: &#123;&#125;/&#123;&#125; (&#123;:.0f&#125;%)\n&#x27;</span>.format(test_loss, correct, len(test_loader.dataset),<span class="number">100.</span> * correct / len(test_loader.dataset)))</span><br></pre></td></tr></table></figure>
+<h2 id="resnet"><a class="markdownIt-Anchor" href="#resnet"></a> ResNet</h2>
+<p><img src="/images/pasted-294.png" alt="基本单元" /></p>
+<ul>
+<li>基本单元的实现</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ResBlk</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, ch_in, ch_out</span>):</span></span><br><span class="line">        super(ResBlk, self).__init__()</span><br><span class="line">        self.conv1 = nn.Conv2d(ch_in, ch_out, kernel_size=<span class="number">3</span>, stride=<span class="number">1</span>, padding=<span class="number">1</span>)</span><br><span class="line">        self.bn1 = nn.BatchNorm2d(ch_out)</span><br><span class="line">        self.conv2 = nn.Conv2d(ch_out, ch_out, kernel_size=<span class="number">3</span>, stride=<span class="number">1</span>, padding=<span class="number">1</span>)</span><br><span class="line">        self.bn2 = nn.BatchNorm2d(ch_out)</span><br><span class="line">        self.extra = nn.Sequential()</span><br><span class="line">        <span class="keyword">if</span> ch_out != ch_in:</span><br><span class="line">            <span class="comment"># [b, ch_in, h, w] =&gt; [b, ch_out, h, w]</span></span><br><span class="line">            self.extra = nn.Sequential(</span><br><span class="line">                nn.Conv2d(ch_in, ch_out, kernel_size=<span class="number">1</span>, stride=<span class="number">1</span>),</span><br><span class="line">                nn.BatchNorm2d(ch_out)</span><br><span class="line">            )</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self, x</span>):</span></span><br><span class="line">        out = F.relu(self.bn1(self.conv1(x)))</span><br><span class="line">        out = self.bn2(self.conv2(out))</span><br><span class="line">        out = self.extra(x) + out</span><br><span class="line">        <span class="keyword">return</span> out</span><br></pre></td></tr></table></figure>
+<ul>
+<li>整体实现</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span>  torch</span><br><span class="line"><span class="keyword">from</span>    torch <span class="keyword">import</span>  nn</span><br><span class="line"><span class="keyword">from</span>    torch.nn <span class="keyword">import</span> functional <span class="keyword">as</span> F</span><br><span class="line"><span class="keyword">from</span>    torch.utils.data <span class="keyword">import</span> DataLoader</span><br><span class="line"><span class="keyword">from</span>    torchvision <span class="keyword">import</span> datasets</span><br><span class="line"><span class="keyword">from</span>    torchvision <span class="keyword">import</span> transforms</span><br><span class="line"><span class="keyword">from</span>    torch <span class="keyword">import</span> nn, optim</span><br><span class="line"><span class="comment"># from    torchvision.models import resnet18</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ResBlk</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, ch_in, ch_out</span>):</span></span><br><span class="line">        super(ResBlk, self).__init__()</span><br><span class="line">        self.conv1 = nn.Conv2d(ch_in, ch_out, kernel_size=<span class="number">3</span>, stride=<span class="number">1</span>, padding=<span class="number">1</span>)</span><br><span class="line">        self.bn1 = nn.BatchNorm2d(ch_out)</span><br><span class="line">        self.conv2 = nn.Conv2d(ch_out, ch_out, kernel_size=<span class="number">3</span>, stride=<span class="number">1</span>, padding=<span class="number">1</span>)</span><br><span class="line">        self.bn2 = nn.BatchNorm2d(ch_out)</span><br><span class="line">        self.extra = nn.Sequential()</span><br><span class="line">        <span class="keyword">if</span> ch_out != ch_in:</span><br><span class="line">            <span class="comment"># [b, ch_in, h, w] =&gt; [b, ch_out, h, w]</span></span><br><span class="line">            self.extra = nn.Sequential(</span><br><span class="line">                nn.Conv2d(ch_in, ch_out, kernel_size=<span class="number">1</span>, stride=<span class="number">1</span>),</span><br><span class="line">                nn.BatchNorm2d(ch_out)</span><br><span class="line">            )</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self, x</span>):</span></span><br><span class="line">        out = F.relu(self.bn1(self.conv1(x)))</span><br><span class="line">        out = self.bn2(self.conv2(out))</span><br><span class="line">        <span class="comment"># short cut.</span></span><br><span class="line">        <span class="comment"># extra module: [b, ch_in, h, w] =&gt; [b, ch_out, h, w]</span></span><br><span class="line">        <span class="comment"># element-wise add:</span></span><br><span class="line">        out = self.extra(x) + out</span><br><span class="line">        <span class="keyword">return</span> out</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ResNet18</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        super(ResNet18, self).__init__()</span><br><span class="line">        self.conv1 = nn.Sequential(</span><br><span class="line">            nn.Conv2d(<span class="number">3</span>, <span class="number">16</span>, kernel_size=<span class="number">3</span>, stride=<span class="number">1</span>, padding=<span class="number">1</span>),</span><br><span class="line">            nn.BatchNorm2d(<span class="number">16</span>)</span><br><span class="line">        )</span><br><span class="line">        <span class="comment"># followed 4 blocks</span></span><br><span class="line">        <span class="comment"># [b, 64, h, w] =&gt; [b, 128, h ,w]</span></span><br><span class="line">        self.blk1 = ResBlk(<span class="number">16</span>, <span class="number">16</span>)</span><br><span class="line">        <span class="comment"># [b, 128, h, w] =&gt; [b, 256, h, w]</span></span><br><span class="line">        self.blk2 = ResBlk(<span class="number">16</span>, <span class="number">32</span>)</span><br><span class="line">        <span class="comment"># # [b, 256, h, w] =&gt; [b, 512, h, w]</span></span><br><span class="line">        <span class="comment"># self.blk3 = ResBlk(128, 256)</span></span><br><span class="line">        <span class="comment"># # [b, 512, h, w] =&gt; [b, 1024, h, w]</span></span><br><span class="line">        <span class="comment"># self.blk4 = ResBlk(256, 512)</span></span><br><span class="line">        self.outlayer = nn.Linear(<span class="number">32</span>*<span class="number">32</span>*<span class="number">32</span>, <span class="number">10</span>)</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self, x</span>):</span></span><br><span class="line">        x = F.relu(self.conv1(x))</span><br><span class="line">        <span class="comment"># [b, 64, h, w] =&gt; [b, 1024, h, w]</span></span><br><span class="line">        x = self.blk1(x)</span><br><span class="line">        x = self.blk2(x)</span><br><span class="line">        <span class="comment"># x = self.blk3(x)</span></span><br><span class="line">        <span class="comment"># x = self.blk4(x)</span></span><br><span class="line">        <span class="comment"># print(x.shape)</span></span><br><span class="line">        x = x.view(x.size(<span class="number">0</span>), <span class="number">-1</span>)</span><br><span class="line">        x = self.outlayer(x)</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    batchsz = <span class="number">32</span></span><br><span class="line">    cifar_train = datasets.CIFAR10(<span class="string">&#x27;cifar&#x27;</span>, <span class="literal">True</span>, transform=transforms.Compose([</span><br><span class="line">        transforms.Resize((<span class="number">32</span>, <span class="number">32</span>)),</span><br><span class="line">        transforms.ToTensor()</span><br><span class="line">    ]), download=<span class="literal">True</span>)</span><br><span class="line">    cifar_train = DataLoader(cifar_train, batch_size=batchsz, shuffle=<span class="literal">True</span>)</span><br><span class="line">    cifar_test = datasets.CIFAR10(<span class="string">&#x27;cifar&#x27;</span>, <span class="literal">False</span>, transform=transforms.Compose([</span><br><span class="line">        transforms.Resize((<span class="number">32</span>, <span class="number">32</span>)),</span><br><span class="line">        transforms.ToTensor()</span><br><span class="line">    ]), download=<span class="literal">True</span>)</span><br><span class="line">    cifar_test = DataLoader(cifar_test, batch_size=batchsz, shuffle=<span class="literal">True</span>)</span><br><span class="line">    x, label = iter(cifar_train).next()</span><br><span class="line">    print(<span class="string">&#x27;x:&#x27;</span>, x.shape, <span class="string">&#x27;label:&#x27;</span>, label.shape)</span><br><span class="line">    device = torch.device(<span class="string">&#x27;cuda&#x27;</span>)</span><br><span class="line">    <span class="comment"># model = Lenet5().to(device)</span></span><br><span class="line">    model = ResNet18().to(device)</span><br><span class="line">    criteon = nn.CrossEntropyLoss().to(device)</span><br><span class="line">    optimizer = optim.Adam(model.parameters(), lr=<span class="number">1e-3</span>)</span><br><span class="line">    print(model)</span><br><span class="line">    <span class="keyword">for</span> epoch <span class="keyword">in</span> range(<span class="number">1000</span>):</span><br><span class="line">        model.train()</span><br><span class="line">        <span class="keyword">for</span> batchidx, (x, label) <span class="keyword">in</span> enumerate(cifar_train):</span><br><span class="line">            <span class="comment"># [b, 3, 32, 32]</span></span><br><span class="line">            <span class="comment"># [b]</span></span><br><span class="line">            x, label = x.to(device), label.to(device)</span><br><span class="line">            logits = model(x)</span><br><span class="line">            <span class="comment"># logits: [b, 10]</span></span><br><span class="line">            <span class="comment"># label:  [b]</span></span><br><span class="line">            <span class="comment"># loss: tensor scalar</span></span><br><span class="line">            loss = criteon(logits, label)</span><br><span class="line">            <span class="comment"># backprop</span></span><br><span class="line">            optimizer.zero_grad()</span><br><span class="line">            loss.backward()</span><br><span class="line">            optimizer.step()</span><br><span class="line">        print(epoch, <span class="string">&#x27;loss:&#x27;</span>, loss.item())</span><br><span class="line">        model.eval()</span><br><span class="line">        <span class="keyword">with</span> torch.no_grad():</span><br><span class="line">            <span class="comment"># test</span></span><br><span class="line">            total_correct = <span class="number">0</span></span><br><span class="line">            total_num = <span class="number">0</span></span><br><span class="line">            <span class="keyword">for</span> x, label <span class="keyword">in</span> cifar_test:</span><br><span class="line">                <span class="comment"># [b, 3, 32, 32]</span></span><br><span class="line">                <span class="comment"># [b]</span></span><br><span class="line">                x, label = x.to(device), label.to(device)</span><br><span class="line">                <span class="comment"># [b, 10]</span></span><br><span class="line">                logits = model(x)</span><br><span class="line">                <span class="comment"># [b]</span></span><br><span class="line">                pred = logits.argmax(dim=<span class="number">1</span>)</span><br><span class="line">                <span class="comment"># [b] vs [b] =&gt; scalar tensor</span></span><br><span class="line">                correct = torch.eq(pred, label).float().sum().item()</span><br><span class="line">                total_correct += correct</span><br><span class="line">                total_num += x.size(<span class="number">0</span>)</span><br><span class="line">                <span class="comment"># print(correct)</span></span><br><span class="line">            acc = total_correct / total_num</span><br><span class="line">            print(epoch, <span class="string">&#x27;acc:&#x27;</span>, acc)</span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+<h2 id="rnn预测sin函数"><a class="markdownIt-Anchor" href="#rnn预测sin函数"></a> RNN预测sin函数</h2>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span>  numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span>  torch</span><br><span class="line"><span class="keyword">import</span>  torch.nn <span class="keyword">as</span> nn</span><br><span class="line"><span class="keyword">import</span>  torch.optim <span class="keyword">as</span> optim</span><br><span class="line"><span class="keyword">from</span>    matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line">num_time_steps = <span class="number">50</span></span><br><span class="line">input_size = <span class="number">1</span></span><br><span class="line">hidden_size = <span class="number">16</span></span><br><span class="line">output_size = <span class="number">1</span></span><br><span class="line">lr=<span class="number">0.01</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Net</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, </span>):</span></span><br><span class="line">        super(Net, self).__init__()</span><br><span class="line"></span><br><span class="line">        self.rnn = nn.RNN(</span><br><span class="line">            input_size=input_size,</span><br><span class="line">            hidden_size=hidden_size,</span><br><span class="line">            num_layers=<span class="number">1</span>,</span><br><span class="line">            batch_first=<span class="literal">True</span>,</span><br><span class="line">        )</span><br><span class="line">        <span class="keyword">for</span> p <span class="keyword">in</span> self.rnn.parameters():</span><br><span class="line">          nn.init.normal_(p, mean=<span class="number">0.0</span>, std=<span class="number">0.001</span>)</span><br><span class="line">        self.linear = nn.Linear(hidden_size, output_size)</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self, x, hidden_prev</span>):</span></span><br><span class="line">       out, hidden_prev = self.rnn(x, hidden_prev)</span><br><span class="line">       <span class="comment"># [b, seq, h]</span></span><br><span class="line">       out = out.view(<span class="number">-1</span>, hidden_size)</span><br><span class="line">       out = self.linear(out)</span><br><span class="line">       out = out.unsqueeze(dim=<span class="number">0</span>)</span><br><span class="line">       <span class="keyword">return</span> out, hidden_prev</span><br><span class="line">model = Net()</span><br><span class="line">criterion = nn.MSELoss()</span><br><span class="line">optimizer = optim.Adam(model.parameters(), lr)</span><br><span class="line">hidden_prev = torch.zeros(<span class="number">1</span>, <span class="number">1</span>, hidden_size)</span><br><span class="line"><span class="keyword">for</span> iter <span class="keyword">in</span> range(<span class="number">6000</span>):</span><br><span class="line">    start = np.random.randint(<span class="number">3</span>, size=<span class="number">1</span>)[<span class="number">0</span>]</span><br><span class="line">    time_steps = np.linspace(start, start + <span class="number">10</span>, num_time_steps)</span><br><span class="line">    data = np.sin(time_steps)</span><br><span class="line">    data = data.reshape(num_time_steps, <span class="number">1</span>)</span><br><span class="line">    x = torch.tensor(data[:<span class="number">-1</span>]).float().view(<span class="number">1</span>, num_time_steps - <span class="number">1</span>, <span class="number">1</span>)</span><br><span class="line">    y = torch.tensor(data[<span class="number">1</span>:]).float().view(<span class="number">1</span>, num_time_steps - <span class="number">1</span>, <span class="number">1</span>)</span><br><span class="line">    output, hidden_prev = model(x, hidden_prev)</span><br><span class="line">    hidden_prev = hidden_prev.detach()</span><br><span class="line">    loss = criterion(output, y)</span><br><span class="line">    model.zero_grad()</span><br><span class="line">    loss.backward()</span><br><span class="line">    <span class="comment"># for p in model.parameters():</span></span><br><span class="line">    <span class="comment">#     print(p.grad.norm())</span></span><br><span class="line">    <span class="comment"># torch.nn.utils.clip_grad_norm_(p, 10)</span></span><br><span class="line">    optimizer.step()</span><br><span class="line">    <span class="keyword">if</span> iter % <span class="number">100</span> == <span class="number">0</span>:</span><br><span class="line">        print(<span class="string">&quot;Iteration: &#123;&#125; loss &#123;&#125;&quot;</span>.format(iter, loss.item()))</span><br><span class="line">start = np.random.randint(<span class="number">3</span>, size=<span class="number">1</span>)[<span class="number">0</span>]</span><br><span class="line">time_steps = np.linspace(start, start + <span class="number">10</span>, num_time_steps)</span><br><span class="line">data = np.sin(time_steps)</span><br><span class="line">data = data.reshape(num_time_steps, <span class="number">1</span>)</span><br><span class="line">x = torch.tensor(data[:<span class="number">-1</span>]).float().view(<span class="number">1</span>, num_time_steps - <span class="number">1</span>, <span class="number">1</span>)</span><br><span class="line">y = torch.tensor(data[<span class="number">1</span>:]).float().view(<span class="number">1</span>, num_time_steps - <span class="number">1</span>, <span class="number">1</span>)</span><br><span class="line">predictions = []</span><br><span class="line">input = x[:, <span class="number">0</span>, :]</span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(x.shape[<span class="number">1</span>]):</span><br><span class="line">  input = input.view(<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>)</span><br><span class="line">  (pred, hidden_prev) = model(input, hidden_prev)</span><br><span class="line">  input = pred</span><br><span class="line">  predictions.append(pred.detach().numpy().ravel()[<span class="number">0</span>])</span><br><span class="line">x = x.data.numpy().ravel()</span><br><span class="line">y = y.data.numpy()</span><br><span class="line">plt.scatter(time_steps[:<span class="number">-1</span>], x.ravel(), s=<span class="number">90</span>)</span><br><span class="line">plt.plot(time_steps[:<span class="number">-1</span>], x.ravel())</span><br><span class="line">plt.scatter(time_steps[<span class="number">1</span>:], predictions)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css"></div></article><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/robotic/">robotic</a></div><nav id="pagination"><div class="next-post pull-right"><a href="/2020/10/09/%E4%B8%89%E7%BB%B4%E8%A7%86%E8%A7%89/"><span>三维视觉</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="vcomment"></div><script src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = 'false' == 'true';
+var verify = 'false' == 'true';
+var record_ip = '' == 'true';
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  recordIP:record_ip,
+  appId:'AdfkiqY89QUSUWbDY9xJuCh0-gzGzoHsz',
+  appKey:'2cEvHcqEWsyoKwy4AUL3kPGh',
+  placeholder:'劈个叉吧',
+  avatar:'mm',
+  guest_info:guest_info,
+  pageSize:'100',
+  lang: 'zh-cn'
+})</script></div></div><footer><div class="layout" id="footer"><div class="copyright">&copy;2020 By hero576</div><div class="framework-info"><span>驱动 - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.8.2"></script><script src="/js/fancybox.js?version=1.8.2"></script><script src="/js/sidebar.js?version=1.8.2"></script><script src="/js/copy.js?version=1.8.2"></script><script src="/js/fireworks.js?version=1.8.2"></script><script src="/js/transition.js?version=1.8.2"></script><script src="/js/scroll.js?version=1.8.2"></script><script src="/js/head.js?version=1.8.2"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css"><script src="/js/katex.js"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>
