@@ -7,7 +7,9 @@ categories:
   - programme
 date: 2020-10-05 16:54:13
 ---
+> 
 
+<!-- more -->
 # 简介
 ## 介绍
 - [官方网址](https://www.opengl.org)
