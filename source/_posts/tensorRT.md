@@ -13,7 +13,7 @@ date: 2020-09-24 18:32:53
 
 # 简介
 ## 介绍
-- TensorRT是一个高性能的深度学习推理（Inference）优化器，可以为深度学习应用提供低延迟、高吞吐率的部署推理。TensorRT可用于对超大规模数据中心、嵌入式平台或自动驾驶平台进行推理加速。TensorRT现已能支持TensorFlow、Caffe、Mxnet、Pytorch等几乎所有的深度学习框架，将TensorRT和NVIDIA的GPU结合起来，能在几乎所有的框架中进行快速和高效的部署推理。
+- [TensorRT](https://docs.nvidia.com/deeplearning/tensorrt/developer-guide/index.html)是一个高性能的深度学习推理（Inference）优化器，可以为深度学习应用提供低延迟、高吞吐率的部署推理。TensorRT可用于对超大规模数据中心、嵌入式平台或自动驾驶平台进行推理加速。TensorRT现已能支持TensorFlow、Caffe、Mxnet、Pytorch等几乎所有的深度学习框架，将TensorRT和NVIDIA的GPU结合起来，能在几乎所有的框架中进行快速和高效的部署推理。
 
 - TensorRT 是一个C++库，从 TensorRT 3 开始提供C++ API和Python API，主要用来针对 NVIDIA GPU进行 高性能推理（Inference）加速。现在最新版TensorRT是4.0版本。
 
@@ -21,7 +21,7 @@ date: 2020-09-24 18:32:53
 
 - 目前TensorRT4.0 几乎可以支持所有常用的深度学习框架，对于caffe和TensorFlow来说，tensorRT可以直接解析他们的网络模型；对于caffe2，pytorch，mxnet，chainer，CNTK等框架则是首先要将模型转为 ONNX 的通用深度学习模型，然后对ONNX模型做解析。而tensorflow和MATLAB已经将TensorRT集成到框架中去了。
 
-- ONNX（Open Neural Network Exchange ）是微软和Facebook携手开发的开放式神经网络交换工具，也就是说不管用什么框架训练，只要转换为ONNX模型，就可以放在其他框架上面去inference。这是一种统一的神经网络模型定义和保存方式，上面提到的除了tensorflow之外的其他框架官方应该都对onnx做了支持，而ONNX自己开发了对tensorflow的支持。从深度学习框架方面来说，这是各大厂商对抗谷歌tensorflow垄断地位的一种有效方式；从研究人员和开发者方面来说，这可以使开发者轻易地在不同机器学习工具之间进行转换，并为项目选择最好的组合方式，加快从研究到生产的速度。
+- ONNX（Open Neural Network Exchange）是微软和Facebook携手开发的开放式神经网络交换工具，也就是说不管用什么框架训练，只要转换为ONNX模型，就可以放在其他框架上面去inference。这是一种统一的神经网络模型定义和保存方式，上面提到的除了tensorflow之外的其他框架官方应该都对onnx做了支持，而ONNX自己开发了对tensorflow的支持。从深度学习框架方面来说，这是各大厂商对抗谷歌tensorflow垄断地位的一种有效方式；从研究人员和开发者方面来说，这可以使开发者轻易地在不同机器学习工具之间进行转换，并为项目选择最好的组合方式，加快从研究到生产的速度。
 
 ![tensorRT](/images/pasted-271.png)
 
@@ -78,8 +78,8 @@ $ sudo apt-get install uff-converter-tf
 
 - 进入 samples 文件夹直接 make，会在 bin 目录中生成可执行文件，可以一一进行测试学习。
 
-- 另外tensorRT是不开源的， 它的头文件位于 /usr/include/x86_64-linux-gnu 目录下，共有七个
-- tensorRT的库文件位于 /usr/lib/x86_64-linux-gnu 目录下
+- 另外tensorRT是不开源的， 它的头文件位于`/usr/include/x86_64-linux-gnu`目录下，共有七个
+- tensorRT的库文件位于`/usr/lib/x86_64-linux-gnu`目录下
 
 ## windows
 - [下载安装包](https://developer.nvidia.com/nvidia-tensorrt-7x-download)
@@ -91,7 +91,148 @@ $ sudo apt-get install uff-converter-tf
 
 
 # 使用
+## 创建网络
+### 原始api搭建
+- 创建builder和网络
+```cpp
+IBuilder* builder = createInferBuilder(gLogger);
+INetworkDefinition* network = builder->createNetworkV2(1U << static_cast<uint32_t>(NetworkDefinitionCreationFlag::kEXPLICIT_BATCH));
+```
 
+- 定义网络输入输出
+> Add the Input layer to the network, with the input dimensions, including dynamic batch. A network can have multiple inputs, although in this sample there is only one:
+```cpp
+auto data = network->addInput(INPUT_BLOB_NAME, dt, Dims3{-1, 1, INPUT_H, INPUT_W});
+```
+
+- 添加卷积层
+> Add the Convolution layer with hidden layer input nodes, strides and weights for filter and bias. In order to retrieve the tensor reference from the layer, we can use:
+```cpp
+auto conv1 = network->addConvolution(*data->getOutput(0), 20, DimsHW{5, 5}, weightMap["conv1filter"], weightMap["conv1bias"]);
+conv1->setStride(DimsHW{1, 1});
+```
+
+> Note: Weights passed to TensorRT layers are in host memory.
+-  添加池化层
+> Add the Pooling layer:
+```cpp
+auto pool1 = network->addPooling(*conv1->getOutput(0), PoolingType::kMAX, DimsHW{2, 2});
+pool1->setStride(DimsHW{2, 2});
+```
+
+- 全连接和激活层
+> Add the FullyConnected and Activation layers:
+```cpp
+auto ip1 = network->addFullyConnected(*pool1->getOutput(0), 500, weightMap["ip1filter"], weightMap["ip1bias"]);
+auto relu1 = network->addActivation(*ip1->getOutput(0), ActivationType::kRELU);
+```
+
+- softmax层
+> Add the SoftMax layer to calculate the final probabilities and set it as the output:
+```cpp
+auto prob = network->addSoftMax(*relu1->getOutput(0));
+prob->getOutput(0)->setName(OUTPUT_BLOB_NAME);
+```
+
+- 输出
+> Mark the output:
+```cpp
+network->markOutput(*prob->getOutput(0));
+```
+
+### 通过已生成网络搭建
+- parse解析器支持：ONNX、UFF、Caffe的方式，导入网络模型
+```cpp
+//ONNX: 
+auto parser = nvonnxparser::createParser(*network, gLogger);
+//Caffe: 
+auto parser = nvcaffeparser1::createCaffeParser();
+//UFF: 
+auto parser = nvuffparser::createUffParser();
+```
+
+- 解析Caffe网络 
+```cpp
+//Create the builder and network:
+IBuilder* builder = createInferBuilder(gLogger);
+INetworkDefinition* network = builder->createNetworkV2(0U);
+//Create the Caffe parser:
+ICaffeParser* parser = createCaffeParser();
+Parse the imported model:
+const IBlobNameToTensor* blobNameToTensor = parser->parse("deploy_file" , "modelFile", *network, DataType::kFLOAT);
+//Specify the outputs of the network:
+for (auto& s : outputs)
+    network->markOutput(*blobNameToTensor->find(s.c_str()));
+```
+
+## 创建engine
+
+> Build the engine using the builder object:
+```cpp
+IBuilderConfig* config = builder->createBuilderConfig();
+config->setMaxWorkspaceSize(1 << 20);
+ICudaEngine* engine = builder->buildEngineWithConfig(*network, *config);
+```
+> When the engine is built, TensorRT makes copies of the weights.
+
+- 释放资源
+> Dispense with the network, builder, and parser if using one.
+```cpp
+parser->destroy();
+network->destroy();
+config->destroy();
+builder->destroy();
+```
+
+## 序列化模型
+- 序列化模型
+> Run the builder as a prior offline step and then serialize:
+```cpp
+IHostMemory *serializedModel = engine->serialize();
+// store model to disk
+// <…>
+serializedModel->destroy();
+```
+
+- 反序列化
+> Create a runtime object to deserialize:
+```cpp
+IRuntime* runtime = createInferRuntime(gLogger);
+ICudaEngine* engine = runtime->deserializeCudaEngine(modelData, modelSize, nullptr);
+```
+
+## 执行模型
+
+> Create some space to store intermediate activation values. Since the engine holds the network definition and trained parameters, additional space is necessary. These are held in an execution context:
+```cpp
+IExecutionContext *context = engine->createExecutionContext();
+```
+
+> An engine can have multiple execution contexts, allowing one set of weights to be used for multiple overlapping inference tasks. For example, you can process images in parallel CUDA streams using one engine and one context per stream. Each context will be created on the same GPU as the engine.
+
+> Use the input and output blob names to get the corresponding input and output index:
+```cpp
+int inputIndex = engine->getBindingIndex(INPUT_BLOB_NAME);
+int outputIndex = engine->getBindingIndex(OUTPUT_BLOB_NAME);
+```
+
+> Using these indices, set up a buffer array pointing to the input and output buffers on the GPU:
+```cpp
+void* buffers[2];
+buffers[inputIndex] = inputBuffer;
+buffers[outputIndex] = outputBuffer;
+```
+
+> TensorRT execution is typically asynchronous, so enqueue the kernels on a CUDA stream:
+```cpp
+context->enqueueV2(buffers, stream, nullptr);
+```
+> It is common to enqueue asynchronous memcpy() before and after the kernels to move data from the GPU if it is not already there. The final argument to enqueueV2() is an optional CUDA event which will be signaled when the input buffers have been consumed and their memory may be safely reused.
+
+> To determine when the kernel (and possibly memcpy()) are complete, use standard CUDA synchronization mechanisms such as events, or waiting on the stream.
+
+
+# 示例
 - 下面代码是一个简单的build过程
 ```cpp
 IBuilder* builder = createInferBuilder(gLogger);
@@ -114,5 +255,4 @@ builder->setMaxWorkspaceSize(1 << 30);
 ICudaEngine* engine = builder->buildCudaEngine(*network);
 ```
 
-# 实例
-- 之后补充
+
