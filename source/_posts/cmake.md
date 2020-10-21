@@ -15,7 +15,7 @@ date: 2020-09-11 01:12:03
 # 简介
 - CMake实现了一种平台无关的编译配置工具，只需要编写CMakeList.txt文件，就可以实现“Write once, run everywhere”。文件 CMakeLists.txt 需要手工编写，也可以通过编写脚本进行半自动的生成。
 - [官方文档](https://cmake.org/cmake/help/cmake2.4docs.html)
-
+- [中文文档](https://www.hahack.com/codes/cmake)
 - 在 linux 平台下使用 CMake 生成 Makefile 并编译的流程如下：
   1. 编写 CMake 配置文件 CMakeLists.txt 。
   2. 执行命令 cmake PATH 或者 ccmake PATH 生成 Makefile（ccmake 和 cmake 的区别在于前者提供了一个交互式的界面）。其中， PATH 是 CMakeLists.txt 所在的目录。

@@ -139,3 +139,9 @@ Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V -All
 Enable-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform
 Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
 ```
+
+4. 图形界面黑屏
+- 由于设置屏保，登录后黑屏，需要将屏保关闭
+```bash
+xset s off
+```
