@@ -1,0 +1,171 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="Google Colab"><meta name="keywords" content="skills"><meta name="author" content="hero576"><meta name="copyright" content="hero576"><title>Google Colab | void land space</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.8.2"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.8.2"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="dns-prefetch" href="https://hm.baidu.com"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?5ff8fca367285c16c6dd5c16ca2ccc1b";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();</script><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  hexoVersion: '5.0.2'
+} </script><meta name="generator" content="Hexo 5.0.2"><link rel="alternate" href="/atom.xml" title="void land space" type="application/atom+xml">
+</head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text"> 简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.1.</span> <span class="toc-text"> 介绍</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-number">2.</span> <span class="toc-text"> 准备工作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B4%A6%E6%88%B7%E6%B3%A8%E5%86%8C"><span class="toc-number">2.1.</span> <span class="toc-text"> 账户注册</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E7%A1%AC%E4%BB%B6%E4%BF%A1%E6%81%AF"><span class="toc-number">2.2.</span> <span class="toc-text"> 查看硬件信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%93%E7%9A%84%E5%AE%89%E8%A3%85"><span class="toc-number">2.3.</span> <span class="toc-text"> 库的安装</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E4%BB%A3%E7%A0%81"><span class="toc-number">3.</span> <span class="toc-text"> 运行代码</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E8%AE%B0%E4%BA%8B%E6%9C%AC"><span class="toc-number">3.1.</span> <span class="toc-text"> 使用记事本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A9%E7%94%A8google-drive"><span class="toc-number">3.2.</span> <span class="toc-text"> 利用Google Drive</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#google-drive%E4%BA%91%E7%AB%AF%E7%A1%AC%E7%9B%98%E9%85%8D%E7%BD%AE"><span class="toc-number">3.2.1.</span> <span class="toc-text"> Google Drive云端硬盘配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A0%E8%BD%BDgoogle-drive%E4%BA%91%E7%AB%AF%E7%A1%AC%E7%9B%98"><span class="toc-number">3.2.2.</span> <span class="toc-text"> 加载Google Drive云端硬盘</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%87%E6%8D%A2%E5%BD%93%E5%89%8D%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="toc-number">3.2.3.</span> <span class="toc-text"> 切换当前文件夹</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E4%BB%A3%E7%A0%81-2"><span class="toc-number">3.2.4.</span> <span class="toc-text"> 运行代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9E%E6%8E%A5%E5%88%B0%E6%9C%AC%E5%9C%B0%E7%9A%84jupyter%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">3.3.</span> <span class="toc-text"> 连接到本地的Jupyter服务器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E9%85%8D%E7%BD%AE"><span class="toc-number">3.3.1.</span> <span class="toc-text"> 本地配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9E%E6%8E%A5%E8%BF%9C%E7%A8%8B"><span class="toc-number">3.3.2.</span> <span class="toc-text"> 连接远程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E4%BB%A3%E7%A0%81"><span class="toc-number">3.3.3.</span> <span class="toc-text"> 执行代码</span></a></li></ol></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/images/haimianbaobao.jpg"></div><div class="author-info__name text-center">hero576</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">53</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">13</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">分类</span><span class="pull-right">5</span></a></div></div></div><div id="content-outer"><div class="plain" id="top-container"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">void land space</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">主页</a><a class="site-page" href="/archives">文章</a><a class="site-page" href="/tags">标签</a><a class="site-page" href="/categories">分类</a><a class="site-page" href="/gallery">相册</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> 搜索</span></a></span></div></div><div class="layout" id="content-inner"><article id="post"><div class="plain" id="post-title">Google Colab</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-10-21</time><span class="post-meta__separator">|</span><i class="fa fa-inbox" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/common/"> common</a></div><div class="article-container" id="post-content"><blockquote></blockquote>
+<a id="more"></a>
+<h1 id="简介"><a class="markdownIt-Anchor" href="#简介"></a> 简介</h1>
+<h2 id="介绍"><a class="markdownIt-Anchor" href="#介绍"></a> 介绍</h2>
+<ul>
+<li>谷歌推出的一个免费GPU服务器，官方对其的说明是：</li>
+</ul>
+<blockquote>
+<p>Colaboratory是一个研究项目，可免费使用。</p>
+</blockquote>
+<p>​- Colaboratory 旨在帮助传播机器学习培训和研究成果，它是一个 Jupyter 笔记本环境，不需要进行任何设置就可以使用，并且完全在云端运行可以方便的使用Keras,TensorFlow,PyTorch等框架进行深度学习应用的开发。虚拟机配置T4 GPU，12G内存，39G硬盘空间。</p>
+<p>​- <a target="_blank" rel="noopener" href="https://research.google.com/colaboratory/local-runtimes.html">Google Colab官方文档</a></p>
+<ul>
+<li>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_42617455/article/details/104260490">教程链接</a></p>
+</li>
+<li>
+<p>Colaboratory最多只能运行12小时，时间一到就会清空VM上所有数据。这包括我们安装的软件，包括我们下载的数据，存放的计算结果，建议保存必要的数据。</p>
+</li>
+</ul>
+<h1 id="准备工作"><a class="markdownIt-Anchor" href="#准备工作"></a> 准备工作</h1>
+<h2 id="账户注册"><a class="markdownIt-Anchor" href="#账户注册"></a> 账户注册</h2>
+<ul>
+<li>谷歌浏览器</li>
+<li>一个谷歌账号</li>
+<li><a target="_blank" rel="noopener" href="https://colab.research.google.com">Google Colab</a><br />
+​- <a target="_blank" rel="noopener" href="https://drive.google.com">谷歌云盘</a></li>
+</ul>
+<h2 id="查看硬件信息"><a class="markdownIt-Anchor" href="#查看硬件信息"></a> 查看硬件信息</h2>
+<ul>
+<li>bash代码可以直接运行，前面加上<code>!</code>符号</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>查看信息</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>显示出你所使用的所有硬件</td>
+<td><code>from tensorflow.python.client import device_lib</code><br><code>device_lib.list_local_devices()</code></td>
+</tr>
+<tr>
+<td>查看CPU信息</td>
+<td><code>!cat /proc/cpuinfo</code></td>
+</tr>
+<tr>
+<td>查看内存信息</td>
+<td><code>!cat /proc/meminfo</code></td>
+</tr>
+<tr>
+<td>查看版本信息</td>
+<td><code>!cat /proc/version</code></td>
+</tr>
+<tr>
+<td>查看设备</td>
+<td><code>!cat /proc/devices</code></td>
+</tr>
+<tr>
+<td>查看GPU</td>
+<td><code>!/opt/bin/nvidia-smi</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="库的安装"><a class="markdownIt-Anchor" href="#库的安装"></a> 库的安装</h2>
+<ul>
+<li>Colab自带了Tensorflow、Matplotlib、Numpy、Pandas等深度学习基础库，如果还需要其他依赖，如Keras，需要自己安装，安装命令如下：<code>pip install keras</code></li>
+</ul>
+<h1 id="运行代码"><a class="markdownIt-Anchor" href="#运行代码"></a> 运行代码</h1>
+<ul>
+<li>首先在左上角<code>修改 -&gt; 笔记本设置 -&gt;硬件加速器</code>设置为GPU</li>
+</ul>
+<p><img src="/images/pasted-311.png" alt="设置GPU" /></p>
+<ul>
+<li>下面三种方式，第一种最快，第三种最慢</li>
+</ul>
+<h2 id="使用记事本"><a class="markdownIt-Anchor" href="#使用记事本"></a> 使用记事本</h2>
+<ul>
+<li>新建一个Python记事本，写入代码，直接运行（与Jupyter的使用类似）</li>
+</ul>
+<p><img src="/images/pasted-312.png" alt="使用记事本" /></p>
+<h2 id="利用google-drive"><a class="markdownIt-Anchor" href="#利用google-drive"></a> 利用Google Drive</h2>
+<h3 id="google-drive云端硬盘配置"><a class="markdownIt-Anchor" href="#google-drive云端硬盘配置"></a> Google Drive云端硬盘配置</h3>
+<ul>
+<li>如果要跑自己的数据集就需要先把项目和数据集上传到Google Drive，可以直接把文件夹拖进去，或者新建一个文件，第一次用Google Drive需要在关联更多应用里关联Google Colaboratory<br />
+<img src="/images/pasted-313.png" alt="关联Google Colaboratory" /></li>
+</ul>
+<h3 id="加载google-drive云端硬盘"><a class="markdownIt-Anchor" href="#加载google-drive云端硬盘"></a> 加载Google Drive云端硬盘</h3>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> google.colab <span class="keyword">import</span> drive 	drive.mount(<span class="string">&#x27;/content/drive&#x27;</span>) </span><br></pre></td></tr></table></figure>
+<p>-​ 或者在左侧文件栏中点击装载Goole云端硬盘，自动生成上述代码后运行，点击运行后会生成一个链接，点进去登录云盘，把验证码复制过来，输入之后enter</p>
+<p><img src="/images/pasted-313.png" alt="装载Goole云端硬盘" /></p>
+<h3 id="切换当前文件夹"><a class="markdownIt-Anchor" href="#切换当前文件夹"></a> 切换当前文件夹</h3>
+<ul>
+<li>在左侧栏中找到项目存放路径，运行以下代码：</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">​<span class="keyword">import</span> os </span><br><span class="line">os.chdir(<span class="string">&quot;/content/drive/My Drive/Colab Notebooks/test_Mnist&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="/images/pasted-313.png" alt="切换当前文件夹" /></p>
+<h3 id="运行代码-2"><a class="markdownIt-Anchor" href="#运行代码-2"></a> 运行代码</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">​python your_filename </span><br></pre></td></tr></table></figure>
+<h2 id="连接到本地的jupyter服务器"><a class="markdownIt-Anchor" href="#连接到本地的jupyter服务器"></a> 连接到本地的Jupyter服务器</h2>
+<ul>
+<li>具体可参考<a target="_blank" rel="noopener" href="https://research.google.com/colaboratory/local-runtimes.html">Colab官方文档</a></li>
+</ul>
+<h3 id="本地配置"><a class="markdownIt-Anchor" href="#本地配置"></a> 本地配置</h3>
+<ul>
+<li>打开本地Jupyter，安装并启用jupyter_http_over_ws扩展程序（一次性），输入代码：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">！pip install jupyter_http_over_ws ！jupyter serverextension enable *--py jupyter_http_over_ws </span><br></pre></td></tr></table></figure>
+<h3 id="连接远程"><a class="markdownIt-Anchor" href="#连接远程"></a> 连接远程</h3>
+<ul>
+<li>以管理员身份运行Anaconda Prompt，输入命令：（port对应的端口号是自定义的）</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">jupyter notebook --NotebookApp.allow_origin=<span class="string">&#x27;https://colab.research.google.com&#x27;</span> --port=8899 --NotebookApp.port_retries=0 </span><br></pre></td></tr></table></figure>
+<ul>
+<li>然后会弹出Jupyter的新界面，注意使用的浏览器切换成谷歌</li>
+</ul>
+<h3 id="执行代码"><a class="markdownIt-Anchor" href="#执行代码"></a> 执行代码</h3>
+<ul>
+<li>在Colab右上角选择连接到本地代码执行程序，输入自定义的端口号：<br />
+<img src="/images/pasted-314.png" alt="连接到本地" /></li>
+</ul>
+<blockquote>
+<p>补充：使用Pytorch<br />
+输入以下代码，运行后会输出一个链接，点击进入visdom，如果不行，修改URL，将https， 修改为http便可</p>
+</blockquote>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">! npm install -g localtunnel  <span class="comment"># 8097是自己设置的端口号，可修改为自己要用的端口号</span></span><br><span class="line"> get_ipython().system_raw(<span class="string">&#x27;python3 -m pip install visdom&#x27;</span>)  </span><br><span class="line"> get_ipython().system_raw(<span class="string">&#x27;python3 -m visdom.server -port 8097 &gt;&gt; visdomlog.txt 2&gt;&amp;1 &amp;&#x27;</span>)    </span><br><span class="line"> get_ipython().system_raw(<span class="string">&#x27;lt --port 8097 &gt;&gt; url.txt 2&gt;&amp;1 &amp;&#x27;</span>)    </span><br><span class="line"> <span class="keyword">import</span> time  </span><br><span class="line"> time.sleep(<span class="number">5</span>) </span><br><span class="line"> ! cat url.txt  </span><br><span class="line"> <span class="keyword">import</span> visdom  </span><br><span class="line"> time.sleep(<span class="number">5</span>)  </span><br><span class="line"> vis = visdom.Visdom(port=<span class="string">&#x27;8097&#x27;</span>)    </span><br><span class="line"> print(vis) </span><br><span class="line"> time.sleep(<span class="number">3</span>)  </span><br><span class="line"> vis.text(<span class="string">&#x27;testing&#x27;</span>)  </span><br><span class="line"> ! cat visdomlog.txt </span><br></pre></td></tr></table></figure>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css"></div></article><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/skills/">skills</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2020/10/23/ROS/"><i class="fa fa-chevron-left">  </i><span>ROS</span></a></div><div class="next-post pull-right"><a href="/2020/10/19/docker/"><span>docker</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="vcomment"></div><script src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = 'false' == 'true';
+var verify = 'false' == 'true';
+var record_ip = '' == 'true';
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  recordIP:record_ip,
+  appId:'AdfkiqY89QUSUWbDY9xJuCh0-gzGzoHsz',
+  appKey:'2cEvHcqEWsyoKwy4AUL3kPGh',
+  placeholder:'劈个叉吧',
+  avatar:'mm',
+  guest_info:guest_info,
+  pageSize:'100',
+  lang: 'zh-cn'
+})</script></div></div><footer><div class="layout" id="footer"><div class="copyright">&copy;2020 By hero576</div><div class="framework-info"><span>驱动 - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.8.2"></script><script src="/js/fancybox.js?version=1.8.2"></script><script src="/js/sidebar.js?version=1.8.2"></script><script src="/js/copy.js?version=1.8.2"></script><script src="/js/fireworks.js?version=1.8.2"></script><script src="/js/transition.js?version=1.8.2"></script><script src="/js/scroll.js?version=1.8.2"></script><script src="/js/head.js?version=1.8.2"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css"><script src="/js/katex.js"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>
