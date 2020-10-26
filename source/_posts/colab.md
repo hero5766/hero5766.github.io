@@ -29,7 +29,8 @@ date: 2020-10-21 18:00:45
 - 谷歌浏览器
 - 一个谷歌账号
 - [Google Colab](https://colab.research.google.com)
-​- [谷歌云盘](https://drive.google.com)
+​
+- [谷歌云盘](https://drive.google.com)
 
 ## 查看硬件信息
 - bash代码可以直接运行，前面加上`!`符号

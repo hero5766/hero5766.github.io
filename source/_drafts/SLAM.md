@@ -19,14 +19,22 @@ date: 2020-07-31 20:03:00
 [^1]:Simultaneous Localisation and Mapping (SLAM):Part I The Essential Algorithms
 [^2]:Simultaneous Localisation and Mapping (SLAM):Part II State of the Art
 
-$P(x_k,m \vdots Z_{k:0},U_{k:0},x_0)$|在x0初始状态，观测和控制已知的条件下，对应x_k和m的概率
--|-
-$x_k$|状态
-$m$|地图
-$Z_{k:0}$|观测
-$U_{k:0}$|控制
+- 在x0初始状态，观测和控制已知的条件下，对应x_k和m的概率：
+  - $P(x_k,m \vdots Z_{k:0},U_{k:0},x_0)$
+  - $x_k$：状态
+  - $m$：地图
+  - $Z_{k:0}$：观测
+  - $U_{k:0}$：控制
 
 - SLAM提出了一个基本架构，根据输入（可见光、IMU、激光雷达、声呐），求得输出（环境及环境位置）。
+
+基本架构|说明
+-|-
+前端|使用传感器获取的数据，计算对应时间的机器人状态
+后端|在前端的状态之上，对漂移和误差进行估计和优化
+回环|当路径回到原始位置后，对总体路径进行调整
+建图|对获取的数据进行处理建图，为后续导航、决策控制等使用
+
 
 ## SLAM的发展
 - SLAM根据特点可以分为两种：
@@ -40,7 +48,7 @@ $U_{k:0}$|控制
 - EKF Monocular SLAM：Javier Civera,<strong style="color:red">Andrew J.Davison</strong>，用单目视觉就可以完成SLAM，大大降低了成本。
 - PTAM-SLAM：Georg Klein,<strong style="color:red">David Murray</strong>
 - RGBD-SLAM
-- ORB-SLAM
+- ORB-SLAM2
 - LSD-SLAM
 
 ### 基于激光
@@ -55,9 +63,9 @@ $U_{k:0}$|控制
 [kitti](http://www.evlibs.net/datasets/kitti)
 
 ## 书籍
-- [slam十四讲]()
-- [Multiple View Geometry]()
-- [State Estimation For Robotics]()
+- [视觉SLAM十四讲从理论到实践]()
+- [Multiple View Geometry]()多视图几何
+- [State Estimation For Robotics]()机器人学中的状态估计
 - [机器人学中的状态估计]()
 
 

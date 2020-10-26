@@ -25,16 +25,37 @@ date: 2020-09-11 01:12:03
 ## 注释
 - 符号"#"后面的内容被认为是注释
 
-## 函数
+## 命令
 - 格式：`命令名称(参数1 参数2)`
 - 参数之间用空格间隔
+- [官方文档](https://cmake.org/cmake/help/v3.0/manual/cmake-commands.7.html)
 
-
-|函数||
+|命令||
 |-|-|
-|PROJECT(projectname)|设置项目名称|
-|CMAKE_MINIMUM_REQUIRED(VERSION 2.6)|限定cmake版本|
-|AUX_SOURCE_DIRECTORY(. DIR_SRCS)|将目录赋值给变量|
+|`PROJECT(projectname)`|设置项目名称|
+|`CMAKE_MINIMUM_REQUIRED(VERSION 2.6)`|限定cmake版本|
+|`AUX_SOURCE_DIRECTORY(. DIR_SRCS)`|查找当前目录下的所有源文件，并将名称保存到 DIR_SRCS 变量|
+|`add_executable(sayHello ${DIR_SRCS})`|将DIR_SRCS指代的所有源文件，生成可执行文件sayHello|
+|`include_directoris("include")`|引入头文件目录|
+|`add_library(libHello "src/Hello.cpp")`|引入源文件生成链接库，将src目录中的源文件编译为共享库|
+|`target_link_libraries(sayHello libHello)`|可执行文件设置头文件目录|
+|`ADD_SUBDIRECTORY( src )` | 指明本项目包含一个子目录 src，添加其中的cmakelist.txt文件|
+|`message(STATUS,"msg ... ")`|为用户显示一条消息，可选的关键字：<br>(无) = 重要消息；<br> STATUS = 非重要消息；<br> WARNING = CMake 警告, 会继续执行；<br> AUTHOR_WARNING = CMake 警告 (dev), 会继续执行；<br> SEND_ERROR = CMake 错误, 继续执行，但是会跳过生成的步骤；<br> FATAL_ERROR = CMake 错误, 终止所有处理过程；|
+|`link_directories("./libs")`|添加链接库所在的目录|
+|`set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")`|设置输出目录|
+|`set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")`|设置c++编译选项|
+|`find_package( OpenCV REQUIRED )`|链接第三方库，设置REQUIRED表示opencv是必须找到的，如果找不到就会报错|
+|`INCLUDE_DIRECTORIES(${OpenCV_INCLUDE_DIRS})`|链接第三方库，添加opencv的include路径
+|`target_link_libraries(predict  ${OpenCV_LIBS})`|链接opencv库文件
+|`set(mymessage "This is a message print!")`|设置变量|
+|`message(WARNING "${mymessage}")`|打印变量
+|`FIND_PATH(LIBDB_CXX_INCLUDE_DIR db_cxx.h /usr/include/ /usr/local/include/)` |指明头文件查找的路径：在 /usr/include/ 和 /usr/local/include/ 中查找文件db_cxx.h ,并将db_cxx.h 所在的路径保存在 LIBDB_CXX_INCLUDE_DIR中
+|`FIND_LIBRARY( LIBDB_CXX_LIBRARIES NAMES db_cxx PATHS /usr/lib/ /usr/local/lib/)`|用于查找链接库并将结果保存在变量中：在目录 /usr/lib/ 和 /usr/local/lib/ 中寻找名称为 db_cxx 的链接库,并将结果保存在 LIBDB_CXX_LIBRARIES
+|`SET(CMAKE_MODULE_PATH ${CMAKE_ROOT}/Modules ${CMAKE_SOURCE_DIR}/cmake/modules)`|表示到目录 ./cmake/modules 中查找 Findlibdb_cxx.cmake|
+|`set(CMAKE_BUILD_TYPE Debug`|可以的取值是 Debug Release RelWithDebInfo 和 MinSizeRel。当这个变量值为 Debug 的时候,CMake 会使用变量 CMAKE_CXX_FLAGS_DEBUG 和 CMAKE_C_FLAGS_DEBUG 中的字符串作为编译选项生成 Makefile ,当这个变量值为 Release 的时候,工程会使用变量 CMAKE_CXX_FLAGS_RELEASE 和 CMAKE_C_FLAGS_RELEASE 选项生成 Makefile|
+|`SET(CMAKE_CXX_FLAGS_DEBUG "$ENV{CXXFLAGS} -O0 -Wall -g -ggdb")`|debug 版的项目生成的可执行文件需要有调试信息并且不需要进行优化，设置优化的参数最高-O3,最低是 -O0，添加调试信息的参数是 -g -ggdb，如果不添加这个参数,调试信息就不会被包含在生成的二进制文件中。
+|`SET(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall")`|release 版的不需要调试信息但需要优化
+
 
 # 命令
 
@@ -42,9 +63,6 @@ date: 2020-09-11 01:12:03
 -|-
 ccmake [options] <path-to-source>| 生成Makefile，提供了一个图形化的操作界面
 cmake [options] <path-to-source> | 生成Makefile
-
-
-
 
 # 示例
 ## 单文件工程
@@ -93,8 +111,7 @@ add_executable(Demo main.cc mathfunc.cpp)
 cmake_minimum_required (VERSION 2.8)
 # 项目信息
 project (Demo2)
-# 查找当前目录下的所有源文件
-# 并将名称保存到 DIR_SRCS 变量
+# 查找当前目录下的所有源文件，并将名称保存到 DIR_SRCS 变量
 aux_source_directory(. DIR_SRCS)
 # 指定生成目标
 add_executable(Demo ${DIR_SRCS})

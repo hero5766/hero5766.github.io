@@ -117,6 +117,15 @@ sudo service xrdp restart
 
   - 此时再远程连接，即可连接上。
 
+# wsl与windows相互访问文件
+- [wsl访问windows文件夹](https://superuser.com/questions/1066261/how-to-access-windows-folders-from-bash-on-ubuntu-on-windows)：
+  - windows：`c:\`
+  - wsl：`/mnt/c/`
+
+- [windows访问wsl文件夹](https://superuser.com/questions/1110974/how-to-access-linux-ubuntu-files-from-windows-10-wsl)：
+  - 在windows位置：`C:\Users\%USERNAME%\AppData\Local\Packages\CanonicalGroupLimited.UbuntuonWindows_79rhkp1fndgsc\LocalState\rootfs\`
+  - 由于linux文件夹不被建议访问，使用windows资源管理器容易造成wsl不可预知的问题，因为缺少VolFs所需要的额外信息
+
 # 问题汇总
 ## Win10 2004 WSL2 ERROR: 0x800701bc
 - uninstall the Linux kernel (or Windows Subsystem for Linux Update) by running this program
