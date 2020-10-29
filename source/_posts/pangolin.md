@@ -45,16 +45,16 @@ sudo make install
 - 这里总结了[博客yuntian_li](https://blog.csdn.net/weixin_43991178/article/details/105119610)中对Pangolin的使用方法
 
 
-## 类型
+<!-- ## 类型
 
 类型|说明
--|-
+-|- -->
 
 
 ## 方法
 
 方法|代码|说明
--|-
+-|-|-
 创建视窗对象|`pangolin::CreateWindowAndBind("Main",640,480);`|创建名称为“Main”的GUI窗口，尺寸为640×640
 启动深度测试|`glEnable(GL_DEPTH_TEST);`|该功能会使得pangolin只会绘制朝向镜头的那一面像素点，避免容易混淆的透视关系出现，因此在任何3D可视化中都应该开启该功能
 创建观察相机视图|`pangolin::OpenGlRenderState s_cam(pangolin::ProjectionMatrix(640,480,420,420,320,320,0.2,100),pangolin::ModelViewLookAt(2,0,2, 0,0,0, pangolin::AxisY));` |在视图中放置摄像机，在视窗中“放置”一个摄像机，给出摄像机的内参矩阵ProjectionMatrix从而在我们对摄像机进行交互操作时，Pangolin会自动根据内参矩阵完成对应的透视变换。此外，我们还需要给出摄像机初始时刻所处的位置，摄像机的视点位置（即摄像机的光轴朝向哪一个点）以及摄像机的本身哪一轴朝上。ProjectionMatrix的参数依次为<br>观察相机的图像高度<br>宽度<br>4个内参<br>最近和最远视距<br>ModelViewLookAt的参数依次为<br>相机所在的位置<br>相机所看的视点位置(一般会设置在原点)

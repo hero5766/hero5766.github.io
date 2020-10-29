@@ -63,6 +63,9 @@ date: 2020-09-11 01:12:03
 -|-
 ccmake [options] <path-to-source>| 生成Makefile，提供了一个图形化的操作界面
 cmake [options] <path-to-source> | 生成Makefile
+make |编译<br>-j3：多线程进行编译， j 后面的数字是你想要使用的线程数量<br>install：编译好的文件放入到系统环境中去
+
+
 
 # 示例
 ## 单文件工程
