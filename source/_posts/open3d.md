@@ -37,9 +37,6 @@ conda install --channel https://conda.anaconda.org/open3d-admin open3d
 
 ### linux
 
-```bash
-```
-
 # 示例[^1]
 [^1]: [链接](https://blog.csdn.net/suyunzzz/article/details/105183824)
 
@@ -69,6 +66,7 @@ pcd_tree=o3d.geometry.KDTreeFlann(pcd)  # 创建一个实例 pcd_tree以使用KD
 [k, index, _] = pcd_tree.search_knn_vector_3d(pcd.points[K], 50)
 np.asarray(pcd.colors)[index[1:], :] = [0, 1, 0]   # 给50以内的点设置颜色为green
 ```
+
 - ps:colors和points是PointCloud中的两个矩阵
 
 ## 可视化点云+label
