@@ -5,9 +5,9 @@ tags:
   - robotic
 categories:
   - programme
-date: 2020-07-31 20:03:00
+date: 2020-11-01 20:03:00
 ---
-> SLAM
+> 
 <!--more-->
 
 # 简介
@@ -91,8 +91,8 @@ linux操作系统|16.04以上
 .deb文件|`sudo dpkg install *.deb PATH:*.deb`<br>`sudo dpky --list`<br>`sudo dpkg --remove [package name]`
 cmake|
 
-# SLAM理论基础
-## 数学表达
+<!-- # SLAM理论基础 -->
+<!-- ## 数学表达
 - 四元数
 ## 刚体运动
 - 欧式旋转
@@ -108,9 +108,9 @@ cmake|
 ## 基于自身量测的估计
 ## 基于视觉的RANSAC PNP
 ## 基于点云特征的ICP
-## 随机概率融合（VINS、LINS）
+## 随机概率融合（VINS、LINS） -->
 
-# 非线性优化
+<!-- # 非线性优化
 ## 优化的目标
 - 状态估计：后端的目标是从噪声的数据估计内在的状态
   - 渐进式Incremental/Recursive
@@ -130,39 +130,44 @@ cmake|
 
 ## 递归
 - k时刻所有待估计的量组成k时刻状态：$x_k\triangleq\left\{x_k,y_1,\cdots,y_m\right\}$
-- k时刻观测统一记成$z_k=\begin{cases}x_k=f(x_{k-1},u_k)+wk\\z_k=h(x_k)+v_k\end{cases}$
+- k时刻观测统一记成$z_k=\begin{cases}x_k=f(x_{k-1},u_k)+wk\\z_k=h(x_k)+v_k\end{cases}$ -->
+
+
+# 后端优化
+- 在视觉里程计、激光里程计获取到的实时姿态之后，后端整合起来做全局的优化，使得最终结果能更接近真实环境
+
 
 
 
 # 回路和图优化
 ## 词袋模型
-## G2O
-## Ceres
+<!-- ## G2O
+## Ceres -->
 ## 关键帧
 ## 局部子图
 ## gstam
 
-# 传感器
+<!-- # 传感器
 ## 视觉
 ## 激光
 ## 声呐、超声
-## 惯导
+## 惯导 -->
 
-# 地图
+<!-- # 地图
 ## 点云
 ## 拓扑地图
 ## 语义地图
-## 特征地图
+## 特征地图 -->
 
-# 视觉
+<!-- # 视觉
 ## 相机模型
 ## 立体视觉
-## 视觉几何
+## 视觉几何 -->
 
-## AR/VR
-- Unity3D最广泛使用的AR/VR的平台
+<!-- ## AR/VR
+- Unity3D最广泛使用的AR/VR的平台 -->
 
-# 深度学习和SLAM
+<!-- # 深度学习和SLAM
 ## 单目深度估计
 ## 环境分割识别
 ## 语义理解
@@ -174,6 +179,6 @@ cmake|
 ## 无人机
 ## 室内辅助导航
 
-
+ -->
 
 
