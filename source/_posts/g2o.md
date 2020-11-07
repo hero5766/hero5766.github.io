@@ -58,7 +58,7 @@ types    |各种顶点和边，很重要！我们用户在构建图优化问题�
 
 - 先看上半部分。SparseOptimizer 是我们最终要维护的东东。它是一个Optimizable Graph，从而也是一个Hyper Graph。一个 SparseOptimizer 含有很多个顶点 （都继承自 Base Vertex）和很多个边（继承自 BaseUnaryEdge, BaseBinaryEdge或BaseMultiEdge）。这些 Base Vertex 和 Base Edge 都是抽象的基类，而实际用的顶点和边，都是它们的派生类。我们用 SparseOptimizer.addVertex 和 SparseOptimizer.addEdge 向一个图中添加顶点和边，最后调用 SparseOptimizer.optimize 完成优化。
 - 在优化之前，需要指定我们用的求解器和迭代算法。从图中下半部分可以看到，一个 SparseOptimizer 拥有一个 Optimization Algorithm，继承自Gauss-Newton, Levernberg-Marquardt, Powell's dogleg 三者之一（我们常用的是GN或LM）。同时，这个 Optimization Algorithm 拥有一个Solver，它含有两个部分。一个是 SparseBlockMatrix ，用于计算稀疏的雅可比和海塞； 一个是用于计算迭代过程中最关键的一步
-$$HΔx=−b$$
+$$HΔx=-b$$
 
 - 这就需要一个线性方程的求解器。而这个求解器，可以从 PCG, CSparse, Choldmod 三者选一。
 
