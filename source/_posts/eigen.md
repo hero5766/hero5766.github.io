@@ -26,6 +26,12 @@ sudo updatedb
 locate eigen3
 ```
 
+- 创建软连接
+```bash
+sudo ln -sf eigen3/Eigen Eigen
+sudo ln -sf eigen3/unsupported unsupported
+```
+
 ### windows
 ```bash
 vcpkg install eigen3
