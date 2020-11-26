@@ -71,6 +71,42 @@ PCL安装|说明
 下载PCL|[下载链接](https://github.com/PointCloudLibrary/pcl)
 cmake编译|必须选择BUILD_CUDA才能编译kinfu，如果使用openni2，需要在with中勾选该选项
 
+
+### linux
+- 依赖
+- 其中vtk以及qt这两个库，建议大家还是从源码编译安装比较好。
+
+```bash
+sudo apt-get update  
+sudo apt-get install -y git build-essential linux-libc-dev  
+sudo apt-get install -y cmake cmake-gui   
+sudo apt-get install -y libusb-1.0-0-dev libusb-dev libudev-dev  
+sudo apt-get install -y mpi-default-dev openmpi-bin openmpi-common    
+sudo apt-get install -y libflann1.8 libflann-dev  
+sudo apt-get install -y libeigen3-dev  
+sudo apt-get install -y libboost-all-dev  
+sudo apt-get install -y libvtk5.10-qt4 libvtk5.10 libvtk5-dev  
+sudo apt-get install -y libqhull* libgtest-dev  
+sudo apt-get install -y freeglut3-dev pkg-config  
+sudo apt-get install -y libxmu-dev libxi-dev   
+sudo apt-get install -y mono-complete  
+sudo apt-get install -y qt-sdk openjdk-8-jdk openjdk-8-jre 
+```
+
+`sudo apt-get install -y git build-essential linux-libc-dev  cmake cmake-gui libusb-1.0-0-dev libusb-dev libudev-dempi-default-dev openmpi-bin libflann1.8 libflann-dev  libeigen3-dev  libboost-all-dev  libvtk5.10-qt4 libvtk5.10 libvtk5-dev libqhull* libgtest-dev  freeglut3-dev pkg-config  libxmu-dev libxi-dev   mono-complete  qt-sdk openjdk-8-jdk openjdk-8-jre openmpi-common`
+
+- vtk安装：[下载地址](https://vtk.org/download/)：VTK-8.2.0.tar.gz和VTKData-8.2.0.tar.gz
+
+- 执行
+```bash
+mkdir build
+cd build
+cmake ../ -DBUILD_SHARED_LIBS=ON -DBUILD_TESTING=ON -DCMAKE_BUILD_TYPE=Release -DVTK_WRAP_PYTHON=ON
+make -j8
+sudo make install
+```
+
+
 ### 样例数据
 
 - [官方pcd数据下载](https://github.com/PointCloudLibrary/data)
