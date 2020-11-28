@@ -1,0 +1,231 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="三维重建"><meta name="keywords" content="robotic"><meta name="author" content="hero576"><meta name="copyright" content="hero576"><title>三维重建 | void land space</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.8.2"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.8.2"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="dns-prefetch" href="https://hm.baidu.com"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?5ff8fca367285c16c6dd5c16ca2ccc1b";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();</script><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  hexoVersion: '5.0.2'
+} </script><meta name="generator" content="Hexo 5.0.2"><link rel="alternate" href="/atom.xml" title="void land space" type="application/atom+xml">
+</head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text"> 简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E5%9C%BA%E6%99%AF"><span class="toc-number">2.</span> <span class="toc-text"> 静态场景[1][2]</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#kinectfusion"><span class="toc-number">2.1.</span> <span class="toc-text"> KinectFusion</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#kintinuous"><span class="toc-number">2.2.</span> <span class="toc-text"> Kintinuous</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#elasticfusion"><span class="toc-number">2.3.</span> <span class="toc-text"> ElasticFusion</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#elasticreconstruction"><span class="toc-number">2.4.</span> <span class="toc-text"> ElasticReconstruction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dynamicfusion"><span class="toc-number">2.5.</span> <span class="toc-text"> DynamicFusion</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#infinitam"><span class="toc-number">2.6.</span> <span class="toc-text"> InfiniTAM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bundlefusion"><span class="toc-number">2.7.</span> <span class="toc-text"> BundleFusion[3][4]</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E5%9C%BA%E6%99%AF"><span class="toc-number">3.</span> <span class="toc-text"> 动态场景</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#dynamicfusion-2"><span class="toc-number">3.1.</span> <span class="toc-text"> DynamicFusion</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#volumedeform"><span class="toc-number">3.2.</span> <span class="toc-text"> volumeDeform</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bodyfusion"><span class="toc-number">3.3.</span> <span class="toc-text"> BodyFusion</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#doublefusion"><span class="toc-number">3.4.</span> <span class="toc-text"> DoubleFusion</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#unstructuredfusion"><span class="toc-number">3.5.</span> <span class="toc-text"> UnstructuredFusion</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#robustfusion"><span class="toc-number">3.6.</span> <span class="toc-text"> RobustFusion</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#killingfusion"><span class="toc-number">3.7.</span> <span class="toc-text"> KillingFusion</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#surfelwarp"><span class="toc-number">3.8.</span> <span class="toc-text"> SurfelWarp</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#fusion4d"><span class="toc-number">3.9.</span> <span class="toc-text"> Fusion4D</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95"><span class="toc-number">4.</span> <span class="toc-text"> 深度学习方法[5]</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#deepvo"><span class="toc-number">4.1.</span> <span class="toc-text"> DeepVO</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undeepvo"><span class="toc-number">4.2.</span> <span class="toc-text"> UnDeepVO</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vinet"><span class="toc-number">4.3.</span> <span class="toc-text"> VINet</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sfm-net"><span class="toc-number">4.4.</span> <span class="toc-text"> SfM-Net</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cnn-slam"><span class="toc-number">4.5.</span> <span class="toc-text"> CNN-SLAM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#posenet"><span class="toc-number">4.6.</span> <span class="toc-text"> PoseNet</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vidloc"><span class="toc-number">4.7.</span> <span class="toc-text"> VidLoc</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#netvlad"><span class="toc-number">4.8.</span> <span class="toc-text"> NetVLAD</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#learned-stereo-machine"><span class="toc-number">4.9.</span> <span class="toc-text"> Learned Stereo Machine</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#deepmvs"><span class="toc-number">4.10.</span> <span class="toc-text"> DeepMVS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mvsnet"><span class="toc-number">4.11.</span> <span class="toc-text"> MVSNet</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#recurrent-mvsnet"><span class="toc-number">4.12.</span> <span class="toc-text"> Recurrent MVSNet</span></a></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/images/haimianbaobao.jpg"></div><div class="author-info__name text-center">hero576</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">65</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">14</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">分类</span><span class="pull-right">5</span></a></div></div></div><div id="content-outer"><div class="plain" id="top-container"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">void land space</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">主页</a><a class="site-page" href="/archives">文章</a><a class="site-page" href="/tags">标签</a><a class="site-page" href="/categories">分类</a><a class="site-page" href="/gallery">相册</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> 搜索</span></a></span></div></div><div class="layout" id="content-inner"><article id="post"><div class="plain" id="post-title">三维重建</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-11-29</time><span class="post-meta__separator">|</span><i class="fa fa-inbox" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/programme/"> programme</a></div><div class="article-container" id="post-content"><blockquote></blockquote>
+<a id="more"></a>
+<h1 id="简介"><a class="markdownIt-Anchor" href="#简介"></a> 简介</h1>
+<ul>
+<li>三维重建包含静态场景、动态场景。目前是一个非常热的研究领域，未来会在很多领域发挥巨大作用
+<ul>
+<li>室内场景：稠密三维重建目的是使用消费级相机（本文特指深度相机）对室内场景进行扫描，自动生成一个精确完整的三维模型，应用在室内的增强现实游戏、机器人室内导航、AR家具展示等。</li>
+<li>室外场景主要应用在自动驾驶、建筑建模等场景</li>
+</ul>
+</li>
+</ul>
+<h1 id="静态场景"><a class="markdownIt-Anchor" href="#静态场景"></a> 静态场景<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup><sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup></h1>
+<h2 id="kinectfusion"><a class="markdownIt-Anchor" href="#kinectfusion"></a> KinectFusion</h2>
+<ul>
+<li>
+<p>帝国理工的Newcombe等人在2011年提出的KinectFusion，可在不需要RGB图而只用深度图的情况下就能实时地建立三维模型。KinectFusion算法首次实现了基于廉价消费类相机的实时刚体重建，在当时是非常有影响力的工作，它极大的推动了实时稠密三维重建的商业化进程。</p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/ismar2011.pdf">论文</a></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="https://github.com/ParikaGoel/KinectFusion">代码</a></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="http://pointclouds.org/news/kinectfusion-open-source.html">PCL实现的代码</a></p>
+</li>
+</ul>
+<h2 id="kintinuous"><a class="markdownIt-Anchor" href="#kintinuous"></a> Kintinuous</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://www.thomaswhelan.ie/Whelan12rssw.pdf">论文</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/mp3guy/Kintinuous">代码连接</a></li>
+</ul>
+<h2 id="elasticfusion"><a class="markdownIt-Anchor" href="#elasticfusion"></a> ElasticFusion</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://roboticsproceedings.org/rss11/p01.pdf">论文</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.thomaswhelan.ie/Whelan16ijrr.pdf">论文</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/mp3guy/ElasticFusion">代码连接</a></li>
+</ul>
+<h2 id="elasticreconstruction"><a class="markdownIt-Anchor" href="#elasticreconstruction"></a> ElasticReconstruction</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://vladlen.info/papers/indoor.pdf">论文</a></li>
+<li><a target="_blank" rel="noopener" href="http://qianyi.info/scene.html">项目官网</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/qianyizh/ElasticReconstruction">代码连接</a></li>
+</ul>
+<h2 id="dynamicfusion"><a class="markdownIt-Anchor" href="#dynamicfusion"></a> DynamicFusion</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1708.00783">论文</a></li>
+<li><a target="_blank" rel="noopener" href="https://grail.cs.washington.edu/projects/dynamicfusion/">项目官网</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/mihaibujanca/dynamicfusion">代码连接</a></li>
+</ul>
+<h2 id="infinitam"><a class="markdownIt-Anchor" href="#infinitam"></a> InfiniTAM</h2>
+<ul>
+<li><a href="">论文</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.robots.ox.ac.uk/~victor/infinitam/">项目官网</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/victorprad/InfiniTAM">代码连接</a></li>
+</ul>
+<h2 id="bundlefusion"><a class="markdownIt-Anchor" href="#bundlefusion"></a> BundleFusion<sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup><sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup></h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1604.01093.pdf">论文</a></li>
+<li><a target="_blank" rel="noopener" href="http://graphics.stanford.edu/projects/bundlefusion/">项目官网</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/niessner/BundleFusion">代码连接</a></li>
+</ul>
+<h1 id="动态场景"><a class="markdownIt-Anchor" href="#动态场景"></a> 动态场景</h1>
+<h2 id="dynamicfusion-2"><a class="markdownIt-Anchor" href="#dynamicfusion-2"></a> DynamicFusion</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://rse-lab.cs.washington.edu/papers/dynamic-fusion-cvpr-2015.pdf">论文</a></li>
+</ul>
+<h2 id="volumedeform"><a class="markdownIt-Anchor" href="#volumedeform"></a> volumeDeform</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://graphics.stanford.edu/~niessner/papers/2016/5volumeDeform/innmann2016deform.pdf">论文</a></li>
+</ul>
+<h2 id="bodyfusion"><a class="markdownIt-Anchor" href="#bodyfusion"></a> BodyFusion</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://www.liuyebin.com/bodyfusion/bodyfusion_files/BdyFu_ICCV17.pdf">论文</a></li>
+</ul>
+<h2 id="doublefusion"><a class="markdownIt-Anchor" href="#doublefusion"></a> DoubleFusion</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://www.liuyebin.com/doublefusion/doublefusion_files/doublefusion.pdf">论文</a></li>
+</ul>
+<h2 id="unstructuredfusion"><a class="markdownIt-Anchor" href="#unstructuredfusion"></a> UnstructuredFusion</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=8708933&amp;tag=1">论文</a></li>
+</ul>
+<h2 id="robustfusion"><a class="markdownIt-Anchor" href="#robustfusion"></a> RobustFusion</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.ecva.net/papers/eccv_2020/papers_ECCV/papers/123490239.pdf">论文</a></li>
+</ul>
+<h2 id="killingfusion"><a class="markdownIt-Anchor" href="#killingfusion"></a> KillingFusion</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://campar.in.tum.de/pub/slavcheva2017cvpr/slavcheva2017cvpr.pdf">论文</a></li>
+</ul>
+<h2 id="surfelwarp"><a class="markdownIt-Anchor" href="#surfelwarp"></a> SurfelWarp</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1904.13073.pdf">论文</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/weigao95/surfelwarp">代码</a></li>
+</ul>
+<h2 id="fusion4d"><a class="markdownIt-Anchor" href="#fusion4d"></a> Fusion4D</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.microsoft.com/en-us/research/wp-content/uploads/2016/11/a114-dou.pdf">论文</a></li>
+</ul>
+<h1 id="深度学习方法"><a class="markdownIt-Anchor" href="#深度学习方法"></a> 深度学习方法<sup class="footnote-ref"><a href="#fn5" id="fnref5">[5]</a></sup></h1>
+<ul>
+<li>3-D重建基本上可以分成两种路径：一是多视角重建，二是运动重建</li>
+</ul>
+<p><strong>多视角重建</strong></p>
+<ul>
+<li>多视角立体视觉(MVS，multiple view stereo)，传统MVS的方法可以分成两种：区域增长（region growing）和深度融合（depth-fusion）。</li>
+</ul>
+<p><strong>运动重建</strong></p>
+<ul>
+<li>运动恢复结构（SFM）是基于背景不动的前提，机器人的研究者称之为SLAM。</li>
+<li>在机器人领域成为同步定位和制图（SLAM）技术，有滤波法和关键帧法两种</li>
+<li>后者精度高，在稀疏特征点的基础上可以采用集束调整（BA，Bundle Adjustment）
+<ul>
+<li>PTAM</li>
+<li>ORB-SLAM1/2</li>
+<li>LSD-SLAM</li>
+<li>KinectFusion（RGB-D数据）</li>
+<li>LOAM/Velodyne SLAM（激光雷达数据）</li>
+</ul>
+</li>
+<li>视觉里程计（VO）是SLAM的一部分，估计自身运动和姿态变化。</li>
+<li>深度学习的迅猛发展，在SLAM/SFM/VO/MVS的应用探索也就成了必然。</li>
+</ul>
+<h2 id="deepvo"><a class="markdownIt-Anchor" href="#deepvo"></a> DeepVO</h2>
+<ul>
+<li>基于深度递归卷积神经网络（RCNN）提出了一种端到端单目视觉里程计（VO）框架。</li>
+</ul>
+<h2 id="undeepvo"><a class="markdownIt-Anchor" href="#undeepvo"></a> UnDeepVO</h2>
+<ul>
+<li>深度神经网络估计单目相机的6-DoF姿势及其视野的深度。</li>
+</ul>
+<h2 id="vinet"><a class="markdownIt-Anchor" href="#vinet"></a> VINet</h2>
+<ul>
+<li>使用视觉和惯性传感器进行运动估计的流形（on-manifold）序列到序列的学习方法。消除相机和IMU之间繁琐的手动同步，无需手动校准；模型自然地结合特定领域信息，显著地减轻漂移。</li>
+</ul>
+<h2 id="sfm-net"><a class="markdownIt-Anchor" href="#sfm-net"></a> SfM-Net</h2>
+<ul>
+<li>用于视频运动估计几何觉察的神经网络，根据场景、目标深度、相机运动、3D目标旋转和平移等来分解帧像素运动。</li>
+</ul>
+<h2 id="cnn-slam"><a class="markdownIt-Anchor" href="#cnn-slam"></a> CNN-SLAM</h2>
+<ul>
+<li>用于精确和密集的单目图像重建。</li>
+</ul>
+<h2 id="posenet"><a class="markdownIt-Anchor" href="#posenet"></a> PoseNet</h2>
+<ul>
+<li>Kendall A, Grimes M, Cipolla R. “Posenet: A convolutional network for real-time 6-dof camera relocalization”，IEEE ICCV. 2015</li>
+<li>实时单目6 DOF重定位系统。</li>
+</ul>
+<h2 id="vidloc"><a class="markdownIt-Anchor" href="#vidloc"></a> VidLoc</h2>
+<ul>
+<li>用于视频片段6-DoF定位的递归卷积模型。</li>
+</ul>
+<h2 id="netvlad"><a class="markdownIt-Anchor" href="#netvlad"></a> NetVLAD</h2>
+<ul>
+<li>基于视觉的位置识别问题要求快速准确地识别给定查询照片的位置。</li>
+</ul>
+<h2 id="learned-stereo-machine"><a class="markdownIt-Anchor" href="#learned-stereo-machine"></a> Learned Stereo Machine</h2>
+<ul>
+<li>用于多视角立体视觉的深度学习系统，即学习立体视觉机（LSM）。</li>
+</ul>
+<h2 id="deepmvs"><a class="markdownIt-Anchor" href="#deepmvs"></a> DeepMVS</h2>
+<ul>
+<li>用于多视角立体视觉（MVS）重建的深度卷积神经网络（ConvNet）。</li>
+</ul>
+<h2 id="mvsnet"><a class="markdownIt-Anchor" href="#mvsnet"></a> MVSNet</h2>
+<ul>
+<li>出了一种端到端深度神经网络来推断参考深度图D</li>
+</ul>
+<h2 id="recurrent-mvsnet"><a class="markdownIt-Anchor" href="#recurrent-mvsnet"></a> Recurrent MVSNet</h2>
+<ul>
+<li>基于递归神经网络的可扩展多视角立体视觉框架</li>
+</ul>
+<hr class="footnotes-sep" />
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/29885222/answer/918009389">连接</a> <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/296509722">连接</a> <a href="#fnref2" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn3" class="footnote-item"><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzIxOTczOTM4NA==&amp;mid=2247485487&amp;idx=1&amp;sn=068e04d652578deb55e93b1a32fa9a21&amp;chksm=97d7edb8a0a064ae265e9beb0f337f36fd3470a14ce97701cb16710608e0f1899c3d03b196ff&amp;scene=21#wechat_redirect">连接</a> <a href="#fnref3" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn4" class="footnote-item"><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/fuxingyin/article/details/52921958">连接</a> <a href="#fnref4" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn5" class="footnote-item"><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/112103579">连接</a> <a href="#fnref5" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css"></div></article><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/robotic/">robotic</a></div><nav id="pagination"><div class="next-post pull-right"><a href="/2020/11/10/c11/"><span>c++11</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="vcomment"></div><script src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = 'false' == 'true';
+var verify = 'false' == 'true';
+var record_ip = '' == 'true';
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  recordIP:record_ip,
+  appId:'AdfkiqY89QUSUWbDY9xJuCh0-gzGzoHsz',
+  appKey:'2cEvHcqEWsyoKwy4AUL3kPGh',
+  placeholder:'劈个叉吧',
+  avatar:'mm',
+  guest_info:guest_info,
+  pageSize:'100',
+  lang: 'zh-cn'
+})</script></div></div><footer><div class="layout" id="footer"><div class="copyright">&copy;2020 By hero576</div><div class="framework-info"><span>驱动 - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.8.2"></script><script src="/js/fancybox.js?version=1.8.2"></script><script src="/js/sidebar.js?version=1.8.2"></script><script src="/js/copy.js?version=1.8.2"></script><script src="/js/fireworks.js?version=1.8.2"></script><script src="/js/transition.js?version=1.8.2"></script><script src="/js/scroll.js?version=1.8.2"></script><script src="/js/head.js?version=1.8.2"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css"><script src="/js/katex.js"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>
