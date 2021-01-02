@@ -31,8 +31,20 @@ pip install pycryptodome
 pip install pycrypto 
 ```
 
+## ECB
+- 一般视频网站常用的加密方式，只需要key就可以解密。
+- 参考：[链接](https://www.jianshu.com/p/dee16407a776)
+```py
+def decrypt_ts( data, key, iv):
+    cipher = AES.new(key, AES.MODE_CBC, iv=iv)
+    plain_data = cipher.decrypt(data)
+    return plain_data
+```
+
 ## CBC
 - cbc模式使用了AES-128加密，需要一个十六位的key(密钥)和一个十六位iv(偏移量)
+- 51cto视频流就是这种方式
+
 ```python
 from Crypto.Cipher import AES
 import os

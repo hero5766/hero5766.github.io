@@ -5,7 +5,7 @@ tags:
   - algorithm
 categories:
   - AI
-date: 2020-09-24 18:32:53
+date: 2020-12-05 18:32:53
 ---
 
 > TensorRT
@@ -58,8 +58,22 @@ Plugin| integrate custom layer implementations that TensorRT does not natively s
 
 - [详细介绍](https://www.cnblogs.com/qccz123456/p/11767858.html)
 
-# 安装
-## linux
+## 安装
+**cuda**
+- 首先要在机器上安装cuda，在[官网](https://developer.nvidia.com/cuda-toolkit-archive)找到对应的系统下载安装即可。
+- 完成后可以测试是否成功：`nvcc --version`
+**cudnn**
+- 安装cudnn，[官网](https://developer.nvidia.com/rdp/cudnn-archive)。
+- 把cudnn解压到cuda路径即可
+
+**配置环境变量**
+```bash
+export CUDA_HOME=/usr/local/cuda
+export CUDNN_HOME=xxx/cudnn-10.0xxxx/cuda
+export PATH=$PATH:$CUDA_HOME/bin:$CUDNN_HOME/bin
+```
+
+### linux
 - [官方指导](http://docs.nvidia.com/deeplearning/sdk/tensorrt-install-guide/index.html)
 
 ```bash
@@ -81,7 +95,7 @@ $ sudo apt-get install uff-converter-tf
 - 另外tensorRT是不开源的， 它的头文件位于`/usr/include/x86_64-linux-gnu`目录下，共有七个
 - tensorRT的库文件位于`/usr/lib/x86_64-linux-gnu`目录下
 
-## windows
+### windows
 - [下载安装包](https://developer.nvidia.com/nvidia-tensorrt-7x-download)
 
 - 解压，设置系统环境变量

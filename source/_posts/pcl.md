@@ -1231,26 +1231,124 @@ int main (int argc, char** argv){
 # 配准
 
 ## ICP
+**算法步骤：**
+- (1)对点集A中每个点Pa施加出事变换T0，得到Pa’；
+- (2)从点集B中寻找距离点Pa’最近的点Pb，形成对应点对；
+- (3)求解最优变换△T；
+- (4)根据前后两次的迭代误差以及迭代次数等条件判断是否收敛，如果收敛，则输出最终结果：`T=△T*T0`，否则`T0=△T*T0`，重复步骤(1)
+
+
+- $\triangle T=\argmin\sum_{i=1}{n}\|p_{bi}-(Rp_{ai}+t)\|^2_2$
+- $\triangle T=\begin{bmatrix}R&t\\0&1\end{bmatrix}$
+
+
+**终止条件：**
+- (1)最大迭代次数
+- (2)收敛标准：估计点云变换不再变化：当前变换和上次变换的差值之和小于用户定义的阈值
+- (3)找到解：误差平方和小于用户自定义阈值
+
+
+### 简单使用
+
+```cpp
+pcl::IterativeClosestPoint<pcl::PointXYZ,pcl::PointXYZ> icp;
+icp.setInputCloud(cloud_in);
+icp.setInputTarget(cloud_out);
+icp.setMaximumIterations(nr_iterations);
+icp.setTransformationEpsilon(epsilon);
+icp.setEuclideanFitnessEpsilon(distance);
+pcl::PointCloud<pcl::PointXYZ>Final;
+icp.align(Final);
+```
+
+
+
+### 接口
 
 常用接口|说明
 -|-
 实例化|`pcl::IterativeClosestPoint<pcl::PointXYZ, pcl::PointXYZ> icp;`
 最大迭代次数|`icp.setMaximumIterations(100);`
-输入点云|`icp.setInputSource(cloud_in);`
-目标点云|`icp.setInputTarget(cloud_out);`
-搜索最近邻是否双向搜索|`icp.setUseReciprocalCorrespondences(false);`
-最大近邻点距离|`icp.setMaxCorrespondenceDistance(0.5);`
-匹配对剔除器|`icp.addCorrespondenceRejector(rejector);`
-迭代误差收敛阈值|`icp.setEuclideanFitnessEpsilon(0.0001);`
-ICP计算方法|`icp.setTransformationEstimation(te);`
+源点云，转换的点云|`icp.setInputSource(cloud_in);`
+目标点云，参考点云|`icp.setInputTarget(cloud_out);`
+设置查找近邻时是否双向搜索|`icp.setUseReciprocalCorrespondences(false);`
+设置最大临近点距离，超过则不参与计算|`icp.setMaxCorrespondenceDistance(0.5);`
+设置匹配对剔除器|`icp.addCorrespondenceRejector(rejector);`
+设置迭代误差收敛阈值|`icp.setEuclideanFitnessEpsilon(0.0001);`
+设置icp计算方法：SVD、LM|`icp.setTransformationEstimation(te);`
 执行运算|`icp.align(*cloud_icp);`
-获取ICP是否收敛|`icp.hasConverged();`
-获取ICP匹配的变换矩阵|`Eigen::Matrix4f transformation_matrix = icp.getFinalTransformation();`
-获取ICP匹配得分|`icp.getFitnessScore();`
+获取icp是否收敛|`icp.hasConverged();`
+获取icp匹配得到的变换矩阵|`Eigen::Matrix4f transformation_matrix = icp.getFinalTransformation();`
+获取icp得分|`icp.getFitnessScore();`
 
+
+## 点云配准方法
+
+```cpp
+Eigen::Matrix4f transformation;
+TransformationEstimationSVD<PointT,PointT>svd;
+svd.estimateRigidTransformation(src,target,corres,trans);
+```
 
 ## 广义配准
 - ICP使用最近邻迭代搜索，容易调入局部极小，并且初始变换矩阵影响算法结果。广义配准利用点云特征匹配，可以很好的估计两组点云的变换状态，能够得到良好的效果。
+
+
+**算法步骤：**
+- (1)采集原始点云，分析两个原点云关键点k；
+- (2)在每个关键点k处，计算相应的特征描述子f
+- (3)根据特征描述子f和对应的xyz坐标值，估计对应匹配关系；
+- (4)因为噪声或虚假匹配，并非所有的对应关系都有效，根据规则排除虚假对应匹配；
+- (5)根据有效对应匹配关系，估计刚体变换关系；
+
+### Matching Features
+```cpp
+CorrespondenceEstimation<FeatureT,FeatureT>est;
+est.setInputClout(source_features);
+est.setInputTarget(target_features);
+est.determineCorrespondences(correspondences);
+```
+
+### 虚假匹配
+**用sac排除虚假匹配(outliers)**
+- (1)选择三对对应匹配对d，m；
+- (2)估计选择样本的变换关系(R,t)；
+- (3)用((Rd+t)-m)2<c确定内点对；
+- (4)重复N次，使得(R,t)有更多的内点；
+
+```cpp
+CorrespondenceRejectorSampleConsensus<PointT> sac;
+sac.setInputCloud(source);
+sac.setTargetCloud(target);
+sac.setInlierThreshold(epsilon);
+sac.setMaxIterations(N);
+sac.setInputCorrespondences(correspondences);
+sac.getCorrespondences(inliers);
+Eigen::Matrix4f t_matrix = sac.getBestTransformation();
+```
+
+**sac-ia(Sampled Consesus-Initial Alignment)**
+- (1)在原点云中选择n个点d；
+- (2)对每个点d：1、选择k个最近匹配；2、选择其中一个为匹配点m；
+- (3)估计选择样本的变换关系(R,t)；
+- (4)用((Rd+t)-m)2<c确定内点对；
+- (5)重复N次，使得(R,t)有更多的内点；
+
+```cpp
+pcl::SampleConsensusInitalAlignment<PointT,PointT,FeatureT> sac_ia;
+sac_ia.setNumberOfSamples(n);
+sac_ia.setMinSampleDistance(d);
+sac_ia.setCorrespondenceRandomness(k);
+sac_ia.setMaximumIterations(N);
+sac_ia.setInputCloud(source);
+sac_ia.setInputTarget(target);
+sac_ia.setSourceFeatures(source_features);
+sac_ia.setTargetFeatures(target_features);
+sac_ia.align(aligned_source);
+Eigen::Matrix4f t_matrix = sac_ia.getFinalTransformation();
+```
+
+### 接口
 
 方法|说明
 -|-

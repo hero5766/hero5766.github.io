@@ -67,6 +67,11 @@ date: 2020-11-01 20:03:00
 - [Multiple View Geometry]()多视图几何
 - [State Estimation For Robotics]()机器人学中的状态估计
 - [机器人学中的状态估计]()
+- [computer vision for visual effects]()
+- [computer vision: algorithrim and application]()
+- [multiple view geometry]()
+- [an invitation to 3-D vision]()
+- [computer vision: a modern approach]()
 
 
 ## 资料
@@ -158,7 +163,7 @@ cmake|
 
 - 用随机变量表示状态，估计其概率分布
 - k时刻所有待估计的量组成k时刻状态：
-  - $x_k\sideset{\;}{\;}=^\{x_k,y_1,...,y_m\}$
+  - $x_k=\{x_k,y_1,...,y_m\}$
 - k时刻观测统一记成：$z_k$方程简化为：
   - $\begin{cases}x_k=f(x_{k-1,u_k}+w_k)\\z_{k}=h(x_k)+v_k\end{cases}$，$k=1,...n$
 - 根据过去0到k时刻的数据，估计当前状态
