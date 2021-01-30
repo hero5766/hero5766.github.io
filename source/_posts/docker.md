@@ -251,3 +251,135 @@ CMD     /usr/sbin/sshd -D
   - 如果未说明最后一个参数，那么默认上下文路径就是 Dockerfile 所在的位置。
   > 注意：上下文路径下不要放无用的文件，因为会一起打包发送给 docker 引擎，如果文件过多会造成过程缓慢。
 
+# 问题
+## docker 权限问题 Got permission denied while trying to connect to the Docker daemon socket at 。。。
+- 在用户权限下docker 命令需要 sudo 否则出现以下问题
+通过将用户添加到docker用户组可以将sudo去掉，命令如下
+
+```bash
+sudo groupadd docker #添加docker用户组
+sudo gpasswd -a $USER docker #将登陆用户加入到docker用户组中
+newgrp docker #更新用户组
+```
+
+## docker部署nginx
+- [链接](https://www.cnblogs.com/saneri/p/11799865.html)
+```bash
+# 查找 Docker Hub 上的 nginx 镜像
+docker search nginx
+# 拉取官方的Nginx镜像
+docker pull nginx
+# 在本地镜像列表里查到镜像
+docker images nginx
+```
+
+- 使用 NGINX 默认的配置来启动一个 Nginx 容器实例：
+```bash
+docker run --rm --name nginx-test -p 8080:80 -d nginx
+```
+
+参数|说明
+-|-
+--rm|容器终止运行后，自动删除容器文件。
+--name nginx-test|容器的名字叫做nginx-test,名字自己定义.
+-p| 端口进行映射，将本地 8080 端口映射到容器内部的 80 端口
+-d|容器启动后，在后台运行
+
+```bash
+#查看启动的docker容器
+docker container ps
+```
+
+- 在浏览器中打开http://172.17.0.1:8080就可以看到nginx了
+
+**映射本地目录**
+
+- 创建本地目录，用于存放Nginx的相关文件信息.
+```bash
+mkdir -p /home/nginx/www /home/nginx/logs /home/nginx/conf
+#www: 目录将映射为 nginx 容器配置的虚拟目录。
+#logs: 目录将映射为 nginx 容器的日志目录。
+#conf: 目录里的配置文件将映射为 nginx 容器的配置文件。
+```
+
+- 拷贝容器内 Nginx 默认配置文件到本地当前目录下的 conf 目录,容器ID可以查看 docker ps 命令输入中的第一列：
+```bash
+docker ps
+docker cp CONTAINER_ID_xx:/etc/nginx/nginx.conf /home/nginx/conf/
+```
+
+- 部署命令
+```bash
+docker run --rm -d -p 8081:80 --name nginx-test-web \
+  -v /home/nginx/www:/usr/share/nginx/html \
+  -v /home/nginx/conf/nginx.conf:/etc/nginx/nginx.conf \
+  -v /home/nginx/logs:/var/log/nginx \
+  nginx
+```
+
+参数|说明
+-|-
+--rm|容器终止运行后，自动删除容器文件。
+-p 8081:80|将容器的 80 端口映射到主机的 8082 端口.
+--name nginx-test-web|将容器命名为 nginx-test-web 
+-v /home/nginx/www:/usr/share/nginx/html|将我们自己创建的 www 目录挂载到容器的 /usr/share/nginx/html。
+-v /home/nginx/conf/nginx.conf:/etc/nginx/nginx.conf|将我们自己创建的 nginx.conf 挂载到容器的 /etc/nginx/nginx.conf。
+-v /home/nginx/logs:/var/log/nginx|将我们自己创建的 logs 挂载到容器的 /var/log/nginx。
+
+
+- 启动以上命令后进入 /home/nginx/www 目录：
+```bash
+cd /home/nginx/www/
+vim index.html 
+```
+
+- 在浏览器里面输入http://172.17.0.1:8081/
+- 如果在访问时出现403错误，应该是index.html文件权限不足，给成644就行.
+
+## docker下使用opencv
+
+```bash
+docker pull ubuntu
+# 开启容器
+docker run -it --name opencv4_3d -v /mnt/d/code_basket/c/reconstruction:/home/workspace ubuntu
+# 退出后重新进入容器
+docker exec -it /bin/bash
+```
+
+# 提交镜像
+- [链接](https://www.cnblogs.com/codehu/p/docker_pull_push.html)
+
+```bash
+docker commit -p -a "hero576" -m "for opencv4 reconstruction" opencv4_3d hero576/opencv4:v1
+```
+
+参数|说明
+-|-
+-a |提交的镜像作者；
+-m |提交时的说明文字；
+-p |在commit时，将容器暂停。
+
+- 再次查看镜像，发现了本地新提交的codehi/nginx:v1的镜像
+```bash
+docker images
+```
+
+- 然后登陆到`docker hub`
+```bash
+docker login
+```
+
+- 将镜像推送到`docker hub`仓库中
+```bash
+docker push hero576/opencv4:v1
+```
+
+- 在另一台服务器使用pull方法下载这个镜像
+```bash
+docker pull hero576/opencv4:v1
+```
+**push 时报错 "denied: requested access to the resource is denied" 的解决方法**
+- 报这个错说明tag需要改名字，由于之前commit的时候没有填tag，导致这块上传不上去，解决办法：
+```bash
+docker tag 1d8fca63675a hero576/opencv4:v1
+```

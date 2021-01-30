@@ -54,6 +54,8 @@ int main(){
 ```
 
 ## python安装
+- [ubuntu安装](https://blog.csdn.net/wohu1104/article/details/107993979)
+
 ```python
 pip install opencv-python
 pip install opencv-contrib-python
