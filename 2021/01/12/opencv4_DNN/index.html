@@ -1,0 +1,105 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="opencv4神经网络模块"><meta name="keywords" content="robotic"><meta name="author" content="hero576"><meta name="copyright" content="hero576"><title>opencv4神经网络模块 | void land space</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.8.2"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.8.2"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="dns-prefetch" href="https://hm.baidu.com"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?5ff8fca367285c16c6dd5c16ca2ccc1b";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();</script><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  hexoVersion: '5.0.2'
+} </script><meta name="generator" content="Hexo 5.0.2"><link rel="alternate" href="/atom.xml" title="void land space" type="application/atom+xml">
+</head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text"> 简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.1.</span> <span class="toc-text"> 介绍</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B"><span class="toc-number">2.</span> <span class="toc-text"> 网络模型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#yolov3"><span class="toc-number">2.1.</span> <span class="toc-text"> YOLOV3</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8"><span class="toc-number">3.</span> <span class="toc-text"> 使用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81"><span class="toc-number">4.</span> <span class="toc-text"> 代码</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ssd"><span class="toc-number">4.1.</span> <span class="toc-text"> ssd</span></a></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/images/haimianbaobao.jpg"></div><div class="author-info__name text-center">hero576</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">68</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">14</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">分类</span><span class="pull-right">5</span></a></div></div></div><div id="content-outer"><div class="plain" id="top-container"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">void land space</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">主页</a><a class="site-page" href="/archives">文章</a><a class="site-page" href="/tags">标签</a><a class="site-page" href="/categories">分类</a><a class="site-page" href="/gallery">相册</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> 搜索</span></a></span></div></div><div class="layout" id="content-inner"><article id="post"><div class="plain" id="post-title">opencv4神经网络模块</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2021-01-12</time><span class="post-meta__separator">|</span><i class="fa fa-inbox" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/programme/"> programme</a></div><div class="article-container" id="post-content"><blockquote></blockquote>
+<a id="more"></a>
+<h1 id="简介"><a class="markdownIt-Anchor" href="#简介"></a> 简介</h1>
+<h2 id="介绍"><a class="markdownIt-Anchor" href="#介绍"></a> 介绍</h2>
+<ul>
+<li>opencv4对深度神经网络提供了支持，使得opencv4对图像处理的能力大大拓展。<a target="_blank" rel="noopener" href="https://github.com/opencv/opencv/wiki/Deep-Learning-in-OpenCV">官方介绍</a></li>
+</ul>
+<h1 id="网络模型"><a class="markdownIt-Anchor" href="#网络模型"></a> 网络模型</h1>
+<h2 id="yolov3"><a class="markdownIt-Anchor" href="#yolov3"></a> YOLOV3</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://pjreddie.com/darknet/yolo">地址</a></li>
+<li>下载网络权重文件，网络配置yml文件+</li>
+</ul>
+<h1 id="使用"><a class="markdownIt-Anchor" href="#使用"></a> 使用</h1>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>引入</td>
+<td><code>#include&lt;opencv2/dnn.hpp&gt;</code></td>
+</tr>
+<tr>
+<td>命名空间</td>
+<td><code>using namespace cv::dnn;</code></td>
+</tr>
+<tr>
+<td>初始化模型</td>
+<td><code>Net net = readNetFromCaffe(model_prototxt, model_caffe);</code></td>
+</tr>
+<tr>
+<td>设置计算后台</td>
+<td><code>net.setPreferableBackend(DNN_BACKEND_OPENCV);</code></td>
+</tr>
+<tr>
+<td>设置计算设备</td>
+<td><code>net.setPreferableTarget(DNN_TARGET_CUDA);</code></td>
+</tr>
+<tr>
+<td>打印模型结构</td>
+<td><code>vector&lt;string&gt; layer_names = net.getLayerNames();</code><br><code>for (auto i : layer_names) &#123;</code><br><code>int id = net.getLayerId(i);</code><br><code>auto layer = net.getLayer(id);</code><br><code>//cout&lt;&lt;id&lt;&lt;layer &lt;&lt; i &lt;&lt; endl;</code><br><code>printf(&quot;layerid:%d,type:%s,name:%s\n&quot;, id,layer-&gt;type.c_str(), layer-&gt;name.c_str());</code><br><code>&#125;</code></td>
+</tr>
+<tr>
+<td>定义测试图像</td>
+<td><code>Mat inputBlob = blobFromImage(src,1.,Size(w,h),Scalar(117., 117., 117.),true,false);</code></td>
+</tr>
+<tr>
+<td>计算输出</td>
+<td><code>Mat probMat = net.forward();</code>可以指定任意一层的输出<br><code>Mat prob = probMat.reshape(1, 1);</code><br><code>Point classNum;double classProb;</code><br><code>minMaxLoc(prob, NULL, &amp;classProb, NULL, &amp;classNum);</code></td>
+</tr>
+</tbody>
+</table>
+<h1 id="代码"><a class="markdownIt-Anchor" href="#代码"></a> 代码</h1>
+<ul>
+<li>需要准备训练好的模型权重文件，模型配置文件，配置文件中定义了模型结构、图像输入后的图像尺寸，压缩比例，均值等信息。<a target="_blank" rel="noopener" href="https://github.com/opencv/opencv/blob/master/samples/dnn/models.yml">官方</a>也给定了一些samples供使用。</li>
+</ul>
+<h2 id="ssd"><a class="markdownIt-Anchor" href="#ssd"></a> ssd</h2>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;opencv2/dnn.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv::dnn;</span><br><span class="line">String objNames[] = &#123; <span class="string">&quot;background&quot;</span>,<span class="string">&quot;aeroplane&quot;</span>,<span class="string">&quot;bicycle&quot;</span> ,<span class="string">&quot;bird&quot;</span> ,<span class="string">&quot;boat&quot;</span> ,<span class="string">&quot;bottle&quot;</span> ,<span class="string">&quot;bus&quot;</span> ,<span class="string">&quot;car&quot;</span> ,<span class="string">&quot;cat&quot;</span> ,</span><br><span class="line"><span class="string">&quot;chair&quot;</span> ,<span class="string">&quot;cow&quot;</span> ,<span class="string">&quot;diningtable&quot;</span> ,<span class="string">&quot;dog&quot;</span> ,<span class="string">&quot;horse&quot;</span> ,<span class="string">&quot;motorbike&quot;</span> ,<span class="string">&quot;person&quot;</span> ,<span class="string">&quot;pottedplant&quot;</span> ,<span class="string">&quot;sheep&quot;</span> ,<span class="string">&quot;sofa&quot;</span> ,</span><br><span class="line"><span class="string">&quot;train&quot;</span> ,<span class="string">&quot;tvmoitor&quot;</span> &#125;;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">string</span> model_path = <span class="string">R&quot;(model\ssd\)&quot;</span>;</span><br><span class="line">    <span class="built_in">string</span> model_cfg_file = model_path + <span class="string">&quot;MobileNetSSD_deploy.caffemodel&quot;</span>;</span><br><span class="line">    <span class="built_in">string</span> model_pro_file = model_path + <span class="string">&quot;MobileNetSSD_deploy.prototxt&quot;</span>;</span><br><span class="line">    <span class="built_in">string</span> model_label_file = model_path + <span class="string">&quot;labelmap_det.txt&quot;</span>;</span><br><span class="line">    Net net = readNetFromCaffe(model_pro_file, model_cfg_file);</span><br><span class="line">    net.setPreferableBackend(DNN_BACKEND_OPENCV);</span><br><span class="line">    <span class="comment">//net.setPreferableTarget(DNN_TARGET_CUDA);</span></span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; layer_names = net.getLayerNames();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> i : layer_names) &#123;</span><br><span class="line">        <span class="keyword">int</span> id = net.getLayerId(i);</span><br><span class="line">        <span class="keyword">auto</span> layer = net.getLayer(id);</span><br><span class="line">        <span class="comment">//cout&lt;&lt;id&lt;&lt;layer &lt;&lt; i &lt;&lt; endl;</span></span><br><span class="line">        <span class="comment">//printf(&quot;layerid:%d,type:%s,name:%s\n&quot;, id, layer-&gt;type.c_str(), layer-&gt;name.c_str());</span></span><br><span class="line">    &#125;</span><br><span class="line">    Mat src = imread(<span class="string">R&quot;(Pictures\1.jpg)&quot;</span>);</span><br><span class="line">    imshow(<span class="string">&quot;input&quot;</span>, src);</span><br><span class="line">    Mat blob = blobFromImage(src, <span class="number">0.007843</span>, Size(<span class="number">300</span>, <span class="number">300</span>), Scalar(<span class="number">127.5</span>, <span class="number">127.5</span>, <span class="number">127.5</span>), <span class="literal">false</span>, <span class="literal">false</span>);</span><br><span class="line">    net.setInput(blob, <span class="string">&quot;data&quot;</span>);</span><br><span class="line">    Mat detection = net.forward(<span class="string">&quot;detection_out&quot;</span>);</span><br><span class="line">    <span class="function">Mat <span class="title">detectionMat</span><span class="params">(detection.size[<span class="number">2</span>], detection.size[<span class="number">3</span>], CV_32F, detection.ptr&lt;<span class="keyword">float</span>&gt;())</span></span>;</span><br><span class="line">    <span class="keyword">float</span> confidence_trhreshold = <span class="number">0.5</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; detectionMat.rows; i++) &#123;</span><br><span class="line">        <span class="keyword">float</span> score = detectionMat.at&lt;<span class="keyword">float</span>&gt;(i, <span class="number">2</span>);</span><br><span class="line">        <span class="keyword">if</span> (score &gt; confidence_trhreshold) &#123;</span><br><span class="line">            <span class="keyword">size_t</span> objIndex = (<span class="keyword">size_t</span>)(detectionMat.at&lt;<span class="keyword">float</span>&gt;(i, <span class="number">1</span>));</span><br><span class="line">            <span class="keyword">float</span> tl_x = detectionMat.at&lt;<span class="keyword">float</span>&gt;(i, <span class="number">3</span>) * src.cols;</span><br><span class="line">            <span class="keyword">float</span> tl_y = detectionMat.at&lt;<span class="keyword">float</span>&gt;(i, <span class="number">4</span>) * src.rows;</span><br><span class="line">            <span class="keyword">float</span> br_x = detectionMat.at&lt;<span class="keyword">float</span>&gt;(i, <span class="number">5</span>) * src.cols;</span><br><span class="line">            <span class="keyword">float</span> br_y = detectionMat.at&lt;<span class="keyword">float</span>&gt;(i, <span class="number">6</span>) * src.rows;</span><br><span class="line">            <span class="function">Rect <span class="title">box</span><span class="params">((<span class="keyword">int</span>)tl_x, (<span class="keyword">int</span>)tl_y, (<span class="keyword">int</span>)(br_x - tl_x), (<span class="keyword">int</span>)(br_y - tl_y))</span></span>;</span><br><span class="line">            rectangle(src, box, Scalar(<span class="number">0</span>, <span class="number">0</span>, <span class="number">255</span>), <span class="number">2</span>, <span class="number">8</span>, <span class="number">0</span>);</span><br><span class="line">            putText(src, format(<span class="string">&quot;score:%.2f,index:%s&quot;</span>,score, objNames[objIndex].c_str()), box.tl(), FONT_HERSHEY_PLAIN, <span class="number">0.75</span>, Scalar(<span class="number">255</span>, <span class="number">0</span>, <span class="number">25</span>), <span class="number">1</span>, <span class="number">8</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    imshow(<span class="string">&quot;res&quot;</span>, src);</span><br><span class="line">    waitKey(<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css"></div></article><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/robotic/">robotic</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2021/01/16/%E7%9B%B8%E6%9C%BA%E6%A0%87%E5%AE%9A/"><i class="fa fa-chevron-left">  </i><span>相机标定</span></a></div><div class="next-post pull-right"><a href="/2021/01/02/decorator/"><span>装饰器</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="vcomment"></div><script src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = 'false' == 'true';
+var verify = 'false' == 'true';
+var record_ip = '' == 'true';
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  recordIP:record_ip,
+  appId:'AdfkiqY89QUSUWbDY9xJuCh0-gzGzoHsz',
+  appKey:'2cEvHcqEWsyoKwy4AUL3kPGh',
+  placeholder:'劈个叉吧',
+  avatar:'mm',
+  guest_info:guest_info,
+  pageSize:'100',
+  lang: 'zh-cn'
+})</script></div></div><footer><div class="layout" id="footer"><div class="copyright">&copy;2020 - 2021 By hero576</div><div class="framework-info"><span>驱动 - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.8.2"></script><script src="/js/fancybox.js?version=1.8.2"></script><script src="/js/sidebar.js?version=1.8.2"></script><script src="/js/copy.js?version=1.8.2"></script><script src="/js/fireworks.js?version=1.8.2"></script><script src="/js/transition.js?version=1.8.2"></script><script src="/js/scroll.js?version=1.8.2"></script><script src="/js/head.js?version=1.8.2"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css"><script src="/js/katex.js"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>
