@@ -55,6 +55,7 @@ int main(){
 
 ## python安装
 - [ubuntu安装](https://blog.csdn.net/wohu1104/article/details/107993979)
+- [ubuntu带contribute安装](https://cloud.tencent.com/developer/article/1491605)
 
 ```python
 pip install opencv-python

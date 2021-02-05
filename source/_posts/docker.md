@@ -346,7 +346,7 @@ docker run -it --name opencv4_3d -v /mnt/d/code_basket/c/reconstruction:/home/wo
 docker exec -it /bin/bash
 ```
 
-# 提交镜像
+## 提交镜像
 - [链接](https://www.cnblogs.com/codehu/p/docker_pull_push.html)
 
 ```bash
@@ -383,3 +383,43 @@ docker pull hero576/opencv4:v1
 ```bash
 docker tag 1d8fca63675a hero576/opencv4:v1
 ```
+
+## 解决docker容器内中文乱码问题
+**临时解决**
+locale -a查看容器所有语言环境
+
+```bash
+# 进入容器
+docker exec -it 容器ID bash
+[root@41056165bd6f /]#  locale -a
+C
+C.utf8
+POSIX
+```
+
+- C.UTF-8可以支持中文，只需要把容器编码设置为C.UTF-8即可
+```bash
+[root@41056165bd6f /]# vim /etc/profile
+# 添加 LANG=C.UTF-8
+[root@41056165bd6f /]# source /etc/profile
+```
+- 不过这个方法，有个弊端，容器kill掉之后，重新启动容器，需要再次配置；
+
+
+**永久解决**
+- 修改Dockerfile
+```bash
+ENV LANG C.UTF-8
+```
+
+- 然后重新生成镜像，重新启动容器
+- 这样生成的镜像，就已经解决了乱码问题
+
+
+
+
+
+
+
+
+
