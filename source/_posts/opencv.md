@@ -1027,14 +1027,16 @@ addWeighted(grad_x,0.5,grad_y,0.5,0,dst);
 
 ### 步骤
 1. **模糊去噪声**
- - 使用高斯滤波
+ - 使用高斯滤波，默认卷积核5*5
 2. **提取梯度与方向**
   - 使用sobel算子，计算x,y方向的值，获取L2梯度
 3. **非最大信号抑制**
   - 在前面获得的梯度方向，判断该像素与方向两侧相比，是否是最大，最大保留。否则丢弃
+![](/images/pasted-382.png)
 4. **高低阈值链接**
-  - 设高阈值T1、低阈值T2，其中T1/T2=2~3
+  - 也称为滞后阈值，设高阈值T1、低阈值T2，其中T1/T2=2~3
   - 策略：大于高阈值全部保留，小于低阈值全部丢弃，之间的可以连接到高阈值像素点的保留
+![](/images/pasted-383.png)
 
 ### 代码实现
 
@@ -1942,6 +1944,173 @@ while(true){
   imshow("meanshift",frame);
 }
 ```
+
+
+# opencv-python
+
+## 基本操作
+函数|说明
+-|-
+`import cv2`|引入
+`img=cv2.imread(imagename)`|读入图像
+`cap=cv2.VideoCapture(videoname)`|读入视频
+`cap.isOpened()`|判断是否打开
+`ret,frame=cap.read()`|ret读取帧是否成功，frame当前帧，返回为空则说明读取结束
+`cv2.cvtColor(img,cv2.COLOR_BGR2RGB)`|色彩空间转换
+`cv2.imshow(title,img);cv2.waitKey(0);cv2.destroyAllWindows();`|显示图像
+`img_roi=img[:200,:200]`|兴趣域
+`b,g,r=cv2.split(img)`|图像通道划分
+`img=cv2.merge(b,g,r)`|通道组合
+`cv2.copyMakeBorder(img,top,bottom,left,right,boarderType`|边界填充，包括<br>BORDER_REPLICATE复制最边缘像素值<br>BORDER_REFLECT反射法，fedcba|abcdef|fedcba<br>BORDER_REFLECT_101反射，以最边缘像为轴,fedcb|abcdef|edcba<br>BORER_WRAP外包装法,cdefgh|abccdefgh|abcdefg<br>BORDER_CONSTANT常量法，需要制定value
+`cv2.add(img1,img2)`|两幅图像add操作，超出255则取255
+`cv2.resize(img,(w,h)[,fx,fy])`|更改尺寸，不指定size，也可以通过fxfy倍数关系调整大小
+`cv2.addWeighted(img1,alpha,img2,beta,b`|带权重相加
+`mask=np.zeros(img.shape[:2],np.uint8);mask[100:200,200:300]=255;cv2.bitwise_and(img,img,mask=mask)`|掩码操作
+`img_group=np.hstack((img1,img2,img3))`|图像水平拼接
+`img_group=np.vstack((img1,img2,img3))`|图像垂直拼接
+
+## 阈值平滑
+
+函数|说明
+-|-
+`ret,dst=cv2.threshold(src,thresh,maxbal,type)`|图像阈值<br>src只能输入单通道图像<br>thresh阈值<br>maxval超出阈值，赋的值<br>type二值化操作类型<br>THRESH_BINARY超出阈值取maxval,否则0<br>THRESH_BINARY_INV,THRESH_BINARY的反转<br>THRESH_TRUNC,超出阈值取阈值,否则不变<br>THRESH_TOZERO,超出阈值不变,否则0<br>THRESH_TOZERO_INV,THRESH_TOZERO的反转
+`blur=cv2.blur(img,(3,3))`|均值滤波
+`box=cv2.boxFilter(img,-1,(3,3),normalize=True`|方框滤波，不做归一化会越界
+`gussian=cv2.GussianBlur(img,(3,3),1)`|高斯滤波
+`median=cv2.medianBlur(img,3)`|中值滤波
+
+
+
+## 形态学
+
+函数|说明
+-|-
+`erosion=cv2.erode(img,kernel=np.ones((5,5),np.uint8),iterations=1`|腐蚀,iterations迭代次数
+`dilate=cv2.dilate(img,kernel,iterations`|膨胀
+`opening=cv2.morphologyEx(img,cv2.MORPH_OPEN,kernel`|开运算：先腐蚀后膨胀
+`closing=cv2.morphologyEx(img,cv2.MORPH_CLOSE,kernel`|闭运算：先膨胀后腐蚀
+`gradient=cv2.morphologyEx(img,cv2.MORPH_GRADIENT,kernel`|梯度运算：膨胀-腐蚀
+`tophat=cv2.morphologyEx(img,cv2.MORPH_TOPHAT,kernel`|礼帽操作：原始输入-开运算
+`blackhat=cv2.morphologyEx(img,cv2.MORPH_BLACKHAT,kernel`|黑帽操作：闭运算-原始输入
+
+## 图像梯度
+
+函数|说明
+-|-
+`dst=cv2.Sobel(src,ddepth,dx,dy,ksize)`|Sobel算子,CV_64F有负数时图像被截断，需要取绝对值`dst_x=cv2.Sobel(img,cv2.CV_64F,1,0,ksize=3);dst_x=cv2.convertScaleAbs(dst_x);dst=cv2.addWeighted(dst_x,0.5,dst_y,0.5,0)`，xy分开计算效果更好
+`dst=cv2.Scharr(src,ddepth,dx,dy,ksize)`|Scharr算子
+`dst=cv2.Laplacian(src,ddepth,ksize)`|laplacian算子
+
+## 边缘检测
+
+函数|说明
+-|-
+`dst=cv2.Canny(img,minval,maxval)`|canny
+
+## 图像金字塔
+
+函数|说明
+-|-
+`up=cv2.pyrUp(img);down=cv2.pyrDown(img);`|金字塔
+``|拉普拉斯金字塔：src-pyrUp(pyrDown(src))
+
+
+## 边缘轮廓
+
+函数|说明
+-|-
+`cv2.findContours(img_binary,mode,method)`|mode:<br>RETR_EXTERNAL只检索最外面轮廓<br>RETR_LIST检索所有轮廓，并保存一条链表中<br>RETR_CCOMP检索所有轮廓，并将它们组织为两层，顶层是各部分的外部边界，第二层是空洞的边界<br> [x]RETR_TREE检测所有轮廓，并重构嵌套轮廓的整个层次<br>method:<br>CHAIN_APPROX_NONE以Freeman链码方式输出轮廓，所有其他方法输出多边形(顶点序列)<br>CHAIN_APPROX_SIMPLE压缩水平、垂直和倾斜部分，函数只保留他们的终点部分
+`cv2.drawContours(img_cpy,contours,-1,(0,0,255),2)`|绘制轮廓，-1表示所有轮廓都绘制，scalar颜色，2线宽
+`area=cv2.contourArea(contours[0])`|轮廓面积
+`cv2.arcLength(contours[0],True)`|周长，True表示闭合
+`approx=cv2.approxPolyDP(contours[0],epsilon=0.1,True)`|轮廓近似
+`x,y,w,h=cv2.boundingRect(contours[0])`|外接矩形
+`(x,y),radius=cv2.minEnclosingCircle(contours[0])`|外接圆
+
+
+```py
+import cv2
+img = cv2.imread("/data/pic/1.png")
+gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+ret,thresh = cv2.threshold(gray,127,255,cv2.THRESH_BINARY)
+binary,contours,hierarchy = cv2.findCOntours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_NONE)
+# 绘制轮廓
+img_cpy = img.copy()
+res = cv2.drawContours(img_cpy,contours,-1,(0,0,255),2)
+cv2.imshow("title",res)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+```
+## 模板匹配
+- 匹配算法[官网介绍](https://docs.opencv.org/4.4.0/df/dfb/group__imgproc__object.html#gga3a7850640f1fe1f58fe91a2d7583695dab65c042ed62c9e9e095a1e7e41fe2773)
+
+算法|说明
+-|-
+`TM_SQDIFF`|平方距离，值越小越相似
+`TM_SQDIFF_NORMED`|归一化
+`TM_CCORR`|相关性，值越大越相似
+`TM_CCORR_NORMED`|归一化
+`TM_CCOEFF`|相关系数，值越大越相似
+`TM_CCOEFF_NORMED`|归一化
+
+
+函数|说明
+-|-
+`res=cv2.matchTemplate(img,template,cv2.TM_SQDIFF)`|img:AxB,template:axb，输出(A-a+1)x(B-a+1)
+`minval,maxval,minloc,maxloc=cv2.minMaxLoc(res)`|获取最小最大值及区域
+`top_left=minloc if method in [cv2.TM_SQDIFF,cv2.SQDIFF_NORMED] else maxloc;bottom_right=(top_left[0]+template.shape[0],top_left[1]+template.shape[1]);cv2.rectangle(img,top_left,bottom_right,255,2`|绘制区域
+
+- 获取多个匹配区域
+```py
+img = cv2.imread("1.jpg")
+img_gray = cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
+template = cv2.imread("2.jpg",0)
+h,w = template.shape[:2]
+res = cv2.matchTemplate(img_gray,template,cv2.TM_CCOEFF_NORMED)
+threshold=0.8
+#匹配度大于0.8的坐标
+loc = np.where(res>=threshold)
+for p in zip(*loc[::-1]):
+  bottom_right=(p[0]+w,p[1]+h)
+  cv2.rectangle(img,p,bottom_right,(0,0,255),2)
+cv2.imshow("title",img)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+```
+
+## 直方图
+
+函数|说明
+-|-
+`hist=cv2.calcHist(img,channels,mask,histSize,ranges)`|直方图：`hist=cv2.calcHist([img],[0],None,[256],[0,256])`
+`eq=cv2.equalizeHist(img)`|直方图均值化
+`clahe=cv2.createCLAHE(clipLimit=2.0,tileGridSize=(8,8));img_clahe=clahe.apply(img)`|自适应直方图均衡化
+
+
+```py
+img = cv2.imread("1.jpg")
+color = ['b','g','r']
+for i,col in enumerate(color):
+  hist = cv2.calcHist([img],[i],None,[256],[0,256])
+  plt.plot(hist,color=col)
+  plt.xlim([0,256])
+```
+
+
+## 傅里叶变换
+- 傅里叶：任何周期信号，都可以用正弦函数表达。建立复频域，表示这种变换
+- 滤波：高频、低频滤波
+
+函数|说明
+-|-
+`img32=np.float32(img)`|输入图像需要先转换成np.float32格式
+`dft=cv2.dft(img32,flags=cv2.DFT_COMPLEX_OUTPUT)`|
+`cv2.idft()`|
+`dft_shift=np.fft.fftshift(dft)`|得到的结果频率为0会在左上角，通常要转换到中心位置
+`magnitude_spectrum=20*np.log(cv2.magnitude(dft_shift[:,:,0],dft_shift[:,:,1]))`|dft返回结果是双通道的(实部、虚部)，需要转换成图像格式才能显示
+`mask=np.zeros(`|低通滤波
+``|
+``|
 
 
 

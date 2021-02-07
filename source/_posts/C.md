@@ -1,3 +1,4 @@
+---
 title: C++
 author: hero576
 tags:
@@ -48,8 +49,10 @@ return 0;
   
 - 真正的枚举(enum)
   - c 语言中枚举本质就是整型，枚举变量可以用任意整型赋值。而 c++中枚举变量，只能用被枚举出来的元素初始化。
-```c
+```cpp
 enum season {SPR,SUM,AUT,WIN};
+bool isn = 1;
+cout<<sizeof(isn)<<endl;//1个字节
 ```
 
 - 表达式的值可被赋值
@@ -59,7 +62,137 @@ int a,b = 5;
 (a = b) = 10;  //b的值给了a，10的值又继续给了a
 (a<b? a:b) = 200;
 ```
-  
+
+## 宽字符
+```cpp
+#include<iostream>
+#include<locale>
+using namespace std;
+int main(){
+  setlocale(LC_ALL,"zh-CN");//三种写法都可以vs2013
+  // _wsetlocale(LC_ALL,L"zh-CN");
+  // setlocale(LC_ALL,"chs");
+  wchar_t *p(L"hello 够");
+  wcout<<p<<endl;
+  return 0;
+}
+```
+
+## 动态获取数据类型
+- typeid是关键字
+
+```cpp
+#include<cstring>
+cout<<typeid(a).name()<<endl;
+if (strcmp(typeid(a).name(),typeid(b).name())){
+  cout<<"equal"<<endl;
+}
+```
+
+## 可变参数
+- 类型一致
+```cpp
+#include<cstdarg>
+template<class T>
+T add(int n,T t...){
+  va_list arg_ptr;//开头指针
+  va_start(arg_ptr,n);//读取n个数
+  T res(0);
+  for(int i=0;i<n;i++){
+    res+=var_arg(arg_ptr,T);
+  }
+  va_end(arg_ptr);
+  return res;
+}
+void main(){
+  cout<<add(4,1,2,3,4)<<endl;
+  cout<<add(5,1.2,2.,3.,4.)<<endl;
+}
+```
+
+- 类型不一致
+```cpp
+#include<cstdarg>
+void show(){}
+template<typename T,typename... Args> //可变参数的类型
+void show(T t,Args... args){
+  cout<<t<<endl;
+  show(args...);
+}
+void main(){
+  show(1,23,4,5);
+}
+```
+
+- 使用c++可变参数模板实现printf/scanf
+```cpp
+#include<cstdarg>
+void show(const char* str){
+    cout<<str;
+}
+template<typename T,typename... Args>
+void show(const char* str,T t,Args... args){
+    while(str&&*str){ //指针不为空，字符串没有到末尾
+        if(*str=='%'&&*(str+1)!='%'){
+            ++str;
+            cout<<t;
+            show(++str,args...);
+            return;
+        }else{
+            cout<<*str++; //跳过一个%
+        }
+    }
+}
+void main(){
+    printf("%d%s%c%f%%",123,"123",'2',123.33);
+    show("%d%s%c%f%%",123,"123",'2',123.33);
+}
+```
+
+## auto
+- 自动推理数据类型
+```cpp
+auto str=L"asdf";
+int a[5]={1,23,4,5,6};
+for (auto i:a){//副本
+  cout<<i<<endl;
+}
+for (auto &i:a){//引用
+  cout<<i<<endl;
+}
+```
+
+## decltype
+- 根据一个变量获取类型，auto自适应变量，但是无法创建指针数组等变量
+```cpp
+bool a=1;
+auto b(a);
+decltype(a) c[5]{0}; //根据一个变量获取类型
+for(auto i:c){
+  cout<<typeid(i).name()<<i<<endl;
+}
+```
+
+## 数组初始化
+- 两种数组初始化方法
+
+```cpp
+int a[5]{1,2,3,4,5};
+//int a[5] = {1,2,3,4,5}; c风格
+int *p(new int[5]{1,2,3,4,5}); // c++写法，分配内存并初始化
+//int *p = new int[5]{1,2,3,4,5} malloc new
+//[x] int *p =(int[20]){1,2,3,4,5};//c的写法
+//[x] int *p =(int[20]){[4]=1,[5]=2};//c的写法
+```
+
+## nullptr
+- `c`语言`NULL`，会被误认为整数
+- `c++`使用`nullptr`可以自动识别对应的类型
+
+
+## new
+- 堆、栈、静态区
+
 
 ## 输入与输出(cin /cout)
 ### cin && cout
@@ -172,7 +305,7 @@ float volume(float length, float weight = 4,float high = 5){
 ```
 
 - 规则
-  1. 默认的顺序，是从右向左，不能跳跃。
+  1. 默认的顺序，是从右向左，不能跳跃。(参数进栈的方式：从右向左)
   2. 函数声明和定义一体时，默认认参数在定义(声明)处。声明在前，定义在后，默认参数在声明处。 
   3. 一个函数，不能既作重载，又作默认参数的函数。当你少写一个参数时，系统无法确认是重载还是默认参数。
 
@@ -2177,8 +2310,9 @@ return 0;
 - 异常被抛出后，从进入 try 块起，到异常被抛掷前，这期间在栈上的构造的所有对象，都会被自动析构。析构的顺序与构造的顺序相反。这一过程称为栈的解旋(unwinding)。而堆上的空间，则会泄漏。
 
 
-## STL
 
-## C11
+# STL
 
-## Boost
+# C11
+
+# Boost
