@@ -4,7 +4,7 @@ author: hero576
 tags:
   - robotic
 categories:
-  - programme
+  - opencv
 date: 2020-07-27 19:17:00
 ---
 > opencv的使用
@@ -1990,7 +1990,7 @@ while(true){
 `opening=cv2.morphologyEx(img,cv2.MORPH_OPEN,kernel`|开运算：先腐蚀后膨胀
 `closing=cv2.morphologyEx(img,cv2.MORPH_CLOSE,kernel`|闭运算：先膨胀后腐蚀
 `gradient=cv2.morphologyEx(img,cv2.MORPH_GRADIENT,kernel`|梯度运算：膨胀-腐蚀
-`tophat=cv2.morphologyEx(img,cv2.MORPH_TOPHAT,kernel`|礼帽操作：原始输入-开运算
+`tophat=cv2.morphologyEx(img,cv2.MORPH_TOPHAT,kernel`|礼帽操作：原始输入-开运算，将明亮部分突出出来
 `blackhat=cv2.morphologyEx(img,cv2.MORPH_BLACKHAT,kernel`|黑帽操作：闭运算-原始输入
 
 ## 图像梯度
@@ -2000,6 +2000,17 @@ while(true){
 `dst=cv2.Sobel(src,ddepth,dx,dy,ksize)`|Sobel算子,CV_64F有负数时图像被截断，需要取绝对值`dst_x=cv2.Sobel(img,cv2.CV_64F,1,0,ksize=3);dst_x=cv2.convertScaleAbs(dst_x);dst=cv2.addWeighted(dst_x,0.5,dst_y,0.5,0)`，xy分开计算效果更好
 `dst=cv2.Scharr(src,ddepth,dx,dy,ksize)`|Scharr算子
 `dst=cv2.Laplacian(src,ddepth,ksize)`|laplacian算子
+
+```py
+#ksize=-1相当于用3*3的
+gradX = cv2.Sobel(tophat, ddepth=cv2.CV_32F, dx=1, dy=0,ksize=-1)
+gradX = np.absolute(gradX)
+(minVal, maxVal) = (np.min(gradX), np.max(gradX))
+gradX = (255 * ((gradX - minVal) / (maxVal - minVal)))
+gradX = gradX.astype("uint8")
+plt.imshow(gradX)
+```
+
 
 ## 边缘检测
 
@@ -2023,7 +2034,7 @@ while(true){
 `cv2.drawContours(img_cpy,contours,-1,(0,0,255),2)`|绘制轮廓，-1表示所有轮廓都绘制，scalar颜色，2线宽
 `area=cv2.contourArea(contours[0])`|轮廓面积
 `cv2.arcLength(contours[0],True)`|周长，True表示闭合
-`approx=cv2.approxPolyDP(contours[0],epsilon=0.1,True)`|轮廓近似
+`approx=cv2.approxPolyDP(contours[0],epsilon=0.1,True)`|轮廓多边形近似，得到多个顶点
 `x,y,w,h=cv2.boundingRect(contours[0])`|外接矩形
 `(x,y),radius=cv2.minEnclosingCircle(contours[0])`|外接圆
 
@@ -2098,21 +2109,86 @@ for i,col in enumerate(color):
 
 
 ## 傅里叶变换
-- 傅里叶：任何周期信号，都可以用正弦函数表达。建立复频域，表示这种变换
-- 滤波：高频、低频滤波
+- 傅里叶：任何周期信号，都可以用正弦函数表达。建立复频域，表示这种变换，[介绍](https://zhuanlan.zhihu.com/p/19763358)
+- 滤波：高通、低通滤波
 
 函数|说明
 -|-
 `img32=np.float32(img)`|输入图像需要先转换成np.float32格式
-`dft=cv2.dft(img32,flags=cv2.DFT_COMPLEX_OUTPUT)`|
-`cv2.idft()`|
-`dft_shift=np.fft.fftshift(dft)`|得到的结果频率为0会在左上角，通常要转换到中心位置
+`dft=cv2.dft(img32,flags=cv2.DFT_COMPLEX_OUTPUT)`|傅里叶变换
+`cv2.idft()`|傅里叶逆变换
+`dft_shift=np.fft.fftshift(dft)`|傅里叶得到的结果，频率为0会在左上角，为了图像显示方便，通常要转换到中心位置
+`dft_ishift=np.fft.ifftshift(dft_shift)`|复原dft
 `magnitude_spectrum=20*np.log(cv2.magnitude(dft_shift[:,:,0],dft_shift[:,:,1]))`|dft返回结果是双通道的(实部、虚部)，需要转换成图像格式才能显示
-`mask=np.zeros(`|低通滤波
-``|
-``|
+
+- [链接](https://blog.csdn.net/qq_41244435/article/details/86663865)
+```py
+img=cv2.imread('1.jpg',0)
+img32=np.float32(img)
+#fft
+f=np.fft.fft2(img)
+fshift=np.fft.fftshift(f)
+magnitude_spectrum=20*np.log(np.abs(fshift))
+#高通滤波ifft
+rows,cols=img.shape
+crows,ccols=np.int8(rows/2),np.int8(cols/2)
+fshift[crows-50:crows+50,ccols-40:ccols+40]=0
+f_ishift=np.fft.ifftshift(fshift)
+f_idft=np.fft.ifft2(f_ishift)
+image_back=np.abs(f_idft)
+#fft
+dft=cv2.dft(img32,flags=cv2.DFT_COMPLEX_OUTPUT)
+dft_shift=np.fft.fftshift(dft)
+magnitude_spectrum=20*np.log(cv2.magnitude(dft_shift[:,:,0],dft_shift[:,:,1]))
+plt.subplot(121),plt.imshow(img,cmp='gray')
+plt.title('src'),plt.xticks([]),plt.yticks([])
+plt.subplot(122),plt.imshow(magnitude_spectrum,cmp='gray')
+plt.show()
+#低通ifft
+mask=np.zeros((rows,cols,2),np.uint8)
+mask[crows-50:crows+50,ccols-40:ccols+40]=1
+fshift=fshift*mask
+f_ishift=np.fft.ifftshift(fshift)
+f_idft=cv2.idft(f_ishift)
+image_back=cv2.magnitude(f_idft[:,:,0],f_idft[:,:,1])
+#性能优化
+nrows=cv2.getOptimalDFTSize(rows)
+ncols=cv2.getOptimalDFTSize(cols)
+nimg=np.zeros((nrows,ncols),np.uint8)
+nimg[:rows,:cols]=img
+# 
+mean_filter=np.ones((3,3))
+x=cv2.getGaussianKernel(5,10)
+gaussian=x*x.T
+scharr=np.array([[-3,0,3],
+                 [-10,0,10],
+                 [-3,0,3]])
+sobel_x=np.array([[-1,0,1],
+                 [-2,0,2],
+                 [-1,0,1]])
+sobel_y=np.array([[-1,-2,-1],
+                 [0,0,0],
+                 [1,2,1]])
+laplacian=np.array([[0,1,0],
+                 [0,-4,0],
+                 [0,1,0]])
+filters=[mean_filter,gaussian,scharr,sobel_x,sobel_y,laplacian]
+filter_name=['mean_filter','gaussian','scharr','sobel_x','sobel_y','laplacian']
+fft_filters=[np.fft.fft2(x,(16,16)) for x in filters]
+fftshift=[np.fft.fftshift(x) for x in fft_filters]
+mag_spectrum=[np.log(np.abs(x)+1) for x in fftshift]
+for i in range(6):
+    plt.subplot(2,3,i+1),plt.imshow(mag_spectrum[i],'gray')
+    plt.title(filter_name[i]),plt.xticks([]),plt.yticks([])
+plt.show
+```
 
 
+## 特征检测
 
+函数|说明
+-|-
+`cv2.cornerHarris(img,blockSize,ksize,k)`|harris<br>blockSize:角点检测中指定区域大小<br>ksize：sobel求导使用的窗口大小<br>k取值参数推荐为[0.04,0.06]<br>`dst=cv2.cornerHarris(gray,2,3,0.04);img[dst>0.01*dst.max()]=[0,0,255];plt.imshow(img)`
+``|sift
 
 

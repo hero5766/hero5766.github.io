@@ -4,7 +4,7 @@ author: hero576
 tags:
   - robotic
 categories:
-  - programme
+  - opencv
 date: 2021-01-12 22:19:03
 ---
 > 
