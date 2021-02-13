@@ -2,16 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://blog.guoming576.cn/2020/07/27/opencv/</loc>
+    <loc>http://blog.guoming576.cn/2020/09/03/%E5%9B%BE%E7%89%87%E6%8B%BC%E6%8E%A5/</loc>
     
-    <lastmod>2021-02-08</lastmod>
+    <lastmod>2021-02-13</lastmod>
     
   </url>
   
   <url>
-    <loc>http://blog.guoming576.cn/2020/09/03/%E5%9B%BE%E7%89%87%E6%8B%BC%E6%8E%A5/</loc>
+    <loc>http://blog.guoming576.cn/2020/07/27/opencv/</loc>
     
-    <lastmod>2021-02-08</lastmod>
+    <lastmod>2021-02-13</lastmod>
     
   </url>
   
@@ -515,7 +515,7 @@
 
   <url>
     <loc>http://blog.guoming576.cn/</loc>
-    <lastmod>2021-02-09</lastmod>
+    <lastmod>2021-02-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -523,98 +523,98 @@
   
   <url>
     <loc>http://blog.guoming576.cn/tags/C-C/</loc>
-    <lastmod>2021-02-09</lastmod>
+    <lastmod>2021-02-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://blog.guoming576.cn/tags/robotic/</loc>
-    <lastmod>2021-02-09</lastmod>
+    <lastmod>2021-02-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://blog.guoming576.cn/tags/skills/</loc>
-    <lastmod>2021-02-09</lastmod>
+    <lastmod>2021-02-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://blog.guoming576.cn/tags/python/</loc>
-    <lastmod>2021-02-09</lastmod>
+    <lastmod>2021-02-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://blog.guoming576.cn/tags/golang/</loc>
-    <lastmod>2021-02-09</lastmod>
+    <lastmod>2021-02-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://blog.guoming576.cn/tags/algorithm/</loc>
-    <lastmod>2021-02-09</lastmod>
+    <lastmod>2021-02-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://blog.guoming576.cn/tags/linux/</loc>
-    <lastmod>2021-02-09</lastmod>
+    <lastmod>2021-02-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://blog.guoming576.cn/tags/windows/</loc>
-    <lastmod>2021-02-09</lastmod>
+    <lastmod>2021-02-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://blog.guoming576.cn/tags/optimization/</loc>
-    <lastmod>2021-02-09</lastmod>
+    <lastmod>2021-02-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://blog.guoming576.cn/tags/mathematics/</loc>
-    <lastmod>2021-02-09</lastmod>
+    <lastmod>2021-02-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://blog.guoming576.cn/tags/funny/</loc>
-    <lastmod>2021-02-09</lastmod>
+    <lastmod>2021-02-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://blog.guoming576.cn/tags/data-structure/</loc>
-    <lastmod>2021-02-09</lastmod>
+    <lastmod>2021-02-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://blog.guoming576.cn/tags/probability/</loc>
-    <lastmod>2021-02-09</lastmod>
+    <lastmod>2021-02-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://blog.guoming576.cn/tags/assembler/</loc>
-    <lastmod>2021-02-09</lastmod>
+    <lastmod>2021-02-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
@@ -623,42 +623,42 @@
   
   <url>
     <loc>http://blog.guoming576.cn/categories/programme/</loc>
-    <lastmod>2021-02-09</lastmod>
+    <lastmod>2021-02-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://blog.guoming576.cn/categories/common/</loc>
-    <lastmod>2021-02-09</lastmod>
+    <lastmod>2021-02-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://blog.guoming576.cn/categories/AI/</loc>
-    <lastmod>2021-02-09</lastmod>
+    <lastmod>2021-02-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://blog.guoming576.cn/categories/math/</loc>
-    <lastmod>2021-02-09</lastmod>
+    <lastmod>2021-02-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://blog.guoming576.cn/categories/algorithm/</loc>
-    <lastmod>2021-02-09</lastmod>
+    <lastmod>2021-02-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://blog.guoming576.cn/categories/opencv/</loc>
-    <lastmod>2021-02-09</lastmod>
+    <lastmod>2021-02-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
