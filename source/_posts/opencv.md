@@ -2192,3 +2192,48 @@ plt.show
 ``|sift
 
 
+```py
+img = cv2.imread('1.jpg')
+gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+sift = cv2.SIFT_create()
+kp = sift.detect(gray,None)
+img = cv2.drawKeypoints(gray,kp,img)
+# 特征点集描述子
+keypoints,keypoints_desc = sift.compute(gray,kp)
+plt.imshow(img)
+```
+
+## 特征匹配
+
+函数|说明
+-|-
+bf=cv2.BFMatcher(crossCheck=True)|创建暴力匹配对象
+bf=cv2.FlannBasedMatcher()|使用flann库，匹配速度更快
+matches=bf.match(des1,des2)|1对1匹配
+matches=bf.knnMatch(des1,des2,k=2)|k近邻匹配
+
+- 暴力匹配
+```py
+img1 = cv2.imread('1.jpg',0)
+img2 = cv2.imread('2.jpg',0)
+sift = cv2.SIFT_create()
+kp1,des1 = sift.detectAndCompute(img1,None)
+kp2,des2 = sift.detectAndCompute(img2,None)
+bf = cv2.BFMatcher(crossCheck=True)
+# 1对1
+matches = bf.match(des1,des2)
+matches = sorted(matches,key=lambda x:x.distance)
+img3 = cv2.drawMatches(img1,kp1,img2,kp2,matches[:10],None,flags=2)
+plt.imshow(img3)
+```
+
+
+
+
+
+
+
+
+
+
+
