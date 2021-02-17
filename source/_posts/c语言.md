@@ -1,3 +1,4 @@
+---
 title: c语言
 author: hero576
 tags:
@@ -6,7 +7,7 @@ categories:
   - programme
 date: 2020-07-01 21:02:00
 ---
-> c语言基础
+> 
 <!--more-->
 # 简介
 ## hello world

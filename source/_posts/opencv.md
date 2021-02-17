@@ -1944,6 +1944,65 @@ while(true){
   imshow("meanshift",frame);
 }
 ```
+# opencv-cuda
+## 透视变换
+
+```cpp
+//resize
+Mat img = imread(R"(1.jpg)"),result;
+GpuMat image;
+GpuMat dst;
+image.upload(img);
+cuda::resize(image,dst,Size(0,0),2,2,INTER_CUBIC);
+dst.download(result);
+//affine
+int cx = image.cols/2;
+int cy = image.rows/2;
+Mat M = getRotationMatrix2D(Point(cx,cy),45,1.);
+cuda::warpAffine(image,dst,M,image.size());
+dst.download(result);
+```
+
+## filter
+```cpp
+Mat img = imread("1.jpg");
+GpuMat image,dres3x3;
+image.upload(img);
+cuda::cvtColor(image,image,COLOR_BGR2BGRA);
+//boxfilter
+auto filter3x3_box = cuda::createBoxFilter(image.type(),image.type(),Size(3,3),Point(-1,-1));
+filter3x3->apply(image,dres3x3);
+//gaussian filter
+auto filter3x3_gaussian = cuda::createGaussianFilter(image.type(),image.type(),Size(5,5),5);
+//sobel filter
+auto sobel_x_filter = cuda::createSobelFilter(image.type(),image.type(),1,0,3);
+auto sobel_y_filter = cuda::createSobelFilter(image.type(),image.type(),0,1,3);
+GpuMat grad_x,grad_y,grad_xy;
+sobel_x_filter->apply(image,grad_x);
+sobel_y_filter->apply(image,grad_y);
+cuda::addWeighted(grad_x,0.5,grad_y,0.5,0,grad_xy);
+//scharr filter
+auto sobel_x_filter = cuda::createScharrFilter(image.type(),image.type(),1,0,3);
+auto sobel_y_filter = cuda::createScharrFilter(image.type(),image.type(),0,1,3);
+GpuMat grad_x,grad_y,grad_xy;
+sobel_x_filter->apply(image,grad_x);
+sobel_y_filter->apply(image,grad_y);
+cuda::addWeighted(grad_x,0.5,grad_y,0.5,0,grad_xy);
+//canny filter
+GpuMat gray,edges;
+cuda::cvtColor(image,gray,COLOR_BGRA2GRAY);
+auto edge_detector = cuda::createCannyEdgeDetector(50,150,3,true);
+edge_detector->detect(gray,edges);
+//laplace filter
+GpuMat gray,edges;
+cuda::cvtColor(image,gray,COLOR_BGRA2GRAY);
+auto laplacian_filter = cuda::createLaplacianFilter(50,150,3,true);
+laplacian_filter->apply(gray,edges);
+
+Mat res3;
+dres3x3.download(res3);
+```
+
 
 
 # opencv-python
@@ -1963,7 +2022,7 @@ while(true){
 `img=cv2.merge(b,g,r)`|通道组合
 `cv2.copyMakeBorder(img,top,bottom,left,right,boarderType`|边界填充，包括<br>BORDER_REPLICATE复制最边缘像素值<br>BORDER_REFLECT反射法，fedcba|abcdef|fedcba<br>BORDER_REFLECT_101反射，以最边缘像为轴,fedcb|abcdef|edcba<br>BORER_WRAP外包装法,cdefgh|abccdefgh|abcdefg<br>BORDER_CONSTANT常量法，需要制定value
 `cv2.add(img1,img2)`|两幅图像add操作，超出255则取255
-`cv2.resize(img,(w,h)[,fx,fy])`|更改尺寸，不指定size，也可以通过fxfy倍数关系调整大小
+`cv2.resize(img,(w,h)[,fx,fy])`|更改尺寸，不指定size，也可以通过fxfy倍数关系调整大小，INTER_CUBIC双立方插值
 `cv2.addWeighted(img1,alpha,img2,beta,b`|带权重相加
 `mask=np.zeros(img.shape[:2],np.uint8);mask[100:200,200:300]=255;cv2.bitwise_and(img,img,mask=mask)`|掩码操作
 `img_group=np.hstack((img1,img2,img3))`|图像水平拼接
@@ -2227,13 +2286,723 @@ img3 = cv2.drawMatches(img1,kp1,img2,kp2,matches[:10],None,flags=2)
 plt.imshow(img3)
 ```
 
+## 背景建模
+### 帧差法
+- 简单，但是用的不是非常广
+  - $D_n(x,y)=\|f_n(x,y)-f_{n-1}(x,y)\|$
+  - $R_n(x,y)=\begin{cases}255&D_n(x,y)>T\\0&else\end{cases}$
+
+**缺点**
+- 引入噪音和空洞
+
+### 混合高斯模型
+
+- 在进行前置检测前，先对背景进行驯良，对图像每个背景采用一个混合高斯模型进行模拟，每个背景混合高斯模型个数可以自适应。然后在测试阶段，对新来的像素进行GMM匹配，如果该像素能够匹配其中一个高斯，则认为是背景，否则为前景。由于整个过程GMM模型在不断更新学习中，所以在动态背景有一定鲁棒性。
+
+```py
+import numpy as np
+import cv2
+#经典的测试视频
+cap = cv2.VideoCapture('test.avi')
+#形态学操作需要使用
+kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(3,3))
+#创建混合高斯模型用于背景建模
+fgbg = cv2.createBackgroundSubtractorMOG2()
+while(True):
+    ret, frame = cap.read()
+    if not ret:
+      break
+    fgmask = fgbg.apply(frame)
+    #形态学开运算去噪点
+    fgmask = cv2.morphologyEx(fgmask, cv2.MORPH_OPEN, kernel)
+    #寻找视频中的轮廓
+    im, contours, hierarchy = cv2.findContours(fgmask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    for c in contours:
+        #计算各轮廓的周长
+        perimeter = cv2.arcLength(c,True)
+        if perimeter > 188:
+            #找到一个直矩形（不会旋转）
+            x,y,w,h = cv2.boundingRect(c)
+            #画出这个矩形
+            cv2.rectangle(frame,(x,y),(x+w,y+h),(0,255,0),2)    
+    cv2.imshow('frame',frame)
+    cv2.imshow('fgmask', fgmask)
+    k = cv2.waitKey(150) & 0xff
+    if k == 27:
+        break
+cap.release()
+cv2.destroyAllWindows()
+```
+
+## 光流估计
+- 光流是空间运动物体在观测成像平面上的像素运动的“瞬时速度”，根据各个像素点的速度矢量特征，可以对图像进行动态分析，例如目标跟踪。
+  - **亮度恒定：**同一点随着时间的变化，其亮度不会发生改变。
+  - **小运动：**随着时间的变化不会引起位置的剧烈变化，只有小运动情况下才能用前后帧之间单位位置变化引起的灰度变化去近似灰度对位置的偏导数。
+  - **空间一致：**一个场景上邻近的点投影到图像上也是邻近点，且邻近点速度一致。因为光流法基本方程约束只有一个，而要求x，y方向的速度，有两个未知变量。所以需要连立n多个方程求解。
+
+
+函数|说明
+-|-
+cv2.calcOpticalFlowPyrLK()|参数：<br> prevImage 前一帧图像<br>nextImage 当前帧图像<br>prevPts 待跟踪的特征点向量<br>winSize 搜索窗口的大小<br>maxLevel 最大的金字塔层数<br>返回：<br>nextPts 输出跟踪特征点向量<br>status 特征点是否找到，找到的状态为1，未找到的状态为0
+
+
+```py
+import numpy as np
+import cv2
+cap = cv2.VideoCapture('test.avi')
+# 角点检测所需参数
+feature_params = dict( maxCorners=100,qualityLevel=0.3,minDistance=7)
+# lucas kanade参数
+lk_params = dict(winSize=(15,15),maxLevel=2)
+# 随机颜色条
+color = np.random.randint(0,255,(100,3))
+# 拿到第一帧图像
+ret, old_frame = cap.read()
+old_gray = cv2.cvtColor(old_frame, cv2.COLOR_BGR2GRAY)
+# 返回所有检测特征点，需要输入图像，角点最大数量（效率），品质因子（特征值越大的越好，来筛选）
+# 距离相当于这区间有比这个角点强的，就不要这个弱的了
+p0 = cv2.goodFeaturesToTrack(old_gray, mask = None, **feature_params)
+# 创建一个mask
+mask = np.zeros_like(old_frame)
+while(True):
+    ret,frame = cap.read()
+    if not ret:
+      break
+    frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    # 需要传入前一帧和当前图像以及前一帧检测到的角点
+    p1, st, err = cv2.calcOpticalFlowPyrLK(old_gray, frame_gray, p0, None, **lk_params)
+    # st=1表示
+    good_new = p1[st==1]
+    good_old = p0[st==1]
+    # 绘制轨迹
+    for i,(new,old) in enumerate(zip(good_new,good_old)):
+        a,b = new.ravel()
+        c,d = old.ravel()
+        mask = cv2.line(mask, (a,b),(c,d), color[i].tolist(), 2)
+        frame = cv2.circle(frame,(a,b),5,color[i].tolist(),-1)
+    img = cv2.add(frame,mask)
+    cv2.imshow('frame',img)
+    k = cv2.waitKey(150) & 0xff
+    if k == 27:
+        break
+    # 更新
+    old_gray = frame_gray.copy()
+    p0 = good_new.reshape(-1,1,2)
+cv2.destroyAllWindows()
+cap.release()
+```
+
+## DNN
+
+### caffe
+```py
+# 导入工具包
+import utils_paths
+import numpy as np
+import cv2
+# 标签文件处理
+rows = open("synset_words.txt").read().strip().split("\n")
+classes = [r[r.find(" ") + 1:].split(",")[0] for r in rows]
+# Caffe所需配置文件
+net = cv2.dnn.readNetFromCaffe("bvlc_googlenet.prototxt","bvlc_googlenet.caffemodel")
+# 图像路径
+imagePaths = sorted(list(utils_paths.list_images("images/")))
+# 图像数据预处理
+image = cv2.imread(imagePaths[0])
+resized = cv2.resize(image, (224, 224))
+# image scalefactor size mean swapRB 
+blob = cv2.dnn.blobFromImage(resized, 1, (224, 224), (104, 117, 123))
+print("First Blob: {}".format(blob.shape))
+# 得到预测结果
+net.setInput(blob)
+preds = net.forward()
+# 排序，取分类可能性最大的
+idx = np.argsort(preds[0])[::-1][0]
+text = "Label: {}, {:.2f}%".format(classes[idx],preds[0][idx] * 100)
+cv2.putText(image, text, (5, 25),  cv2.FONT_HERSHEY_SIMPLEX,0.7, (0, 0, 255), 2)
+# 显示
+cv2.imshow("Image", image)
+cv2.waitKey(0)
+# Batch数据制作
+images = []
+# 方法一样，数据是一个batch
+for p in imagePaths[1:]:
+	image = cv2.imread(p)
+	image = cv2.resize(image, (224, 224))
+	images.append(image)
+# blobFromImages函数，注意有s
+blob = cv2.dnn.blobFromImages(images, 1, (224, 224), (104, 117, 123))
+print("Second Blob: {}".format(blob.shape))
+# 获取预测结果
+net.setInput(blob)
+preds = net.forward()
+for (i, p) in enumerate(imagePaths[1:]):
+	image = cv2.imread(p)
+	idx = np.argsort(preds[i])[::-1][0]
+	text = "Label: {}, {:.2f}%".format(classes[idx],preds[i][idx] * 100)
+	cv2.putText(image, text, (5, 25),  cv2.FONT_HERSHEY_SIMPLEX,0.7, (0, 0, 255), 2)
+	cv2.imshow("Image", image)
+	cv2.waitKey(0)
+```
+
+## 跟踪
+### KCF[^1]
+[^1]: [链接](https://zhuanlan.zhihu.com/p/48249974)
+
+
+- [KCF](http://www.robots.ox.ac.uk/~joao/publications/henriques_eccv2012.pdf)全称为Kernel Correlation Filter 核相关滤波算法。是在2014年由Joao F. Henriques, Rui Caseiro, Pedro Martins, and Jorge Batista提出来的
+- KCF系列算法:KCF、DCF、MOSSE，其中MOSSE是目标跟踪领域的第一篇相关滤波类方法，真正第一次显示了相关滤波的潜力,只是由于选取特征过于简单，效果并不是最好的
+- 在OTB50上的实验结果，Precision和FPS碾压了OTB50上最好的Struck
+- 从此目标跟踪就只有两大方向，一个是实时性的相关滤波方向，另一个当然是随主流的深度学习方向了，但目前在速度方面，还是相关滤波碾压一切算法，是当前工业界目标跟踪领域使用的主要算法框架
+![](/images/pasted-389.png)
+
+```py
+import argparse
+import time
+import cv2
+import numpy as np
+# 配置参数
+ap = argparse.ArgumentParser()
+ap.add_argument("-v", "--video", type=str,help="path to input video file")
+ap.add_argument("-t", "--tracker", type=str, default="kcf",help="OpenCV object tracker type")
+args = vars(ap.parse_args())
+# opencv已经实现了的追踪算法
+OPENCV_OBJECT_TRACKERS = {
+	"csrt": cv2.TrackerCSRT_create,
+	"kcf": cv2.TrackerKCF_create,
+	"boosting": cv2.TrackerBoosting_create,
+	"mil": cv2.TrackerMIL_create,
+	"tld": cv2.TrackerTLD_create,
+	"medianflow": cv2.TrackerMedianFlow_create,
+	"mosse": cv2.TrackerMOSSE_create
+}
+# 实例化OpenCV's multi-object tracker
+trackers = cv2.MultiTracker_create()
+vs = cv2.VideoCapture(args["video"])
+# 视频流
+while True:
+	# 取当前帧
+	ret, frame = vs.read()
+	# 到头了就结束
+	if not ret:
+		break
+	# resize每一帧
+	(h, w) = frame.shape[:2]
+	width=600
+	r = width / float(w)
+	dim = (width, int(h * r))
+	frame = cv2.resize(frame, dim, interpolation=cv2.INTER_AREA)
+	# 追踪结果
+	(success, boxes) = trackers.update(frame)
+	# 绘制区域
+	for box in boxes:
+		(x, y, w, h) = [int(v) for v in box]
+		cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+	# 显示
+	cv2.imshow("Frame", frame)
+	key = cv2.waitKey(100) & 0xFF
+	if key == ord("s"):
+		# 选择一个区域，按s
+		box = cv2.selectROI("Frame", frame, fromCenter=False, showCrosshair=True)
+		# 创建一个新的追踪器
+		tracker = OPENCV_OBJECT_TRACKERS[args["tracker"]]()
+		trackers.add(tracker, frame, box)
+	# 退出
+	elif key == 27:
+		break
+vs.release()
+cv2.destroyAllWindows()
+```
+
+### 深度学习跟踪方法
+
+```py
+#导入工具包
+import numpy as np
+import argparse
+import dlib
+import cv2
+"""
+--prototxt mobilenet_ssd/MobileNetSSD_deploy.prototxt 
+--model mobilenet_ssd/MobileNetSSD_deploy.caffemodel 
+--video race.mp4
+"""
+import datetime
+class FPS:
+    def __init__(self):
+        # store the start time, end time, and total number of frames
+        # that were examined between the start and end intervals
+        self._start = None
+        self._end = None
+        self._numFrames = 0
+    def start(self):
+        # start the timer
+        self._start = datetime.datetime.now()
+        return self
+    def stop(self):
+        # stop the timer
+        self._end = datetime.datetime.now()
+    def update(self):
+        # increment the total number of frames examined during the
+        # start and end intervals
+        self._numFrames += 1
+    def elapsed(self):
+        # return the total number of seconds between the start and
+        # end interval
+        return (self._end - self._start).total_seconds()
+    def fps(self):
+        # compute the (approximate) frames per second
+        return self._numFrames / self.elapsed()
+# 参数
+ap = argparse.ArgumentParser()
+ap.add_argument("-p", "--prototxt", required=True,help="path to Caffe 'deploy' prototxt file")
+ap.add_argument("-m", "--model", required=True,help="path to Caffe pre-trained model")
+ap.add_argument("-v", "--video", required=True,help="path to input video file")
+ap.add_argument("-o", "--output", type=str,help="path to optional output video file")
+ap.add_argument("-c", "--confidence", type=float, default=0.2,help="minimum probability to filter weak detections")
+args = vars(ap.parse_args())
+# SSD标签
+CLASSES = ["background", "aeroplane", "bicycle", "bird", "boat","bottle", "bus", "car", "cat", "chair", "cow", "diningtable","dog", "horse", "motorbike", "person", "pottedplant", "sheep","sofa", "train", "tvmonitor"]
+# 读取网络模型
+print("[INFO] loading model...")
+net = cv2.dnn.readNetFromCaffe(args["prototxt"], args["model"])
+# 初始化
+print("[INFO] starting video stream...")
+vs = cv2.VideoCapture(args["video"])
+writer = None
+# 一会要追踪多个目标
+trackers = []
+labels = []
+# 计算FPS
+fps = FPS().start()
+while True:
+	# 读取一帧
+	(grabbed, frame) = vs.read()
+	# 是否是最后了
+	if frame is None:
+		break
+	# 预处理操作
+	(h, w) = frame.shape[:2]
+	width=600
+	r = width / float(w)
+	dim = (width, int(h * r))
+	frame = cv2.resize(frame, dim, interpolation=cv2.INTER_AREA)
+	rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+	# 如果要将结果保存的话
+	if args["output"] is not None and writer is None:
+		fourcc = cv2.VideoWriter_fourcc(*"MJPG")
+		writer = cv2.VideoWriter(args["output"], fourcc, 30,(frame.shape[1], frame.shape[0]), True)
+	# 先检测 再追踪
+	if len(trackers) == 0:
+		# 获取blob数据
+		(h, w) = frame.shape[:2]
+		blob = cv2.dnn.blobFromImage(frame, 0.007843, (w, h), 127.5)
+		# 得到检测结果
+		net.setInput(blob)
+		detections = net.forward()
+		# 遍历得到的检测结果
+		for i in np.arange(0, detections.shape[2]):
+			# 能检测到多个结果，只保留概率高的
+			confidence = detections[0, 0, i, 2]
+			# 过滤
+			if confidence > args["confidence"]:
+				# extract the index of the class label from the
+				# detections list
+				idx = int(detections[0, 0, i, 1])
+				label = CLASSES[idx]
+				# 只保留人的
+				if CLASSES[idx] != "person":
+					continue
+				# 得到BBOX
+				#print (detections[0, 0, i, 3:7])
+				box = detections[0, 0, i, 3:7] * np.array([w, h, w, h])
+				(startX, startY, endX, endY) = box.astype("int")
+				# 使用dlib来进行目标追踪
+				#http://dlib.net/python/index.html#dlib.correlation_tracker
+				t = dlib.correlation_tracker()
+				rect = dlib.rectangle(int(startX), int(startY), int(endX), int(endY))
+				t.start_track(rgb, rect)
+				# 保存结果
+				labels.append(label)
+				trackers.append(t)
+				# 绘图
+				cv2.rectangle(frame, (startX, startY), (endX, endY),(0, 255, 0), 2)
+				cv2.putText(frame, label, (startX, startY - 15),cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 255, 0), 2)
+	# 如果已经有了框，就可以直接追踪了
+	else:
+		# 每一个追踪器都要进行更新
+		for (t, l) in zip(trackers, labels):
+			t.update(rgb)
+			pos = t.get_position()
+			# 得到位置
+			startX = int(pos.left())
+			startY = int(pos.top())
+			endX = int(pos.right())
+			endY = int(pos.bottom())
+			# 画出来
+			cv2.rectangle(frame, (startX, startY), (endX, endY),(0, 255, 0), 2)
+			cv2.putText(frame, l, (startX, startY - 15),
+				cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 255, 0), 2)
+	# 也可以把结果保存下来
+	if writer is not None:
+		writer.write(frame)
+	# 显示
+	cv2.imshow("Frame", frame)
+	key = cv2.waitKey(1) & 0xFF
+	# 退出
+	if key == 27:
+		break
+	# 计算FPS
+	fps.update()
+fps.stop()
+print("[INFO] elapsed time: {:.2f}".format(fps.elapsed()))
+print("[INFO] approx. FPS: {:.2f}".format(fps.fps()))
+if writer is not None:
+	writer.release()
+cv2.destroyAllWindows()
+vs.release()
+```
+
+- 多线程
+```py
+import multiprocessing
+import numpy as np
+import argparse
+import dlib
+import cv2
+import datetime
+class FPS:
+    def __init__(self):
+        # store the start time, end time, and total number of frames
+        # that were examined between the start and end intervals
+        self._start = None
+        self._end = None
+        self._numFrames = 0
+    def start(self):
+        # start the timer
+        self._start = datetime.datetime.now()
+        return self
+    def stop(self):
+        # stop the timer
+        self._end = datetime.datetime.now()
+    def update(self):
+        # increment the total number of frames examined during the
+        # start and end intervals
+        self._numFrames += 1
+    def elapsed(self):
+        # return the total number of seconds between the start and
+        # end interval
+        return (self._end - self._start).total_seconds()
+    def fps(self):
+        # compute the (approximate) frames per second
+        return self._numFrames / self.elapsed()
+#perfmon
+def start_tracker(box, label, rgb, inputQueue, outputQueue):
+	t = dlib.correlation_tracker()
+	rect = dlib.rectangle(int(box[0]), int(box[1]), int(box[2]), int(box[3]))
+	t.start_track(rgb, rect)
+	while True:
+		# 获取下一帧
+		rgb = inputQueue.get()
+		# 非空就开始处理
+		if rgb is not None:
+			# 更新追踪器
+			t.update(rgb)
+			pos = t.get_position()
+			startX = int(pos.left())
+			startY = int(pos.top())
+			endX = int(pos.right())
+			endY = int(pos.bottom())
+			# 把结果放到输出q
+			outputQueue.put((label, (startX, startY, endX, endY)))
+ap = argparse.ArgumentParser()
+ap.add_argument("-p", "--prototxt", required=True,help="path to Caffe 'deploy' prototxt file")
+ap.add_argument("-m", "--model", required=True,	help="path to Caffe pre-trained model")
+ap.add_argument("-v", "--video", required=True,help="path to input video file")
+ap.add_argument("-o", "--output", type=str,help="path to optional output video file")
+ap.add_argument("-c", "--confidence", type=float, default=0.2,help="minimum probability to filter weak detections")
+args = vars(ap.parse_args())
+# 一会要放多个追踪器
+inputQueues = []
+outputQueues = []
+CLASSES = ["background", "aeroplane", "bicycle", "bird", "boat","bottle", "bus", "car", "cat", "chair", "cow", "diningtable","dog", "horse", "motorbike", "person", "pottedplant", "sheep","sofa", "train", "tvmonitor"]
+print("[INFO] loading model...")
+net = cv2.dnn.readNetFromCaffe(args["prototxt"], args["model"])
+print("[INFO] starting video stream...")
+vs = cv2.VideoCapture(args["video"])
+writer = None
+fps = FPS().start()
+if __name__ == '__main__':
+	while True:
+		(grabbed, frame) = vs.read()
+		if frame is None:
+			break
+		(h, w) = frame.shape[:2]
+		width=600
+		r = width / float(w)
+		dim = (width, int(h * r))
+		frame = cv2.resize(frame, dim, interpolation=cv2.INTER_AREA)
+		rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+		if args["output"] is not None and writer is None:
+			fourcc = cv2.VideoWriter_fourcc(*"MJPG")
+			writer = cv2.VideoWriter(args["output"], fourcc, 30,(frame.shape[1], frame.shape[0]), True)
+		#首先检测位置
+		if len(inputQueues) == 0:
+			(h, w) = frame.shape[:2]
+			blob = cv2.dnn.blobFromImage(frame, 0.007843, (w, h), 127.5)
+			net.setInput(blob)
+			detections = net.forward()
+			for i in np.arange(0, detections.shape[2]):
+				confidence = detections[0, 0, i, 2]
+				if confidence > args["confidence"]:
+					idx = int(detections[0, 0, i, 1])
+					label = CLASSES[idx]
+					if CLASSES[idx] != "person":
+						continue
+					box = detections[0, 0, i, 3:7] * np.array([w, h, w, h])
+					(startX, startY, endX, endY) = box.astype("int")
+					bb = (startX, startY, endX, endY)
+					# 创建输入q和输出q
+					iq = multiprocessing.Queue()
+					oq = multiprocessing.Queue()
+					inputQueues.append(iq)
+					outputQueues.append(oq)
+					# 多核
+					p = multiprocessing.Process(target=start_tracker,args=(bb, label, rgb, iq, oq))
+					p.daemon = True
+					p.start()
+					cv2.rectangle(frame, (startX, startY), (endX, endY),(0, 255, 0), 2)
+					cv2.putText(frame, label, (startX, startY - 15),cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 255, 0), 2)
+		else:
+			# 多个追踪器处理的都是相同输入
+			for iq in inputQueues:
+				iq.put(rgb)
+			for oq in outputQueues:
+				# 得到更新结果
+				(label, (startX, startY, endX, endY)) = oq.get()
+				# 绘图
+				cv2.rectangle(frame, (startX, startY), (endX, endY),(0, 255, 0), 2)
+				cv2.putText(frame, label, (startX, startY - 15),cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 255, 0), 2)
+		if writer is not None:
+			writer.write(frame)
+		cv2.imshow("Frame", frame)
+		key = cv2.waitKey(1) & 0xFF
+		if key == 27:
+			break
+		fps.update()
+	fps.stop()
+	print("[INFO] elapsed time: {:.2f}".format(fps.elapsed()))
+	print("[INFO] approx. FPS: {:.2f}".format(fps.fps()))
+	if writer is not None:
+		writer.release()
+	cv2.destroyAllWindows()
+	vs.release()
+```
 
 
 
+## 代码
+### 人脸检测
+- [landmark下载地址](http://dlib.net/files)
+```py
+#导入工具包
+from collections import OrderedDict
+import numpy as np
+import argparse
+import dlib
+import cv2
+#https://ibug.doc.ic.ac.uk/resources/facial-point-annotations/
+#http://dlib.net/files/
+# 参数
+ap = argparse.ArgumentParser()
+ap.add_argument("-p", "--shape-predictor", required=True,help="path to facial landmark predictor")
+ap.add_argument("-i", "--image", required=True,help="path to input image")
+args = vars(ap.parse_args())
+FACIAL_LANDMARKS_68_IDXS = OrderedDict([("mouth", (48, 68)),("right_eyebrow", (17, 22)),("left_eyebrow", (22, 27)),("right_eye", (36, 42)),("left_eye", (42, 48)),("nose", (27, 36)),("jaw", (0, 17))])
+FACIAL_LANDMARKS_5_IDXS = OrderedDict([("right_eye", (2, 3)),	("left_eye", (0, 1)),	("nose", (4))])
+def shape_to_np(shape, dtype="int"):
+	# 创建68*2
+	coords = np.zeros((shape.num_parts, 2), dtype=dtype)
+	# 遍历每一个关键点
+	# 得到坐标
+	for i in range(0, shape.num_parts):
+		coords[i] = (shape.part(i).x, shape.part(i).y)
+	return coords
+def visualize_facial_landmarks(image, shape, colors=None, alpha=0.75):
+	# 创建两个copy
+	# overlay and one for the final output image
+	overlay = image.copy()
+	output = image.copy()
+	# 设置一些颜色区域
+	if colors is None:
+		colors = [(19, 199, 109), (79, 76, 240), (230, 159, 23),(168, 100, 168), (158, 163, 32),(163, 38, 32), (180, 42, 220)]
+	# 遍历每一个区域
+	for (i, name) in enumerate(FACIAL_LANDMARKS_68_IDXS.keys()):
+		# 得到每一个点的坐标
+		(j, k) = FACIAL_LANDMARKS_68_IDXS[name]
+		pts = shape[j:k]
+		# 检查位置
+		if name == "jaw":
+			# 用线条连起来
+			for l in range(1, len(pts)):
+				ptA = tuple(pts[l - 1])
+				ptB = tuple(pts[l])
+				cv2.line(overlay, ptA, ptB, colors[i], 2)
+		# 计算凸包
+		else:
+			hull = cv2.convexHull(pts)
+			cv2.drawContours(overlay, [hull], -1, colors[i], -1)
+	# 叠加在原图上，可以指定比例
+	cv2.addWeighted(overlay, alpha, output, 1 - alpha, 0, output)
+	return output
+# 加载人脸检测与关键点定位
+detector = dlib.get_frontal_face_detector()
+predictor = dlib.shape_predictor(args["shape_predictor"])
+# 读取输入数据，预处理
+image = cv2.imread(args["image"])
+(h, w) = image.shape[:2]
+width=500
+r = width / float(w)
+dim = (width, int(h * r))
+image = cv2.resize(image, dim, interpolation=cv2.INTER_AREA)
+gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+# 人脸检测
+rects = detector(gray, 1)
+# 遍历检测到的框
+for (i, rect) in enumerate(rects):
+	# 对人脸框进行关键点定位
+	# 转换成ndarray
+	shape = predictor(gray, rect)
+	shape = shape_to_np(shape)
+	# 遍历每一个部分
+	for (name, (i, j)) in FACIAL_LANDMARKS_68_IDXS.items():
+		clone = image.copy()
+		cv2.putText(clone, name, (10, 30), cv2.FONT_HERSHEY_SIMPLEX,0.7, (0, 0, 255), 2)
+		# 根据位置画点
+		for (x, y) in shape[i:j]:
+			cv2.circle(clone, (x, y), 3, (0, 0, 255), -1)
+		# 提取ROI区域
+		(x, y, w, h) = cv2.boundingRect(np.array([shape[i:j]]))
+		roi = image[y:y + h, x:x + w]
+		(h, w) = roi.shape[:2]
+		width=250
+		r = width / float(w)
+		dim = (width, int(h * r))
+		roi = cv2.resize(roi, dim, interpolation=cv2.INTER_AREA)
+		# 显示每一部分
+		cv2.imshow("ROI", roi)
+		cv2.imshow("Image", clone)
+		cv2.waitKey(0)
+	# 展示所有区域
+	output = visualize_facial_landmarks(image, shape)
+	cv2.imshow("Image", output)
+	cv2.waitKey(0)
+```
 
+### 疲劳监测
+- 眨眼检测
 
-
-
+```py
+#导入工具包
+from scipy.spatial import distance as dist
+from collections import OrderedDict
+import numpy as np
+import argparse
+import time
+import dlib
+import cv2
+FACIAL_LANDMARKS_68_IDXS = OrderedDict([("mouth", (48, 68)),("right_eyebrow", (17, 22)),("left_eyebrow", (22, 27)),("right_eye", (36, 42)),("left_eye", (42, 48)),("nose", (27, 36)),("jaw", (0, 17))])
+# http://vision.fe.uni-lj.si/cvww2016/proceedings/papers/05.pdf
+def eye_aspect_ratio(eye):
+	# 计算距离，竖直的
+	A = dist.euclidean(eye[1], eye[5])
+	B = dist.euclidean(eye[2], eye[4])
+	# 计算距离，水平的
+	C = dist.euclidean(eye[0], eye[3])
+	# ear值
+	ear = (A + B) / (2.0 * C)
+	return ear
+# 输入参数
+ap = argparse.ArgumentParser()
+ap.add_argument("-p", "--shape-predictor", required=True,help="path to facial landmark predictor")
+ap.add_argument("-v", "--video", type=str, default="",help="path to input video file")
+args = vars(ap.parse_args())
+# 设置判断参数
+EYE_AR_THRESH = 0.3
+EYE_AR_CONSEC_FRAMES = 3
+# 初始化计数器
+COUNTER = 0
+TOTAL = 0
+# 检测与定位工具
+print("[INFO] loading facial landmark predictor...")
+detector = dlib.get_frontal_face_detector()
+predictor = dlib.shape_predictor(args["shape_predictor"])
+# 分别取两个眼睛区域
+(lStart, lEnd) = FACIAL_LANDMARKS_68_IDXS["left_eye"]
+(rStart, rEnd) = FACIAL_LANDMARKS_68_IDXS["right_eye"]
+# 读取视频
+print("[INFO] starting video stream thread...")
+vs = cv2.VideoCapture(args["video"])
+#vs = FileVideoStream(args["video"]).start()
+time.sleep(1.0)
+def shape_to_np(shape, dtype="int"):
+	# 创建68*2
+	coords = np.zeros((shape.num_parts, 2), dtype=dtype)
+	# 遍历每一个关键点
+	# 得到坐标
+	for i in range(0, shape.num_parts):
+		coords[i] = (shape.part(i).x, shape.part(i).y)
+	return coords
+# 遍历每一帧
+while True:
+	# 预处理
+	frame = vs.read()[1]
+	if frame is None:
+		break
+	(h, w) = frame.shape[:2]
+	width=1200
+	r = width / float(w)
+	dim = (width, int(h * r))
+	frame = cv2.resize(frame, dim, interpolation=cv2.INTER_AREA)
+	gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+	# 检测人脸
+	rects = detector(gray, 0)
+	# 遍历每一个检测到的人脸
+	for rect in rects:
+		# 获取坐标
+		shape = predictor(gray, rect)
+		shape = shape_to_np(shape)
+		# 分别计算ear值
+		leftEye = shape[lStart:lEnd]
+		rightEye = shape[rStart:rEnd]
+		leftEAR = eye_aspect_ratio(leftEye)
+		rightEAR = eye_aspect_ratio(rightEye)
+		# 算一个平均的
+		ear = (leftEAR + rightEAR) / 2.0
+		# 绘制眼睛区域
+		leftEyeHull = cv2.convexHull(leftEye)
+		rightEyeHull = cv2.convexHull(rightEye)
+		cv2.drawContours(frame, [leftEyeHull], -1, (0, 255, 0), 1)
+		cv2.drawContours(frame, [rightEyeHull], -1, (0, 255, 0), 1)
+		# 检查是否满足阈值
+		if ear < EYE_AR_THRESH:
+			COUNTER += 1
+		else:
+			# 如果连续几帧都是闭眼的，总数算一次
+			if COUNTER >= EYE_AR_CONSEC_FRAMES:
+				TOTAL += 1
+			# 重置
+			COUNTER = 0
+		# 显示
+		cv2.putText(frame, "Blinks: {}".format(TOTAL), (10, 30),cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
+		cv2.putText(frame, "EAR: {:.2f}".format(ear), (300, 30),cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
+	cv2.imshow("Frame", frame)
+	key = cv2.waitKey(10) & 0xFF
+	if key == 27:
+		break
+vs.release()
+cv2.destroyAllWindows()
+```
 
 
 
