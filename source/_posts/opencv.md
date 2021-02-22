@@ -1945,6 +1945,54 @@ while(true){
 }
 ```
 # opencv-cuda
+## 常用函数
+
+函数|说明
+-|-
+`bitwise_and()`|
+`bitwise_not()`|
+`bitwise_or()`|
+`bitwise_xor()`|
+`compare()`|
+`divide()`|：除
+`exp()`|
+`log()`|
+`max()`|
+`min()`|
+`multiply()`|
+`threshold()`|二值化，但要指定设定阈值
+`blendLinear()`|两幅图片的线形混合
+`calcHist()`|
+`createBoxFilter ()`|创建一个规范化的2D框过滤器
+`canny`|边缘检测
+`createGaussianFilter()`|创建一个Gaussian过滤器
+`createLaplacianFilter()`|创建一个Laplacian过滤器
+`createLinearFilter()`|创建一个线形过滤器
+`createMorphologyFilter()`|形态学运算滤波器；腐蚀、开、关等操作
+`createSolbelFilter()`|创建一个solbel过滤器
+`createHougnCirclesDetector()`|创建一个霍夫原检测器
+`createMedianFilter()`|创建一个中值滤波过滤器
+`createTemplateMatching()`|模板匹配
+`cvtColor()`|颜色空间转换
+`dft()`|执行浮点矩阵的正向或逆离散傅里叶变换
+`drawColorDisp()`|颜色差异图像
+`equalizeHist()`|将灰度图像的直方图均衡化
+`findMinMax()`|
+`findMinMaxLoc()`|
+`flip()`|翻转二维矩阵
+`merge()`|用几个单通道矩阵构成一个多通道矩阵
+`split()`|将多通道矩阵分离成多个单通道矩阵
+`getCudaEnabledDeviceCount()`|：获取可用的gpu数目
+`getDevice()`|返回由cuda::setDevice或默认初始化的当前设备索引
+`printCudaDeviceInfo()`|
+`resetDevice()`|显示地销毁和清理与当前进程中当前设备相关的所有资源
+`setDevice()`|设置一个device并为当前线程初始化它；如果省略次函数的调用，则在第一次`CUDA使用时初始化默认设备
+`remap()`|对图像应用一般的几个变换
+`resize()`|调整一个图像
+`rotate()`|在原点(0,0)周围旋转一个图像，然后移动它
+`sum()`|返回矩阵元素的和
+
+
 ## 透视变换
 
 ```cpp
@@ -2001,6 +2049,340 @@ laplacian_filter->apply(gray,edges);
 
 Mat res3;
 dres3x3.download(res3);
+```
+
+
+- 边缘保留滤波/meanshift
+```cpp
+Mat image_host = getImage(), dst_host;
+imshow("input", image_host);
+int64 start = getTickCount();
+GpuMat image, dst;
+image.upload(image_host);
+cuda::bilateralFilter(image, dst, 0, 100, 14, 4);
+// cuda::cvtColor(image, image, COLOR_BGR2BGRA);
+// cuda::meanShiftFiltering(image, dst, 10, 50);
+cout << "gpu filter fps:" << getTickFrequency() / (getTickCount() - start) << endl;
+dst.download(dst_host);
+imshow("gray", dst_host);
+waitKey(0);
+destroyAllWindows();
+```
+
+## 形态学
+- 在opencv4cuda中，没有了二值化和形态学操作
+
+```cpp
+Mat gray_host = getImage(0), dst_host;
+GpuMat gray, binary;
+gray.upload(gray_host);
+cuda::threshold(gray, binary, 0, 255, THRESH_BINARY);
+Mat se = cv::getStructuringElement(MORPH_RECT,Size(3,3));
+auto morph_filter = cuda::createMorphologyFilter(MORPH_OPEN, gray.type(), se);
+morph_filter->apply(binary, binary);
+binary.download(dst_host);
+show("input", gray_host);
+show("gray", dst_host);
+waitKey(0);
+destroyAllWindows();
+```
+
+
+
+## 角点检测
+```cpp
+Mat image_host = imread("D:/images/building.png");
+imshow("input", image_host);
+GpuMat src, gray, corners;
+Mat dst;
+src.upload(image_host);
+cuda::cvtColor(src, gray, COLOR_BGR2GRAY);
+auto corner_detector = cuda::createGoodFeaturesToTrackDetector(gray.type(), 1000, 0.01, 15, 3, true);
+corner_detector->detect(gray, corners);
+corners.download(dst);
+printf("number of corners : %d \n", corners.cols);
+for (int i = 0; i < corners.cols; i++) {
+  int r = rng.uniform(0, 255);
+  int g = rng.uniform(0, 255);
+  int b = rng.uniform(0, 255);
+  Point2f pt = dst.at<Point2f>(0, i);
+  circle(image_host, pt, 3, Scalar(b, g, r), 2, 8, 0);
+}
+imshow("corner detect result", image_host);
+waitKey(0);
+```
+
+## 视频分析
+## 背景分析
+```cpp
+void background_demo() {
+	VideoCapture cap;
+	cap.open("D:/images/video/vtest.avi");
+	auto mog = cuda::createBackgroundSubtractorMOG2();
+	Mat frame;
+	GpuMat d_frame, d_fgmask, d_bgimg;
+	Mat fg_mask, bgimg, fgimg;
+	namedWindow("input", WINDOW_AUTOSIZE);
+	namedWindow("background", WINDOW_AUTOSIZE);
+	namedWindow("mask", WINDOW_AUTOSIZE);
+	Mat se = cv::getStructuringElement(MORPH_RECT, Size(5, 5));
+	while (true) {
+		int64 start = getTickCount();
+		bool ret = cap.read(frame);
+		if (!ret) break;
+		// 背景分析
+		d_frame.upload(frame);
+		mog->apply(d_frame, d_fgmask);
+		mog->getBackgroundImage(d_bgimg);
+		// 形态学操作
+		auto morph_filter = cuda::createMorphologyFilter(MORPH_OPEN, d_fgmask.type(), se);
+		morph_filter->apply(d_fgmask, d_fgmask);
+		// download from GPU Mat
+		d_bgimg.download(bgimg);
+		d_fgmask.download(fg_mask);
+		// 计算FPS
+		double fps = getTickFrequency() / (getTickCount() - start);
+		putText(frame, format("FPS: %.2f", fps), Point(50, 50), FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 255), 2, 8);
+
+		imshow("input", frame);
+		imshow("background", bgimg);
+		imshow("mask", fg_mask);
+		char c = waitKey(1);
+		if (c == 27) {
+			break;
+		}
+	}
+	waitKey(0);
+	return;
+}
+```
+
+### 光流分析
+```cpp
+void optical_flow_demo() {
+	VideoCapture cap;
+	cap.open("test.avi");
+	auto farn = cuda::FarnebackOpticalFlow::create();
+	Mat f, pf;
+	cap.read(pf);
+	GpuMat frame, gray, preFrame, preGray;
+	preFrame.upload(pf);
+	cuda::cvtColor(preFrame, preGray, COLOR_BGR2GRAY);
+	Mat hsv = Mat::zeros(preFrame.size(), preFrame.type());
+	GpuMat flow;
+	vector<Mat> mv;
+	split(hsv, mv);
+	GpuMat gMat, gAng;
+	Mat mag = Mat::zeros(hsv.size(), CV_32FC1);
+	Mat ang = Mat::zeros(hsv.size(), CV_32FC1);
+	gMat.upload(mag);
+	gAng.upload(ang);
+	namedWindow("input", WINDOW_AUTOSIZE);
+	namedWindow("optical flow demo", WINDOW_AUTOSIZE);
+	Mat se = cv::getStructuringElement(MORPH_RECT, Size(5, 5));
+	while (true) {
+		int64 start = getTickCount();
+		bool ret = cap.read(f);
+		if (!ret) break;
+		// 光流分析
+		frame.upload(f);
+		cuda::cvtColor(frame, gray, COLOR_BGR2GRAY);
+		farn->calc(preGray, gray, flow);
+		// 坐标转换
+		vector<GpuMat> mm;
+		cuda::split(flow, mm);
+		cuda::cartToPolar(mm[0], mm[1], gMat, gAng);
+		cuda::normalize(gMat, gMat, 0, 255, NORM_MINMAX, CV_32FC1);
+		gMat.download(mag);
+		gAng.download(ang);
+		// 显示
+		ang = ang * 180 / CV_PI / 2.0;
+		convertScaleAbs(mag, mag);
+		convertScaleAbs(ang, ang);
+		mv[0] = ang;
+		mv[1] = Scalar(255);
+		mv[2] = mag;
+		merge(mv, hsv);
+		Mat bgr;
+		cv::cvtColor(hsv, bgr, COLOR_HSV2BGR);
+		// 计算FPS
+		double fps = getTickFrequency() / (getTickCount() - start);
+		putText(f, format("FPS: %.2f", fps), Point(50, 50), FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 255), 2, 8);
+		gray.copyTo(preGray);
+		imshow("input", f);
+		imshow("optical flow demo", bgr);
+		char c = waitKey(1);
+		if (c == 27) {
+			break;
+		}
+	}
+	waitKey(0);
+	return;
+}
+```
+
+## 特征检测
+### ORB
+```cpp
+// cpu data
+Mat h_object_image = imread("D:/images/box.png", 0); // with a leather target image
+Mat h_scene_image = imread("D:/images/box_in_scene.png", 0); // scene image,
+// gpu data
+cuda::GpuMat d_object_image;
+cuda::GpuMat d_scene_image;
+vector< KeyPoint > h_keypoints_scene, h_keypoints_object; // CPU key points
+cuda::GpuMat d_descriptors_scene, d_descriptors_object;   // GPU descriptor
+// Image CPU uploaded to GPU
+d_object_image.upload(h_object_image);
+d_scene_image.upload(h_scene_image);
+// 对象检测
+auto orb = cuda::ORB::create();
+// Detect feature points and extract corresponding descriptors
+orb->detectAndCompute(d_object_image, cuda::GpuMat(), h_keypoints_object, d_descriptors_object);
+orb->detectAndCompute(d_scene_image, cuda::GpuMat(), h_keypoints_scene, d_descriptors_scene);
+// Brute Force Violence Matcher
+Ptr< cuda::DescriptorMatcher > matcher = cuda::DescriptorMatcher::createBFMatcher(NORM_HAMMING);
+vector< vector< DMatch> > d_matches;
+matcher->knnMatch(d_descriptors_object, d_descriptors_scene, d_matches, 2);
+std::cout << "match size:" << d_matches.size() << endl;
+std::vector< DMatch > good_matches;
+for (int k = 0; k < std::min(h_keypoints_object.size() - 1, d_matches.size()); k++){
+  if ((d_matches[k][0].distance < 0.9*(d_matches[k][1].distance)) &&
+    ((int)d_matches[k].size() <= 2 && (int)d_matches[k].size()>0)){
+    good_matches.push_back(d_matches[k][0]);
+  }
+}
+std::cout << "size:" << good_matches.size() << endl;
+// 绘制匹配点对
+Mat h_image_result;
+drawMatches(h_object_image, h_keypoints_object, h_scene_image, h_keypoints_scene,
+  good_matches, h_image_result, Scalar::all(-1), Scalar::all(-1),
+  vector<char>(), DrawMatchesFlags::DEFAULT);
+// Find the image pixel 2d coordinates corresponding to the matching point pair
+std::vector<Point2f> object;
+std::vector<Point2f> scene;
+for (int i = 0; i < good_matches.size(); i++){
+  object.push_back(h_keypoints_object[good_matches[i].queryIdx].pt);
+  scene.push_back(h_keypoints_scene[good_matches[i].trainIdx].pt);
+}
+// 计算单应性矩阵
+Mat Homo = findHomography(object, scene, RANSAC);
+std::vector<Point2f> corners(4); // four corners of the image
+std::vector<Point2f> scene_corners(4);
+// 透视变换
+corners[0] = Point(0, 0);
+corners[1] = Point(h_object_image.cols, 0);
+corners[2] = Point(h_object_image.cols, h_object_image.rows);
+corners[3] = Point(0, h_object_image.rows);
+perspectiveTransform(corners, scene_corners, Homo);
+// 绘制对象
+line(h_image_result, scene_corners[0] + Point2f(h_object_image.cols, 0), scene_corners[1] + Point2f(h_object_image.cols, 0), Scalar(255, 0, 0), 4);
+line(h_image_result, scene_corners[1] + Point2f(h_object_image.cols, 0), scene_corners[2] + Point2f(h_object_image.cols, 0), Scalar(255, 0, 0), 4);
+line(h_image_result, scene_corners[2] + Point2f(h_object_image.cols, 0), scene_corners[3] + Point2f(h_object_image.cols, 0), Scalar(255, 0, 0), 4);
+line(h_image_result, scene_corners[3] + Point2f(h_object_image.cols, 0), scene_corners[0] + Point2f(h_object_image.cols, 0), Scalar(255, 0, 0), 4);
+imshow("Good Matches & Object detection", h_image_result);
+waitKey(0);
+```
+
+## 对象检测
+### HOG检测
+```cpp
+VideoCapture cap;
+cap.open("test.avi");
+Mat f;
+GpuMat frame, gray;
+namedWindow("input", WINDOW_AUTOSIZE);
+namedWindow("People Detector Demo", WINDOW_AUTOSIZE);
+// 创建检测器
+auto hog = cuda::HOG::create();
+hog->setSVMDetector(hog->getDefaultPeopleDetector());
+vector<Rect> objects;
+while (true) {
+  int64 start = getTickCount();
+  bool ret = cap.read(f);
+  if (!ret) break;
+  imshow("input", f);
+  // HOG detector
+  frame.upload(f);
+  cuda::cvtColor(frame, gray, COLOR_BGR2GRAY);
+  hog->detectMultiScale(gray, objects);
+  // 绘制检测
+  for (int i = 0; i < objects.size(); i++) {
+    rectangle(f, objects[i], Scalar(0, 0, 255), 2, 8, 0);
+  }
+  // 计算FPS
+  double fps = getTickFrequency() / (getTickCount() - start);
+  putText(f, format("FPS: %.2f", fps), Point(50, 50), FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 255), 2, 8);
+  imshow("People Detector Demo", f);
+  char c = cv::waitKey(1);
+  if (c == 27) {
+    break;
+  }
+}
+cv::waitKey(0);
+```
+
+
+## 代码
+### 颜色跟踪
+```cpp
+VideoCapture cap;
+cap.open("video.mp4");
+Mat frame_host, binary;
+GpuMat frame, hsv, mask;
+vector<GpuMat> mv;
+vector<GpuMat> thres(4);
+while (true) {
+  int64 start = getTickCount();
+  bool ret = cap.read(frame_host);
+  if (!ret) break;
+  imshow("frame", frame_host);
+  frame.upload(frame_host);
+  cuda::cvtColor(frame, hsv, COLOR_BGR2HSV);
+  cuda::split(hsv, mv);
+  // replace inRange
+  cuda::threshold(mv[0], thres[0], 35, 255, THRESH_BINARY);
+  cuda::threshold(mv[0], thres[3], 77, 255, THRESH_BINARY);
+  cuda::threshold(mv[1], thres[1], 43, 255, THRESH_BINARY);
+  cuda::threshold(mv[2], thres[2], 46, 255, THRESH_BINARY);
+  cuda::bitwise_xor(thres[0], thres[3], thres[0]);
+  cuda::bitwise_and(thres[1], thres[0], mask);
+  cuda::bitwise_and(mask, thres[2], mask);
+  cuda::threshold(mask, mask, 66, 255, THRESH_BINARY);
+  Mat se = cv::getStructuringElement(MORPH_RECT, Size(7, 7));
+  auto morph_filter = cuda::createMorphologyFilter(MORPH_OPEN, mask.type(), se);
+  morph_filter->apply(mask, mask);
+  mask.download(binary);
+  imshow("mask", binary);
+  // 连通组件分析
+  Mat labels = Mat::zeros(binary.size(), CV_32S);
+  Mat stats, centroids;
+  int num_labels = connectedComponentsWithStats(binary, labels, stats, centroids, 8, 4);
+  for (int i = 1; i < num_labels; i++) {
+    int cx = centroids.at<double>(i, 0);
+    int cy = centroids.at<double>(i, 1);
+    int x = stats.at<int>(i, CC_STAT_LEFT);
+    int y = stats.at<int>(i, CC_STAT_TOP);
+    int width = stats.at<int>(i, CC_STAT_WIDTH);
+    int height = stats.at<int>(i, CC_STAT_HEIGHT);
+    if (width < 50 || height < 50) {
+      continue;
+    }
+    circle(frame_host, Point(cx, cy), 2, Scalar(255, 0, 0), 2, 8, 0);
+    Rect rect(x, y, width, height);
+    rectangle(frame_host, rect, Scalar(0, 0, 255), 2, 8, 0);
+  }
+  double fps = getTickFrequency() / (getTickCount() - start);
+  putText(frame_host, format("FPS: %.2f", fps), Point(50, 50), FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 255), 2, 8);
+  imshow("color object tracking", frame_host);
+  if (fps > 80) {
+    break;
+  }
+  char c = waitKey(1);
+  if (c == 27) {
+    break;
+  }
+}
 ```
 
 
