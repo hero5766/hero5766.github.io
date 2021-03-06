@@ -1944,6 +1944,7 @@ while(true){
   imshow("meanshift",frame);
 }
 ```
+
 # opencv-cuda
 ## 常用函数
 
@@ -2399,6 +2400,7 @@ while (true) {
 `ret,frame=cap.read()`|ret读取帧是否成功，frame当前帧，返回为空则说明读取结束
 `cv2.cvtColor(img,cv2.COLOR_BGR2RGB)`|色彩空间转换
 `cv2.imshow(title,img);cv2.waitKey(0);cv2.destroyAllWindows();`|显示图像
+`k = cv2.waitKey(5) & 0xFF`|键盘输入
 `img_roi=img[:200,:200]`|兴趣域
 `b,g,r=cv2.split(img)`|图像通道划分
 `img=cv2.merge(b,g,r)`|通道组合
@@ -2419,6 +2421,10 @@ while (true) {
 `box=cv2.boxFilter(img,-1,(3,3),normalize=True`|方框滤波，不做归一化会越界
 `gussian=cv2.GussianBlur(img,(3,3),1)`|高斯滤波
 `median=cv2.medianBlur(img,3)`|中值滤波
+`cv2.filter2D()`|2D滤波器
+`bilateralFilter ()`|双边滤波
+`xmingproc.jointBilateralFilter()`|联合双边滤波
+`ximgproc.guidedFilter ()`|导向滤波
 
 
 
@@ -2441,6 +2447,11 @@ while (true) {
 `dst=cv2.Sobel(src,ddepth,dx,dy,ksize)`|Sobel算子,CV_64F有负数时图像被截断，需要取绝对值`dst_x=cv2.Sobel(img,cv2.CV_64F,1,0,ksize=3);dst_x=cv2.convertScaleAbs(dst_x);dst=cv2.addWeighted(dst_x,0.5,dst_y,0.5,0)`，xy分开计算效果更好
 `dst=cv2.Scharr(src,ddepth,dx,dy,ksize)`|Scharr算子
 `dst=cv2.Laplacian(src,ddepth,ksize)`|laplacian算子
+`laplacian = cv2.Laplacian(frame, cv2.CV_64F)`|边缘检测算子-拉普拉斯
+`sobelx = cv2.Sobel(frame,cv2.CV_64F, 1, 0, ksize=5)`|边缘检测算子-索贝尔（X）
+`sobely = cv2.Sobel(frame,cv2.CV_64F, 0, 1, ksize=5)`|边缘检测算子-索贝尔（Y）
+`edges = cv2.Canny(frame, 100, 200)`|目标检测-canny
+
 
 ```py
 #ksize=-1相当于用3*3的
@@ -3184,6 +3195,39 @@ if __name__ == '__main__':
 
 
 ## 代码
+### 示例
+- [连接](https://blog.csdn.net/weixin_36139471/article/details/112369389)
+- [连接](https://blog.csdn.net/weixin_34550555/article/details/112369374)
+
+### 多线程开启摄像头
+```py
+import cv2
+import threading
+import queue
+def multistream(stream, q):
+    ret, frame = stream.read()
+    q.put(frame)
+if __name__ == "__main__":
+   camlink1 = "rtsp://......link1"
+   camlink2 = "rtsp://......link2"
+   stream1 = cv2.VideoCapture(camlink1)
+   stream2 = cv2.VideoCapture(camlink2)
+   print("stream is opened")
+   while True:
+      q = queue.Queue()
+      cam1 = threading.Thread(target=multistream, args=(stream1, q))
+      cam2 = threading.Thread(target=multistream, args=(stream2, q))
+      cam1.start()
+      cam2.start()
+      cam1.join()
+      cam2.join()
+      while not q.empty():
+          cv2.imshow("video", q.get())
+      k = cv2.waitKey(1) & 0xFF
+      if k == 27:
+        break
+```
+
 ### 人脸检测
 - [landmark下载地址](http://dlib.net/files)
 ```py
