@@ -199,7 +199,7 @@ int *p(new int[5]{1,2,3,4,5}); // c++写法，分配内存并初始化
 - `c++`使用`nullptr`可以自动识别对应的类型
 
 
-## new
+## new/delete
 - 堆、栈、静态区
 
 存储区|说明
@@ -228,6 +228,37 @@ int main(){
 }
 ```
 
+- 重载:`new,new[],delete,delete[]`
+- new执行顺序：`局部new -> 全局new -> malloc -> 构造函数`
+- delete执行顺序：`析构函数 -> 局部delete -> 全局delete -> free`
+
+```cpp
+//局部重载
+class myclass{
+public:
+  myclass{};
+  ~myclass{};
+  static void * operator new(size_t size){
+    myclass *p = ::new myclass; //引用全局的new
+    return p;
+  }
+  static void  operator delete(void *p){
+    ::delete p;
+  }
+}
+
+//全局重载
+void * operator new(size_t size){
+  void*p=malloc(size);
+  return p;
+}
+void * operator new[](size_t size){
+  return operator new(size);
+}
+void  operator delete(void *p){
+  free(p);
+}
+```
 
 
 
@@ -393,9 +424,15 @@ float volume(float length, float weight = 4,float high = 5){
 ## 引用(Reference)
 - 变量名，本身是一段内存的引用,即别名(alias)。此处引入的引用，是为己有变量起一个别名。
 - 引用是一种声明关系，声明时必须初始化，引用不开辟空间。
+- 引用使用指针进行管理
 ```cpp
 int a;
 int &b = a;  //b是a的引用
+cout<<sizeof(b)<<endl; //等同于sizeof(int)
+struct Mystruct{
+  double & c;
+}
+cout<<sizeof(Mystruct)<<endl;//指针大小
 ```
 
 ### 规则
@@ -487,6 +524,14 @@ cout<<ref<<endl;
   - 使用 const 可以避免无意修改数据的编程错误。
   - 使用 const 可以处理 const 和非 const 实参。否则将只能接受非 const 数据。
   - 使用 const 引用，可使函数能够正确的生成并使用临时变量（如果实参与引用参数不匹配，就会生成临时变量）
+
+
+### 左值/右值引用
+```cpp
+int a(4);
+int &ra(a);
+int && rra(move(a)); //右值，有内存实体就直接引用，没有则开辟内存
+```
 
 ## 函数指针
 ### 函数指针数组
@@ -908,6 +953,26 @@ int main(){
         cout<<infos2[i].id<<" "<<infos2[i].num<<endl;
     }
     return 0;
+}
+```
+
+## 多元数组
+- 存取不同数据类型
+```cpp
+#include<iostream>
+#include<tuple>
+using namespace std;
+int main(){
+  char ch='x';
+  short sh = 12;
+  double db = 123;
+  char *p = "asd";
+  tuple<char,short,double,char*>mytuple(ch,sh,db,p);
+  auto v=get<0>(mytuple);
+  cout<<v<<endl;
+  //tuple不能使用auto
+  // for(auto i:mytuple){}
+  return 0;
 }
 ```
 
@@ -1840,6 +1905,19 @@ private:
 };
 ```
 
+## 智能指针
+### auto_ptr：自动内存释放
+
+```cpp
+auto_ptr<double>p(1);
+```
+
+### unique_ptr
+
+```cpp
+unique_ptr<double>p(1);
+```
+
 
 ## 继承与派生(Inherit&&Derive)
 - 继承和派生实际描述的是一件事，只不过被描述对象不同，父类派生出子类，子类继承于父类。基类派生出派生类，派生类继承于基类。
@@ -2412,6 +2490,53 @@ b->f();
 
 
 # `C++`高级
+## 数据结构
+### 双链表
+
+```cpp
+#include<list>
+#include<iostream>
+using namespace std;
+int main(){
+  list<int>mylist{1,2,3,4,5};
+  mylist.push_back(10);
+  mylist.push_front(10);
+  mylist.assign(3,5);//重新初始化链表，3个5
+  for(auto i:mylist){
+    cout<<i<<endl;
+  }
+  // 迭代器
+  for(auto ib=mylist.begin();ib!=mylist.end();ib++){
+    cout<<&ib<<endl;
+  }
+  for(auto rb=mylist.rbegin();rb!=mylist.rend();rb++){
+    cout<<&rb<<endl;
+    if(*rb==3){
+      mylist.insert(rb,123);//插入
+    }
+    if(*rb==3){
+      mylist.erase(rb);//删除
+      break;
+    }
+  }
+  mylist.pop_back();//删除尾部
+  mylist.pop_front();//删除头部
+  mylist.sort(); //排序
+  cout<<"第一个"<<mylist.front()<<endl;
+  cout<<"最后一个"<<mylist.back()<<endl;
+  cout<<"个数"<<mylist.size()<<endl;
+  mylist.clear();//链表清空
+
+  list<int>mylist1{1,2,3,4,5};
+  list<int>mylist2{1,2,3,4,5};
+  mylist1.sort();
+  mylist2.sort();
+  // mylist1.merge(mylist2);//归并排序，保证两个链表有序
+  mylist1.swap(mylist2);
+  return 0;
+}
+```
+
 ## 模板(Templates)
 - 泛型(Generic Programming)即是指具有在多种数据类型上皆可操作的含意。泛型编程的代表作品 STL 是一种高效、泛型、可交互操作的软件组件。
 - 泛型编程最初诞生于 `C++`中，目的是为了实现 `C++`的 STL（标准模板库）。其语言支持机制就是模板（Templates）。模板的精神其实很简单：参数化类型。换句话说，把一个原本特定于某个类型的算法或类当中的类型信息抽掉，抽出来做成模板参数 T。
