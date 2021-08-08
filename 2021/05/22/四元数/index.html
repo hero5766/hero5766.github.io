@@ -1,0 +1,139 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="四元素"><meta name="keywords" content="algorithm"><meta name="author" content="hero576"><meta name="copyright" content="hero576"><title>四元素 | void land space</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.8.2"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.8.2"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="dns-prefetch" href="https://hm.baidu.com"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?5ff8fca367285c16c6dd5c16ca2ccc1b";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();</script><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  hexoVersion: '5.0.2'
+} </script><meta name="generator" content="Hexo 5.0.2"><link rel="alternate" href="/atom.xml" title="void land space" type="application/atom+xml">
+</head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E5%85%83%E7%B4%A0"><span class="toc-number">1.</span> <span class="toc-text"> 四元素[1][2][3][4]</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BC%95%E5%85%A5%E5%9B%9B%E5%85%83%E7%B4%A0"><span class="toc-number">2.</span> <span class="toc-text"> 引入四元素</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%99%9A%E9%83%A8%E7%9A%84%E8%BF%90%E7%AE%97"><span class="toc-number">3.</span> <span class="toc-text"> 虚部的运算</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BA%AF%E8%99%9A%E5%9B%9B%E5%85%83%E6%95%B0"><span class="toc-number">4.</span> <span class="toc-text"> 纯虚四元数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%A7%E8%B4%A8"><span class="toc-number">5.</span> <span class="toc-text"> 性质</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8D%95%E4%BD%8D%E5%9B%9B%E5%85%83%E6%95%B0"><span class="toc-number">6.</span> <span class="toc-text"> 单位四元数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8D%95%E4%BD%8D%E7%BA%AF%E8%99%9A%E5%9B%9B%E5%85%83%E6%95%B0"><span class="toc-number">7.</span> <span class="toc-text"> 单位纯虚四元数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8C%87%E6%95%B0%E6%98%A0%E5%B0%84"><span class="toc-number">8.</span> <span class="toc-text"> 指数映射</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AF%B9%E6%95%B0%E6%98%A0%E5%B0%84"><span class="toc-number">9.</span> <span class="toc-text"> 对数映射</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%90%83%E9%9D%A2%E6%8F%92%E5%80%BC"><span class="toc-number">10.</span> <span class="toc-text"> 球面插值</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">11.</span> <span class="toc-text"> </span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/images/haimianbaobao.jpg"></div><div class="author-info__name text-center">hero576</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">80</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">16</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">分类</span><span class="pull-right">8</span></a></div></div></div><div id="content-outer"><div class="plain" id="top-container"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">void land space</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">主页</a><a class="site-page" href="/archives">文章</a><a class="site-page" href="/tags">标签</a><a class="site-page" href="/categories">分类</a><a class="site-page" href="/gallery">相册</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> 搜索</span></a></span></div></div><div class="layout" id="content-inner"><article id="post"><div class="plain" id="post-title">四元素</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2021-05-22</time><span class="post-meta__separator">|</span><i class="fa fa-inbox" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/math/"> math</a></div><div class="article-container" id="post-content"><h1 id="四元素"><a class="markdownIt-Anchor" href="#四元素"></a> 四元素<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup><sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup><sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup><sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup></h1>
+<h1 id="引入四元素"><a class="markdownIt-Anchor" href="#引入四元素"></a> 引入四元素</h1>
+<ul>
+<li>假设有两个复数：<code>$\begin&#123;cases&#125;A=a+bi\\C=c+di\end&#123;cases&#125;$</code>，在引入一个虚部j，定义：<code>$Q=A+Cj$</code>，并定义：<code>$k=ij$</code>，可得：<code>$Q=a+bi+cj+dk\in\mathbb&#123;H&#125;$</code></li>
+<li>另一种表示，复数<code>$z=a_bi$</code>表示复平面内一个点，坐标为<code>$(a,b)$</code>，四元数也可以表示为<code>$Q=a+bi+cj+dk\Longleftrightarrow q_w+q_v$</code>
+<ul>
+<li>其中，<code>$q_w$</code>为实部，<code>$q_v=q_xi+q_yj+q_zk=(q_x,q_y,q_z)$</code>为虚部</li>
+</ul>
+</li>
+<li>将四元数Q记作四维空间向量q，则可以写为：<code>$q=\begin&#123;bmatrix&#125;q_w\\q_v\end&#123;bmatrix&#125;=\begin&#123;bmatrix&#125;q_w\\q_x\\q_y\\q_z\end&#123;bmatrix&#125;$</code></li>
+</ul>
+<h1 id="虚部的运算"><a class="markdownIt-Anchor" href="#虚部的运算"></a> 虚部的运算</h1>
+<ul>
+<li><code>$i^2=j^2=k^2=ijk=-1\\ij=-ji=k\\jk=-kj=i\\ki=-ik=j$</code></li>
+<li>实数，虚数，复数本质都是四元数：<code>$\\a\in\mathbb&#123;H&#125;\\bi\in\mathbb&#123;I&#125;\in\mathbb&#123;H&#125;\\a+bi\in\mathbb&#123;Z&#125;\in\mathbb&#123;H&#125;$</code></li>
+</ul>
+<h1 id="纯虚四元数"><a class="markdownIt-Anchor" href="#纯虚四元数"></a> 纯虚四元数</h1>
+<ul>
+<li><code>$Q=bi+cj+dk\in\mathbb&#123;H&#125;_p\subset\mathbb&#123;H&#125;$</code></li>
+</ul>
+<h1 id="性质"><a class="markdownIt-Anchor" href="#性质"></a> 性质</h1>
+<table>
+<thead>
+<tr>
+<th>运算</th>
+<th>公式</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>加法</td>
+<td><code>$p\pm q=\begin&#123;bmatrix&#125;p_w\\p_v\end&#123;bmatrix&#125;\pm\begin&#123;bmatrix&#125;q_w\\q_v\end&#123;bmatrix&#125;=\begin&#123;bmatrix&#125;p_w\pm q_w\\p_v\pm q_v\end&#123;bmatrix&#125;$</code></td>
+<td>交换律:<code>$p+q=q+p$</code><br>结合律：<code>$p+(q+r)=(p+q)+r$</code></td>
+</tr>
+<tr>
+<td>乘积</td>
+<td><code>$p\otimes q=(q_w+q_xi+q_yj+q_zk)\otimes(p_w+p_xi+p_yj+p_zk)\\=\begin&#123;bmatrix&#125;p_wq_w-p_xq_x-p_yq_y-p_zq_z\\p_wq_x+p_xq_w+p_yq_z-p_zq_y\\p_wq_y-p_xq_z+p_yq_w+p_zq_x\\p_wq_z+p_xq_y-p_yq_x+p_zq_w\\\end&#123;bmatrix&#125;\\=\begin&#123;bmatrix&#125;p_wq_w-p_v^Tq_v\\p_wq_v+q_wp_v+p_v\times q_v\end&#123;bmatrix&#125;\\=\begin&#123;bmatrix&#125;p_w&amp;-p_x&amp;-p_y&amp;-p_z\\p_x&amp;p_w&amp;-p_z&amp;p_y\\p_y&amp;p_z&amp;p_w&amp;-p_x\\p_z&amp;-p_y&amp;p_x&amp;p_w\\\end&#123;bmatrix&#125;\begin&#123;bmatrix&#125;q_w\\q_x\\q_y\\q_z\end&#123;bmatrix&#125;\\=p_Lq\\=\begin&#123;bmatrix&#125;q_w&amp;-q_x&amp;-q_y&amp;-q_z\\q_x&amp;q_w&amp;q_z&amp;-q_y\\q_y&amp;-q_z&amp;q_w&amp;q_x\\q_z&amp;q_y&amp;-q_x&amp;q_w\\\end&#123;bmatrix&#125;\begin&#123;bmatrix&#125;p_w\\p_x\\p_y\\p_z\end&#123;bmatrix&#125;\\=q_Rp$</code></td>
+<td>不满足交换律<code>$q\otimes p=\neq p\otimes q$</code><br>结合律：<code>$(q\otimes p)\otimes r=q\otimes (p\otimes r)$</code><br>分配率：<code>$q\otimes (p+r)=q\otimes p+q\otimes r$</code><br><code>$p_Rq_L=q_Lp_R$</code></td>
+</tr>
+<tr>
+<td>共轭</td>
+<td><code>$q^*=q_w-q_v=\begin&#123;bmatrix&#125;q_w\\-q_v\end&#123;bmatrix&#125;\\q^*\otimes q=q\otimes q^*=\begin&#123;bmatrix&#125;q_w^2+q_x^2+q_y^2+q_z^2\\0_v\end&#123;bmatrix&#125;\\(p\otimes q)^*=q^*\otimes p^*$</code></td>
+<td></td>
+</tr>
+<tr>
+<td>模</td>
+<td><code>$\|q\|=\sqrt&#123;q\otimes q^*&#125;=\sqrt&#123;q^*\otimes q&#125;=\sqrt&#123;q_w^2+q_x^2+q_y^2+q_z^2&#125;$</code></td>
+<td></td>
+</tr>
+<tr>
+<td>逆</td>
+<td><code>$q^&#123;-1&#125;\otimes q=1\\q^&#123;-1&#125;=\frac&#123;q^*&#125;&#123;\|q\|^2&#125;$</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h1 id="单位四元数"><a class="markdownIt-Anchor" href="#单位四元数"></a> 单位四元数</h1>
+<ul>
+<li>模长为1的四元数<code>$\|q\|=1$</code>，这样限制其刚好三个自由度，用于三维空间的旋转。任意单位四元素总可以表达成下面的形式：<code>$\\q=\begin&#123;bmatrix&#125;\cos&#123;\theta&#125;\\u\sin&#123;\theta&#125;\end&#123;bmatrix&#125;$</code>
+<ul>
+<li>其中：<code>$u=u_xi+u_yj+u_zk$</code>是单位矢量，<code>$\theta$</code>是标量</li>
+<li>由于是单位四元数：<code>$q^&#123;-1&#125;=\frac&#123;q^*&#125;&#123;\|q\|^2&#125;=q^&#123;*&#125;$</code></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>三维空间的旋转的表达：</p>
+<ul>
+<li>欧拉角：Yaw, Pitch, Roll，共三个自由度；</li>
+<li>旋转矩阵：虽然这是个3维方阵，貌似有9个自由度，但它本身也受到正交性等限制。它也只有三个自由度；</li>
+<li>旋转向量：旋转方向向量只有两个自由度，外加一个旋转角度，所以，它也肯定是三个自由度；</li>
+<li>单位四元数：当一个四元数被限制为单位四元数时，它也只剩下了三个自由度，我们可以用它来表达旋转。</li>
+</ul>
+</blockquote>
+<h1 id="单位纯虚四元数"><a class="markdownIt-Anchor" href="#单位纯虚四元数"></a> 单位纯虚四元数</h1>
+<ul>
+<li>四元数<code>$q=[0,u_x,u_y,u_z]^T\in\mathbb&#123;H&#125;_p$</code>，<code>$\|q\|=1$</code>，可得：<code>$q\otimes q=-1$</code></li>
+</ul>
+<h1 id="指数映射"><a class="markdownIt-Anchor" href="#指数映射"></a> 指数映射</h1>
+<h1 id="对数映射"><a class="markdownIt-Anchor" href="#对数映射"></a> 对数映射</h1>
+<h1 id="球面插值"><a class="markdownIt-Anchor" href="#球面插值"></a> 球面插值</h1>
+<h1 id=""><a class="markdownIt-Anchor" href="#"></a> </h1>
+<hr class="footnotes-sep" />
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/tchenai/p/9767510.html">四元数基础（一） - shared_ptr - 博客园 (cnblogs.com)</a> <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/tchenai/p/9775269.html">四元数基础（二） - shared_ptr - 博客园 (cnblogs.com)</a> <a href="#fnref2" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn3" class="footnote-item"><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/u011760195/article/details/85382640">点的旋转（4）：四元数的乘法_ayww的博客-CSDN博客_四元数的乘法</a> <a href="#fnref3" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn4" class="footnote-item"><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/leixinyue/p/13469155.html">四元数和旋转(Quaternion &amp; rotation)</a> <a href="#fnref4" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css"></div></article><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/algorithm/">algorithm</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2021/07/05/cvxpy/"><i class="fa fa-chevron-left">  </i><span>cvxpy</span></a></div><div class="next-post pull-right"><a href="/2021/05/20/MPC/"><span>MPC原理</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="vcomment"></div><script src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = 'false' == 'true';
+var verify = 'false' == 'true';
+var record_ip = '' == 'true';
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  recordIP:record_ip,
+  appId:'AdfkiqY89QUSUWbDY9xJuCh0-gzGzoHsz',
+  appKey:'2cEvHcqEWsyoKwy4AUL3kPGh',
+  placeholder:'劈个叉吧',
+  avatar:'mm',
+  guest_info:guest_info,
+  pageSize:'100',
+  lang: 'zh-cn'
+})</script></div></div><footer><div class="layout" id="footer"><div class="copyright">&copy;2020 - 2021 By hero576</div><div class="framework-info"><span>驱动 - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.8.2"></script><script src="/js/fancybox.js?version=1.8.2"></script><script src="/js/sidebar.js?version=1.8.2"></script><script src="/js/copy.js?version=1.8.2"></script><script src="/js/fireworks.js?version=1.8.2"></script><script src="/js/transition.js?version=1.8.2"></script><script src="/js/scroll.js?version=1.8.2"></script><script src="/js/head.js?version=1.8.2"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css"><script src="/js/katex.js"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>
