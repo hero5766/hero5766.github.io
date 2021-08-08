@@ -442,3 +442,51 @@ print (cnt)
 
 
 # 其他
+## tqdm[^1]
+[^1]: [连接](https://langbin.blog.csdn.net/article/details/54798823)
+- 进度条：`pip install tqdm`
+
+```py
+bar = tqdm(["a", "b", "c", "d"])
+for char in pbar:
+    pbar.set_description("Processing %s" % char)
+```
+
+- 手动控制更新
+```py
+# 方法一
+with tqdm(total=100) as pbar:
+    for i in range(10):
+        pbar.update(10)
+# 方法二
+pbar = tqdm(total=100)
+for i in range(10):
+    pbar.update(10)
+pbar.close()        
+```
+
+- 在Shell的tqdm用法
+```bash
+$ time find . -name '*.py' -exec cat \{} \; | wc -l
+857365
+ 
+real    0m3.458s
+user    0m0.274s
+sys     0m3.325s
+ 
+$ time find . -name '*.py' -exec cat \{} \; | tqdm | wc -l
+857366it [00:03, 246471.31it/s]
+857365
+ 
+real    0m3.585s
+user    0m0.862s
+sys     0m3.358s
+
+$ find . -name '*.py' -exec cat \{} \; |
+    tqdm --unit loc --unit_scale --total 857366 >> /dev/null
+100%|███████████████████████████████████| 857K/857K [00:04<00:00, 246Kloc/s]
+```
+
+## websocket
+- [官方文档](https://websockets.readthedocs.io/en/stable/intro.html)
+

@@ -44,6 +44,8 @@ vcpkg install eigen3
 
 - [官方文档](http://eigen.tuxfamily.org/dox/modules.html)，网站访问需要vpn
 - [翻译注释的工程文件](https://github.com/qixianyu-buaa/EigenChineseDocument)
+- [Eigen库学习教程(全)_hongge_smile的博客](https://blog.csdn.net/hongge_smile/article/details/107296658)
+- [Eigen库QR分解 - 灰信网](https://www.freesion.com/article/62631167090/)
 
 
 ## 库与头文件

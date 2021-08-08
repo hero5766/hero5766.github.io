@@ -50,6 +50,18 @@ sudo make install
 类型|说明
 -|- -->
 
+## 资料
+[Pangolin官方地址](https://github.com/stevenlovegrove/Pangolin)
+[泡泡机器人](https://mp.weixin.qq.com/s?__biz=MzI5MTM1MTQwMw==&mid=2247485156&idx=1&sn=7109ee61d663d21832b94534b6863db4&chksm=ec10b8e0db6731f62490664d3ef02491e93371d99bda926b116dc216b1411789ed78aba2a166&mpshare=1&scene=1&srcid=0505TTqkFeTOzqAV63lggaE9&pass_ticket=b%2FXHS6vjWLb%2BKGKqEBCjh7chAnhbsnjE7MJpLEZNBJmpKfemcHXmJL%2BIZ5pRwYeD#rd)
+[github demo](https://github.com/stevenlovegrove/Pangolin/blob/master/examples/)
+[opengl相机位置方向](https://learnopengl-cn.readthedocs.io/zh/latest/01%20Getting%20started/09%20Camera/)
+[lookat函数](https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluLookAt.xml)
+[Pangolin安装问题](http://www.cnblogs.com/liufuqiang/p/5618335.html)
+[Pangolin的Example](https://github.com/stevenlovegrove/Pangolin/tree/master/examples)
+[Pangolin的使用](http://docs.ros.org/fuerte/api/pangolin_wrapper/html/namespacepangolin.html)
+[特性](http://www.stevenlovegrove.com/?id=44)
+
+
 
 ## 方法
 

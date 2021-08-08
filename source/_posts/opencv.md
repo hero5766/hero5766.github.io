@@ -122,6 +122,290 @@ cvtColor(src,lab,COLOR_BGR2Lab);
 
 ## 彩色图像的饱和度和亮度
 
+# Mat操作
+## 矩阵[^1]
+[^1]:[连接](https://blog.csdn.net/qq61394323/article/details/53318112)
+```cpp
+Mat I,img,I1,I2,dst,A,B;
+double k,alpha;
+Scalar s;
+```
+
+基本属性|-
+-|-
+cols |矩阵列数
+rows|矩阵行数
+channels|通道数
+type|数据类型
+total|矩阵总元素数
+data|指向矩阵数据块的指针
+
+多通道数据类型|-
+-|-
+`#define CV_8U   0`|
+`#define CV_8S   1`|
+`#define CV_16U  2`|
+`#define CV_16S  3`|
+`#define CV_32S  4`|
+`#define CV_32F  5`|
+`#define CV_64F  6`|
+`#define CV_USRTYPE1 7`|
+`#define CV_MAT_DEPTH_MASK       (CV_DEPTH_MAX - 1)`|
+`#define CV_MAT_DEPTH(flags)     ((flags) & CV_MAT_DEPTH_MASK)`|
+`#define CV_MAKETYPE(depth,cn) (CV_MAT_DEPTH(depth) + (((cn)-1) << CV_CN_SHIFT))`|
+`#define CV_MAKE_TYPE CV_MAKETYPE`|
+`#define CV_8UC1 CV_MAKETYPE(CV_8U,1)`|
+`#define CV_8UC2 CV_MAKETYPE(CV_8U,2)`|
+`#define CV_8UC3 CV_MAKETYPE(CV_8U,3)`|
+`#define CV_8UC4 CV_MAKETYPE(CV_8U,4)`|
+
+
+### 1.加法
+```cpp
+I=I1+I2;//等同add(I1,I2,I);
+add(I1,I2,dst,mask,dtype);
+scaleAdd(I1,scale,I2,dst);//dst=scale*I1+I2;
+```
+### 2.减法
+```cpp
+absdiff(I1,I2,I);//I=|I1-I2|;
+A-B;A-s;s-A;-A;
+subtract(I1,I2,dst);
+```
+### 3.乘法
+```cpp
+I=I.mul(I);//点乘,I.mul(I,3);-->I=3*I.^2
+Mat C=A.mul(5/B);//==divide(A,B,C,5);
+A*B;矩阵相乘
+I=alpha*I;
+Mat::cross(Mat);//三维向量(或矩阵)的叉乘,A.cross(B)
+double Mat::dot(Mat);//2个向量(或矩阵)的点乘的结果,A.dot(B)
+mul-------multiply
+pow(src,double p,dst);//如果p是整数dst(I)=src(I)^p;其他|src(I)|^p
+```
+
+### 4.除法
+```cpp
+divide(I1,I2,dst,scale,int dtype=-1);//dst=saturate_cast(I1*scale/I2);
+A/B;alpha/A;都是点除
+```
+### 5.转换
+```cpp
+I.convertTo(I1,CV_32F);//类型转换
+A.t();//转置
+flip(I,dst,int flipCode);//flipCode=0是上下翻转，>0时左右翻转,<0时一起来
+sqrt(I,dst);
+cvtColor(I,dst,int code,int dstCn=0);
+resize:对图像进行形变
+```
+--------------------------------------------------------------------------
+### 6.其他
+```cpp
+Scalar s=sum(I);各通道求和
+norm,countNonZero,trace,determinant,repeat都是返回Mat或者Scalar
+countNonZero:用来统计非零的向量个数.(rows*cols个)
+Scalar m=mean(I);//各通道求平均
+Mat RowClone=C.row(1).clone();//复制第2行
+addWeight(I1,alpha,I2,beta,gamma,dst,int dtype=-1);//dst=saturate(alpha*I1+beta*I2+gamma);dtype是dst的深度
+```
+----------------------------------------------------------------------------
+### 7.运算符
+```cpp
+log10()
+exp(I,dst);//dst=exp(I);计算每个数组元素的指数
+log(I,dst);//如果Iij!=0;则dstij=log(|Iij|)
+randu(I,Scalar::all(0),Scalar::all(255));
+Mat::t()转置
+Mat::inv(int method=DECOMP_LU)求逆。method=DECOMP_CHOLESKY(专门用于对称，速度是LU的2倍),DECOMP_SVD//A.inv();A.inv()*B;
+invert(I1,dst,int method=DECOMP_LU);//用法同上
+MatExpr abs(Mat)//求绝对值
+A cmpop B;A compop alpha;alpha cmpop A;这里cmpop表示>,>=,==,!=,<=,<等，结果是CV_8UC1的mask的0或255
+按位运算：A logicop B;A logicop s;s logicop A;~A;这里logicop代表&,|,^
+bitwise_not(I,dst,mask);//inverts所有的队列
+还有bitwise_and,bitwise_or,bitwise_xor,
+min(A,B);min(A,alpha);max(A,B);max(A,alpha);都返回MatExpr,返回的dst和A的类型一样
+double determinant(Mat);//行列式
+bool eigen(I1,dst,int lowindex=-1,int highindex=-1);//
+bool eigen(I1,dst,I,int...);//得到特征值向量dst和对应特征值的特征向量
+minMaxLoc(I1,&minVal,&maxVal,Point *minLoc=0,Point* MaxLoc=0,mask);
+//minLoc是2D时距原点最小的点(未考证)
+```
+------------------------------------------------------------------------------
+### 8.初始化
+```cpp
+Mat I(img,Rect(10,10,100,100));//用一块地方初始化。
+Mat I=img(Range:all(),Range(1,3));//所有行，1~3列
+Mat I=img.clone();//完全复制
+img.copyTo(I);//传递矩阵头
+Mat I(2,2,CV_8UC3,Scalar(0,0,255));//I=[0,0,255,0,0,255;0,0,255,0,0,255];
+Mat E=Mat::eye(4,4,CV_64F);//对角矩阵
+Mat O=Mat::ones(2,2,CV_32F);//全一矩阵
+Mat Z=Mat::zeros(3,3,CV_8UC1);//全零矩阵
+Mat C=(Mat_(2,2)<<0,-1,2,3);//如果是简单矩阵的初始化
+Mat::row(i);Mat::row(j);Mat::rowRange(start,end);Mat::colRange(start,end);都只是创建个头
+Mat::diag(int d);d=0是是主对角线，d=1是比主低的对角线,d=-1....
+static Mat Mat::diag(const Mat& matD)
+Mat::setTo(Scalar &s);以s初始化矩阵
+Mat::push_back(Mat);在原来的Mat的最后一行后再加几行
+Mat::pop_back(size_t nelems=1);//移出最下面几行
+```
+- 构造函数
+```cpp
+(1) Mat::Mat()
+(2) Mat::Mat(int rows, int cols, int type)
+(3) Mat::Mat(Size size, int type)
+(4) Mat::Mat(int rows, int cols, int type, const Scalar& s)
+(5) Mat::Mat(Size size, int type, const Scalar& s)
+(6) Mat::Mat(const Mat& m)
+(7) Mat::Mat(int rows, int cols, int type, void* data, size_t step = AUTO_STEP)
+(8) Mat::Mat(Size size, int type, void* data, size_t step = AUTO_STEP)
+(9) Mat::Mat(const Mat& m, const Range& rowRange, const Range& colRange)
+(10) Mat::Mat(const Mat& m, const Rect& roi)
+(11) Mat::Mat(const CvMat* m, bool copyData = false)
+(12) Mat::Mat(const IplImage* img, bool copyData = false)
+(13) template<typename T, int n>explicit Mat::Mat(const Vec<T, n>& vec, bool copyData = true)
+(14) template<typename T, int m, int n> explicit Mat::Mat(const Matx<T, m, n>& vec, bool copyData = true)
+(15) template explicit Mat::Mat(const vector& vec, bool copyData = false)
+(16) Mat::Mat(const MatExpr& expr)
+(17) Mat::Mat(int ndims, const int* sizes, int type)
+(18) Mat::Mat(int ndims, const int* sizes, int type, const Scalar& s)
+(19) Mat::Mat(int ndims, const int* sizes, int type, void* data, const size_t* steps = 0)
+```
+-------------------------------------------------------------------------------
+### 9.矩阵读取和修改
+- 操作方法[^2]
+[^2]:[连接](https://www.cnblogs.com/pingwen/p/12292693.html)
+  1. at定位符访问
+  2. 指针访问
+  3. 迭代器iterator访问
+
+
+(1)1个通道：
+```cpp
+for(int i=0;i
+for(int j=0;j
+I.at(i,j)=k;
+```
+(2)3个通道：
+```cpp
+Mat_ _I=I;//他没有4个通道寸，只有3个通道！
+for(int i=0;i
+for(int j=0;j
+{
+_I(i,j)[0]=b;
+_I(i,j)[1]=g;
+_I(i,j)[2]=r;
+}
+I=_I;
+//或者直接用I.at(i,j)[0]....
+float *s;
+for(i=0;i
+{s=proImg.ptr(i);
+for(j=0;j
+{a1=s[3*j+1]-m1;
+a2=s[3*j+2]-m2;}}
+```
+-------------------------------------------------------------------------
+(3)其他机制
+```cpp
+I.rows(0).setTo(Scalar(0));//把第一行清零
+saturate_cast(...);//可以确保内容为0~255的整数
+Mat::total();返回一共的元素数量
+size_t Mat::elemSize();返回元素的大小:CV_16SC3-->3*sizeof(short)-->6
+size_t Mat::elemSize1();返回元素一个通道的大小CV_16SC3-->sizeof(short)-->2
+int Mat::type()返回他的类型CV_16SC3之类
+int Mat::depth()返回深度:CV_16SC3-->CV_16S
+int Mat::channels()返回通道数
+size_t Mat:step1()返回一个被elemSize1()除以过的step
+Size Mat::size()返回Size(cols,rows);如果大于2维，则返回(-1,-1)，都是先宽再高的
+bool Mat::empty()如果没有元素返回1,即Mat::total()==0或者Mat::data==NULL
+uchar *Mat::ptr(int i=0)指向第i行
+Mat::at(int i)(int i,int j)(Point pt)(int i,int j,int k)
+RNG随机类:next,float RNG::uniform(float a,float b);..
+double RNG::gaussian(double sigma);
+RNG::fill(I,int distType,Mat low,Mat up);//用随机数填充
+randu(I,low,high);
+randn(I,Mat mean,Mat stddev);
+reduce(I,dst,int dim,int reduceOp,int dtype=-1);//可以统计每行或每列的最大、最小、平均值、和
+setIdentity(dst,Scalar &value=Scalar(1));//把对角线替换为value
+//效果等同：Mat A=Mat::eye(4,3,CV_32F)*5;
+```
+--------------------------------------------------------------
+### 10.较复杂运算
+```cpp
+gemm(I1,I2,alpha,I3,beta,dst,int flags=0);//I1至少是浮点型,I2同I1,flags用来转置
+//gemm(I1,I2,alpha,I3,beta,dst,GEMM_1_T,GEMM_3_T);-->dst=alpha*I1.t()*I2+beta*I3.t();可用此完全代替此函数
+mulTransposed(I,dst,bool aTa,Mat delta=noArray(),double scale=1,int rtype=-1);
+//I是1通道的,和gemm不同,他可用于任何类型。
+//如果aTa=flase时,dst=scale*(I-delta).t()*(I-delta);
+//如果是true,dst=scale*(I-delta)(I-delta).t();
+calcCovarMatrix(Mat,int,Mat,Mat,int,int=);calcCovarMatrix(Mat I,Mat covar,Mat mean,int flags,int=);
+cartToPolar//转到极坐标
+compare(I1,I2,dst,cmpop);cmpop=CMP_EQ,CMP_GT,CMP_GE,CMP_LT,CMP_LE,COM_NE
+completeSymm(M,bool lowerToUpper=false);当lowerToUpper=true时Mij=Mji(ij)
+变成可显示图像:convertScaleAbs(I,dst,alpha,beta);dst=saturate_cast(|alpha*I+beta|);
+dct(I,dst,int flags=0);//DCT变换，1维、2维的矩阵;flags=DCT_INVERSE,DCT_ROWS
+idct,dft,idft
+inRange(I1,I_low,I_up,dst);//dst是CV_8UC1,在2者之间就是255
+Mahalanobis(vec1,vec2,covar);
+merge(vector,Mat);//把多个Mat组合成一个和split相反
+double norm(...)：当src2木有时,norm可以计算出最长向量、向量距离和、向量距离和的算术平方根
+solveCubic解3次方程，solvePoly解n次方程
+排列：sort,sortIdx
+mixChannels();对某个通道进行各种传递
+```
+-----------------------------------------------------------------
+### 11.未懂的函数
+```cpp
+getConvertElem,extractImageCOI,LUT
+magnitude(x,y,dst);//I1,I2都是1维向量,dst=sqrt(x(I)^2+y(I)^2);
+meanStdDev,
+MulSpectrums(I1,I2,dst,flags);傅里叶
+normalize(I,dst,alpha,beta,int normType=NORM_L2,int rtype=-1,mask);//归一化
+PCA,SVD,solve,transform,transpose
+```
+## 其他数据结构
+### 点
+```cpp
+Point2f P(5,1);
+Point3f P3f(2,6,7);
+vector v;v.push_back((float)CV_PI);v.push_back(2);v.push_back(3.01f);//不断入
+vector vPoints(20);//一次定义20个
+```
+
+```cpp
+Point p1 = { 2,3 }; 
+Point p2 = Point2i(3, 4);
+```
+### 尺寸
+```cpp
+Size a = Size(5, 6); 
+cout <<"a.width=" << a.width << ":a.height=" << a.height;
+```
+### 矩形
+```cpp
+Rect rect = Rect(100, 50, 10, 20); // 参数:x、y、width、height 
+cout << rect.area() << endl;     //返回rect的面积 200
+cout << rect.size() << endl;     //返回rect的尺寸 [10 × 20]
+cout << rect.tl() << endl;       //返回rect的左上顶点的坐标 [100, 50]
+cout << rect.br() << endl;       //返回rect的右下顶点的坐标 [110, 70]
+cout << rect.width << endl;    //返回rect的宽度 10
+cout << rect.height << endl;   //返回rect的高度 20
+cout <<  rect.contains(Point(101, 51) ) << endl;  //返回布尔变量，判断是否包含Point点
+```
+ 
+ 
+## 常用方法
+```cpp
+Mat mask=src<0;这样很快建立一个mask了
+```
+ 
+ 
+## 以后可能用到的函数
+```cpp
+randShuffle,repeat
+```
+
 # 卷积和傅里叶变换
 ## 卷积
 ### 数学描述

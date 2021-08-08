@@ -20,6 +20,15 @@ cd Sophus
 git checkout a621ff
 ```
 
+## fmt报错[^1]
+[^1]: [连接](https://stackoverflow.com/questions/59348475/i-cant-use-fmt-library-headers-on-c)
+```bash
+sudo apt install libfmt-dev
+```
+
+```cmake
+target_link_libraries({PROJECT_NAME} fmt)
+```
 
 # [使用](https://blog.csdn.net/robinhjwy/article/details/77334189)
 ## 添加依赖

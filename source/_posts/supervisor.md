@@ -12,7 +12,8 @@ date: 2020-08-03 22:03:00
 
 <!--more-->
 
-# 简介
+# 简介[^1]
+[^1]: [连接](https://blog.csdn.net/u012374229/article/details/47158435)
 - Supervisor是一个用Python2写的进程管理工具，可以很方便的对进程进行启动、停止、重启等操作。
 
 - [官方网址](http://supervisord.org/)
@@ -32,6 +33,12 @@ sudo chmod 777 /etc/supervisor
 - 接着就可以启动 Supervisord 了：
 ```bash
 supervisord
+```
+
+- 设置配置文件
+```bash
+supervisord -c /etc/supervisord.conf 
+supervisord -c /etc/supervisor/supervisord.conf
 ```
 
 # 配置
@@ -60,9 +67,9 @@ stdout_logfile=logfile        ; 指定日志文件，会在执行目录创建日
 
 |命令|说明|
 |-|-|
-|supervisorctl start programxxx|启动某个进程|
-|supervisorctl restart programxxx|重启某个进程|
-|supervisorctl stop groupworker: |重启所有属于名为groupworker这个分组的进程(start,restart同理)|
+|supervisorctl start program_name|启动某个进程|
+|supervisorctl restart program_name|重启某个进程|
+|supervisorctl stop groupworker: |停止所有属于名为groupworker这个分组的进程(start,restart同理)|
 |supervisorctl stop all|停止全部进程，注：start、restart、stop都不会载入最新的配置文件。|
 |supervisorctl reload|载入最新的配置文件，停止原有进程并按新的配置启动、管理所有进程。|
 |supervisorctl update|根据最新的配置文件，启动新配置或有改动的进程，配置没有改动的进程不会受影响而重启。|

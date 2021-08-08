@@ -1216,6 +1216,59 @@ imgplot = plt.imshow(lum_img, clim=(0, 0.7))
 # imgplot.set_clim(0.0, 0.7)
 ```
 
+# 动画
+## ion
+- 可以实时在画布显示绘图结果，但是刷新比较慢
 
+```py
+plt.ion()
+print(len(x1))
+for i in range(max(len(x1),len(x2))):
+    plt.cla()
+    # for stopping simulation with the esc key.
+    plt.gcf().canvas.mpl_connect('key_release_event', lambda event: [exit(0) if event.key == 'escape' else None])
+
+    plt.plot(x1, y1, "-r", label="front")
+    plt.plot(x2, y2, "-b", label="rear")
+    if i<len(x1):
+        #plt.plot([x1[i]],[y1[i]],"kx")
+        plot_car(x1[i],y1[i],yaw1[i])
+    if i<len(x2):
+        #plt.plot([x2[i]],[y2[i]],"kx")
+        plot_car(x2[i],y2[i],yaw2[i])
+    plt.grid(True)
+    plt.pause(0.00001)
+plt.ioff()
+plt.show()
+```
+
+## animation
+- 根据更新函数绘制动画，速度快
+
+```py
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+import numpy as np
+
+x = np.arange(0, 2*np.pi, 0.1)
+y = np.sin(x)
+
+fig, axes = plt.subplots(nrows=6)
+
+styles = ['r-', 'g-', 'y-', 'm-', 'k-', 'c-']
+def plot(ax, style):
+    return ax.plot(x, y, style, animated=True)[0]
+lines = [plot(ax, style) for ax, style in zip(axes, styles)]
+
+def animate(i):
+    for j, line in enumerate(lines, start=1):
+        line.set_ydata(np.sin(j*x + i/10.0))
+    return lines
+
+# We'd normally specify a reasonable "interval" here...
+ani = animation.FuncAnimation(fig, animate, range(1, 200), 
+                              interval=0, blit=True)
+plt.show()
+```
 
 

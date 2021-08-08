@@ -86,7 +86,7 @@ docker ps # ensure docker can run normally without sudo
 容器容器运行的进程|`docker top CONTAINERID/NAME`|
 显示一个或多个容器的详细信息|`docker inspect CONTAINERID/NAME`|返回一个 JSON 文件记录着 Docker 容器的配置和状态信息
 从容器的更改创建一个新的映像|`docker commit`|
-在容器和本地文件系统之间复制文件/文件夹|`docker cp`|
+在容器和本地文件系统之间复制文件/文件夹|容器->本机`docker cp container_id:docker容器内的文件全路径 本机保存文件的全路径`<br>本机->容器：`docker cp E:\PHP\configure.txt 4a2f08d2c1f8:/data1/configure.txt`|
 创建一个新的容器|`docker create`|
 检查容器文件系统上文件或目录的更改|`docker diff`|
 杀死一个或多个运行容器|`docker kill`|
@@ -166,6 +166,14 @@ CMD     /usr/sbin/sshd -D
 查看创建的镜像|`docker images`|
 使用新镜像创建容器|`docker run -t -i runoob/centos:6.7  /bin/bash`|
 设置镜像标签|`docker tag 860c279d2fec runoob/centos:dev`|
+
+## 上传镜像
+```bash
+docker commit 8f # 提交
+docker login #
+docker tag aee hero576/mympc:v4  # 修改image的tag名称
+docker push hero576/mympc:v4
+```
 
 ## 连接
 - Docker 容器互联：端口映射并不是唯一把 docker 连接到另一个容器的方法。docker 有一个连接系统允许将多个容器连接在一起，共享连接信息。docker 连接会创建一个父子关系，其中父容器可以看到子容器的信息。
@@ -415,7 +423,14 @@ ENV LANG C.UTF-8
 - 然后重新生成镜像，重新启动容器
 - 这样生成的镜像，就已经解决了乱码问题
 
-
+```bash
+cat << EOF > /root/.vimrc
+:set encoding=utf-8
+:set fileencodings=ucs-bom,utf-8,cp936
+:set fileencoding=gb2312
+:set termencoding=utf-8
+EOF
+```
 
 
 

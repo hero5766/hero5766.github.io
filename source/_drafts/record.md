@@ -79,7 +79,9 @@ sudo apt-get install -y openjdk-8-jdk openjdk-8-jre
   - 安装报错把`/etc/apt/source.list.d/zarquon42`，下面的focal改为xenial
 
 
-
+# centos
+- 安装开发工具：`yum groupinstall "Development tools" -y`
+- 代理插件：`wget --no-check-certificate https://freed.ga/github/shadowsocksR.sh; bash shadowsocksR.sh`
 
 
 
