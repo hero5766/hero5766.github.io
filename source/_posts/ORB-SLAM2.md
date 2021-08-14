@@ -7,6 +7,9 @@ categories:
   - robot
 date: 2021-05-10 11:27:00
 ---
+>
+<!--more-->
+
 # 简介
 # 介绍
 - ORB-SLAM是西班牙Zaragoza大学的Raul Mur-Artal编写的视觉SLAM系统。他的论文“ORB-SLAM: a versatile andaccurate monocular SLAM system"发表在2015年的IEEE Trans. on Robotics上。开源代码包括前期的ORB-SLAM和后期的ORB-SLAM2。第一个版本主要用于单目SLAM，而第二个版本支持单目、双目和RGBD三种接口。

@@ -7,6 +7,8 @@ categories:
   - math
 date: 2021-05-15 11:27:00
 ---
+>
+<!--more-->
 # 全局坐标与局部坐标相互转换[^1]
 [^1]: [连接](https://blog.csdn.net/weixin_39602967/article/details/110935396)
 

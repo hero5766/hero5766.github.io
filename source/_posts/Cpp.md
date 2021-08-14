@@ -2960,3 +2960,23 @@ return 0;
 # C11
 
 # Boost
+
+
+# GPU
+- amp
+
+```cpp
+#include <amp.h>
+#include <iostream>
+using namespace std;
+using namespace concurrency;
+int main(){
+  int a[10] = {1,2,3,4,5,6,7,8,9,10};
+  array_view<int> av(10,a); // GPU计算结构
+  parallel_for_each(av.extent,[=](index<1>indx)restrict(amp){av[indx]+=1;});
+  for(int i=0;i<10;i++){
+    cout<<a[i]<<endl;
+  }
+  return 0;
+}
+```

@@ -7,7 +7,8 @@ categories:
   - control
 date: 2021-05-20 10:10:00
 ---
-
+>
+<!--more-->
 
 ![数学模型](/images/pasted-395.png)
 ![阿克曼转向角](/images/pasted-396.png)
