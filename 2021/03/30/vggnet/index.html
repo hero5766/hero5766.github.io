@@ -1,0 +1,119 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="VGGNet"><meta name="keywords" content="algorithm"><meta name="author" content="hero576"><meta name="copyright" content="hero576"><title>VGGNet | void land space</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.8.2"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.8.2"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="dns-prefetch" href="https://hm.baidu.com"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?5ff8fca367285c16c6dd5c16ca2ccc1b";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();</script><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  hexoVersion: '5.0.2'
+} </script><meta name="generator" content="Hexo 5.0.2"><link rel="alternate" href="/atom.xml" title="void land space" type="application/atom+xml">
+</head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#vggnet"><span class="toc-number">1.</span> <span class="toc-text"> VGGNet</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E6%94%B9%E8%BF%9B"><span class="toc-number">1.1.</span> <span class="toc-text"> 网络改进</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84"><span class="toc-number">1.2.</span> <span class="toc-text"> 网络结构</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8D%B7%E7%A7%AF%E5%A0%86%E5%8F%A0"><span class="toc-number">2.</span> <span class="toc-text"> 卷积堆叠</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%AD%E7%BB%83"><span class="toc-number">3.</span> <span class="toc-text"> 训练</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%9A%E5%89%AA%E8%A3%81"><span class="toc-number">4.</span> <span class="toc-text"> 多剪裁</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AF%86%E9%9B%86%E8%AF%84%E4%BC%B0"><span class="toc-number">5.</span> <span class="toc-text"> 密集评估</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/images/haimianbaobao.jpg"></div><div class="author-info__name text-center">hero576</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">83</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">16</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">分类</span><span class="pull-right">9</span></a></div></div></div><div id="content-outer"><div class="plain" id="top-container"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">void land space</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">主页</a><a class="site-page" href="/archives">文章</a><a class="site-page" href="/tags">标签</a><a class="site-page" href="/categories">分类</a><a class="site-page" href="/gallery">相册</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> 搜索</span></a></span></div></div><div class="layout" id="content-inner"><article id="post"><div class="plain" id="post-title">VGGNet</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2021-03-30</time><span class="post-meta__separator">|</span><i class="fa fa-inbox" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/DL/"> DL</a></div><div class="article-container" id="post-content"><blockquote></blockquote>
+<a id="more"></a>
+<h1 id="vggnet"><a class="markdownIt-Anchor" href="#vggnet"></a> VGGNet</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1409.1556v1">VGGNet</a>2015，K. Simonyan and A. Zisserman提出，是2014 年ILSVRC竞赛分类任务的第二名（第一名是GoogLeNet）和定位任务的第一名。</li>
+<li>泛化能力强，适合迁移学习</li>
+</ul>
+<h2 id="网络改进"><a class="markdownIt-Anchor" href="#网络改进"></a> 网络改进</h2>
+<ul>
+<li>对卷积核和池化大小进行了统一： 3×3卷积和2×2最大池化操作</li>
+<li>采用卷积层堆叠的策略，将多个连续的卷积层构成卷积层组</li>
+<li>采用小的卷积滤波器，网络更深（16/19层）</li>
+<li>不采用LRN(Local Response Normalization)</li>
+</ul>
+<h2 id="网络结构"><a class="markdownIt-Anchor" href="#网络结构"></a> 网络结构</h2>
+<ul>
+<li>VGG-16有16个卷积层或全连接层，包括五组卷积层和3个全连接层，即： 16=2+2+3+3+3+3。</li>
+</ul>
+<p><img src="/images/pasted-123.png" alt="VGG网络结构" /></p>
+<p><img src="/images/pasted-124.png" alt="VGG网络结构" /></p>
+<ul>
+<li>网络包含5组卷积操作，每组内的卷积层具有相同的结构，每组包含1~3个连续的卷积层，每两个卷积层之间为ReLU层。</li>
+<li>VGG的卷积层，特征图的空间分辨率单调递减，特征图的通道数单调递增。使得输入图像在维度上流畅地转换到分类向量。AlexNet的通道数无此规律，VGGNet后续的GoogLeNet和ResNet均遵循此维度变化的规律。</li>
+</ul>
+<p><img src="/images/pasted-126.png" alt="卷积层分辨率递减，通道数递增" /></p>
+<h1 id="卷积堆叠"><a class="markdownIt-Anchor" href="#卷积堆叠"></a> 卷积堆叠</h1>
+<ul>
+<li>与单个卷积层相比，卷积堆叠可以增加感受野，增强网络的学习能力和特征表达能力</li>
+<li>与具有较大核的卷积层相比，采用多个具有小卷积核的卷积层串联的方式能够减少网络参数</li>
+<li>在每层卷积之后进行ReLU非线性操作可提升网络的特征学习能力</li>
+</ul>
+<p><img src="/images/pasted-125.png" alt="卷积堆叠" /></p>
+<ul>
+<li>感受野计算公式：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>F</mi><mo stretchy="false">(</mo><mi>i</mi><mo stretchy="false">)</mo><mo>=</mo><mo stretchy="false">(</mo><mi>F</mi><mo stretchy="false">(</mo><mi>i</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mi>x</mi><mi>S</mi><mi>t</mi><mi>r</mi><mi>i</mi><mi>d</mi><mi>e</mi><mo>+</mo><mi>K</mi><mi>s</mi><mi>i</mi><mi>z</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">F(i)=(F(i+1)-1)xStride+Ksize</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">F</span><span class="mopen">(</span><span class="mord mathdefault">i</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.13889em;">F</span><span class="mopen">(</span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mord mathdefault">x</span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord mathdefault">t</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span><span class="mord mathdefault">e</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">K</span><span class="mord mathdefault">s</span><span class="mord mathdefault">i</span><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="mord mathdefault">e</span></span></span></span>
+<ul>
+<li>其中：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>F</mi><mo stretchy="false">(</mo><mi>i</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">F(i)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">F</span><span class="mopen">(</span><span class="mord mathdefault">i</span><span class="mclose">)</span></span></span></span>为第i层感受野</li>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>t</mi><mi>r</mi><mi>i</mi><mi>d</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">stride</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">t</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span><span class="mord mathdefault">e</span></span></span></span>第i层步距</li>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi><mi>s</mi><mi>i</mi><mi>z</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">ksize</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mord mathdefault">s</span><span class="mord mathdefault">i</span><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="mord mathdefault">e</span></span></span></span>卷积核或池化核尺寸</li>
+</ul>
+</li>
+</ul>
+<h1 id="训练"><a class="markdownIt-Anchor" href="#训练"></a> 训练</h1>
+<ul>
+<li>
+<p>训练是通过使用带有动量的小批次梯度下降的反向传播来优化多类别逻辑回归目标</p>
+</li>
+<li>
+<p>批次大小设置为256，动量为0.9。 通过权重衰减正则化（L2惩罚因子设置为5 × 10−4）和前两个全连接层的丢弃（丢弃率设置为0.5）对训练进行正则化。</p>
+</li>
+<li>
+<p>学习率初始设定为10−2， 然后当验证集准确率度停止改善时，学习率降低10倍</p>
+</li>
+<li>
+<p>单尺度训练：训练图像大小裁剪为固定大小<code>224*224</code>(s=224)或<code>384*384</code>(s=384)</p>
+</li>
+<li>
+<p>多尺度训练：尺度抖动，训练图像大小随机在<code>s∈[256,512]</code>的范围中</p>
+</li>
+<li>
+<p>训练时，将不同尺寸的s，随机裁剪为<code>224*224</code>的训练样本</p>
+</li>
+<li>
+<p>测试时，将图像缩放到固定尺寸Q=s或0.5(256+512)，对网络最后的卷积层使用滑动窗口进行分类预测，对不同的窗口分类结果取平均。</p>
+</li>
+</ul>
+<h1 id="多剪裁"><a class="markdownIt-Anchor" href="#多剪裁"></a> 多剪裁</h1>
+<ul>
+<li>Multi-Crop evaluation: 从测试图像中剪切出一大批<code>224*224</code>的小块图像，在输出时取平均得到一个1000维的平均结果。</li>
+</ul>
+<h1 id="密集评估"><a class="markdownIt-Anchor" href="#密集评估"></a> 密集评估</h1>
+<ul>
+<li>Dense evaluation: 测试图像的尺寸不作任何变化，将最后一个卷积层和全连接层看成为一个卷积操作，然后对所作的结果进行平均。 全卷积网络因为没有全连接的限制，因而可以接收任意宽或高的输入</li>
+<li>首先将全连接的层转换为卷积层（第一个FC层转换到7×7卷积层，最后两个FC层转换到1×1转换层）。 然后将得到的全卷积网络应用于整个（未剪切的）图像。</li>
+<li>比如，对于训练图像其大小为<code>224*224</code>，经过最后一个卷积得到7×7×m的特征图，然后输出为1000个结点。这是训练好的网络。</li>
+<li>对于一个<code>448*448</code>的测试图像，经过训练好的网络的映射，最后会输出<code>2*2*1000</code>大小的结果，将<code>2*2</code>里面的内容进行平均，即得到1000维向量</li>
+</ul>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css"></div></article><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/algorithm/">algorithm</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2021/03/30/lenet/"><i class="fa fa-chevron-left">  </i><span>LeNet</span></a></div><div class="next-post pull-right"><a href="/2021/02/17/%E8%BD%A6%E9%81%93%E7%BA%BF/"><span>车道线</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="vcomment"></div><script src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = 'false' == 'true';
+var verify = 'false' == 'true';
+var record_ip = '' == 'true';
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  recordIP:record_ip,
+  appId:'AdfkiqY89QUSUWbDY9xJuCh0-gzGzoHsz',
+  appKey:'2cEvHcqEWsyoKwy4AUL3kPGh',
+  placeholder:'劈个叉吧',
+  avatar:'mm',
+  guest_info:guest_info,
+  pageSize:'100',
+  lang: 'zh-cn'
+})</script></div></div><footer><div class="layout" id="footer"><div class="copyright">&copy;2020 - 2021 By hero576</div><div class="framework-info"><span>驱动 - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.8.2"></script><script src="/js/fancybox.js?version=1.8.2"></script><script src="/js/sidebar.js?version=1.8.2"></script><script src="/js/copy.js?version=1.8.2"></script><script src="/js/fireworks.js?version=1.8.2"></script><script src="/js/transition.js?version=1.8.2"></script><script src="/js/scroll.js?version=1.8.2"></script><script src="/js/head.js?version=1.8.2"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css"><script src="/js/katex.js"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>
