@@ -1907,15 +1907,35 @@ private:
 
 ## 智能指针
 ### auto_ptr：自动内存释放
+- 可以拷贝构造，负值重载，引用计数
+- 原则已经不推荐使用了
 
 ```cpp
 auto_ptr<double>p(1);
+auto_ptr<int>pint(new int[1024*1024]);
+// -------- 
+auto_ptr<string>pint(new string[1024*1024]); // 指针被auto_ptr析构时，会与string的析构发生冲突，stl管理内存与auto_ptr发生冲突，造成程序的不稳定
 ```
 
 ### unique_ptr
+- 检测到不调用，则不会分配内存；
+- 不可以拷贝构造、负值重载，独享内存，其他指针不能拥有，但可以move
 
 ```cpp
 unique_ptr<double>p(1);
+unique_ptr<int>pint(new int[1024]);
+unique_ptr<int>pint2 = move(pint); // 左值引用
+//pint.reset();//释放内存
+```
+
+### shared_ptr
+- 引用计数
+- 使用智能指针在编译的时候，会在编译内内部的堆先测试一下，有用才编译；
+
+```cpp
+shared_ptr<int> pint(new int[1024]);
+cout<<pint.use_count();
+pint.reset(); //每次释放，use_count减一
 ```
 
 

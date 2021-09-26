@@ -146,6 +146,12 @@ chunk|根据数量拆分`a.chunk(2,dim=0)`
 条件|`torch.where(condition,x,y)`condition用来表示是从x还是y取值
 查表|`gather(input,dim,index,out=None)`
 
+```py
+test = torch.rand((5,4))
+index = torch.tensor([[1,2,2,0],[3,1,1,2],[0,0,0,0],[1,1,1,1],[2,2,2,2]])
+torch.gather(test,0,index)
+torch.gather(test,1,index)
+```
 
 ## 导数和梯度
 - 导数derivate

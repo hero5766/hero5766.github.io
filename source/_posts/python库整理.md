@@ -1,3 +1,4 @@
+---
 title: python库整理
 author: hero576
 tags:
@@ -291,6 +292,14 @@ def moving_average(iterable,n = 3):
 array = [40,30,50,46,39,44]
 for ele in moving_average(array,n=3):
     print (ele)
+```
+
+
+```py
+t = deque(maxlen=5)
+for i in range(10):
+    t.append(i)
+    print(t)
 ```
 
 ### defaultdict
