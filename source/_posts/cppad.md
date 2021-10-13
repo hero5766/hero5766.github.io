@@ -23,7 +23,7 @@ date: 2021-07-05 17:07:20
 
 # 代码
 - 最优化问题：
-- `$\begin{cases}minimize&&x_1*x_4*(x_1+x_2+x_3)+x_3\\subject\;to &&x_1*x_2*x_3*x_4\ge25\\&&x_1^2+x_2^2+x_3^2+x_4^2=40\\&&1\le x_1,x_2,x_3,x_4\le 5\end{cases}$`
+- $\begin{cases}minimize&&x_1*x_4*(x_1+x_2+x_3)+x_3\\subject\;to &&x_1*x_2*x_3*x_4\ge25\\&&x_1^2+x_2^2+x_3^2+x_4^2=40\\&&1\le x_1,x_2,x_3,x_4\le 5\end{cases}$
 
 - 设置参数、初始状态、状态约束值、等式/不等式约束值、优化方程/等式及不等式方程。
 
